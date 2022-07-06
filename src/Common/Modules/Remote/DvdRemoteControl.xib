@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DvdRemoteControl" customModule="DEFT" customModuleProvider="target">
+            <connections>
+                <outlet property="circularDirectionButton" destination="2fO-tP-mqN" id="bff-iI-kij"/>
+                <outlet property="directionButtonContainerViewBottomConstraint" destination="em3-cO-m8R" id="lYc-EF-yb7"/>
+                <outlet property="directionButtonContainerViewTopConstraint" destination="yHj-10-JZQ" id="nOl-mD-VcN"/>
+                <outlet property="numberPadControl" destination="yOq-Pb-NSA" id="mxj-gU-OHE"/>
+                <outlet property="powerButton" destination="OXN-mR-kgd" id="tdI-uL-Foq"/>
+                <outlet property="volumeRectangularDirectionButton" destination="ZdR-kd-bwq" id="AME-48-jFS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iqn-uw-plW">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="550"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xHM-mO-csC" userLabel="buttonContainerView">
+                    <rect key="frame" x="19.5" y="0.0" width="281" height="124"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OXN-mR-kgd" userLabel="powerButton" customClass="AppToggleButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="TW4-1s-7q6"/>
+                                <constraint firstAttribute="height" constant="56" id="dSd-Uo-MXE"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="16" minY="15" maxX="16" maxY="17"/>
+                            <state key="normal" image="RemoteButtonPowerOn"/>
+                            <connections>
+                                <action selector="didSelectPowerButton:" destination="-1" eventType="touchUpInside" id="6pB-1c-gwt"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTa-Nd-g4y" userLabel="previousButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="68" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="7xP-pK-LiH"/>
+                                <constraint firstAttribute="height" constant="56" id="QUf-2f-QXi"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                            <state key="normal" image="RemoteButtonPrevious"/>
+                            <connections>
+                                <action selector="didSelectPreviousButton:" destination="-1" eventType="touchUpInside" id="E4O-AE-0Dw"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLg-XV-KD6" userLabel="rewindButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="75" y="68" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="Lpd-Mn-1G5"/>
+                                <constraint firstAttribute="height" constant="56" id="RMG-ro-atU"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="15" minY="17" maxX="19" maxY="17"/>
+                            <state key="normal" image="RemoteButtonRewind"/>
+                            <connections>
+                                <action selector="didSelectRewindButton:" destination="-1" eventType="touchUpInside" id="V0j-EQ-H3M"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OPc-kU-P74" userLabel="forwardButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="150" y="68" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="L1o-ju-xow"/>
+                                <constraint firstAttribute="height" constant="56" id="XDl-0a-BfE"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="19" minY="17" maxX="15" maxY="17"/>
+                            <state key="normal" image="RemoteButtonForward"/>
+                            <connections>
+                                <action selector="didSelectForwardButton:" destination="-1" eventType="touchUpInside" id="FUB-IO-ye8"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4G-nm-Hwi" userLabel="nextButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="225" y="68" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="WDQ-Dh-GCA"/>
+                                <constraint firstAttribute="height" constant="56" id="bFN-dw-BbK"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                            <state key="normal" image="RemoteButtonNext"/>
+                            <connections>
+                                <action selector="didSelectNextButton:" destination="-1" eventType="touchUpInside" id="9RS-VF-8IL"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzK-dY-6el" userLabel="playButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="75" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="83H-3l-S8I"/>
+                                <constraint firstAttribute="height" constant="56" id="BbH-yk-I1r"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="20" minY="18" maxX="16" maxY="18"/>
+                            <state key="normal" image="RemoteButtonPlay"/>
+                            <connections>
+                                <action selector="didSelectPlayButton:" destination="-1" eventType="touchUpInside" id="boU-Do-8wk"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr6-il-lPt" userLabel="pauseButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="150" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="S0K-k3-ivU"/>
+                                <constraint firstAttribute="height" constant="56" id="Tm7-Ph-PEK"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="19" minY="19" maxX="19" maxY="19"/>
+                            <state key="normal" image="RemoteButtonPause"/>
+                            <connections>
+                                <action selector="didSelectPauseButton:" destination="-1" eventType="touchUpInside" id="vL7-LL-QLk"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugk-oE-HkL" userLabel="stopButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="225" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="QMr-Km-QrG"/>
+                                <constraint firstAttribute="width" constant="56" id="WBZ-M4-Wvr"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="19" minY="19" maxX="19" maxY="19"/>
+                            <state key="normal" image="RemoteButtonStop"/>
+                            <connections>
+                                <action selector="didSelectStopButton:" destination="-1" eventType="touchUpInside" id="Ak4-Vg-MOl"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="OPc-kU-P74" firstAttribute="leading" secondItem="cLg-XV-KD6" secondAttribute="trailing" constant="19" id="31y-NQ-vXU"/>
+                        <constraint firstItem="gTa-Nd-g4y" firstAttribute="top" secondItem="OXN-mR-kgd" secondAttribute="bottom" constant="12" id="9HX-Ru-x0Q"/>
+                        <constraint firstAttribute="bottom" secondItem="cLg-XV-KD6" secondAttribute="bottom" id="Bin-Ij-YZQ"/>
+                        <constraint firstItem="OXN-mR-kgd" firstAttribute="top" secondItem="xHM-mO-csC" secondAttribute="top" id="FTT-49-D0h"/>
+                        <constraint firstAttribute="bottom" secondItem="OPc-kU-P74" secondAttribute="bottom" id="Gfx-Lw-BLF"/>
+                        <constraint firstAttribute="trailing" secondItem="Ugk-oE-HkL" secondAttribute="trailing" id="HF4-a0-4Yg"/>
+                        <constraint firstAttribute="bottom" secondItem="q4G-nm-Hwi" secondAttribute="bottom" id="HSY-IN-QLo"/>
+                        <constraint firstItem="qzK-dY-6el" firstAttribute="leading" secondItem="OXN-mR-kgd" secondAttribute="trailing" constant="19" id="HTs-XA-2jV"/>
+                        <constraint firstAttribute="bottom" secondItem="gTa-Nd-g4y" secondAttribute="bottom" id="Kdx-Sl-ctL"/>
+                        <constraint firstItem="qzK-dY-6el" firstAttribute="top" secondItem="xHM-mO-csC" secondAttribute="top" id="Kr5-u1-1nx"/>
+                        <constraint firstItem="OXN-mR-kgd" firstAttribute="leading" secondItem="xHM-mO-csC" secondAttribute="leading" id="LNo-Lk-fLL"/>
+                        <constraint firstItem="Gr6-il-lPt" firstAttribute="top" secondItem="xHM-mO-csC" secondAttribute="top" id="NMr-MR-caj"/>
+                        <constraint firstItem="Gr6-il-lPt" firstAttribute="leading" secondItem="qzK-dY-6el" secondAttribute="trailing" constant="19" id="PHz-HU-Qyh"/>
+                        <constraint firstItem="Ugk-oE-HkL" firstAttribute="top" secondItem="xHM-mO-csC" secondAttribute="top" id="Qdp-YC-jvQ"/>
+                        <constraint firstItem="cLg-XV-KD6" firstAttribute="leading" secondItem="gTa-Nd-g4y" secondAttribute="trailing" constant="19" id="V94-wd-xbt"/>
+                        <constraint firstItem="gTa-Nd-g4y" firstAttribute="leading" secondItem="xHM-mO-csC" secondAttribute="leading" id="YuY-qx-bnp"/>
+                        <constraint firstItem="Ugk-oE-HkL" firstAttribute="leading" secondItem="Gr6-il-lPt" secondAttribute="trailing" constant="19" id="af2-Ro-H7M"/>
+                        <constraint firstItem="q4G-nm-Hwi" firstAttribute="leading" secondItem="OPc-kU-P74" secondAttribute="trailing" constant="19" id="dqy-2A-muz"/>
+                        <constraint firstAttribute="trailing" secondItem="q4G-nm-Hwi" secondAttribute="trailing" id="pHJ-bp-fTC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yOq-Pb-NSA" userLabel="numberPadControl" customClass="NumberPadControl" customModule="DEFT" customModuleProvider="target">
+                    <rect key="frame" x="30" y="286" width="260" height="254"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="260" id="dr5-Lh-id3"/>
+                        <constraint firstAttribute="height" constant="254" id="saS-ic-1d2"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c8c-PO-Fyf" userLabel="directionButtonContainerView">
+                    <rect key="frame" x="20" y="140" width="280" height="130"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2fO-tP-mqN" customClass="CircularDirectionButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="74" y="0.0" width="130" height="130"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="2fO-tP-mqN" secondAttribute="height" multiplier="1:1" id="2k4-dy-TM5"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZdR-kd-bwq" userLabel="volumeRectangularDirectionButton" customClass="RectangularDirectionButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="130"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="oFj-vO-Jfi"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kHI-GX-COA" userLabel="nextButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="224" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="CHP-oU-883"/>
+                                <constraint firstAttribute="height" constant="56" id="HuX-Ll-O49"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="19" minY="18" maxX="19" maxY="20"/>
+                            <state key="normal" image="RemoteButtonEject"/>
+                            <connections>
+                                <action selector="didSelectEjectButton:" destination="-1" eventType="touchUpInside" id="NzE-ra-xKH"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Qh-EN-esQ" userLabel="nextButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="224" y="74" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="62r-Yq-cG2"/>
+                                <constraint firstAttribute="height" constant="56" id="TJ2-hA-qdg"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                            <state key="normal" image="RemoteButtonMute"/>
+                            <connections>
+                                <action selector="didSelectMuteButton:" destination="-1" eventType="touchUpInside" id="KtP-o3-e0a"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ZdR-kd-bwq" firstAttribute="leading" secondItem="c8c-PO-Fyf" secondAttribute="leading" id="5GD-4r-naF"/>
+                        <constraint firstAttribute="bottom" secondItem="ZdR-kd-bwq" secondAttribute="bottom" id="5Rk-MJ-oGG"/>
+                        <constraint firstAttribute="bottom" secondItem="6Qh-EN-esQ" secondAttribute="bottom" id="9zE-OF-iKh"/>
+                        <constraint firstAttribute="height" constant="130" id="Aw9-9H-Yg0"/>
+                        <constraint firstAttribute="bottom" secondItem="2fO-tP-mqN" secondAttribute="bottom" id="ZwO-hC-ZgA"/>
+                        <constraint firstItem="2fO-tP-mqN" firstAttribute="leading" secondItem="ZdR-kd-bwq" secondAttribute="trailing" constant="24" id="dTc-Ws-FOX"/>
+                        <constraint firstItem="2fO-tP-mqN" firstAttribute="top" secondItem="c8c-PO-Fyf" secondAttribute="top" id="gMb-Ej-Cwq"/>
+                        <constraint firstItem="ZdR-kd-bwq" firstAttribute="top" secondItem="c8c-PO-Fyf" secondAttribute="top" id="heY-a3-lYy"/>
+                        <constraint firstItem="kHI-GX-COA" firstAttribute="top" secondItem="c8c-PO-Fyf" secondAttribute="top" id="hkp-tz-dFN"/>
+                        <constraint firstItem="kHI-GX-COA" firstAttribute="leading" secondItem="2fO-tP-mqN" secondAttribute="trailing" constant="20" id="iIE-1z-eMA"/>
+                        <constraint firstAttribute="trailing" secondItem="6Qh-EN-esQ" secondAttribute="trailing" id="kCS-HF-ybt"/>
+                        <constraint firstAttribute="trailing" secondItem="kHI-GX-COA" secondAttribute="trailing" id="wjO-VE-nrD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="6zi-JX-fE3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="c8c-PO-Fyf" firstAttribute="centerX" secondItem="Iqn-uw-plW" secondAttribute="centerX" id="F6Z-gq-fFZ"/>
+                <constraint firstItem="xHM-mO-csC" firstAttribute="top" secondItem="Iqn-uw-plW" secondAttribute="top" id="HjE-yX-9xQ"/>
+                <constraint firstItem="yOq-Pb-NSA" firstAttribute="centerX" secondItem="Iqn-uw-plW" secondAttribute="centerX" id="ZHW-7R-WJr"/>
+                <constraint firstItem="yOq-Pb-NSA" firstAttribute="top" secondItem="c8c-PO-Fyf" secondAttribute="bottom" constant="16" id="em3-cO-m8R"/>
+                <constraint firstItem="xHM-mO-csC" firstAttribute="centerX" secondItem="Iqn-uw-plW" secondAttribute="centerX" id="qaa-1j-LEZ"/>
+                <constraint firstItem="c8c-PO-Fyf" firstAttribute="top" secondItem="xHM-mO-csC" secondAttribute="bottom" constant="16" id="yHj-10-JZQ"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="15.942028985507248" y="-361.60714285714283"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="6Qh-EN-esQ">
+            <size key="intrinsicContentSize" width="200" height="200"/>
+        </designable>
+        <designable name="Gr6-il-lPt">
+            <size key="intrinsicContentSize" width="512" height="512"/>
+        </designable>
+        <designable name="OPc-kU-P74">
+            <size key="intrinsicContentSize" width="768" height="668"/>
+        </designable>
+        <designable name="Ugk-oE-HkL">
+            <size key="intrinsicContentSize" width="512" height="512"/>
+        </designable>
+        <designable name="cLg-XV-KD6">
+            <size key="intrinsicContentSize" width="768" height="668"/>
+        </designable>
+        <designable name="gTa-Nd-g4y">
+            <size key="intrinsicContentSize" width="512" height="512"/>
+        </designable>
+        <designable name="kHI-GX-COA">
+            <size key="intrinsicContentSize" width="530" height="530"/>
+        </designable>
+        <designable name="q4G-nm-Hwi">
+            <size key="intrinsicContentSize" width="512" height="512"/>
+        </designable>
+        <designable name="qzK-dY-6el">
+            <size key="intrinsicContentSize" width="512" height="512"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="RemoteButtonEject" width="530" height="530"/>
+        <image name="RemoteButtonForward" width="768" height="668"/>
+        <image name="RemoteButtonMute" width="200" height="200"/>
+        <image name="RemoteButtonNext" width="512" height="512"/>
+        <image name="RemoteButtonPause" width="512" height="512"/>
+        <image name="RemoteButtonPlay" width="512" height="512"/>
+        <image name="RemoteButtonPowerOn" width="256" height="256"/>
+        <image name="RemoteButtonPrevious" width="512" height="512"/>
+        <image name="RemoteButtonRewind" width="768" height="668"/>
+        <image name="RemoteButtonStop" width="512" height="512"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

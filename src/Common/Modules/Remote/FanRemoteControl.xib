@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FanRemoteControl" customModule="Wifinity" customModuleProvider="target">
+            <connections>
+                <outlet property="powerButton" destination="n5B-Ti-JBG" id="GKy-IZ-R6I"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Ho1-Qr-vja">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5B-Ti-JBG" userLabel="powerButton" customClass="AppToggleButton" customModule="Wifinity" customModuleProvider="target">
+                    <rect key="frame" x="132" y="0.0" width="56" height="56"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="56" id="8a9-0I-rJM"/>
+                        <constraint firstAttribute="height" constant="56" id="H7r-cE-uTz"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="systemBlueColor"/>
+                    <inset key="imageEdgeInsets" minX="14" minY="14" maxX="14" maxY="14"/>
+                    <state key="normal" image="RemoteButtonPowerOn"/>
+                    <connections>
+                        <action selector="didSelectPowerButton:" destination="-1" eventType="touchUpInside" id="FJi-7e-gWS"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B7d-fp-6lr" userLabel="buttonContainerView">
+                    <rect key="frame" x="15" y="76" width="290" height="132"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bw0-JP-tCe" userLabel="ledButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="90" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="gp7-Ub-we6"/>
+                                <constraint firstAttribute="width" constant="90" id="z8e-LV-aNr"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                            <state key="normal" title="LED"/>
+                            <connections>
+                                <action selector="didSelectLedButton:" destination="-1" eventType="touchUpInside" id="hc1-Yn-tcR"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XzE-dh-XMK" userLabel="boostButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                            <rect key="frame" x="100" y="0.0" width="90" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="7cq-Ca-cQg"/>
+                                <constraint firstAttribute="height" constant="56" id="I7k-t8-J3K"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                            <state key="normal" title="BOOST"/>
+                            <connections>
+                                <action selector="didSelectBoostButton:" destination="-1" eventType="touchUpInside" id="RUR-K0-BAo"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPQ-q9-20l" userLabel="timerButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                            <rect key="frame" x="200" y="0.0" width="90" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="kgW-WI-SIa"/>
+                                <constraint firstAttribute="width" constant="90" id="zTE-yC-uEX"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                            <state key="normal" title="TIMER"/>
+                            <connections>
+                                <action selector="didSelectTimerButton:" destination="-1" eventType="touchUpInside" id="q0y-g9-Kaz"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppJ-nm-Je2" userLabel="sleepButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="76" width="90" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="Ix2-qL-VNO"/>
+                                <constraint firstAttribute="width" constant="90" id="Yqm-dj-KVb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                            <state key="normal" title="SLEEP"/>
+                            <connections>
+                                <action selector="didSelectSleepButton:" destination="-1" eventType="touchUpInside" id="f1U-2i-pOO"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jpl-aB-nDe" userLabel="speedMinusButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                            <rect key="frame" x="100" y="76" width="90" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="KRT-9k-7YU"/>
+                                <constraint firstAttribute="height" constant="56" id="xu5-3x-0dK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                            <state key="normal" title="SPEED -"/>
+                            <connections>
+                                <action selector="didSelectSpeedMinusButton:" destination="-1" eventType="touchUpInside" id="IMD-t1-IzZ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Vs-Dg-MyW" userLabel="speedPlusButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                            <rect key="frame" x="200" y="76" width="90" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="vfj-aA-7yv"/>
+                                <constraint firstAttribute="width" constant="90" id="wW9-4Z-f9X"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                            <state key="normal" title="SPEED+"/>
+                            <connections>
+                                <action selector="didSelectSpeedPlusButton:" destination="-1" eventType="touchUpInside" id="mcP-Mg-xss"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="bw0-JP-tCe" firstAttribute="leading" secondItem="B7d-fp-6lr" secondAttribute="leading" id="0eH-FN-pZp"/>
+                        <constraint firstItem="ppJ-nm-Je2" firstAttribute="top" secondItem="bw0-JP-tCe" secondAttribute="bottom" constant="20" id="0mZ-Rq-a9R"/>
+                        <constraint firstItem="qPQ-q9-20l" firstAttribute="top" secondItem="B7d-fp-6lr" secondAttribute="top" id="3Um-lM-BdE"/>
+                        <constraint firstAttribute="bottom" secondItem="4Vs-Dg-MyW" secondAttribute="bottom" id="4my-9A-0g6"/>
+                        <constraint firstAttribute="trailing" secondItem="qPQ-q9-20l" secondAttribute="trailing" id="C5A-fy-otT"/>
+                        <constraint firstItem="qPQ-q9-20l" firstAttribute="leading" secondItem="XzE-dh-XMK" secondAttribute="trailing" constant="10" id="NKI-oP-Jzy"/>
+                        <constraint firstItem="Jpl-aB-nDe" firstAttribute="leading" secondItem="ppJ-nm-Je2" secondAttribute="trailing" constant="10" id="PJq-ex-Vab"/>
+                        <constraint firstAttribute="trailing" secondItem="4Vs-Dg-MyW" secondAttribute="trailing" id="aJg-yy-VCR"/>
+                        <constraint firstAttribute="bottom" secondItem="Jpl-aB-nDe" secondAttribute="bottom" id="arx-Tb-582"/>
+                        <constraint firstItem="ppJ-nm-Je2" firstAttribute="leading" secondItem="B7d-fp-6lr" secondAttribute="leading" id="f7p-qO-qzp"/>
+                        <constraint firstItem="XzE-dh-XMK" firstAttribute="top" secondItem="B7d-fp-6lr" secondAttribute="top" id="fNL-11-7zP"/>
+                        <constraint firstItem="bw0-JP-tCe" firstAttribute="top" secondItem="B7d-fp-6lr" secondAttribute="top" id="moc-2g-SGu"/>
+                        <constraint firstItem="4Vs-Dg-MyW" firstAttribute="leading" secondItem="Jpl-aB-nDe" secondAttribute="trailing" constant="10" id="tRx-y3-c5f"/>
+                        <constraint firstAttribute="bottom" secondItem="ppJ-nm-Je2" secondAttribute="bottom" id="yaG-Qs-ULd"/>
+                        <constraint firstItem="XzE-dh-XMK" firstAttribute="leading" secondItem="bw0-JP-tCe" secondAttribute="trailing" constant="10" id="zGl-OD-LTj"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="OKh-DZ-xKf"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="B7d-fp-6lr" firstAttribute="centerX" secondItem="Ho1-Qr-vja" secondAttribute="centerX" id="IIa-4i-die"/>
+                <constraint firstItem="n5B-Ti-JBG" firstAttribute="centerX" secondItem="Ho1-Qr-vja" secondAttribute="centerX" id="TEe-Fh-hSf"/>
+                <constraint firstItem="n5B-Ti-JBG" firstAttribute="top" secondItem="Ho1-Qr-vja" secondAttribute="top" id="THB-jV-yNy"/>
+                <constraint firstItem="B7d-fp-6lr" firstAttribute="top" secondItem="n5B-Ti-JBG" secondAttribute="bottom" constant="20" id="dpN-3F-4sU"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="279.71014492753625" y="496.875"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="4Vs-Dg-MyW">
+            <size key="intrinsicContentSize" width="59" height="30"/>
+        </designable>
+        <designable name="Jpl-aB-nDe">
+            <size key="intrinsicContentSize" width="60" height="30"/>
+        </designable>
+        <designable name="XzE-dh-XMK">
+            <size key="intrinsicContentSize" width="53" height="30"/>
+        </designable>
+        <designable name="bw0-JP-tCe">
+            <size key="intrinsicContentSize" width="30" height="30"/>
+        </designable>
+        <designable name="ppJ-nm-Je2">
+            <size key="intrinsicContentSize" width="47" height="30"/>
+        </designable>
+        <designable name="qPQ-q9-20l">
+            <size key="intrinsicContentSize" width="47" height="30"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="RemoteButtonPowerOn" width="256" height="256"/>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,1567 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		187EE9A3286EC46700DB3EC0 /* SharedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */; };
+		187F70612869900300CE4620 /* ContollerList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187F70602869900300CE4620 /* ContollerList.storyboard */; };
+		187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70622869906400CE4620 /* ControllerListViewController.swift */; };
+		187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */; };
+		187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */; };
+		372D440F283F5F2A002F0F96 /* Core.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372D440E283F5F2A002F0F96 /* Core.storyboard */; };
+		372D4411283F5F52002F0F96 /* CoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4410283F5F52002F0F96 /* CoreViewController.swift */; };
+		372D4413283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */; };
+		3755BACB283684A100D4C956 /* IRFanRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3755BAC9283684A100D4C956 /* IRFanRemoteControl.swift */; };
+		3755BACC283684A100D4C956 /* IRFanRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3755BACA283684A100D4C956 /* IRFanRemoteControl.xib */; };
+		37560E06283F794000041FD4 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37560E05283F794000041FD4 /* Core.swift */; };
+		37560E08283F80DB00041FD4 /* CoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37560E07283F80DB00041FD4 /* CoreTableViewCell.swift */; };
+		3F040F7D258504480035ABAB /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F040F7C258504480035ABAB /* Device.swift */; };
+		3F0AC4622695D67D0015F939 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0AC4612695D67D0015F939 /* FirebaseAuth */; };
+		3F0AC4642695D67D0015F939 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0AC4632695D67D0015F939 /* FirebaseDatabase */; };
+		3F0AC4662695D67D0015F939 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0AC4652695D67D0015F939 /* FirebaseMessaging */; };
+		3F29A85A25B3F35D00F39867 /* Sensor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A85925B3F35D00F39867 /* Sensor.storyboard */; };
+		3F29A86225B3F3C600F39867 /* Mood.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A86125B3F3C600F39867 /* Mood.storyboard */; };
+		3F29A86A25B3F40900F39867 /* Lock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A86925B3F40900F39867 /* Lock.storyboard */; };
+		3F29A87225B3F45F00F39867 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A87125B3F45F00F39867 /* Schedule.storyboard */; };
+		3F29A87A25B3F49F00F39867 /* Rule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A87925B3F49F00F39867 /* Rule.storyboard */; };
+		3F29A88225B3F4D000F39867 /* AppNotification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A88125B3F4D000F39867 /* AppNotification.storyboard */; };
+		3F29A88725B3F53500F39867 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A88625B3F53500F39867 /* Dashboard.storyboard */; };
+		3F29A88F25B3F5D600F39867 /* Room.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A88E25B3F5D600F39867 /* Room.storyboard */; };
+		3F29A89725B3F63800F39867 /* RoutingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F29A89625B3F63800F39867 /* RoutingManager.swift */; };
+		3F38297425B42D2100CBF493 /* NewApplianceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38297325B42D2100CBF493 /* NewApplianceController.swift */; };
+		3F38297F25B43CBF00CBF493 /* SelectApplianceTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38297E25B43CBF00CBF493 /* SelectApplianceTypeController.swift */; };
+		3F38298725B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F38298625B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift */; };
+		3F411D04271DDB1F001DBB85 /* Device.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F411CFA271DDB1F001DBB85 /* Device.storyboard */; };
+		3F411D05271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411CFB271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift */; };
+		3F411D06271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411CFC271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift */; };
+		3F411D07271DDB1F001DBB85 /* NewDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411CFD271DDB1F001DBB85 /* NewDeviceController.swift */; };
+		3F411D08271DDB1F001DBB85 /* NewDeviceInputPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411CFE271DDB1F001DBB85 /* NewDeviceInputPasswordController.swift */; };
+		3F411D09271DDB1F001DBB85 /* NewDeviceReconnectInternetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411CFF271DDB1F001DBB85 /* NewDeviceReconnectInternetController.swift */; };
+		3F411D0A271DDB1F001DBB85 /* NewDeviceScanQrCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411D00271DDB1F001DBB85 /* NewDeviceScanQrCodeController.swift */; };
+		3F411D0B271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411D01271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift */; };
+		3F411D0C271DDB1F001DBB85 /* SelectDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411D02271DDB1F001DBB85 /* SelectDeviceController.swift */; };
+		3F411D0D271DDB1F001DBB85 /* SelectDeviceTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F411D03271DDB1F001DBB85 /* SelectDeviceTableCellView.swift */; };
+		3F561C9A25A9B57900AAD474 /* AppBreadCrumbView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F561C9925A9B57900AAD474 /* AppBreadCrumbView.swift */; };
+		3F60E666258284DB0094823F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E664258284DB0094823F /* Main.storyboard */; };
+		3F60E668258284DC0094823F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E667258284DC0094823F /* Assets.xcassets */; };
+		3F60E66B258284DC0094823F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E669258284DC0094823F /* LaunchScreen.storyboard */; };
+		3F60E676258284DC0094823F /* WifinityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E675258284DC0094823F /* WifinityTests.swift */; };
+		3F60E681258284DC0094823F /* WifinityUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E680258284DC0094823F /* WifinityUITests.swift */; };
+		3F60E6A22582859F0094823F /* DataFetchManagerFireBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6982582859F0094823F /* DataFetchManagerFireBase.swift */; };
+		3F60E6A32582859F0094823F /* DataFetchManagerFireBaseAppliance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6992582859F0094823F /* DataFetchManagerFireBaseAppliance.swift */; };
+		3F60E6A42582859F0094823F /* DataFetchManagerFireBaseAppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E69A2582859F0094823F /* DataFetchManagerFireBaseAppNotification.swift */; };
+		3F60E6A52582859F0094823F /* DataFetchManagerFireBaseCurtain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E69B2582859F0094823F /* DataFetchManagerFireBaseCurtain.swift */; };
+		3F60E6A62582859F0094823F /* DataFetchManagerFireBaseLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E69C2582859F0094823F /* DataFetchManagerFireBaseLock.swift */; };
+		3F60E6A72582859F0094823F /* DataFetchManagerFireBaseMood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E69D2582859F0094823F /* DataFetchManagerFireBaseMood.swift */; };
+		3F60E6A82582859F0094823F /* DataFetchManagerFireBaseRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E69E2582859F0094823F /* DataFetchManagerFireBaseRemote.swift */; };
+		3F60E6A92582859F0094823F /* DataFetchManagerFireBaseRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E69F2582859F0094823F /* DataFetchManagerFireBaseRoom.swift */; };
+		3F60E6AA2582859F0094823F /* DataFetchManagerFireBaseSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6A02582859F0094823F /* DataFetchManagerFireBaseSchedule.swift */; };
+		3F60E6AB2582859F0094823F /* DataFetchManagerFireBaseSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6A12582859F0094823F /* DataFetchManagerFireBaseSensor.swift */; };
+		3F60E6B1258285B10094823F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6B0258285B10094823F /* AppDelegate.swift */; };
+		3F60E6B7258285BA0094823F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E6B6258285BA0094823F /* GoogleService-Info.plist */; };
+		3F60E741258288640094823F /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E6C9258288640094823F /* Common.xcassets */; };
+		3F60E742258288640094823F /* DataFetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6CB258288640094823F /* DataFetchManager.swift */; };
+		3F60E743258288640094823F /* AppFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6CD258288640094823F /* AppFloatingButton.swift */; };
+		3F60E744258288640094823F /* AppSegmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6CE258288640094823F /* AppSegmentButton.swift */; };
+		3F60E745258288640094823F /* AppSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6CF258288640094823F /* AppSlider.swift */; };
+		3F60E746258288640094823F /* AppSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D0258288640094823F /* AppSwitch.swift */; };
+		3F60E747258288640094823F /* AppTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D1258288640094823F /* AppTableView.swift */; };
+		3F60E748258288640094823F /* AppToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D2258288640094823F /* AppToggleButton.swift */; };
+		3F60E749258288640094823F /* BaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D3258288640094823F /* BaseController.swift */; };
+		3F60E74A258288640094823F /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D4258288640094823F /* ConfigurationManager.swift */; };
+		3F60E74B258288640094823F /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D5258288640094823F /* KeychainManager.swift */; };
+		3F60E74C258288640094823F /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D6258288640094823F /* PopupManager.swift */; };
+		3F60E74D258288640094823F /* ProgressOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D7258288640094823F /* ProgressOverlay.swift */; };
+		3F60E74E258288640094823F /* UtilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6D8258288640094823F /* UtilityManager.swift */; };
+		3F60E74F258288640094823F /* Appliance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6DA258288640094823F /* Appliance.swift */; };
+		3F60E750258288640094823F /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6DB258288640094823F /* AppNotification.swift */; };
+		3F60E751258288640094823F /* Curtain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6DC258288640094823F /* Curtain.swift */; };
+		3F60E752258288640094823F /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6DD258288640094823F /* Lock.swift */; };
+		3F60E753258288640094823F /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6DE258288640094823F /* Mood.swift */; };
+		3F60E754258288640094823F /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6DF258288640094823F /* Remote.swift */; };
+		3F60E755258288640094823F /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E0258288640094823F /* Room.swift */; };
+		3F60E756258288640094823F /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E1258288640094823F /* Schedule.swift */; };
+		3F60E757258288640094823F /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E2258288640094823F /* Sensor.swift */; };
+		3F60E758258288640094823F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E3258288640094823F /* User.swift */; };
+		3F60E75A258288640094823F /* SearchApplianceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E7258288640094823F /* SearchApplianceController.swift */; };
+		3F60E75B258288640094823F /* SearchApplianceLedTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E8258288640094823F /* SearchApplianceLedTableCellView.swift */; };
+		3F60E75C258288640094823F /* SearchApplianceTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6E9258288640094823F /* SearchApplianceTableCellView.swift */; };
+		3F60E75D258288640094823F /* SelectComponentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6EA258288640094823F /* SelectComponentController.swift */; };
+		3F60E75E258288640094823F /* SelectComponentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6EB258288640094823F /* SelectComponentTableCellView.swift */; };
+		3F60E75F258288640094823F /* SearchCurtainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6ED258288640094823F /* SearchCurtainController.swift */; };
+		3F60E760258288640094823F /* SearchCurtainTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6EE258288640094823F /* SearchCurtainTableCellView.swift */; };
+		3F60E761258288640094823F /* DashboardCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F0258288640094823F /* DashboardCollectionHeaderView.swift */; };
+		3F60E762258288640094823F /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F1258288640094823F /* DashboardController.swift */; };
+		3F60E763258288640094823F /* DrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F2258288640094823F /* DrawerController.swift */; };
+		3F60E764258288640094823F /* DrawerMenuTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F3258288640094823F /* DrawerMenuTableCellView.swift */; };
+		3F60E765258288640094823F /* FrequentlyOperatedCollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F4258288640094823F /* FrequentlyOperatedCollectionCellView.swift */; };
+		3F60E766258288640094823F /* RoomCollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F5258288640094823F /* RoomCollectionCellView.swift */; };
+		3F60E767258288640094823F /* SearchLockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F7258288640094823F /* SearchLockController.swift */; };
+		3F60E768258288640094823F /* SearchLockTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6F8258288640094823F /* SearchLockTableCellView.swift */; };
+		3F60E769258288640094823F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6FA258288640094823F /* LoginController.swift */; };
+		3F60E76A258288640094823F /* SearchMoodController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6FC258288640094823F /* SearchMoodController.swift */; };
+		3F60E76B258288640094823F /* SearchMoodTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6FD258288640094823F /* SearchMoodTableCellView.swift */; };
+		3F60E76C258288640094823F /* SearchAppNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E6FF258288640094823F /* SearchAppNotificationController.swift */; };
+		3F60E76D258288640094823F /* SearchAppNotificationTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E700258288640094823F /* SearchAppNotificationTableCellView.swift */; };
+		3F60E76E258288640094823F /* SearchAppNotificationTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E701258288640094823F /* SearchAppNotificationTypeController.swift */; };
+		3F60E76F258288640094823F /* SearchAppNotificationTypeTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E702258288640094823F /* SearchAppNotificationTypeTableCellView.swift */; };
+		3F60E770258288640094823F /* AcRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E704258288640094823F /* AcRemoteControl.swift */; };
+		3F60E771258288640094823F /* AcRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E705258288640094823F /* AcRemoteControl.xib */; };
+		3F60E772258288640094823F /* CircularDirectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E706258288640094823F /* CircularDirectionButton.swift */; };
+		3F60E773258288640094823F /* CircularDirectionButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E707258288640094823F /* CircularDirectionButton.xib */; };
+		3F60E774258288640094823F /* DvdRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E708258288640094823F /* DvdRemoteControl.swift */; };
+		3F60E775258288640094823F /* DvdRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E709258288640094823F /* DvdRemoteControl.xib */; };
+		3F60E776258288640094823F /* DynamicButtonCollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E70A258288640094823F /* DynamicButtonCollectionCellView.swift */; };
+		3F60E777258288640094823F /* DynamicButtonCollectionCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E70B258288640094823F /* DynamicButtonCollectionCellView.xib */; };
+		3F60E778258288640094823F /* DynamicButtonContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E70C258288640094823F /* DynamicButtonContainerView.swift */; };
+		3F60E779258288640094823F /* DynamicButtonContainerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E70D258288640094823F /* DynamicButtonContainerView.xib */; };
+		3F60E77A258288650094823F /* FanRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E70E258288640094823F /* FanRemoteControl.swift */; };
+		3F60E77B258288650094823F /* FanRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E70F258288640094823F /* FanRemoteControl.xib */; };
+		3F60E77C258288650094823F /* LedStripRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E710258288640094823F /* LedStripRemoteControl.swift */; };
+		3F60E77D258288650094823F /* LedStripRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E711258288640094823F /* LedStripRemoteControl.xib */; };
+		3F60E77E258288650094823F /* MoodLightRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E712258288640094823F /* MoodLightRemoteControl.swift */; };
+		3F60E77F258288650094823F /* MoodLightRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E713258288640094823F /* MoodLightRemoteControl.xib */; };
+		3F60E780258288650094823F /* NewRemoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E714258288640094823F /* NewRemoteController.swift */; };
+		3F60E781258288650094823F /* NumberPadControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E715258288640094823F /* NumberPadControl.swift */; };
+		3F60E782258288650094823F /* NumberPadControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E716258288640094823F /* NumberPadControl.xib */; };
+		3F60E783258288650094823F /* ProjectorRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E717258288640094823F /* ProjectorRemoteControl.swift */; };
+		3F60E784258288650094823F /* ProjectorRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E718258288640094823F /* ProjectorRemoteControl.xib */; };
+		3F60E785258288650094823F /* RectangularDirectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E719258288640094823F /* RectangularDirectionButton.swift */; };
+		3F60E786258288650094823F /* RectangularDirectionButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E71A258288640094823F /* RectangularDirectionButton.xib */; };
+		3F60E787258288650094823F /* RemoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E71B258288640094823F /* RemoteButton.swift */; };
+		3F60E788258288650094823F /* RemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E71C258288640094823F /* RemoteControl.swift */; };
+		3F60E789258288650094823F /* RemoteDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E71D258288640094823F /* RemoteDetailsController.swift */; };
+		3F60E78A258288650094823F /* SearchRemoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E71E258288640094823F /* SearchRemoteController.swift */; };
+		3F60E78B258288650094823F /* SearchRemoteTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E71F258288640094823F /* SearchRemoteTableCellView.swift */; };
+		3F60E78C258288650094823F /* TvRemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E720258288640094823F /* TvRemoteControl.swift */; };
+		3F60E78D258288650094823F /* TvRemoteControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F60E721258288640094823F /* TvRemoteControl.xib */; };
+		3F60E78E258288650094823F /* UpdateRemoteButtonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E722258288640094823F /* UpdateRemoteButtonController.swift */; };
+		3F60E78F258288650094823F /* SelectRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E724258288640094823F /* SelectRoomController.swift */; };
+		3F60E790258288650094823F /* SelectRoomTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E725258288640094823F /* SelectRoomTableCellView.swift */; };
+		3F60E791258288650094823F /* SearchRuleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E727258288640094823F /* SearchRuleController.swift */; };
+		3F60E792258288650094823F /* NewScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E729258288640094823F /* NewScheduleController.swift */; };
+		3F60E793258288650094823F /* ScheduleComponentTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E72A258288640094823F /* ScheduleComponentTableCellView.swift */; };
+		3F60E794258288650094823F /* ScheduleRepeatTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E72B258288640094823F /* ScheduleRepeatTableCellView.swift */; };
+		3F60E795258288650094823F /* ScheduleTimeTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E72C258288640094823F /* ScheduleTimeTableCellView.swift */; };
+		3F60E796258288650094823F /* ScheduleTitleTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E72D258288640094823F /* ScheduleTitleTableCellView.swift */; };
+		3F60E797258288650094823F /* SearchScheduleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E72E258288640094823F /* SearchScheduleController.swift */; };
+		3F60E798258288650094823F /* SearchScheduleTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E72F258288640094823F /* SearchScheduleTableCellView.swift */; };
+		3F60E799258288650094823F /* SearchSensorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E731258288640094823F /* SearchSensorController.swift */; };
+		3F60E79A258288650094823F /* SearchSensorTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E732258288640094823F /* SearchSensorTableCellView.swift */; };
+		3F60E79B258288650094823F /* SensorDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E733258288640094823F /* SensorDetailsController.swift */; };
+		3F60E7A2258288650094823F /* BrightnessPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E73D258288640094823F /* BrightnessPickerView.swift */; };
+		3F60E7A3258288650094823F /* ColorPickerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E73E258288640094823F /* ColorPickerControl.swift */; };
+		3F60E7A4258288650094823F /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F60E73F258288640094823F /* ColorWheel.swift */; };
+		3F66B9FC25F33210004DF705 /* AppNotificationSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66B9FB25F33210004DF705 /* AppNotificationSettingsController.swift */; };
+		3F66BA0125F33DCF004DF705 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66BA0025F33DCF004DF705 /* CacheManager.swift */; };
+		3F68C9E6258A1D59002D44A4 /* DataFetchManagerFireBaseDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F68C9E5258A1D59002D44A4 /* DataFetchManagerFireBaseDevice.swift */; };
+		3F7044CB25A199EE00A967DA /* DataContractManagerFireBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7044CA25A199EE00A967DA /* DataContractManagerFireBase.swift */; };
+		3F7044D025A19AA900A967DA /* DataFetchManagerFireBaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7044CF25A19AA900A967DA /* DataFetchManagerFireBaseUser.swift */; };
+		3F71E8AB25F3728800568D96 /* AppNotificationSettingsTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F71E8AA25F3728800568D96 /* AppNotificationSettingsTableCellView.swift */; };
+		3F73FD3725B3F0D100204FEC /* Appliance.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F73FD3625B3F0D100204FEC /* Appliance.storyboard */; };
+		3F73FD3F25B3F1D800204FEC /* Curtain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F73FD3E25B3F1D800204FEC /* Curtain.storyboard */; };
+		3F73FD4725B3F27900204FEC /* Remote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F73FD4625B3F27900204FEC /* Remote.storyboard */; };
+		3F82C7D225D2851900F47CE8 /* SelectDimTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82C7D025D2851800F47CE8 /* SelectDimTypeController.swift */; };
+		3F82C7D325D2851900F47CE8 /* SelectDimTypeTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82C7D125D2851900F47CE8 /* SelectDimTypeTableCellView.swift */; };
+		3F96CB2B25B5D9BE00523116 /* AppHeaderBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F96CB2A25B5D9BE00523116 /* AppHeaderBarView.swift */; };
+		3F96CB3525B5D9E600523116 /* AppHeaderBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F96CB3425B5D9E600523116 /* AppHeaderBarView.xib */; };
+		3FA221C127038872006B8680 /* notify_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3FA221C027038872006B8680 /* notify_sound.wav */; };
+		3FA8416C274FD531007B274D /* ForgotPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8416A274FD531007B274D /* ForgotPasswordController.swift */; };
+		3FA8416D274FD531007B274D /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FA8416B274FD531007B274D /* Login.storyboard */; };
+		3FA8416F274FD57B007B274D /* RulePortalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8416E274FD57B007B274D /* RulePortalController.swift */; };
+		3FA86E242678E1A100DC80EE /* Energy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FA86E222678E1A100DC80EE /* Energy.storyboard */; };
+		3FA86E252678E1A100DC80EE /* EnergyDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA86E232678E1A100DC80EE /* EnergyDetailsController.swift */; };
+		3FDA20CB26354542008C8DB7 /* SelectRemoteKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA20C926354542008C8DB7 /* SelectRemoteKeyController.swift */; };
+		3FDA20CC26354542008C8DB7 /* SelectRemoteKeyTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA20CA26354542008C8DB7 /* SelectRemoteKeyTableCellView.swift */; };
+		3FE2C27E2725C31300AC76EB /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2C27D2725C31300AC76EB /* Rule.swift */; };
+		3FE2C2802725C34200AC76EB /* SearchRuleTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2C27F2725C34200AC76EB /* SearchRuleTableCellView.swift */; };
+		3FE2C2822725C42100AC76EB /* DataFetchManagerFireBaseRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE2C2812725C42100AC76EB /* DataFetchManagerFireBaseRule.swift */; };
+		47268592282451D80058E92C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 47268591282451D80058E92C /* Kingfisher */; };
+		472685952824556E0058E92C /* OfferZone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 472685942824556E0058E92C /* OfferZone.storyboard */; };
+		47B23714282456730048A87D /* OfferZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B23713282456730048A87D /* OfferZoneViewController.swift */; };
+		47B23717282459D60048A87D /* OffersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B23715282459D60048A87D /* OffersTableViewCell.swift */; };
+		47B23718282459D60048A87D /* OffersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47B23716282459D60048A87D /* OffersTableViewCell.xib */; };
+		47B2371A282470140048A87D /* OfferDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B23719282470140048A87D /* OfferDetailViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3F60E672258284DC0094823F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F60E653258284DB0094823F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F60E65A258284DB0094823F;
+			remoteInfo = Wifinity;
+		};
+		3F60E67D258284DC0094823F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F60E653258284DB0094823F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F60E65A258284DB0094823F;
+			remoteInfo = Wifinity;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunction.swift; sourceTree = "<group>"; };
+		187F70602869900300CE4620 /* ContollerList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContollerList.storyboard; sourceTree = "<group>"; };
+		187F70622869906400CE4620 /* ControllerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerListViewController.swift; sourceTree = "<group>"; };
+		187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllrTableViewCell.swift; sourceTree = "<group>"; };
+		187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettingViewController.swift; sourceTree = "<group>"; };
+		372D440E283F5F2A002F0F96 /* Core.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Core.storyboard; sourceTree = "<group>"; };
+		372D4410283F5F52002F0F96 /* CoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreViewController.swift; sourceTree = "<group>"; };
+		372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseCore.swift; sourceTree = "<group>"; };
+		3755BAC9283684A100D4C956 /* IRFanRemoteControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRFanRemoteControl.swift; sourceTree = "<group>"; };
+		3755BACA283684A100D4C956 /* IRFanRemoteControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IRFanRemoteControl.xib; sourceTree = "<group>"; };
+		37560E05283F794000041FD4 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		37560E07283F80DB00041FD4 /* CoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTableViewCell.swift; sourceTree = "<group>"; };
+		3F040F7C258504480035ABAB /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		3F29A85925B3F35D00F39867 /* Sensor.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Sensor.storyboard; sourceTree = "<group>"; };
+		3F29A86125B3F3C600F39867 /* Mood.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Mood.storyboard; sourceTree = "<group>"; };
+		3F29A86925B3F40900F39867 /* Lock.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Lock.storyboard; sourceTree = "<group>"; };
+		3F29A87125B3F45F00F39867 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
+		3F29A87925B3F49F00F39867 /* Rule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Rule.storyboard; sourceTree = "<group>"; };
+		3F29A88125B3F4D000F39867 /* AppNotification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AppNotification.storyboard; sourceTree = "<group>"; };
+		3F29A88625B3F53500F39867 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		3F29A88E25B3F5D600F39867 /* Room.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Room.storyboard; sourceTree = "<group>"; };
+		3F29A89625B3F63800F39867 /* RoutingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingManager.swift; sourceTree = "<group>"; };
+		3F38297325B42D2100CBF493 /* NewApplianceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewApplianceController.swift; sourceTree = "<group>"; };
+		3F38297E25B43CBF00CBF493 /* SelectApplianceTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectApplianceTypeController.swift; sourceTree = "<group>"; };
+		3F38298625B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectApplianceTypeTableCellView.swift; sourceTree = "<group>"; };
+		3F411CFA271DDB1F001DBB85 /* Device.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Device.storyboard; sourceTree = "<group>"; };
+		3F411CFB271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceConfigureDeviceController.swift; sourceTree = "<group>"; };
+		3F411CFC271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceConnectDeviceHotspotController.swift; sourceTree = "<group>"; };
+		3F411CFD271DDB1F001DBB85 /* NewDeviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceController.swift; sourceTree = "<group>"; };
+		3F411CFE271DDB1F001DBB85 /* NewDeviceInputPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceInputPasswordController.swift; sourceTree = "<group>"; };
+		3F411CFF271DDB1F001DBB85 /* NewDeviceReconnectInternetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceReconnectInternetController.swift; sourceTree = "<group>"; };
+		3F411D00271DDB1F001DBB85 /* NewDeviceScanQrCodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceScanQrCodeController.swift; sourceTree = "<group>"; };
+		3F411D01271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeviceSelectRoomController.swift; sourceTree = "<group>"; };
+		3F411D02271DDB1F001DBB85 /* SelectDeviceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDeviceController.swift; sourceTree = "<group>"; };
+		3F411D03271DDB1F001DBB85 /* SelectDeviceTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDeviceTableCellView.swift; sourceTree = "<group>"; };
+		3F561C9925A9B57900AAD474 /* AppBreadCrumbView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBreadCrumbView.swift; sourceTree = "<group>"; };
+		3F60E65B258284DB0094823F /* Wifinity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wifinity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F60E665258284DB0094823F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3F60E667258284DC0094823F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3F60E66A258284DC0094823F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3F60E66C258284DC0094823F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F60E671258284DC0094823F /* WifinityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WifinityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F60E675258284DC0094823F /* WifinityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifinityTests.swift; sourceTree = "<group>"; };
+		3F60E677258284DC0094823F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F60E67C258284DC0094823F /* WifinityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WifinityUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F60E680258284DC0094823F /* WifinityUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifinityUITests.swift; sourceTree = "<group>"; };
+		3F60E682258284DC0094823F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F60E6982582859F0094823F /* DataFetchManagerFireBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBase.swift; sourceTree = "<group>"; };
+		3F60E6992582859F0094823F /* DataFetchManagerFireBaseAppliance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseAppliance.swift; sourceTree = "<group>"; };
+		3F60E69A2582859F0094823F /* DataFetchManagerFireBaseAppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseAppNotification.swift; sourceTree = "<group>"; };
+		3F60E69B2582859F0094823F /* DataFetchManagerFireBaseCurtain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseCurtain.swift; sourceTree = "<group>"; };
+		3F60E69C2582859F0094823F /* DataFetchManagerFireBaseLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseLock.swift; sourceTree = "<group>"; };
+		3F60E69D2582859F0094823F /* DataFetchManagerFireBaseMood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseMood.swift; sourceTree = "<group>"; };
+		3F60E69E2582859F0094823F /* DataFetchManagerFireBaseRemote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseRemote.swift; sourceTree = "<group>"; };
+		3F60E69F2582859F0094823F /* DataFetchManagerFireBaseRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseRoom.swift; sourceTree = "<group>"; };
+		3F60E6A02582859F0094823F /* DataFetchManagerFireBaseSchedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseSchedule.swift; sourceTree = "<group>"; };
+		3F60E6A12582859F0094823F /* DataFetchManagerFireBaseSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseSensor.swift; sourceTree = "<group>"; };
+		3F60E6B0258285B10094823F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3F60E6B6258285BA0094823F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3F60E6C9258288640094823F /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
+		3F60E6CB258288640094823F /* DataFetchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchManager.swift; sourceTree = "<group>"; };
+		3F60E6CD258288640094823F /* AppFloatingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFloatingButton.swift; sourceTree = "<group>"; };
+		3F60E6CE258288640094823F /* AppSegmentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSegmentButton.swift; sourceTree = "<group>"; };
+		3F60E6CF258288640094823F /* AppSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSlider.swift; sourceTree = "<group>"; };
+		3F60E6D0258288640094823F /* AppSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSwitch.swift; sourceTree = "<group>"; };
+		3F60E6D1258288640094823F /* AppTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTableView.swift; sourceTree = "<group>"; };
+		3F60E6D2258288640094823F /* AppToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppToggleButton.swift; sourceTree = "<group>"; };
+		3F60E6D3258288640094823F /* BaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseController.swift; sourceTree = "<group>"; };
+		3F60E6D4258288640094823F /* ConfigurationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
+		3F60E6D5258288640094823F /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		3F60E6D6258288640094823F /* PopupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
+		3F60E6D7258288640094823F /* ProgressOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressOverlay.swift; sourceTree = "<group>"; };
+		3F60E6D8258288640094823F /* UtilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityManager.swift; sourceTree = "<group>"; };
+		3F60E6DA258288640094823F /* Appliance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appliance.swift; sourceTree = "<group>"; };
+		3F60E6DB258288640094823F /* AppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
+		3F60E6DC258288640094823F /* Curtain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curtain.swift; sourceTree = "<group>"; };
+		3F60E6DD258288640094823F /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
+		3F60E6DE258288640094823F /* Mood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
+		3F60E6DF258288640094823F /* Remote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
+		3F60E6E0258288640094823F /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		3F60E6E1258288640094823F /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		3F60E6E2258288640094823F /* Sensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		3F60E6E3258288640094823F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3F60E6E7258288640094823F /* SearchApplianceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchApplianceController.swift; sourceTree = "<group>"; };
+		3F60E6E8258288640094823F /* SearchApplianceLedTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchApplianceLedTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6E9258288640094823F /* SearchApplianceTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchApplianceTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6EA258288640094823F /* SelectComponentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectComponentController.swift; sourceTree = "<group>"; };
+		3F60E6EB258288640094823F /* SelectComponentTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectComponentTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6ED258288640094823F /* SearchCurtainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCurtainController.swift; sourceTree = "<group>"; };
+		3F60E6EE258288640094823F /* SearchCurtainTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCurtainTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6F0258288640094823F /* DashboardCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardCollectionHeaderView.swift; sourceTree = "<group>"; };
+		3F60E6F1258288640094823F /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
+		3F60E6F2258288640094823F /* DrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerController.swift; sourceTree = "<group>"; };
+		3F60E6F3258288640094823F /* DrawerMenuTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerMenuTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6F4258288640094823F /* FrequentlyOperatedCollectionCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrequentlyOperatedCollectionCellView.swift; sourceTree = "<group>"; };
+		3F60E6F5258288640094823F /* RoomCollectionCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCollectionCellView.swift; sourceTree = "<group>"; };
+		3F60E6F7258288640094823F /* SearchLockController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLockController.swift; sourceTree = "<group>"; };
+		3F60E6F8258288640094823F /* SearchLockTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchLockTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6FA258288640094823F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		3F60E6FC258288640094823F /* SearchMoodController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMoodController.swift; sourceTree = "<group>"; };
+		3F60E6FD258288640094823F /* SearchMoodTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMoodTableCellView.swift; sourceTree = "<group>"; };
+		3F60E6FF258288640094823F /* SearchAppNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAppNotificationController.swift; sourceTree = "<group>"; };
+		3F60E700258288640094823F /* SearchAppNotificationTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAppNotificationTableCellView.swift; sourceTree = "<group>"; };
+		3F60E701258288640094823F /* SearchAppNotificationTypeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAppNotificationTypeController.swift; sourceTree = "<group>"; };
+		3F60E702258288640094823F /* SearchAppNotificationTypeTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchAppNotificationTypeTableCellView.swift; sourceTree = "<group>"; };
+		3F60E704258288640094823F /* AcRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E705258288640094823F /* AcRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AcRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E706258288640094823F /* CircularDirectionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularDirectionButton.swift; sourceTree = "<group>"; };
+		3F60E707258288640094823F /* CircularDirectionButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircularDirectionButton.xib; sourceTree = "<group>"; };
+		3F60E708258288640094823F /* DvdRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DvdRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E709258288640094823F /* DvdRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DvdRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E70A258288640094823F /* DynamicButtonCollectionCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicButtonCollectionCellView.swift; sourceTree = "<group>"; };
+		3F60E70B258288640094823F /* DynamicButtonCollectionCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DynamicButtonCollectionCellView.xib; sourceTree = "<group>"; };
+		3F60E70C258288640094823F /* DynamicButtonContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicButtonContainerView.swift; sourceTree = "<group>"; };
+		3F60E70D258288640094823F /* DynamicButtonContainerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DynamicButtonContainerView.xib; sourceTree = "<group>"; };
+		3F60E70E258288640094823F /* FanRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FanRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E70F258288640094823F /* FanRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FanRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E710258288640094823F /* LedStripRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LedStripRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E711258288640094823F /* LedStripRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LedStripRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E712258288640094823F /* MoodLightRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodLightRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E713258288640094823F /* MoodLightRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoodLightRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E714258288640094823F /* NewRemoteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRemoteController.swift; sourceTree = "<group>"; };
+		3F60E715258288640094823F /* NumberPadControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberPadControl.swift; sourceTree = "<group>"; };
+		3F60E716258288640094823F /* NumberPadControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NumberPadControl.xib; sourceTree = "<group>"; };
+		3F60E717258288640094823F /* ProjectorRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectorRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E718258288640094823F /* ProjectorRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectorRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E719258288640094823F /* RectangularDirectionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangularDirectionButton.swift; sourceTree = "<group>"; };
+		3F60E71A258288640094823F /* RectangularDirectionButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RectangularDirectionButton.xib; sourceTree = "<group>"; };
+		3F60E71B258288640094823F /* RemoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteButton.swift; sourceTree = "<group>"; };
+		3F60E71C258288640094823F /* RemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteControl.swift; sourceTree = "<group>"; };
+		3F60E71D258288640094823F /* RemoteDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteDetailsController.swift; sourceTree = "<group>"; };
+		3F60E71E258288640094823F /* SearchRemoteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRemoteController.swift; sourceTree = "<group>"; };
+		3F60E71F258288640094823F /* SearchRemoteTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRemoteTableCellView.swift; sourceTree = "<group>"; };
+		3F60E720258288640094823F /* TvRemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TvRemoteControl.swift; sourceTree = "<group>"; };
+		3F60E721258288640094823F /* TvRemoteControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TvRemoteControl.xib; sourceTree = "<group>"; };
+		3F60E722258288640094823F /* UpdateRemoteButtonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateRemoteButtonController.swift; sourceTree = "<group>"; };
+		3F60E724258288640094823F /* SelectRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRoomController.swift; sourceTree = "<group>"; };
+		3F60E725258288640094823F /* SelectRoomTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRoomTableCellView.swift; sourceTree = "<group>"; };
+		3F60E727258288640094823F /* SearchRuleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRuleController.swift; sourceTree = "<group>"; };
+		3F60E729258288640094823F /* NewScheduleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScheduleController.swift; sourceTree = "<group>"; };
+		3F60E72A258288640094823F /* ScheduleComponentTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleComponentTableCellView.swift; sourceTree = "<group>"; };
+		3F60E72B258288640094823F /* ScheduleRepeatTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleRepeatTableCellView.swift; sourceTree = "<group>"; };
+		3F60E72C258288640094823F /* ScheduleTimeTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTimeTableCellView.swift; sourceTree = "<group>"; };
+		3F60E72D258288640094823F /* ScheduleTitleTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTitleTableCellView.swift; sourceTree = "<group>"; };
+		3F60E72E258288640094823F /* SearchScheduleController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScheduleController.swift; sourceTree = "<group>"; };
+		3F60E72F258288640094823F /* SearchScheduleTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScheduleTableCellView.swift; sourceTree = "<group>"; };
+		3F60E731258288640094823F /* SearchSensorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSensorController.swift; sourceTree = "<group>"; };
+		3F60E732258288640094823F /* SearchSensorTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSensorTableCellView.swift; sourceTree = "<group>"; };
+		3F60E733258288640094823F /* SensorDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorDetailsController.swift; sourceTree = "<group>"; };
+		3F60E73D258288640094823F /* BrightnessPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessPickerView.swift; sourceTree = "<group>"; };
+		3F60E73E258288640094823F /* ColorPickerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerControl.swift; sourceTree = "<group>"; };
+		3F60E73F258288640094823F /* ColorWheel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
+		3F66B9FB25F33210004DF705 /* AppNotificationSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotificationSettingsController.swift; sourceTree = "<group>"; };
+		3F66BA0025F33DCF004DF705 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		3F66BA0525F33F53004DF705 /* Wifinity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wifinity.entitlements; sourceTree = "<group>"; };
+		3F68C9E5258A1D59002D44A4 /* DataFetchManagerFireBaseDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseDevice.swift; sourceTree = "<group>"; };
+		3F7044CA25A199EE00A967DA /* DataContractManagerFireBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataContractManagerFireBase.swift; sourceTree = "<group>"; };
+		3F7044CF25A19AA900A967DA /* DataFetchManagerFireBaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseUser.swift; sourceTree = "<group>"; };
+		3F71E8AA25F3728800568D96 /* AppNotificationSettingsTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotificationSettingsTableCellView.swift; sourceTree = "<group>"; };
+		3F73FD3625B3F0D100204FEC /* Appliance.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Appliance.storyboard; sourceTree = "<group>"; };
+		3F73FD3E25B3F1D800204FEC /* Curtain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Curtain.storyboard; sourceTree = "<group>"; };
+		3F73FD4625B3F27900204FEC /* Remote.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Remote.storyboard; sourceTree = "<group>"; };
+		3F82C7D025D2851800F47CE8 /* SelectDimTypeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDimTypeController.swift; sourceTree = "<group>"; };
+		3F82C7D125D2851900F47CE8 /* SelectDimTypeTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDimTypeTableCellView.swift; sourceTree = "<group>"; };
+		3F96CB2A25B5D9BE00523116 /* AppHeaderBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderBarView.swift; sourceTree = "<group>"; };
+		3F96CB3425B5D9E600523116 /* AppHeaderBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppHeaderBarView.xib; sourceTree = "<group>"; };
+		3FA221C027038872006B8680 /* notify_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notify_sound.wav; sourceTree = "<group>"; };
+		3FA8416A274FD531007B274D /* ForgotPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordController.swift; sourceTree = "<group>"; };
+		3FA8416B274FD531007B274D /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		3FA8416E274FD57B007B274D /* RulePortalController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RulePortalController.swift; sourceTree = "<group>"; };
+		3FA86E222678E1A100DC80EE /* Energy.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Energy.storyboard; sourceTree = "<group>"; };
+		3FA86E232678E1A100DC80EE /* EnergyDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyDetailsController.swift; sourceTree = "<group>"; };
+		3FDA20C926354542008C8DB7 /* SelectRemoteKeyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRemoteKeyController.swift; sourceTree = "<group>"; };
+		3FDA20CA26354542008C8DB7 /* SelectRemoteKeyTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectRemoteKeyTableCellView.swift; sourceTree = "<group>"; };
+		3FE2C27D2725C31300AC76EB /* Rule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
+		3FE2C27F2725C34200AC76EB /* SearchRuleTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRuleTableCellView.swift; sourceTree = "<group>"; };
+		3FE2C2812725C42100AC76EB /* DataFetchManagerFireBaseRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseRule.swift; sourceTree = "<group>"; };
+		472685942824556E0058E92C /* OfferZone.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OfferZone.storyboard; sourceTree = "<group>"; };
+		47B23713282456730048A87D /* OfferZoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferZoneViewController.swift; sourceTree = "<group>"; };
+		47B23715282459D60048A87D /* OffersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersTableViewCell.swift; sourceTree = "<group>"; };
+		47B23716282459D60048A87D /* OffersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OffersTableViewCell.xib; sourceTree = "<group>"; };
+		47B23719282470140048A87D /* OfferDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetailViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3F60E658258284DB0094823F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47268592282451D80058E92C /* Kingfisher in Frameworks */,
+				3F0AC4662695D67D0015F939 /* FirebaseMessaging in Frameworks */,
+				3F0AC4622695D67D0015F939 /* FirebaseAuth in Frameworks */,
+				3F0AC4642695D67D0015F939 /* FirebaseDatabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F60E66E258284DC0094823F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F60E679258284DC0094823F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		187F705F28697B6300CE4620 /* ControllerList */ = {
+			isa = PBXGroup;
+			children = (
+				187F70602869900300CE4620 /* ContollerList.storyboard */,
+				187F70622869906400CE4620 /* ControllerListViewController.swift */,
+				187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */,
+				187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */,
+			);
+			path = ControllerList;
+			sourceTree = "<group>";
+		};
+		372D440D283F5F1A002F0F96 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				372D440E283F5F2A002F0F96 /* Core.storyboard */,
+				372D4410283F5F52002F0F96 /* CoreViewController.swift */,
+				37560E07283F80DB00041FD4 /* CoreTableViewCell.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		3F411CF9271DDB1F001DBB85 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				3F411CFA271DDB1F001DBB85 /* Device.storyboard */,
+				3F411CFD271DDB1F001DBB85 /* NewDeviceController.swift */,
+				3F411D00271DDB1F001DBB85 /* NewDeviceScanQrCodeController.swift */,
+				3F411CFC271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift */,
+				3F411CFB271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift */,
+				3F411CFF271DDB1F001DBB85 /* NewDeviceReconnectInternetController.swift */,
+				3F411D01271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift */,
+				3F411CFE271DDB1F001DBB85 /* NewDeviceInputPasswordController.swift */,
+				3F411D02271DDB1F001DBB85 /* SelectDeviceController.swift */,
+				3F411D03271DDB1F001DBB85 /* SelectDeviceTableCellView.swift */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		3F60E652258284DB0094823F = {
+			isa = PBXGroup;
+			children = (
+				3F60E6C7258288640094823F /* Common */,
+				3F60E65D258284DB0094823F /* Wifinity */,
+				3F60E674258284DC0094823F /* WifinityTests */,
+				3F60E67F258284DC0094823F /* WifinityUITests */,
+				3F60E65C258284DB0094823F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3F60E65C258284DB0094823F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E65B258284DB0094823F /* Wifinity.app */,
+				3F60E671258284DC0094823F /* WifinityTests.xctest */,
+				3F60E67C258284DC0094823F /* WifinityUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F60E65D258284DB0094823F /* Wifinity */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6AF258285B10094823F /* Miscellaneous */,
+				3F60E6972582859F0094823F /* DataManager */,
+				3F60E6B5258285BA0094823F /* ThirdParty */,
+				3F60E664258284DB0094823F /* Main.storyboard */,
+				3F60E667258284DC0094823F /* Assets.xcassets */,
+				3F60E669258284DC0094823F /* LaunchScreen.storyboard */,
+				3F60E66C258284DC0094823F /* Info.plist */,
+				3F66BA0525F33F53004DF705 /* Wifinity.entitlements */,
+			);
+			path = Wifinity;
+			sourceTree = "<group>";
+		};
+		3F60E674258284DC0094823F /* WifinityTests */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E675258284DC0094823F /* WifinityTests.swift */,
+				3F60E677258284DC0094823F /* Info.plist */,
+			);
+			path = WifinityTests;
+			sourceTree = "<group>";
+		};
+		3F60E67F258284DC0094823F /* WifinityUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E680258284DC0094823F /* WifinityUITests.swift */,
+				3F60E682258284DC0094823F /* Info.plist */,
+			);
+			path = WifinityUITests;
+			sourceTree = "<group>";
+		};
+		3F60E6972582859F0094823F /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6982582859F0094823F /* DataFetchManagerFireBase.swift */,
+				3F7044CF25A19AA900A967DA /* DataFetchManagerFireBaseUser.swift */,
+				3F60E6992582859F0094823F /* DataFetchManagerFireBaseAppliance.swift */,
+				3F60E69A2582859F0094823F /* DataFetchManagerFireBaseAppNotification.swift */,
+				3F60E69B2582859F0094823F /* DataFetchManagerFireBaseCurtain.swift */,
+				3F60E69C2582859F0094823F /* DataFetchManagerFireBaseLock.swift */,
+				3F60E69D2582859F0094823F /* DataFetchManagerFireBaseMood.swift */,
+				3F60E69E2582859F0094823F /* DataFetchManagerFireBaseRemote.swift */,
+				3F60E69F2582859F0094823F /* DataFetchManagerFireBaseRoom.swift */,
+				3F60E6A02582859F0094823F /* DataFetchManagerFireBaseSchedule.swift */,
+				3F60E6A12582859F0094823F /* DataFetchManagerFireBaseSensor.swift */,
+				3F68C9E5258A1D59002D44A4 /* DataFetchManagerFireBaseDevice.swift */,
+				3FE2C2812725C42100AC76EB /* DataFetchManagerFireBaseRule.swift */,
+				3F7044CA25A199EE00A967DA /* DataContractManagerFireBase.swift */,
+				372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		3F60E6AF258285B10094823F /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6B0258285B10094823F /* AppDelegate.swift */,
+			);
+			path = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		3F60E6B5258285BA0094823F /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6B6258285BA0094823F /* GoogleService-Info.plist */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		3F60E6C7258288640094823F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6C9258288640094823F /* Common.xcassets */,
+				3F60E6CA258288640094823F /* DataManager */,
+				3F60E6CC258288640094823F /* Miscellaneous */,
+				3F60E6D9258288640094823F /* Models */,
+				3F60E6E4258288640094823F /* Modules */,
+				3F60E734258288640094823F /* ThirdParty */,
+				3FA221BF27038872006B8680 /* Resources */,
+			);
+			name = Common;
+			path = ../Common;
+			sourceTree = "<group>";
+		};
+		3F60E6CA258288640094823F /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6CB258288640094823F /* DataFetchManager.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		3F60E6CC258288640094823F /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6CD258288640094823F /* AppFloatingButton.swift */,
+				3F60E6CE258288640094823F /* AppSegmentButton.swift */,
+				3F60E6CF258288640094823F /* AppSlider.swift */,
+				3F60E6D0258288640094823F /* AppSwitch.swift */,
+				3F60E6D1258288640094823F /* AppTableView.swift */,
+				3F60E6D2258288640094823F /* AppToggleButton.swift */,
+				3F561C9925A9B57900AAD474 /* AppBreadCrumbView.swift */,
+				3F60E6D3258288640094823F /* BaseController.swift */,
+				3F60E6D4258288640094823F /* ConfigurationManager.swift */,
+				3F60E6D5258288640094823F /* KeychainManager.swift */,
+				3F60E6D6258288640094823F /* PopupManager.swift */,
+				3F60E6D7258288640094823F /* ProgressOverlay.swift */,
+				3F60E6D8258288640094823F /* UtilityManager.swift */,
+				3F29A89625B3F63800F39867 /* RoutingManager.swift */,
+				3F66BA0025F33DCF004DF705 /* CacheManager.swift */,
+				3F96CB2A25B5D9BE00523116 /* AppHeaderBarView.swift */,
+				3F96CB3425B5D9E600523116 /* AppHeaderBarView.xib */,
+				187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */,
+			);
+			path = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		3F60E6D9258288640094823F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E6DA258288640094823F /* Appliance.swift */,
+				3F60E6DB258288640094823F /* AppNotification.swift */,
+				3F60E6DC258288640094823F /* Curtain.swift */,
+				3F60E6DD258288640094823F /* Lock.swift */,
+				3FE2C27D2725C31300AC76EB /* Rule.swift */,
+				3F60E6DE258288640094823F /* Mood.swift */,
+				3F60E6DF258288640094823F /* Remote.swift */,
+				3F60E6E0258288640094823F /* Room.swift */,
+				3F60E6E1258288640094823F /* Schedule.swift */,
+				3F60E6E2258288640094823F /* Sensor.swift */,
+				3F040F7C258504480035ABAB /* Device.swift */,
+				3F60E6E3258288640094823F /* User.swift */,
+				37560E05283F794000041FD4 /* Core.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3F60E6E4258288640094823F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				372D440D283F5F1A002F0F96 /* Core */,
+				472685932824554B0058E92C /* OfferZone */,
+				3F411CF9271DDB1F001DBB85 /* Device */,
+				3F60E6E5258288640094823F /* Appliance */,
+				3F60E6EC258288640094823F /* Curtain */,
+				3F60E6EF258288640094823F /* Dashboard */,
+				3F60E6F6258288640094823F /* Lock */,
+				3F60E6F9258288640094823F /* Login */,
+				3F60E6FB258288640094823F /* Mood */,
+				3F60E6FE258288640094823F /* Notification */,
+				3F60E703258288640094823F /* Remote */,
+				3F60E723258288640094823F /* Room */,
+				3F60E726258288640094823F /* Rule */,
+				187F705F28697B6300CE4620 /* ControllerList */,
+				3F60E728258288640094823F /* Schedule */,
+				3F60E730258288640094823F /* Sensor */,
+				3FA86E212678E1A100DC80EE /* Energy */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		3F60E6E5258288640094823F /* Appliance */ = {
+			isa = PBXGroup;
+			children = (
+				3F73FD3625B3F0D100204FEC /* Appliance.storyboard */,
+				3F38297325B42D2100CBF493 /* NewApplianceController.swift */,
+				3F60E6E7258288640094823F /* SearchApplianceController.swift */,
+				3F60E6E8258288640094823F /* SearchApplianceLedTableCellView.swift */,
+				3F60E6E9258288640094823F /* SearchApplianceTableCellView.swift */,
+				3F60E6EA258288640094823F /* SelectComponentController.swift */,
+				3F60E6EB258288640094823F /* SelectComponentTableCellView.swift */,
+				3F38297E25B43CBF00CBF493 /* SelectApplianceTypeController.swift */,
+				3F38298625B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift */,
+				3F82C7D025D2851800F47CE8 /* SelectDimTypeController.swift */,
+				3F82C7D125D2851900F47CE8 /* SelectDimTypeTableCellView.swift */,
+			);
+			path = Appliance;
+			sourceTree = "<group>";
+		};
+		3F60E6EC258288640094823F /* Curtain */ = {
+			isa = PBXGroup;
+			children = (
+				3F73FD3E25B3F1D800204FEC /* Curtain.storyboard */,
+				3F60E6ED258288640094823F /* SearchCurtainController.swift */,
+				3F60E6EE258288640094823F /* SearchCurtainTableCellView.swift */,
+			);
+			path = Curtain;
+			sourceTree = "<group>";
+		};
+		3F60E6EF258288640094823F /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A88625B3F53500F39867 /* Dashboard.storyboard */,
+				3F60E6F0258288640094823F /* DashboardCollectionHeaderView.swift */,
+				3F60E6F1258288640094823F /* DashboardController.swift */,
+				3F60E6F2258288640094823F /* DrawerController.swift */,
+				3F60E6F3258288640094823F /* DrawerMenuTableCellView.swift */,
+				3F60E6F4258288640094823F /* FrequentlyOperatedCollectionCellView.swift */,
+				3F60E6F5258288640094823F /* RoomCollectionCellView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		3F60E6F6258288640094823F /* Lock */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A86925B3F40900F39867 /* Lock.storyboard */,
+				3F60E6F7258288640094823F /* SearchLockController.swift */,
+				3F60E6F8258288640094823F /* SearchLockTableCellView.swift */,
+			);
+			path = Lock;
+			sourceTree = "<group>";
+		};
+		3F60E6F9258288640094823F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3FA8416B274FD531007B274D /* Login.storyboard */,
+				3F60E6FA258288640094823F /* LoginController.swift */,
+				3FA8416A274FD531007B274D /* ForgotPasswordController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		3F60E6FB258288640094823F /* Mood */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A86125B3F3C600F39867 /* Mood.storyboard */,
+				3F60E6FC258288640094823F /* SearchMoodController.swift */,
+				3F60E6FD258288640094823F /* SearchMoodTableCellView.swift */,
+			);
+			path = Mood;
+			sourceTree = "<group>";
+		};
+		3F60E6FE258288640094823F /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A88125B3F4D000F39867 /* AppNotification.storyboard */,
+				3F60E701258288640094823F /* SearchAppNotificationTypeController.swift */,
+				3F60E702258288640094823F /* SearchAppNotificationTypeTableCellView.swift */,
+				3F60E6FF258288640094823F /* SearchAppNotificationController.swift */,
+				3F60E700258288640094823F /* SearchAppNotificationTableCellView.swift */,
+				3F66B9FB25F33210004DF705 /* AppNotificationSettingsController.swift */,
+				3F71E8AA25F3728800568D96 /* AppNotificationSettingsTableCellView.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		3F60E703258288640094823F /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				3F73FD4625B3F27900204FEC /* Remote.storyboard */,
+				3F60E71C258288640094823F /* RemoteControl.swift */,
+				3F60E706258288640094823F /* CircularDirectionButton.swift */,
+				3F60E707258288640094823F /* CircularDirectionButton.xib */,
+				3F60E719258288640094823F /* RectangularDirectionButton.swift */,
+				3F60E71A258288640094823F /* RectangularDirectionButton.xib */,
+				3F60E71B258288640094823F /* RemoteButton.swift */,
+				3F60E716258288640094823F /* NumberPadControl.xib */,
+				3F60E715258288640094823F /* NumberPadControl.swift */,
+				3F60E704258288640094823F /* AcRemoteControl.swift */,
+				3F60E705258288640094823F /* AcRemoteControl.xib */,
+				3F60E708258288640094823F /* DvdRemoteControl.swift */,
+				3F60E709258288640094823F /* DvdRemoteControl.xib */,
+				3F60E70E258288640094823F /* FanRemoteControl.swift */,
+				3F60E70F258288640094823F /* FanRemoteControl.xib */,
+				3F60E710258288640094823F /* LedStripRemoteControl.swift */,
+				3F60E711258288640094823F /* LedStripRemoteControl.xib */,
+				3F60E712258288640094823F /* MoodLightRemoteControl.swift */,
+				3F60E713258288640094823F /* MoodLightRemoteControl.xib */,
+				3F60E717258288640094823F /* ProjectorRemoteControl.swift */,
+				3F60E718258288640094823F /* ProjectorRemoteControl.xib */,
+				3F60E720258288640094823F /* TvRemoteControl.swift */,
+				3F60E721258288640094823F /* TvRemoteControl.xib */,
+				3F60E714258288640094823F /* NewRemoteController.swift */,
+				3F60E71E258288640094823F /* SearchRemoteController.swift */,
+				3F60E71F258288640094823F /* SearchRemoteTableCellView.swift */,
+				3F60E71D258288640094823F /* RemoteDetailsController.swift */,
+				3F60E70C258288640094823F /* DynamicButtonContainerView.swift */,
+				3F60E70D258288640094823F /* DynamicButtonContainerView.xib */,
+				3F60E70A258288640094823F /* DynamicButtonCollectionCellView.swift */,
+				3F60E70B258288640094823F /* DynamicButtonCollectionCellView.xib */,
+				3F60E722258288640094823F /* UpdateRemoteButtonController.swift */,
+				3FDA20C926354542008C8DB7 /* SelectRemoteKeyController.swift */,
+				3FDA20CA26354542008C8DB7 /* SelectRemoteKeyTableCellView.swift */,
+				3755BAC9283684A100D4C956 /* IRFanRemoteControl.swift */,
+				3755BACA283684A100D4C956 /* IRFanRemoteControl.xib */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		3F60E723258288640094823F /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A88E25B3F5D600F39867 /* Room.storyboard */,
+				3F60E724258288640094823F /* SelectRoomController.swift */,
+				3F60E725258288640094823F /* SelectRoomTableCellView.swift */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		3F60E726258288640094823F /* Rule */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A87925B3F49F00F39867 /* Rule.storyboard */,
+				3F60E727258288640094823F /* SearchRuleController.swift */,
+				3FE2C27F2725C34200AC76EB /* SearchRuleTableCellView.swift */,
+				3FA8416E274FD57B007B274D /* RulePortalController.swift */,
+			);
+			path = Rule;
+			sourceTree = "<group>";
+		};
+		3F60E728258288640094823F /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A87125B3F45F00F39867 /* Schedule.storyboard */,
+				3F60E729258288640094823F /* NewScheduleController.swift */,
+				3F60E72A258288640094823F /* ScheduleComponentTableCellView.swift */,
+				3F60E72B258288640094823F /* ScheduleRepeatTableCellView.swift */,
+				3F60E72C258288640094823F /* ScheduleTimeTableCellView.swift */,
+				3F60E72D258288640094823F /* ScheduleTitleTableCellView.swift */,
+				3F60E72E258288640094823F /* SearchScheduleController.swift */,
+				3F60E72F258288640094823F /* SearchScheduleTableCellView.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		3F60E730258288640094823F /* Sensor */ = {
+			isa = PBXGroup;
+			children = (
+				3F29A85925B3F35D00F39867 /* Sensor.storyboard */,
+				3F60E731258288640094823F /* SearchSensorController.swift */,
+				3F60E732258288640094823F /* SearchSensorTableCellView.swift */,
+				3F60E733258288640094823F /* SensorDetailsController.swift */,
+			);
+			path = Sensor;
+			sourceTree = "<group>";
+		};
+		3F60E734258288640094823F /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E73C258288640094823F /* SwiftHSVColorPicker */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		3F60E73C258288640094823F /* SwiftHSVColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				3F60E73D258288640094823F /* BrightnessPickerView.swift */,
+				3F60E73E258288640094823F /* ColorPickerControl.swift */,
+				3F60E73F258288640094823F /* ColorWheel.swift */,
+			);
+			path = SwiftHSVColorPicker;
+			sourceTree = "<group>";
+		};
+		3FA221BF27038872006B8680 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3FA221C027038872006B8680 /* notify_sound.wav */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3FA86E212678E1A100DC80EE /* Energy */ = {
+			isa = PBXGroup;
+			children = (
+				3FA86E222678E1A100DC80EE /* Energy.storyboard */,
+				3FA86E232678E1A100DC80EE /* EnergyDetailsController.swift */,
+			);
+			path = Energy;
+			sourceTree = "<group>";
+		};
+		472685932824554B0058E92C /* OfferZone */ = {
+			isa = PBXGroup;
+			children = (
+				472685942824556E0058E92C /* OfferZone.storyboard */,
+				47B23713282456730048A87D /* OfferZoneViewController.swift */,
+				47B23715282459D60048A87D /* OffersTableViewCell.swift */,
+				47B23716282459D60048A87D /* OffersTableViewCell.xib */,
+				47B23719282470140048A87D /* OfferDetailViewController.swift */,
+			);
+			path = OfferZone;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3F60E65A258284DB0094823F /* Wifinity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F60E685258284DC0094823F /* Build configuration list for PBXNativeTarget "Wifinity" */;
+			buildPhases = (
+				3F60E657258284DB0094823F /* Sources */,
+				3F60E658258284DB0094823F /* Frameworks */,
+				3F60E659258284DB0094823F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Wifinity;
+			packageProductDependencies = (
+				3F0AC4612695D67D0015F939 /* FirebaseAuth */,
+				3F0AC4632695D67D0015F939 /* FirebaseDatabase */,
+				3F0AC4652695D67D0015F939 /* FirebaseMessaging */,
+				47268591282451D80058E92C /* Kingfisher */,
+			);
+			productName = Wifinity;
+			productReference = 3F60E65B258284DB0094823F /* Wifinity.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3F60E670258284DC0094823F /* WifinityTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F60E688258284DC0094823F /* Build configuration list for PBXNativeTarget "WifinityTests" */;
+			buildPhases = (
+				3F60E66D258284DC0094823F /* Sources */,
+				3F60E66E258284DC0094823F /* Frameworks */,
+				3F60E66F258284DC0094823F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3F60E673258284DC0094823F /* PBXTargetDependency */,
+			);
+			name = WifinityTests;
+			productName = WifinityTests;
+			productReference = 3F60E671258284DC0094823F /* WifinityTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3F60E67B258284DC0094823F /* WifinityUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F60E68B258284DC0094823F /* Build configuration list for PBXNativeTarget "WifinityUITests" */;
+			buildPhases = (
+				3F60E678258284DC0094823F /* Sources */,
+				3F60E679258284DC0094823F /* Frameworks */,
+				3F60E67A258284DC0094823F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3F60E67E258284DC0094823F /* PBXTargetDependency */,
+			);
+			name = WifinityUITests;
+			productName = WifinityUITests;
+			productReference = 3F60E67C258284DC0094823F /* WifinityUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F60E653258284DB0094823F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					3F60E65A258284DB0094823F = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+					3F60E670258284DC0094823F = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 3F60E65A258284DB0094823F;
+					};
+					3F60E67B258284DC0094823F = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 3F60E65A258284DB0094823F;
+					};
+				};
+			};
+			buildConfigurationList = 3F60E656258284DB0094823F /* Build configuration list for PBXProject "Wifinity" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3F60E652258284DB0094823F;
+			packageReferences = (
+				3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
+			productRefGroup = 3F60E65C258284DB0094823F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3F60E65A258284DB0094823F /* Wifinity */,
+				3F60E670258284DC0094823F /* WifinityTests */,
+				3F60E67B258284DC0094823F /* WifinityUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3F60E659258284DB0094823F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				372D440F283F5F2A002F0F96 /* Core.storyboard in Resources */,
+				47B23718282459D60048A87D /* OffersTableViewCell.xib in Resources */,
+				3F60E784258288650094823F /* ProjectorRemoteControl.xib in Resources */,
+				3F29A88725B3F53500F39867 /* Dashboard.storyboard in Resources */,
+				3F60E775258288640094823F /* DvdRemoteControl.xib in Resources */,
+				3755BACC283684A100D4C956 /* IRFanRemoteControl.xib in Resources */,
+				3F60E66B258284DC0094823F /* LaunchScreen.storyboard in Resources */,
+				3F60E6B7258285BA0094823F /* GoogleService-Info.plist in Resources */,
+				3F73FD3725B3F0D100204FEC /* Appliance.storyboard in Resources */,
+				3F29A85A25B3F35D00F39867 /* Sensor.storyboard in Resources */,
+				3F60E77F258288650094823F /* MoodLightRemoteControl.xib in Resources */,
+				3F60E741258288640094823F /* Common.xcassets in Resources */,
+				3F411D04271DDB1F001DBB85 /* Device.storyboard in Resources */,
+				3F60E782258288650094823F /* NumberPadControl.xib in Resources */,
+				3F60E78D258288650094823F /* TvRemoteControl.xib in Resources */,
+				3F73FD3F25B3F1D800204FEC /* Curtain.storyboard in Resources */,
+				472685952824556E0058E92C /* OfferZone.storyboard in Resources */,
+				3F29A87225B3F45F00F39867 /* Schedule.storyboard in Resources */,
+				3FA221C127038872006B8680 /* notify_sound.wav in Resources */,
+				187F70612869900300CE4620 /* ContollerList.storyboard in Resources */,
+				3F60E777258288640094823F /* DynamicButtonCollectionCellView.xib in Resources */,
+				3F29A88225B3F4D000F39867 /* AppNotification.storyboard in Resources */,
+				3F29A88F25B3F5D600F39867 /* Room.storyboard in Resources */,
+				3F29A86225B3F3C600F39867 /* Mood.storyboard in Resources */,
+				3F60E771258288640094823F /* AcRemoteControl.xib in Resources */,
+				3F96CB3525B5D9E600523116 /* AppHeaderBarView.xib in Resources */,
+				3F60E668258284DC0094823F /* Assets.xcassets in Resources */,
+				3FA86E242678E1A100DC80EE /* Energy.storyboard in Resources */,
+				3F60E77B258288650094823F /* FanRemoteControl.xib in Resources */,
+				3F60E77D258288650094823F /* LedStripRemoteControl.xib in Resources */,
+				3F29A86A25B3F40900F39867 /* Lock.storyboard in Resources */,
+				3F60E779258288640094823F /* DynamicButtonContainerView.xib in Resources */,
+				3F60E773258288640094823F /* CircularDirectionButton.xib in Resources */,
+				3F60E666258284DB0094823F /* Main.storyboard in Resources */,
+				3F73FD4725B3F27900204FEC /* Remote.storyboard in Resources */,
+				3F60E786258288650094823F /* RectangularDirectionButton.xib in Resources */,
+				3F29A87A25B3F49F00F39867 /* Rule.storyboard in Resources */,
+				3FA8416D274FD531007B274D /* Login.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F60E66F258284DC0094823F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F60E67A258284DC0094823F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F60E657258284DB0094823F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F60E74D258288640094823F /* ProgressOverlay.swift in Sources */,
+				3F60E75C258288640094823F /* SearchApplianceTableCellView.swift in Sources */,
+				3F60E78C258288650094823F /* TvRemoteControl.swift in Sources */,
+				3F60E7A2258288650094823F /* BrightnessPickerView.swift in Sources */,
+				3F60E74C258288640094823F /* PopupManager.swift in Sources */,
+				3F60E753258288640094823F /* Mood.swift in Sources */,
+				3F60E74A258288640094823F /* ConfigurationManager.swift in Sources */,
+				3F60E749258288640094823F /* BaseController.swift in Sources */,
+				3F60E799258288650094823F /* SearchSensorController.swift in Sources */,
+				3F82C7D325D2851900F47CE8 /* SelectDimTypeTableCellView.swift in Sources */,
+				3F60E742258288640094823F /* DataFetchManager.swift in Sources */,
+				3FDA20CC26354542008C8DB7 /* SelectRemoteKeyTableCellView.swift in Sources */,
+				3F7044CB25A199EE00A967DA /* DataContractManagerFireBase.swift in Sources */,
+				3F60E74F258288640094823F /* Appliance.swift in Sources */,
+				3F411D08271DDB1F001DBB85 /* NewDeviceInputPasswordController.swift in Sources */,
+				3F66B9FC25F33210004DF705 /* AppNotificationSettingsController.swift in Sources */,
+				3F29A89725B3F63800F39867 /* RoutingManager.swift in Sources */,
+				47B23714282456730048A87D /* OfferZoneViewController.swift in Sources */,
+				3F60E6B1258285B10094823F /* AppDelegate.swift in Sources */,
+				3F60E75D258288640094823F /* SelectComponentController.swift in Sources */,
+				3FDA20CB26354542008C8DB7 /* SelectRemoteKeyController.swift in Sources */,
+				3F60E755258288640094823F /* Room.swift in Sources */,
+				3F411D09271DDB1F001DBB85 /* NewDeviceReconnectInternetController.swift in Sources */,
+				3F60E76D258288640094823F /* SearchAppNotificationTableCellView.swift in Sources */,
+				3F60E791258288650094823F /* SearchRuleController.swift in Sources */,
+				3F60E783258288650094823F /* ProjectorRemoteControl.swift in Sources */,
+				3F60E766258288640094823F /* RoomCollectionCellView.swift in Sources */,
+				3F60E76C258288640094823F /* SearchAppNotificationController.swift in Sources */,
+				3F60E792258288650094823F /* NewScheduleController.swift in Sources */,
+				3F60E6AA2582859F0094823F /* DataFetchManagerFireBaseSchedule.swift in Sources */,
+				3F38298725B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift in Sources */,
+				3F60E760258288640094823F /* SearchCurtainTableCellView.swift in Sources */,
+				3F60E787258288650094823F /* RemoteButton.swift in Sources */,
+				3F60E6A72582859F0094823F /* DataFetchManagerFireBaseMood.swift in Sources */,
+				3755BACB283684A100D4C956 /* IRFanRemoteControl.swift in Sources */,
+				3F60E6A22582859F0094823F /* DataFetchManagerFireBase.swift in Sources */,
+				3F60E75B258288640094823F /* SearchApplianceLedTableCellView.swift in Sources */,
+				47B23717282459D60048A87D /* OffersTableViewCell.swift in Sources */,
+				3F60E78A258288650094823F /* SearchRemoteController.swift in Sources */,
+				3F411D0D271DDB1F001DBB85 /* SelectDeviceTableCellView.swift in Sources */,
+				3F60E7A4258288650094823F /* ColorWheel.swift in Sources */,
+				3F60E76F258288640094823F /* SearchAppNotificationTypeTableCellView.swift in Sources */,
+				3FA8416F274FD57B007B274D /* RulePortalController.swift in Sources */,
+				3F60E75E258288640094823F /* SelectComponentTableCellView.swift in Sources */,
+				3F68C9E6258A1D59002D44A4 /* DataFetchManagerFireBaseDevice.swift in Sources */,
+				3F60E754258288640094823F /* Remote.swift in Sources */,
+				3F7044D025A19AA900A967DA /* DataFetchManagerFireBaseUser.swift in Sources */,
+				3F60E757258288640094823F /* Sensor.swift in Sources */,
+				3F71E8AB25F3728800568D96 /* AppNotificationSettingsTableCellView.swift in Sources */,
+				3F60E752258288640094823F /* Lock.swift in Sources */,
+				3F60E743258288640094823F /* AppFloatingButton.swift in Sources */,
+				3F60E78F258288650094823F /* SelectRoomController.swift in Sources */,
+				187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */,
+				3F60E751258288640094823F /* Curtain.swift in Sources */,
+				187EE9A3286EC46700DB3EC0 /* SharedFunction.swift in Sources */,
+				3FA8416C274FD531007B274D /* ForgotPasswordController.swift in Sources */,
+				3F60E75A258288640094823F /* SearchApplianceController.swift in Sources */,
+				3F60E6A92582859F0094823F /* DataFetchManagerFireBaseRoom.swift in Sources */,
+				3F60E75F258288640094823F /* SearchCurtainController.swift in Sources */,
+				37560E08283F80DB00041FD4 /* CoreTableViewCell.swift in Sources */,
+				3F60E79A258288650094823F /* SearchSensorTableCellView.swift in Sources */,
+				3F60E795258288650094823F /* ScheduleTimeTableCellView.swift in Sources */,
+				187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */,
+				372D4411283F5F52002F0F96 /* CoreViewController.swift in Sources */,
+				3F60E797258288650094823F /* SearchScheduleController.swift in Sources */,
+				3F60E768258288640094823F /* SearchLockTableCellView.swift in Sources */,
+				3F60E780258288650094823F /* NewRemoteController.swift in Sources */,
+				3F60E745258288640094823F /* AppSlider.swift in Sources */,
+				3F60E769258288640094823F /* LoginController.swift in Sources */,
+				3F60E772258288640094823F /* CircularDirectionButton.swift in Sources */,
+				3FA86E252678E1A100DC80EE /* EnergyDetailsController.swift in Sources */,
+				3F60E79B258288650094823F /* SensorDetailsController.swift in Sources */,
+				3F60E744258288640094823F /* AppSegmentButton.swift in Sources */,
+				3F60E793258288650094823F /* ScheduleComponentTableCellView.swift in Sources */,
+				3F60E748258288640094823F /* AppToggleButton.swift in Sources */,
+				3F60E767258288640094823F /* SearchLockController.swift in Sources */,
+				3F96CB2B25B5D9BE00523116 /* AppHeaderBarView.swift in Sources */,
+				372D4413283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift in Sources */,
+				3F60E6A42582859F0094823F /* DataFetchManagerFireBaseAppNotification.swift in Sources */,
+				3F60E788258288650094823F /* RemoteControl.swift in Sources */,
+				3F60E747258288640094823F /* AppTableView.swift in Sources */,
+				3F60E785258288650094823F /* RectangularDirectionButton.swift in Sources */,
+				3F60E778258288640094823F /* DynamicButtonContainerView.swift in Sources */,
+				3F60E77A258288650094823F /* FanRemoteControl.swift in Sources */,
+				3FE2C2802725C34200AC76EB /* SearchRuleTableCellView.swift in Sources */,
+				3F561C9A25A9B57900AAD474 /* AppBreadCrumbView.swift in Sources */,
+				3F38297F25B43CBF00CBF493 /* SelectApplianceTypeController.swift in Sources */,
+				3F60E76A258288640094823F /* SearchMoodController.swift in Sources */,
+				3F60E756258288640094823F /* Schedule.swift in Sources */,
+				3F60E77C258288650094823F /* LedStripRemoteControl.swift in Sources */,
+				3F60E781258288650094823F /* NumberPadControl.swift in Sources */,
+				3F60E774258288640094823F /* DvdRemoteControl.swift in Sources */,
+				3F411D0C271DDB1F001DBB85 /* SelectDeviceController.swift in Sources */,
+				3F60E770258288640094823F /* AcRemoteControl.swift in Sources */,
+				3F60E758258288640094823F /* User.swift in Sources */,
+				3FE2C27E2725C31300AC76EB /* Rule.swift in Sources */,
+				3F60E798258288650094823F /* SearchScheduleTableCellView.swift in Sources */,
+				3F60E6A62582859F0094823F /* DataFetchManagerFireBaseLock.swift in Sources */,
+				3F411D05271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift in Sources */,
+				3F82C7D225D2851900F47CE8 /* SelectDimTypeController.swift in Sources */,
+				3F411D0A271DDB1F001DBB85 /* NewDeviceScanQrCodeController.swift in Sources */,
+				3F60E6A52582859F0094823F /* DataFetchManagerFireBaseCurtain.swift in Sources */,
+				37560E06283F794000041FD4 /* Core.swift in Sources */,
+				3F60E78E258288650094823F /* UpdateRemoteButtonController.swift in Sources */,
+				47B2371A282470140048A87D /* OfferDetailViewController.swift in Sources */,
+				3F60E74B258288640094823F /* KeychainManager.swift in Sources */,
+				3F60E76B258288640094823F /* SearchMoodTableCellView.swift in Sources */,
+				3F60E765258288640094823F /* FrequentlyOperatedCollectionCellView.swift in Sources */,
+				3F60E7A3258288650094823F /* ColorPickerControl.swift in Sources */,
+				3F38297425B42D2100CBF493 /* NewApplianceController.swift in Sources */,
+				3F411D06271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift in Sources */,
+				3F60E790258288650094823F /* SelectRoomTableCellView.swift in Sources */,
+				3F60E6AB2582859F0094823F /* DataFetchManagerFireBaseSensor.swift in Sources */,
+				3F60E746258288640094823F /* AppSwitch.swift in Sources */,
+				3F60E77E258288650094823F /* MoodLightRemoteControl.swift in Sources */,
+				3F411D0B271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift in Sources */,
+				3F411D07271DDB1F001DBB85 /* NewDeviceController.swift in Sources */,
+				3F60E6A82582859F0094823F /* DataFetchManagerFireBaseRemote.swift in Sources */,
+				3F60E789258288650094823F /* RemoteDetailsController.swift in Sources */,
+				3FE2C2822725C42100AC76EB /* DataFetchManagerFireBaseRule.swift in Sources */,
+				187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */,
+				3F60E76E258288640094823F /* SearchAppNotificationTypeController.swift in Sources */,
+				3F60E761258288640094823F /* DashboardCollectionHeaderView.swift in Sources */,
+				3F60E794258288650094823F /* ScheduleRepeatTableCellView.swift in Sources */,
+				3F60E762258288640094823F /* DashboardController.swift in Sources */,
+				3F66BA0125F33DCF004DF705 /* CacheManager.swift in Sources */,
+				3F60E764258288640094823F /* DrawerMenuTableCellView.swift in Sources */,
+				3F60E776258288640094823F /* DynamicButtonCollectionCellView.swift in Sources */,
+				3F60E763258288640094823F /* DrawerController.swift in Sources */,
+				3F040F7D258504480035ABAB /* Device.swift in Sources */,
+				3F60E74E258288640094823F /* UtilityManager.swift in Sources */,
+				3F60E750258288640094823F /* AppNotification.swift in Sources */,
+				3F60E6A32582859F0094823F /* DataFetchManagerFireBaseAppliance.swift in Sources */,
+				3F60E796258288650094823F /* ScheduleTitleTableCellView.swift in Sources */,
+				3F60E78B258288650094823F /* SearchRemoteTableCellView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F60E66D258284DC0094823F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F60E676258284DC0094823F /* WifinityTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F60E678258284DC0094823F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F60E681258284DC0094823F /* WifinityUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3F60E673258284DC0094823F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F60E65A258284DB0094823F /* Wifinity */;
+			targetProxy = 3F60E672258284DC0094823F /* PBXContainerItemProxy */;
+		};
+		3F60E67E258284DC0094823F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F60E65A258284DB0094823F /* Wifinity */;
+			targetProxy = 3F60E67D258284DC0094823F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3F60E664258284DB0094823F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3F60E665258284DB0094823F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3F60E669258284DC0094823F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3F60E66A258284DC0094823F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3F60E683258284DC0094823F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3F60E684258284DC0094823F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3F60E686258284DC0094823F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LXALYZT777;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
+				INFOPLIST_FILE = Wifinity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0.4;
+				OTHER_LDFLAGS = "-ObjC";
+				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
+				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		3F60E687258284DC0094823F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LXALYZT777;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
+				INFOPLIST_FILE = Wifinity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0.4;
+				OTHER_LDFLAGS = "-ObjC";
+				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
+				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		3F60E689258284DC0094823F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WifinityTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.homeone.WifinityTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wifinity.app/Wifinity";
+			};
+			name = Debug;
+		};
+		3F60E68A258284DC0094823F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WifinityTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.homeone.WifinityTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wifinity.app/Wifinity";
+			};
+			name = Release;
+		};
+		3F60E68C258284DC0094823F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WifinityUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.homeone.WifinityUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Wifinity;
+			};
+			name = Debug;
+		};
+		3F60E68D258284DC0094823F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WifinityUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.homeone.WifinityUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Wifinity;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3F60E656258284DB0094823F /* Build configuration list for PBXProject "Wifinity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F60E683258284DC0094823F /* Debug */,
+				3F60E684258284DC0094823F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F60E685258284DC0094823F /* Build configuration list for PBXNativeTarget "Wifinity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F60E686258284DC0094823F /* Debug */,
+				3F60E687258284DC0094823F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F60E688258284DC0094823F /* Build configuration list for PBXNativeTarget "WifinityTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F60E689258284DC0094823F /* Debug */,
+				3F60E68A258284DC0094823F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F60E68B258284DC0094823F /* Build configuration list for PBXNativeTarget "WifinityUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F60E68C258284DC0094823F /* Debug */,
+				3F60E68D258284DC0094823F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.2.0;
+			};
+		};
+		47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3F0AC4612695D67D0015F939 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		3F0AC4632695D67D0015F939 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		3F0AC4652695D67D0015F939 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		47268591282451D80058E92C /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3F60E653258284DB0094823F /* Project object */;
+}

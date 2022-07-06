@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search App Notification Type Controller-->
+        <scene sceneID="ZpZ-op-R8x">
+            <objects>
+                <viewController storyboardIdentifier="SearchAppNotificationTypeControllerId" automaticallyAdjustsScrollViewInsets="NO" id="bnA-Rh-dQL" customClass="SearchAppNotificationTypeController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rDF-vO-Ads">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cv4-hG-zvo" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="AFW-9J-MsB"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R0D-Z9-ZZG" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                                <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchAppNotificationTypeTableCellViewId" rowHeight="60" id="Ee6-Z8-sL3" customClass="SearchAppNotificationTypeTableCellView" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ee6-Z8-sL3" id="wVU-Gn-b1O">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1vB-sz-d98" userLabel="cellSeparatorView">
+                                                    <rect key="frame" x="0.0" y="58.5" width="414" height="1.5"/>
+                                                    <color key="backgroundColor" name="SecondaryLightestColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1.5" id="AnH-eg-ZsC"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Energy Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-BD-7LB">
+                                                    <rect key="frame" x="15" y="20" width="138.5" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" name="PrimaryDarkestColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChevronRight" translatesAutoresizingMaskIntoConstraints="NO" id="jCs-Ja-vPy">
+                                                    <rect key="frame" x="390" y="22" width="16" height="16"/>
+                                                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="Djy-TG-wOe"/>
+                                                        <constraint firstAttribute="height" constant="16" id="nkT-Ja-4vQ"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1v0-BD-7LB" firstAttribute="centerY" secondItem="wVU-Gn-b1O" secondAttribute="centerY" id="86h-Ig-biK"/>
+                                                <constraint firstItem="1v0-BD-7LB" firstAttribute="leading" secondItem="wVU-Gn-b1O" secondAttribute="leading" constant="15" id="8ze-2J-wjg"/>
+                                                <constraint firstAttribute="trailing" secondItem="1vB-sz-d98" secondAttribute="trailing" id="A5k-0U-Fz7"/>
+                                                <constraint firstAttribute="bottom" secondItem="1vB-sz-d98" secondAttribute="bottom" id="MyD-0j-6QK"/>
+                                                <constraint firstItem="1vB-sz-d98" firstAttribute="leading" secondItem="wVU-Gn-b1O" secondAttribute="leading" id="NLh-ki-q34"/>
+                                                <constraint firstAttribute="trailing" secondItem="jCs-Ja-vPy" secondAttribute="trailing" constant="8" id="aQ0-Jl-a8U"/>
+                                                <constraint firstItem="jCs-Ja-vPy" firstAttribute="centerY" secondItem="wVU-Gn-b1O" secondAttribute="centerY" id="fAj-4F-szp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="1v0-BD-7LB" id="9Lf-mj-b4P"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="bnA-Rh-dQL" id="erP-0l-hHR"/>
+                                    <outlet property="delegate" destination="bnA-Rh-dQL" id="oq5-db-jCa"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="daN-eq-Hgr" userLabel="addButton" customClass="AppFloatingButton" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="340" y="788" width="54" height="54"/>
+                                <color key="backgroundColor" name="ControlNormalColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="54" id="N13-md-3zi"/>
+                                    <constraint firstAttribute="height" constant="54" id="rEh-S9-Eau"/>
+                                </constraints>
+                                <color key="tintColor" name="SecondaryLightestColor"/>
+                                <inset key="imageEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                <state key="normal" image="Settings"/>
+                                <connections>
+                                    <action selector="didSelectSettingsButton:" destination="bnA-Rh-dQL" eventType="touchUpInside" id="mji-62-osE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qjX-if-fz7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qjX-if-fz7" firstAttribute="trailing" secondItem="R0D-Z9-ZZG" secondAttribute="trailing" id="8BH-eL-Qty"/>
+                            <constraint firstItem="R0D-Z9-ZZG" firstAttribute="leading" secondItem="qjX-if-fz7" secondAttribute="leading" id="M6R-zT-V6u"/>
+                            <constraint firstAttribute="trailing" secondItem="cv4-hG-zvo" secondAttribute="trailing" id="MLB-wx-na8"/>
+                            <constraint firstItem="cv4-hG-zvo" firstAttribute="leading" secondItem="rDF-vO-Ads" secondAttribute="leading" id="YWc-69-HoT"/>
+                            <constraint firstItem="qjX-if-fz7" firstAttribute="trailing" secondItem="daN-eq-Hgr" secondAttribute="trailing" constant="20" id="YYc-u8-HGC"/>
+                            <constraint firstItem="R0D-Z9-ZZG" firstAttribute="top" secondItem="cv4-hG-zvo" secondAttribute="bottom" id="dEp-1m-m2k"/>
+                            <constraint firstItem="qjX-if-fz7" firstAttribute="bottom" secondItem="R0D-Z9-ZZG" secondAttribute="bottom" id="fXE-Km-h5J"/>
+                            <constraint firstItem="cv4-hG-zvo" firstAttribute="top" secondItem="rDF-vO-Ads" secondAttribute="top" id="gtg-94-f3Z"/>
+                            <constraint firstItem="qjX-if-fz7" firstAttribute="bottom" secondItem="daN-eq-Hgr" secondAttribute="bottom" constant="20" id="ySH-wF-Ro9"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="Wwm-FU-krd"/>
+                    <connections>
+                        <outlet property="appHeaderBarView" destination="cv4-hG-zvo" id="zgI-Cp-ViI"/>
+                        <outlet property="appNotificationTypeTableView" destination="R0D-Z9-ZZG" id="Lll-be-oMZ"/>
+                        <outlet property="settingsButton" destination="daN-eq-Hgr" id="Uzr-V5-y4z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PA9-by-tQg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2789.8550724637685" y="4960.7142857142853"/>
+        </scene>
+        <!--Search App Notification Controller-->
+        <scene sceneID="nC8-sC-hAo">
+            <objects>
+                <viewController storyboardIdentifier="SearchAppNotificationControllerId" automaticallyAdjustsScrollViewInsets="NO" id="NRA-7G-KIp" customClass="SearchAppNotificationController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Egf-Qo-eqX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jH1-GP-nr5" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="i9x-EM-mYv"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hV7-zc-9S6" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                                <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchAppNotificationTableCellViewId" rowHeight="145" id="KQc-31-ie9" customClass="SearchAppNotificationTableCellView" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="145"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KQc-31-ie9" id="sxT-u3-9gi">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="145"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bedroom Fan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjA-qD-VPb">
+                                                    <rect key="frame" x="15" y="15" width="384" height="113.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYl-ZR-USZ" userLabel="cellSeparatorView">
+                                                    <rect key="frame" x="0.0" y="143.5" width="414" height="1.5"/>
+                                                    <color key="backgroundColor" name="SecondaryLightestColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1.5" id="v9L-li-sP9"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hjA-qD-VPb" firstAttribute="top" secondItem="sxT-u3-9gi" secondAttribute="top" constant="15" id="05k-4S-1nJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="KYl-ZR-USZ" secondAttribute="trailing" id="29Q-02-8XQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="KYl-ZR-USZ" secondAttribute="bottom" id="3pi-V0-pMQ"/>
+                                                <constraint firstItem="KYl-ZR-USZ" firstAttribute="top" secondItem="hjA-qD-VPb" secondAttribute="bottom" constant="15" id="OVO-4L-Xfd"/>
+                                                <constraint firstItem="KYl-ZR-USZ" firstAttribute="leading" secondItem="sxT-u3-9gi" secondAttribute="leading" id="RNb-TN-v62"/>
+                                                <constraint firstItem="hjA-qD-VPb" firstAttribute="leading" secondItem="sxT-u3-9gi" secondAttribute="leading" constant="15" id="bxA-w3-582"/>
+                                                <constraint firstAttribute="trailing" secondItem="hjA-qD-VPb" secondAttribute="trailing" constant="15" id="fZR-nu-NDz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                        <connections>
+                                            <outlet property="messageLabel" destination="hjA-qD-VPb" id="YBz-ka-ACP"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="NRA-7G-KIp" id="Io2-zf-FRD"/>
+                                    <outlet property="delegate" destination="NRA-7G-KIp" id="mOW-cG-cFA"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="OWV-3j-waA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hV7-zc-9S6" firstAttribute="leading" secondItem="OWV-3j-waA" secondAttribute="leading" id="8g7-gO-vWC"/>
+                            <constraint firstItem="OWV-3j-waA" firstAttribute="bottom" secondItem="hV7-zc-9S6" secondAttribute="bottom" id="PU0-3M-h4L"/>
+                            <constraint firstItem="OWV-3j-waA" firstAttribute="trailing" secondItem="hV7-zc-9S6" secondAttribute="trailing" id="Pqj-hD-2fg"/>
+                            <constraint firstAttribute="trailing" secondItem="jH1-GP-nr5" secondAttribute="trailing" id="WdN-iQ-DxE"/>
+                            <constraint firstItem="hV7-zc-9S6" firstAttribute="top" secondItem="jH1-GP-nr5" secondAttribute="bottom" id="fKG-ht-xgJ"/>
+                            <constraint firstItem="jH1-GP-nr5" firstAttribute="leading" secondItem="Egf-Qo-eqX" secondAttribute="leading" id="sOq-Ds-aWO"/>
+                            <constraint firstItem="jH1-GP-nr5" firstAttribute="top" secondItem="Egf-Qo-eqX" secondAttribute="top" id="wpG-Co-XlB"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="n3c-si-y21"/>
+                    <connections>
+                        <outlet property="appHeaderBarView" destination="jH1-GP-nr5" id="wxQ-Pz-s5S"/>
+                        <outlet property="appNotificationTableView" destination="hV7-zc-9S6" id="bff-w9-r8V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x1N-sk-igV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3683" y="4961"/>
+        </scene>
+        <!--App Notification Settings Controller-->
+        <scene sceneID="cM6-fE-YF5">
+            <objects>
+                <viewController storyboardIdentifier="AppNotificationSettingsControllerId" automaticallyAdjustsScrollViewInsets="NO" id="pwl-Uu-6OI" customClass="AppNotificationSettingsController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zxU-ES-Xcc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8z-3z-8Ns" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="qyB-HP-JMc"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2WM-8y-mdb" userLabel="appNotificationSettingsTableView" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                                <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AppNotificationSettingsTableCellViewId" rowHeight="60" id="Rjy-sK-hVR" customClass="AppNotificationSettingsTableCellView" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rjy-sK-hVR" id="YZL-1X-DsA">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HzR-5l-eIe" userLabel="cellSeparatorView">
+                                                    <rect key="frame" x="0.0" y="58.5" width="414" height="1.5"/>
+                                                    <color key="backgroundColor" name="SecondaryLightestColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1.5" id="psC-NQ-iqe"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Energy Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uge-Lc-Dvb">
+                                                    <rect key="frame" x="15" y="20" width="138.5" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" name="PrimaryDarkestColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Btl-Wl-Dzv" customClass="AppSwitch" customModule="Wifinity" customModuleProvider="target">
+                                                    <rect key="frame" x="350" y="14.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="onOffSwitchDidChangeValue:" destination="Rjy-sK-hVR" eventType="valueChanged" id="Rau-h9-pg2"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="HzR-5l-eIe" secondAttribute="bottom" id="0Wg-wx-dei"/>
+                                                <constraint firstAttribute="trailing" secondItem="HzR-5l-eIe" secondAttribute="trailing" id="IL6-tq-fIt"/>
+                                                <constraint firstAttribute="trailing" secondItem="Btl-Wl-Dzv" secondAttribute="trailing" constant="15" id="KEC-rq-Dmi"/>
+                                                <constraint firstItem="uge-Lc-Dvb" firstAttribute="leading" secondItem="YZL-1X-DsA" secondAttribute="leading" constant="15" id="NYo-Ik-YnA"/>
+                                                <constraint firstItem="uge-Lc-Dvb" firstAttribute="centerY" secondItem="YZL-1X-DsA" secondAttribute="centerY" id="WAp-Hv-ws1"/>
+                                                <constraint firstItem="HzR-5l-eIe" firstAttribute="leading" secondItem="YZL-1X-DsA" secondAttribute="leading" id="tyS-Ho-p9D"/>
+                                                <constraint firstItem="Btl-Wl-Dzv" firstAttribute="centerY" secondItem="YZL-1X-DsA" secondAttribute="centerY" id="v5E-oA-cyy"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="uge-Lc-Dvb" id="OAD-Pu-6a6"/>
+                                            <outlet property="valueSwitch" destination="Btl-Wl-Dzv" id="0F3-TS-2eS"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="pwl-Uu-6OI" id="6KQ-PW-zxz"/>
+                                    <outlet property="delegate" destination="pwl-Uu-6OI" id="rVE-HF-3gL"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gZZ-eD-c8t"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2WM-8y-mdb" firstAttribute="trailing" secondItem="gZZ-eD-c8t" secondAttribute="trailing" id="01X-BR-Ddg"/>
+                            <constraint firstItem="e8z-3z-8Ns" firstAttribute="leading" secondItem="zxU-ES-Xcc" secondAttribute="leading" id="J9e-3X-aW3"/>
+                            <constraint firstItem="2WM-8y-mdb" firstAttribute="top" secondItem="e8z-3z-8Ns" secondAttribute="bottom" id="fok-IT-584"/>
+                            <constraint firstItem="gZZ-eD-c8t" firstAttribute="bottom" secondItem="2WM-8y-mdb" secondAttribute="bottom" id="lxu-L8-0iS"/>
+                            <constraint firstAttribute="trailing" secondItem="e8z-3z-8Ns" secondAttribute="trailing" id="rfq-vm-6Pk"/>
+                            <constraint firstItem="e8z-3z-8Ns" firstAttribute="top" secondItem="zxU-ES-Xcc" secondAttribute="top" id="sC4-iz-2SL"/>
+                            <constraint firstItem="2WM-8y-mdb" firstAttribute="leading" secondItem="gZZ-eD-c8t" secondAttribute="leading" id="ubi-7H-Mz0"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="Jd9-rZ-L57"/>
+                    <connections>
+                        <outlet property="appHeaderBarView" destination="e8z-3z-8Ns" id="8YH-4u-PAh"/>
+                        <outlet property="appNotificationSettingsTableView" destination="2WM-8y-mdb" id="JS2-rz-nfA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rtp-nD-m5l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4423" y="4961"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ChevronRight" width="384" height="384"/>
+        <image name="Settings" width="90" height="90"/>
+        <namedColor name="ControlNormalColor">
+            <color red="0.0" green="0.50499999523162842" blue="0.94800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryDarkestColor">
+            <color red="0.0" green="0.15299999713897705" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryLightestColor">
+            <color red="0.95499998331069946" green="0.98400002717971802" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryLightestColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

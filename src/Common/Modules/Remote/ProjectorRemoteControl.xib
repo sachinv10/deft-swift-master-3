@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProjectorRemoteControl" customModule="DEFT" customModuleProvider="target">
+            <connections>
+                <outlet property="circularDirectionButton" destination="EFb-GI-SS1" id="uAM-XX-0AP"/>
+                <outlet property="powerButton" destination="RJ5-UC-yVD" id="mfk-2o-vGA"/>
+                <outlet property="volumeRectangularDirectionButton" destination="O2g-c2-wM6" id="BAs-LU-Q33"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ll7-IE-oHw">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvb-Ml-ghK">
+                    <rect key="frame" x="94" y="0.0" width="132" height="56"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJ5-UC-yVD" userLabel="powerButton" customClass="AppToggleButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="F5R-J0-X2t"/>
+                                <constraint firstAttribute="height" constant="56" id="YSO-XO-WSh"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="14" minY="14" maxX="14" maxY="14"/>
+                            <state key="normal" image="RemoteButtonPowerOn"/>
+                            <connections>
+                                <action selector="didSelectPowerButton:" destination="-1" eventType="touchUpInside" id="bY9-5u-Cal"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="769-5h-GIQ" userLabel="backButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="76" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="56" id="MVk-kK-7wb"/>
+                                <constraint firstAttribute="height" constant="56" id="TWD-IA-02g"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemBlueColor"/>
+                            <inset key="imageEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                            <state key="normal" image="RemoteButtonBack"/>
+                            <connections>
+                                <action selector="didSelectBackButton:" destination="-1" eventType="touchUpInside" id="d4N-uE-7Lo"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="769-5h-GIQ" secondAttribute="trailing" id="0rt-pU-ah5"/>
+                        <constraint firstItem="769-5h-GIQ" firstAttribute="top" secondItem="kvb-Ml-ghK" secondAttribute="top" id="99V-fx-eSU"/>
+                        <constraint firstAttribute="bottom" secondItem="RJ5-UC-yVD" secondAttribute="bottom" id="9NS-t0-Y8B"/>
+                        <constraint firstItem="769-5h-GIQ" firstAttribute="leading" secondItem="RJ5-UC-yVD" secondAttribute="trailing" constant="20" id="avl-Qr-4A4"/>
+                        <constraint firstItem="RJ5-UC-yVD" firstAttribute="leading" secondItem="kvb-Ml-ghK" secondAttribute="leading" id="goj-kN-PEE"/>
+                        <constraint firstItem="RJ5-UC-yVD" firstAttribute="top" secondItem="kvb-Ml-ghK" secondAttribute="top" id="iic-j5-qPd"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLz-mi-JzP" userLabel="directionButtonContainerView">
+                    <rect key="frame" x="60" y="76" width="200" height="130"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFb-GI-SS1" customClass="CircularDirectionButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="EFb-GI-SS1" secondAttribute="height" multiplier="1:1" id="Kdo-sZ-shI"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2g-c2-wM6" userLabel="volumeRectangularDirectionButton" customClass="RectangularDirectionButton" customModule="DEFT" customModuleProvider="target">
+                            <rect key="frame" x="150" y="0.0" width="50" height="130"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="6hJ-Ee-LmD"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="EFb-GI-SS1" firstAttribute="leading" secondItem="SLz-mi-JzP" secondAttribute="leading" id="28y-CX-XDs"/>
+                        <constraint firstAttribute="trailing" secondItem="O2g-c2-wM6" secondAttribute="trailing" id="BLs-g8-K06"/>
+                        <constraint firstAttribute="bottom" secondItem="O2g-c2-wM6" secondAttribute="bottom" id="Emq-pp-A9d"/>
+                        <constraint firstItem="O2g-c2-wM6" firstAttribute="leading" secondItem="EFb-GI-SS1" secondAttribute="trailing" constant="20" id="LMF-if-6fv"/>
+                        <constraint firstAttribute="height" constant="130" id="PNp-gP-cIf"/>
+                        <constraint firstItem="EFb-GI-SS1" firstAttribute="top" secondItem="SLz-mi-JzP" secondAttribute="top" id="XQV-s4-p0b"/>
+                        <constraint firstAttribute="bottom" secondItem="EFb-GI-SS1" secondAttribute="bottom" id="l8k-dx-zUk"/>
+                        <constraint firstItem="O2g-c2-wM6" firstAttribute="top" secondItem="SLz-mi-JzP" secondAttribute="top" id="qun-pJ-D2Y"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Cch-yD-Lfr"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="SLz-mi-JzP" firstAttribute="centerX" secondItem="Ll7-IE-oHw" secondAttribute="centerX" id="67e-5N-lKr"/>
+                <constraint firstItem="SLz-mi-JzP" firstAttribute="top" secondItem="kvb-Ml-ghK" secondAttribute="bottom" constant="20" id="fa1-l8-eHh"/>
+                <constraint firstItem="kvb-Ml-ghK" firstAttribute="centerX" secondItem="Ll7-IE-oHw" secondAttribute="centerX" id="sFk-CZ-aJa"/>
+                <constraint firstItem="kvb-Ml-ghK" firstAttribute="top" secondItem="Ll7-IE-oHw" secondAttribute="top" id="vMT-Qo-FTq"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="279.71014492753625" y="496.875"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="769-5h-GIQ">
+            <size key="intrinsicContentSize" width="225" height="225"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="RemoteButtonBack" width="225" height="225"/>
+        <image name="RemoteButtonPowerOn" width="256" height="256"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

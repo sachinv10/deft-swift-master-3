@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search Lock Controller-->
+        <scene sceneID="z5t-7l-mkb">
+            <objects>
+                <viewController storyboardIdentifier="SearchLockControllerId" automaticallyAdjustsScrollViewInsets="NO" id="tZu-i9-gnp" customClass="SearchLockController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="M4W-ib-Fsh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vBI-OL-4ys" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="nnp-Bw-4oB"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8mn-6R-dmX" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                                <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchLockTableCellViewId" rowHeight="70" id="0ju-CU-EHP" customClass="SearchLockTableCellView" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0ju-CU-EHP" id="Kai-Xc-5kh">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bedroom Fan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PB-vO-rmq">
+                                                    <rect key="frame" x="15" y="25.5" width="96.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" name="PrimaryDarkestColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kmr-mi-PSj" userLabel="cellSeparatorView">
+                                                    <rect key="frame" x="0.0" y="68.5" width="414" height="1.5"/>
+                                                    <color key="backgroundColor" name="SecondaryLightestColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1.5" id="Kpd-JC-QMG"/>
+                                                    </constraints>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1US-Hc-YFZ">
+                                                    <rect key="frame" x="359" y="15" width="40" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="a4p-FY-8ou"/>
+                                                        <constraint firstAttribute="width" constant="40" id="wVU-js-Q5Q"/>
+                                                    </constraints>
+                                                    <color key="tintColor" systemColor="systemBlueColor"/>
+                                                    <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                    <state key="normal" image="LockClose"/>
+                                                    <connections>
+                                                        <action selector="didSelectLockButton:" destination="0ju-CU-EHP" eventType="touchUpInside" id="2TK-Tv-JDw"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Kmr-mi-PSj" firstAttribute="leading" secondItem="Kai-Xc-5kh" secondAttribute="leading" id="3cW-Ge-1pQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="1US-Hc-YFZ" secondAttribute="trailing" constant="15" id="4et-OG-VpV"/>
+                                                <constraint firstAttribute="trailing" secondItem="Kmr-mi-PSj" secondAttribute="trailing" id="7Ty-tg-MpG"/>
+                                                <constraint firstAttribute="bottom" secondItem="Kmr-mi-PSj" secondAttribute="bottom" id="SYd-LJ-dbB"/>
+                                                <constraint firstItem="6PB-vO-rmq" firstAttribute="leading" secondItem="Kai-Xc-5kh" secondAttribute="leading" constant="15" id="m5D-Wn-wfn"/>
+                                                <constraint firstItem="1US-Hc-YFZ" firstAttribute="centerY" secondItem="Kai-Xc-5kh" secondAttribute="centerY" id="s5P-9R-Zz9"/>
+                                                <constraint firstItem="6PB-vO-rmq" firstAttribute="centerY" secondItem="Kai-Xc-5kh" secondAttribute="centerY" id="uJd-qN-FbC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                        <connections>
+                                            <outlet property="lockStatusButton" destination="1US-Hc-YFZ" id="gJE-z8-QZE"/>
+                                            <outlet property="titleLabel" destination="6PB-vO-rmq" id="4Mz-E3-SRh"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="tZu-i9-gnp" id="clQ-vq-dh7"/>
+                                    <outlet property="delegate" destination="tZu-i9-gnp" id="i7B-YW-sut"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="KKS-A2-25J"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8mn-6R-dmX" firstAttribute="top" secondItem="vBI-OL-4ys" secondAttribute="bottom" id="GMJ-dn-8ga"/>
+                            <constraint firstItem="8mn-6R-dmX" firstAttribute="leading" secondItem="KKS-A2-25J" secondAttribute="leading" id="Gea-5R-vI6"/>
+                            <constraint firstItem="vBI-OL-4ys" firstAttribute="top" secondItem="M4W-ib-Fsh" secondAttribute="top" id="Oxc-Qi-hOq"/>
+                            <constraint firstItem="KKS-A2-25J" firstAttribute="trailing" secondItem="8mn-6R-dmX" secondAttribute="trailing" id="SXy-Uv-LPO"/>
+                            <constraint firstAttribute="trailing" secondItem="vBI-OL-4ys" secondAttribute="trailing" id="lS1-ba-hqK"/>
+                            <constraint firstItem="vBI-OL-4ys" firstAttribute="leading" secondItem="M4W-ib-Fsh" secondAttribute="leading" id="nvy-PH-3Hd"/>
+                            <constraint firstItem="KKS-A2-25J" firstAttribute="bottom" secondItem="8mn-6R-dmX" secondAttribute="bottom" id="qZy-qE-P2V"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="rxi-HX-8iF"/>
+                    <connections>
+                        <outlet property="appHeaderBarView" destination="vBI-OL-4ys" id="9Vm-cC-3Nm"/>
+                        <outlet property="lockTableView" destination="8mn-6R-dmX" id="DGN-Pm-hef"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Dq-Ts-5h6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2790" y="3603"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LockClose" width="488" height="488"/>
+        <namedColor name="PrimaryDarkestColor">
+            <color red="0.0" green="0.15299999713897705" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryLightestColor">
+            <color red="0.95499998331069946" green="0.98400002717971802" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryLightestColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

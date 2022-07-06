@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircularDirectionButton" customModule="Wifinity" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9u-ZU-Gnu">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5s-uy-v29" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                    <rect key="frame" x="49" y="0.0" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="B5s-uy-v29" secondAttribute="height" multiplier="1:1" id="8lP-UD-EJz"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <state key="normal" title="▲"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldHideBorder" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didBeginEditingUpButton:" destination="-1" eventType="editingDidBegin" id="Eto-Cm-FEB"/>
+                        <action selector="didSelectUpButton:" destination="-1" eventType="touchUpInside" id="9CV-37-Tby"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXd-gv-R5S" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="49" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="MXd-gv-R5S" secondAttribute="height" multiplier="1:1" id="57Y-st-pWm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <state key="normal" title="◀︎"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldHideBorder" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didBeginEditingLeftButton:" destination="-1" eventType="editingDidBegin" id="Unf-gK-AHJ"/>
+                        <action selector="didSelectLeftButton:" destination="-1" eventType="touchUpInside" id="jtC-0w-icT"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTl-Wa-w49" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                    <rect key="frame" x="98" y="49" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="rTl-Wa-w49" secondAttribute="height" multiplier="1:1" id="pjy-JD-pjZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <state key="normal" title="▶︎"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldHideBorder" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didBeginEditingRightButton:" destination="-1" eventType="editingDidBegin" id="iGc-YZ-qHT"/>
+                        <action selector="didSelectRightButton:" destination="-1" eventType="touchUpInside" id="5X9-fB-6qJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDE-NF-hUc" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                    <rect key="frame" x="49" y="98" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="vDE-NF-hUc" secondAttribute="height" multiplier="1:1" id="AKV-BD-4Wy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <state key="normal" title="▼"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="shouldHideBorder" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didBeginEditingDownButton:" destination="-1" eventType="editingDidBegin" id="KWR-i5-puR"/>
+                        <action selector="didSelectDownButton:" destination="-1" eventType="touchUpInside" id="P7t-DN-jvW"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nFr-eV-maf" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
+                    <rect key="frame" x="40.5" y="40.5" width="59" height="59"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="OK"/>
+                    <connections>
+                        <action selector="didBeginEditingOkButton:" destination="-1" eventType="editingDidBegin" id="OQD-xa-4fC"/>
+                        <action selector="didSelectOkButton:" destination="-1" eventType="touchUpInside" id="Nmt-hQ-sMC"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="VZL-ln-RyQ"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="rTl-Wa-w49" firstAttribute="centerY" secondItem="B9u-ZU-Gnu" secondAttribute="centerY" id="4DZ-X9-7Nf"/>
+                <constraint firstItem="nFr-eV-maf" firstAttribute="centerY" secondItem="B9u-ZU-Gnu" secondAttribute="centerY" id="C2c-KR-iaP"/>
+                <constraint firstItem="B5s-uy-v29" firstAttribute="top" secondItem="B9u-ZU-Gnu" secondAttribute="top" id="Gha-mx-6Y6"/>
+                <constraint firstItem="B5s-uy-v29" firstAttribute="height" secondItem="B9u-ZU-Gnu" secondAttribute="height" multiplier="0.3" id="KqT-j2-wJm"/>
+                <constraint firstItem="nFr-eV-maf" firstAttribute="width" secondItem="nFr-eV-maf" secondAttribute="height" multiplier="1:1" id="R0b-Yc-0wC"/>
+                <constraint firstAttribute="trailing" secondItem="rTl-Wa-w49" secondAttribute="trailing" id="RQl-YF-RP5"/>
+                <constraint firstItem="vDE-NF-hUc" firstAttribute="centerX" secondItem="B9u-ZU-Gnu" secondAttribute="centerX" id="UJG-D3-lci"/>
+                <constraint firstItem="rTl-Wa-w49" firstAttribute="width" secondItem="B9u-ZU-Gnu" secondAttribute="width" multiplier="0.3" id="YYE-W1-cPl"/>
+                <constraint firstItem="B5s-uy-v29" firstAttribute="centerX" secondItem="B9u-ZU-Gnu" secondAttribute="centerX" id="cTA-xc-50s"/>
+                <constraint firstItem="vDE-NF-hUc" firstAttribute="width" secondItem="B9u-ZU-Gnu" secondAttribute="width" multiplier="0.3" id="e58-0G-dg3"/>
+                <constraint firstAttribute="bottom" secondItem="vDE-NF-hUc" secondAttribute="bottom" id="isg-M1-qFJ"/>
+                <constraint firstItem="MXd-gv-R5S" firstAttribute="centerY" secondItem="B9u-ZU-Gnu" secondAttribute="centerY" id="jHR-WI-j2t"/>
+                <constraint firstItem="nFr-eV-maf" firstAttribute="height" secondItem="B9u-ZU-Gnu" secondAttribute="height" multiplier="0.42" id="lqU-10-9U4"/>
+                <constraint firstItem="MXd-gv-R5S" firstAttribute="leading" secondItem="B9u-ZU-Gnu" secondAttribute="leading" id="mGN-II-XYq"/>
+                <constraint firstItem="nFr-eV-maf" firstAttribute="centerX" secondItem="B9u-ZU-Gnu" secondAttribute="centerX" id="nGR-Fn-7Jr"/>
+                <constraint firstItem="MXd-gv-R5S" firstAttribute="width" secondItem="B9u-ZU-Gnu" secondAttribute="width" multiplier="0.3" id="pc2-XQ-3L3"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="836" y="107"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="B5s-uy-v29">
+            <size key="intrinsicContentSize" width="30" height="46"/>
+        </designable>
+        <designable name="MXd-gv-R5S">
+            <size key="intrinsicContentSize" width="30" height="46"/>
+        </designable>
+        <designable name="nFr-eV-maf">
+            <size key="intrinsicContentSize" width="30" height="34"/>
+        </designable>
+        <designable name="rTl-Wa-w49">
+            <size key="intrinsicContentSize" width="30" height="46"/>
+        </designable>
+        <designable name="vDE-NF-hUc">
+            <size key="intrinsicContentSize" width="30" height="46"/>
+        </designable>
+    </designables>
+</document>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Core View Controller-->
+        <scene sceneID="uhH-5J-78S">
+            <objects>
+                <viewController storyboardIdentifier="CoreViewController" id="XJD-4C-pmN" customClass="CoreViewController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZR5-LV-oHI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rj5-Th-6mR" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CoreTableViewCell" rowHeight="118" id="pUr-OL-Jbg" customClass="CoreTableViewCell" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="118"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pUr-OL-Jbg" id="d9f-13-aed">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="118"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcV-pg-TBC" userLabel="containerView">
+                                                    <rect key="frame" x="15" y="15" width="384" height="88"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CoreGreenIcon" translatesAutoresizingMaskIntoConstraints="NO" id="KeS-W6-bNw">
+                                                            <rect key="frame" x="15" y="24" width="40" height="40"/>
+                                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="r2L-fc-TPl"/>
+                                                                <constraint firstAttribute="width" constant="40" id="reA-NR-3X7"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bedroom Fan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTH-mN-42I">
+                                                            <rect key="frame" x="85" y="34.5" width="96.5" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xls-Gb-CTS" customClass="AppSwitch" customModule="Wifinity" customModuleProvider="target">
+                                                            <rect key="frame" x="319" y="29" width="52" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="etW-kw-49D"/>
+                                                                <constraint firstAttribute="width" constant="50" id="zdC-Rd-xz9"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="toggleClicked:" destination="pUr-OL-Jbg" eventType="valueChanged" id="Drx-HP-R4Q"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="KeS-W6-bNw" firstAttribute="leading" secondItem="QcV-pg-TBC" secondAttribute="leading" constant="15" id="0Nd-RQ-s03"/>
+                                                        <constraint firstAttribute="bottom" secondItem="KeS-W6-bNw" secondAttribute="bottom" constant="24" id="Ail-1c-eGB"/>
+                                                        <constraint firstItem="vTH-mN-42I" firstAttribute="centerY" secondItem="KeS-W6-bNw" secondAttribute="centerY" id="MjF-Kh-Qyd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="xls-Gb-CTS" secondAttribute="trailing" constant="15" id="ZK1-4n-imv"/>
+                                                        <constraint firstItem="KeS-W6-bNw" firstAttribute="centerY" secondItem="QcV-pg-TBC" secondAttribute="centerY" id="Zmg-0C-9Of"/>
+                                                        <constraint firstItem="xls-Gb-CTS" firstAttribute="centerY" secondItem="KeS-W6-bNw" secondAttribute="centerY" id="cH8-Mp-eqM"/>
+                                                        <constraint firstItem="KeS-W6-bNw" firstAttribute="top" secondItem="QcV-pg-TBC" secondAttribute="top" constant="24" id="exl-MF-nXF"/>
+                                                        <constraint firstItem="vTH-mN-42I" firstAttribute="leading" secondItem="KeS-W6-bNw" secondAttribute="trailing" constant="30" id="l0d-7g-tZe"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L7P-NQ-qUW">
+                                                    <rect key="frame" x="15" y="117.5" width="384" height="0.5"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="aer-MR-5iP"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="QcV-pg-TBC" secondAttribute="bottom" constant="15" id="4qQ-ZA-Lad"/>
+                                                <constraint firstAttribute="bottom" secondItem="L7P-NQ-qUW" secondAttribute="bottom" id="EaJ-WJ-Q5X"/>
+                                                <constraint firstAttribute="trailing" secondItem="L7P-NQ-qUW" secondAttribute="trailing" constant="15" id="Iqs-jR-cbs"/>
+                                                <constraint firstItem="L7P-NQ-qUW" firstAttribute="leading" secondItem="d9f-13-aed" secondAttribute="leading" constant="15" id="Ng0-pE-KET"/>
+                                                <constraint firstAttribute="trailing" secondItem="QcV-pg-TBC" secondAttribute="trailing" constant="15" id="cJe-UQ-Gi9"/>
+                                                <constraint firstItem="QcV-pg-TBC" firstAttribute="top" secondItem="d9f-13-aed" secondAttribute="top" constant="15" id="vsP-DO-Twe"/>
+                                                <constraint firstItem="QcV-pg-TBC" firstAttribute="leading" secondItem="d9f-13-aed" secondAttribute="leading" constant="15" id="zU7-dm-ASm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="coreIcon" destination="KeS-W6-bNw" id="tGQ-Ef-N9G"/>
+                                            <outlet property="coreToggleSwitch" destination="xls-Gb-CTS" id="mKe-rR-dgv"/>
+                                            <outlet property="nameLabel" destination="vTH-mN-42I" id="Y8E-dR-vGq"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cFE-Cf-7Rm" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="95" id="ALe-LL-L1c"/>
+                                </constraints>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MF1-wT-yaU" userLabel="addButton" customClass="AppFloatingButton" customModule="Wifinity" customModuleProvider="target">
+                                <rect key="frame" x="340" y="788" width="54" height="54"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="54" id="Ghc-ab-EgX"/>
+                                    <constraint firstAttribute="height" constant="54" id="rla-0H-D4S"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="18" minY="18" maxX="18" maxY="18"/>
+                                <state key="normal" image="Plus"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uYN-jV-meh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uYN-jV-meh" firstAttribute="bottom" secondItem="rj5-Th-6mR" secondAttribute="bottom" id="Chf-va-VEI"/>
+                            <constraint firstItem="cFE-Cf-7Rm" firstAttribute="leading" secondItem="uYN-jV-meh" secondAttribute="leading" id="HwF-Uf-sKa"/>
+                            <constraint firstItem="uYN-jV-meh" firstAttribute="trailing" secondItem="MF1-wT-yaU" secondAttribute="trailing" constant="20" id="Jk5-Xk-JVg"/>
+                            <constraint firstItem="rj5-Th-6mR" firstAttribute="leading" secondItem="uYN-jV-meh" secondAttribute="leading" id="QhK-fd-BI6"/>
+                            <constraint firstItem="cFE-Cf-7Rm" firstAttribute="top" secondItem="ZR5-LV-oHI" secondAttribute="top" id="Sfe-VN-gsQ"/>
+                            <constraint firstItem="rj5-Th-6mR" firstAttribute="top" secondItem="cFE-Cf-7Rm" secondAttribute="bottom" id="XUe-RZ-tkP"/>
+                            <constraint firstItem="uYN-jV-meh" firstAttribute="bottom" secondItem="MF1-wT-yaU" secondAttribute="bottom" constant="20" id="a0q-Ic-9iX"/>
+                            <constraint firstItem="uYN-jV-meh" firstAttribute="trailing" secondItem="rj5-Th-6mR" secondAttribute="trailing" id="s8b-MA-XZC"/>
+                            <constraint firstItem="cFE-Cf-7Rm" firstAttribute="trailing" secondItem="uYN-jV-meh" secondAttribute="trailing" id="snV-FP-FVw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="MF1-wT-yaU" id="5Fo-5o-ZOR"/>
+                        <outlet property="appHeaderBarView" destination="cFE-Cf-7Rm" id="cEd-e7-0SI"/>
+                        <outlet property="coreTableView" destination="rj5-Th-6mR" id="p3O-o7-6wB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4oj-3P-QLi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="89.855072463768124" y="42.857142857142854"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="CoreGreenIcon" width="30" height="30"/>
+        <image name="Plus" width="357" height="357"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

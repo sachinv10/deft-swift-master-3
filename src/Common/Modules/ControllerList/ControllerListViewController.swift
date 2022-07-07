@@ -125,6 +125,7 @@ class ControllerListViewController: BaseController {
 extension ControllerListViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let applinceobj = controllerApplince.count
+        print(applinceobj)
         return applinceobj
         
     }

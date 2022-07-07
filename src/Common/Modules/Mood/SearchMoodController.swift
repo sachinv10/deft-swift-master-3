@@ -44,7 +44,6 @@ class SearchMoodController: BaseController {
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("did dis appear........")
         self.controllerflag = false
     }
     

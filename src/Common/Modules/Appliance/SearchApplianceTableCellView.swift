@@ -16,6 +16,8 @@ class SearchApplianceTableCellView: UITableViewCell {
     @IBOutlet weak var roomTitleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: AppSwitch!
     @IBOutlet weak var slider: AppSlider!
+    
+    @IBOutlet weak var btnbackgroundhandel: UIButton!
     var sliderTimer: Timer?
     
     var appliance: Appliance?
@@ -36,6 +38,11 @@ class SearchApplianceTableCellView: UITableViewCell {
         }
     }
     
+    
+    @IBAction func btnbackgroundact(_ sender: Any) {
+        
+    }
+    
     @IBOutlet weak var containerViewTrailingConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
@@ -51,6 +58,8 @@ class SearchApplianceTableCellView: UITableViewCell {
         
         self.slider.minimumTrackTintColor = UIColor(named: "ControlCheckedColor")
         self.slider.maximumTrackTintColor = UIColor(named: "ControlNormalColor")
+        btnbackgroundhandel.setTitle("", for: .normal)
+      //  btnbackgroundhandel.contentEdgeInsets = UIEdgeInsets(top: 60, left: -115, bottom: 50, right: 50)
     }
     
     var propObserve = 1 {

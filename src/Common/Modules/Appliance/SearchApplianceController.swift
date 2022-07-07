@@ -60,6 +60,22 @@ class SearchApplianceController: BaseController {
                 self.addButton.isHidden = false
             }
         }
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        applianceTableView.addGestureRecognizer(longPress)
+    
+    }
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: applianceTableView)
+            if let indexPath = applianceTableView.indexPathForRow(at: touchPoint) {
+                print("indexpath=\(indexPath)")
+                
+                if self.isDetailsViewAvailable && indexPath.row < self.appliances.count {
+                    let aSelectedAppliance = self.appliances[indexPath.row]
+                    RoutingManager.shared.gotoApplianceDetails(controller: self, selectedAppliance: aSelectedAppliance)
+                }
+            }
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
@@ -516,11 +532,11 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
      */
     func tableView(_ pTableView: UITableView, didSelectRowAt pIndexPath: IndexPath) {
         pTableView.deselectRow(at: pIndexPath, animated: true)
-        
-        if self.isDetailsViewAvailable && pIndexPath.row < self.appliances.count {
-            let aSelectedAppliance = self.appliances[pIndexPath.row]
-            RoutingManager.shared.gotoApplianceDetails(controller: self, selectedAppliance: aSelectedAppliance)
-        }
+ 
+//        if self.isDetailsViewAvailable && pIndexPath.row < self.appliances.count {
+//            let aSelectedAppliance = self.appliances[pIndexPath.row]
+//            RoutingManager.shared.gotoApplianceDetails(controller: self, selectedAppliance: aSelectedAppliance)
+//        }
     }
     
     

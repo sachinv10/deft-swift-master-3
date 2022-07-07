@@ -68,8 +68,18 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odd-No-RWx">
+                                                            <rect key="frame" x="213" y="-28" width="220" height="96"/>
+                                                            <inset key="imageEdgeInsets" minX="50" minY="40" maxX="30" maxY="40"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain"/>
+                                                            <connections>
+                                                                <action selector="btnbackgroundact:" destination="mKO-ug-gqQ" eventType="touchUpInside" id="Zlw-22-bp9"/>
+                                                            </connections>
+                                                        </button>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MiF-Th-ujB" customClass="AppSwitch" customModule="Wifinity" customModuleProvider="target">
                                                             <rect key="frame" x="334" y="5" width="52" height="30"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="OPa-9r-G7j"/>
                                                                 <constraint firstAttribute="width" constant="50" id="YgQ-mo-RAV"/>
@@ -92,16 +102,20 @@
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="Dh7-WX-Sdc" secondAttribute="bottom" id="2Vy-sl-I3C"/>
                                                         <constraint firstItem="uvW-jw-fvG" firstAttribute="top" secondItem="WhL-jz-FUh" secondAttribute="top" id="427-f3-12C"/>
+                                                        <constraint firstItem="odd-No-RWx" firstAttribute="centerX" secondItem="MiF-Th-ujB" secondAttribute="centerX" multiplier="0.9" id="8TH-yL-FVx"/>
                                                         <constraint firstItem="MiF-Th-ujB" firstAttribute="centerY" secondItem="uvW-jw-fvG" secondAttribute="centerY" id="Mh5-Yy-kor"/>
                                                         <constraint firstItem="m52-0P-vUu" firstAttribute="leading" secondItem="uvW-jw-fvG" secondAttribute="trailing" constant="10" id="Mnc-jL-nK2"/>
                                                         <constraint firstItem="Ezm-Nb-NLe" firstAttribute="trailing" secondItem="uvW-jw-fvG" secondAttribute="trailing" id="Nvj-A3-g55"/>
                                                         <constraint firstItem="FmK-WN-Dag" firstAttribute="bottom" secondItem="m52-0P-vUu" secondAttribute="bottom" id="SID-jZ-dDe"/>
+                                                        <constraint firstItem="odd-No-RWx" firstAttribute="width" secondItem="MiF-Th-ujB" secondAttribute="width" multiplier="4.4" id="SuD-Od-Rg2"/>
                                                         <constraint firstAttribute="trailing" secondItem="Dh7-WX-Sdc" secondAttribute="trailing" id="UPf-KF-YTu"/>
                                                         <constraint firstItem="m52-0P-vUu" firstAttribute="centerY" secondItem="uvW-jw-fvG" secondAttribute="centerY" id="Uu6-uG-rSO"/>
                                                         <constraint firstItem="uvW-jw-fvG" firstAttribute="leading" secondItem="WhL-jz-FUh" secondAttribute="leading" id="Vne-Ck-xDa"/>
+                                                        <constraint firstItem="odd-No-RWx" firstAttribute="height" secondItem="MiF-Th-ujB" secondAttribute="height" multiplier="3.2" id="aBD-Di-qn7"/>
                                                         <constraint firstItem="Ezm-Nb-NLe" firstAttribute="bottom" secondItem="uvW-jw-fvG" secondAttribute="bottom" id="coG-lm-Cy5"/>
                                                         <constraint firstItem="FmK-WN-Dag" firstAttribute="leading" secondItem="m52-0P-vUu" secondAttribute="trailing" constant="8" id="ibQ-Ts-DKC"/>
                                                         <constraint firstAttribute="trailing" secondItem="MiF-Th-ujB" secondAttribute="trailing" id="kEY-5A-TMG"/>
+                                                        <constraint firstItem="odd-No-RWx" firstAttribute="centerY" secondItem="MiF-Th-ujB" secondAttribute="centerY" id="kQa-v6-2DC"/>
                                                         <constraint firstItem="Dh7-WX-Sdc" firstAttribute="leading" secondItem="WhL-jz-FUh" secondAttribute="leading" id="rYT-td-YMp"/>
                                                     </constraints>
                                                 </view>
@@ -136,6 +150,7 @@
                                         <color key="backgroundColor" name="PrimaryLightestColor"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="btnbackgroundhandel" destination="odd-No-RWx" id="8qa-o4-E1r"/>
                                             <outlet property="containerViewTrailingConstraint" destination="GsL-aI-XB1" id="Ks2-2g-o2S"/>
                                             <outlet property="disclosureIndicatorImageView" destination="SAt-IV-IF7" id="Um2-je-G1v"/>
                                             <outlet property="iconImageView" destination="uvW-jw-fvG" id="S8W-oo-zk6"/>

@@ -59,32 +59,35 @@ class DashboardController: BaseController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.async {
-        do{
-        let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
-        aCollectionViewFlowLayout.scrollDirection = .vertical
-        aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
-        aCollectionViewFlowLayout.minimumLineSpacing = 1
-        aCollectionViewFlowLayout.minimumInteritemSpacing = 1
-            DispatchQueue.main.async(execute: {
-             
-                self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
-            })
-
-        self.applianceCollectionView.delaysContentTouches = false
-        
-        self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
-        let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
-        aRoomCollectionViewFlowLayout.scrollDirection = .vertical
-        aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
-        aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
-        aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
-        self.roomCollectionView.collectionViewLayout = aRoomCollectionViewFlowLayout
-        self.roomCollectionView.delaysContentTouches = false
-        }catch let error{
-            print(error.localizedDescription)
-        }
-      }
+//        DispatchQueue.main.async {
+//        do{
+//        let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
+//        aCollectionViewFlowLayout.scrollDirection = .vertical
+//        aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
+//           aCollectionViewFlowLayout.minimumLineSpacing = 1
+//            aCollectionViewFlowLayout.minimumInteritemSpacing = 1
+//            self.applianceCollectionView.clipsToBounds = true
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
+//            }
+//
+//        self.applianceCollectionView.delaysContentTouches = false
+//
+//        self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
+//        let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
+//        aRoomCollectionViewFlowLayout.scrollDirection = .vertical
+//        aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
+//        aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
+//        aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
+//            self.roomCollectionView.clipsToBounds = true
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                self.roomCollectionView.collectionViewLayout = aRoomCollectionViewFlowLayout
+//            }
+//        self.roomCollectionView.delaysContentTouches = false
+//        }catch let error{
+//            print(error.localizedDescription)
+//        }
+//      }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,6 +99,36 @@ class DashboardController: BaseController {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         print("appversion=\(appVersion!)")
         checkApplicationVersion(appversion: appVersion!)
+    }
+    func loadcollectionView() {
+        
+        do{
+        let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
+        aCollectionViewFlowLayout.scrollDirection = .vertical
+        aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
+           aCollectionViewFlowLayout.minimumLineSpacing = 1
+            aCollectionViewFlowLayout.minimumInteritemSpacing = 1
+            self.applianceCollectionView.clipsToBounds = true
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
+            }
+
+        self.applianceCollectionView.delaysContentTouches = false
+        self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
+        let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
+        aRoomCollectionViewFlowLayout.scrollDirection = .vertical
+        aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
+        aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
+        aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
+            self.roomCollectionView.clipsToBounds = true
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+                self.roomCollectionView.collectionViewLayout = aRoomCollectionViewFlowLayout
+            }
+        self.roomCollectionView.delaysContentTouches = false
+        }catch let error{
+            print(error.localizedDescription)
+        }
+      
     }
     func checkApplicationVersion(appversion: String) {
         if let uid = Auth.auth().currentUser?.uid{
@@ -211,6 +244,7 @@ class DashboardController: BaseController {
         
         self.applianceCollectionView.reloadData()
         self.roomCollectionView.reloadData()
+        loadcollectionView()
     }
     
     

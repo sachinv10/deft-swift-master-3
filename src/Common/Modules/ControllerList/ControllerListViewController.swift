@@ -55,7 +55,7 @@ class ControllerListViewController: BaseController {
         
      //   ProgressOverlay.shared.show()
         DataFetchManager.shared.deviceDetails(completion: { (pError, pApplianceArray) in
-             ProgressOverlay.shared.hide()
+          //   ProgressOverlay.shared.hide()
             do
             {
             if pApplianceArray != nil {
@@ -93,7 +93,7 @@ class ControllerListViewController: BaseController {
                 print(error.localizedDescription)
                 ProgressOverlay.shared.hide()
             }
-           // self.reloadAllView()
+            self.reloadAllView()
 
             })
         }

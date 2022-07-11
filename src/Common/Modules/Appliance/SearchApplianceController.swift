@@ -177,7 +177,6 @@ class SearchApplianceController: BaseController {
             let value = setSliderInitialValue()
             self.dynamicButtonContainerView.customeSlider.value = Float(value)
         }
-        
         self.applianceTableView.reloadData()
     }
     func reloadAllViewforupdate() {

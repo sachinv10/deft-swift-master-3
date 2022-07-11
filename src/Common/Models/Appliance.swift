@@ -287,6 +287,9 @@ class ControllerAppliance: NSObject {
     var hardwareId :String?
     var title :String?
     var lastOperated :Double?
+    var wifiSignalStrength :String?
+    var wifiSsid : String?
+    var wifiPassword : String?
     
     func clone() -> ControllerAppliance {
         let anAppliance = ControllerAppliance()
@@ -299,6 +302,9 @@ class ControllerAppliance: NSObject {
         anAppliance.hardwareId = self.hardwareId
         anAppliance.online = self.online
         anAppliance.lastOperated = self.lastOperated
+        anAppliance.wifiSignalStrength = self.wifiSignalStrength
+        anAppliance.wifiSsid = self.wifiSsid
+        anAppliance.wifiPassword = self.wifiPassword
         return anAppliance
     }
 }

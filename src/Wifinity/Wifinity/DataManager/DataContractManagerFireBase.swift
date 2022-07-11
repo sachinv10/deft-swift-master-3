@@ -252,7 +252,15 @@ extension DataContractManagerFireBase {
             if let lastactivity = pDict["lastActive"] as? Double{
                 aDevice.lastOperated = lastactivity
             }
-            
+            if let wifiPassword = pDict["wifiPassword"] as? String{
+                aDevice.wifiPassword = wifiPassword
+            }
+            if let wifiSsid = pDict["wifiSsid"] as? String{
+                aDevice.wifiSsid = wifiSsid
+            }
+            if let wifiSignalStrength = pDict["wifiSignalStrength"] as? String{
+                aDevice.wifiSignalStrength = wifiSignalStrength
+            }
             aDevice.clone()
             aReturnVal = aDevice
         }

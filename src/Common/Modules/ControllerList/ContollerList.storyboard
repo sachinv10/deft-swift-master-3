@@ -278,7 +278,7 @@
                                         <color key="textColor" name="SecondaryDarkerColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wifi Signal Strenth" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZl-yn-dOM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wifi Signal Strength" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZl-yn-dOM">
                                         <rect key="frame" x="36" y="303.5" width="342" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.045137149771464213" green="0.045137149771464213" blue="0.045137149771464213" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -302,23 +302,50 @@
                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXH-mp-06E">
+                                        <rect key="frame" x="8" y="436" width="398" height="265"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qRE-uF-8GH">
+                                                <rect key="frame" x="8" y="8" width="382" height="257"/>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="qRE-uF-8GH" secondAttribute="trailing" constant="8" id="FRC-0O-VOD"/>
+                                            <constraint firstAttribute="bottom" secondItem="qRE-uF-8GH" secondAttribute="bottom" id="YxQ-fH-Zwl"/>
+                                            <constraint firstItem="qRE-uF-8GH" firstAttribute="leading" secondItem="JXH-mp-06E" secondAttribute="leading" constant="8" id="nV7-pS-p4E"/>
+                                            <constraint firstItem="qRE-uF-8GH" firstAttribute="top" secondItem="JXH-mp-06E" secondAttribute="top" constant="8" id="okD-Ta-gzh"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53X-3I-MhN">
+                                        <rect key="frame" x="341" y="334.5" width="37" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise" catalog="system"/>
+                                        <connections>
+                                            <action selector="Refrashwifisignalbtn:" destination="pa5-LG-iTb" eventType="touchUpInside" id="8BY-rX-CXX"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="vZl-yn-dOM" firstAttribute="centerX" secondItem="Fhm-w9-0ZV" secondAttribute="centerX" id="0C9-EQ-Phh"/>
                                     <constraint firstItem="Fhm-w9-0ZV" firstAttribute="leading" secondItem="rcz-1A-QaC" secondAttribute="leading" id="1XG-bT-uwx"/>
+                                    <constraint firstItem="JXH-mp-06E" firstAttribute="height" secondItem="Ou1-5Q-1HW" secondAttribute="height" multiplier="0.323961" id="1kk-hP-Una"/>
+                                    <constraint firstItem="53X-3I-MhN" firstAttribute="height" secondItem="VbR-zg-mjY" secondAttribute="height" multiplier="1.47619" id="2km-mP-EKp"/>
                                     <constraint firstItem="qRD-HH-1Bx" firstAttribute="centerX" secondItem="VbR-zg-mjY" secondAttribute="centerX" id="6Bm-tl-lnt"/>
                                     <constraint firstItem="vZl-yn-dOM" firstAttribute="leading" secondItem="Fhm-w9-0ZV" secondAttribute="leading" id="7me-dQ-7Gs"/>
                                     <constraint firstItem="ggd-gM-bmb" firstAttribute="centerX" secondItem="Y0Y-KQ-10m" secondAttribute="centerX" id="9Bj-3w-U2q"/>
                                     <constraint firstItem="qRD-HH-1Bx" firstAttribute="trailing" secondItem="VbR-zg-mjY" secondAttribute="trailing" id="9nq-q8-uOQ"/>
+                                    <constraint firstItem="53X-3I-MhN" firstAttribute="centerY" secondItem="VbR-zg-mjY" secondAttribute="centerY" id="CSe-8e-V5L"/>
                                     <constraint firstItem="VbR-zg-mjY" firstAttribute="centerX" secondItem="vZl-yn-dOM" secondAttribute="centerX" id="DwT-DA-CVQ"/>
                                     <constraint firstItem="iZt-JT-F4K" firstAttribute="top" secondItem="qRD-HH-1Bx" secondAttribute="bottom" constant="8" symbolic="YES" id="Egh-dJ-9be"/>
                                     <constraint firstItem="ggd-gM-bmb" firstAttribute="trailing" secondItem="Y0Y-KQ-10m" secondAttribute="trailing" id="HLf-Op-hSM"/>
                                     <constraint firstItem="sgO-eA-xV2" firstAttribute="top" secondItem="Ou1-5Q-1HW" secondAttribute="top" constant="81" id="HrV-i6-QPa"/>
+                                    <constraint firstItem="JXH-mp-06E" firstAttribute="top" secondItem="Ou1-5Q-1HW" secondAttribute="top" constant="436" id="Jd4-TH-dpc"/>
                                     <constraint firstItem="WaE-PG-vf5" firstAttribute="centerX" secondItem="Ou1-5Q-1HW" secondAttribute="centerX" id="LcI-Yv-UZw"/>
                                     <constraint firstItem="Y0Y-KQ-10m" firstAttribute="top" secondItem="Ou1-5Q-1HW" secondAttribute="top" constant="136" id="PIm-cp-LAq"/>
                                     <constraint firstItem="iZt-JT-F4K" firstAttribute="centerX" secondItem="qRD-HH-1Bx" secondAttribute="centerX" id="Psc-QX-y1E"/>
                                     <constraint firstItem="VbR-zg-mjY" firstAttribute="leading" secondItem="vZl-yn-dOM" secondAttribute="leading" id="QCN-AB-B1M"/>
+                                    <constraint firstItem="JXH-mp-06E" firstAttribute="centerX" secondItem="Ou1-5Q-1HW" secondAttribute="centerX" id="Sdw-h2-UbY"/>
                                     <constraint firstItem="Fhm-w9-0ZV" firstAttribute="centerX" secondItem="rcz-1A-QaC" secondAttribute="centerX" id="VzT-Pb-M4r"/>
                                     <constraint firstItem="rcz-1A-QaC" firstAttribute="leading" secondItem="ggd-gM-bmb" secondAttribute="leading" id="Y7o-YX-ywH"/>
                                     <constraint firstItem="VbR-zg-mjY" firstAttribute="top" secondItem="vZl-yn-dOM" secondAttribute="bottom" constant="15" id="YKV-5x-bLw"/>
@@ -329,12 +356,15 @@
                                     <constraint firstItem="Y0Y-KQ-10m" firstAttribute="width" secondItem="Ou1-5Q-1HW" secondAttribute="width" multiplier="0.826087" id="d4s-g8-eJ4"/>
                                     <constraint firstItem="sgO-eA-xV2" firstAttribute="width" secondItem="Ou1-5Q-1HW" secondAttribute="width" multiplier="0.826087" id="d51-Pe-L4j"/>
                                     <constraint firstItem="Y0Y-KQ-10m" firstAttribute="height" secondItem="Ou1-5Q-1HW" secondAttribute="height" multiplier="0.0256724" id="e6R-e9-BZu"/>
+                                    <constraint firstItem="53X-3I-MhN" firstAttribute="width" secondItem="VbR-zg-mjY" secondAttribute="width" multiplier="0.108187" id="f2Z-Ph-OdQ"/>
                                     <constraint firstItem="vZl-yn-dOM" firstAttribute="trailing" secondItem="Fhm-w9-0ZV" secondAttribute="trailing" id="fVD-s0-WU4"/>
+                                    <constraint firstAttribute="bottom" secondItem="JXH-mp-06E" secondAttribute="bottom" priority="250" constant="117" id="fVW-an-N6r"/>
                                     <constraint firstItem="sgO-eA-xV2" firstAttribute="height" secondItem="Ou1-5Q-1HW" secondAttribute="height" multiplier="0.0256724" id="ggu-UN-Elv"/>
                                     <constraint firstItem="Fhm-w9-0ZV" firstAttribute="top" secondItem="rcz-1A-QaC" secondAttribute="bottom" constant="15" id="ijn-dN-EkG"/>
                                     <constraint firstItem="qRD-HH-1Bx" firstAttribute="leading" secondItem="VbR-zg-mjY" secondAttribute="leading" id="jMu-KY-EoL"/>
                                     <constraint firstItem="VbR-zg-mjY" firstAttribute="trailing" secondItem="vZl-yn-dOM" secondAttribute="trailing" id="krn-7y-X1L"/>
                                     <constraint firstItem="iZt-JT-F4K" firstAttribute="trailing" secondItem="qRD-HH-1Bx" secondAttribute="trailing" id="nOs-DT-i5a"/>
+                                    <constraint firstItem="JXH-mp-06E" firstAttribute="width" secondItem="Ou1-5Q-1HW" secondAttribute="width" multiplier="0.961353" id="opl-27-PfK"/>
                                     <constraint firstItem="ggd-gM-bmb" firstAttribute="leading" secondItem="Y0Y-KQ-10m" secondAttribute="leading" id="pdU-Cf-qnQ"/>
                                     <constraint firstItem="rcz-1A-QaC" firstAttribute="top" secondItem="ggd-gM-bmb" secondAttribute="bottom" constant="25" id="qAl-U3-SbX"/>
                                     <constraint firstItem="WaE-PG-vf5" firstAttribute="height" secondItem="Ou1-5Q-1HW" secondAttribute="height" multiplier="0.0770171" id="sOj-E7-xN1"/>
@@ -345,6 +375,7 @@
                                     <constraint firstItem="sgO-eA-xV2" firstAttribute="centerX" secondItem="Ou1-5Q-1HW" secondAttribute="centerX" id="xB9-00-yF8"/>
                                     <constraint firstItem="Fhm-w9-0ZV" firstAttribute="trailing" secondItem="rcz-1A-QaC" secondAttribute="trailing" id="xbm-cn-Qzd"/>
                                     <constraint firstItem="Y0Y-KQ-10m" firstAttribute="centerX" secondItem="Ou1-5Q-1HW" secondAttribute="centerX" id="ym9-q8-9j9"/>
+                                    <constraint firstItem="53X-3I-MhN" firstAttribute="leading" secondItem="VbR-zg-mjY" secondAttribute="trailing" constant="-37" id="zmI-TD-oA3"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -358,12 +389,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="Refrashbtn" destination="53X-3I-MhN" id="9jP-kY-F1B"/>
                         <outlet property="backgroundview" destination="Ou1-5Q-1HW" id="Wuw-0O-Prh"/>
                         <outlet property="lblHardwareId" destination="ggd-gM-bmb" id="jzr-Zl-J05"/>
                         <outlet property="lblLastActivity" destination="Fhm-w9-0ZV" id="50t-0n-L9M"/>
                         <outlet property="lblProductionRegistrestion" destination="iZt-JT-F4K" id="W69-D6-jJu"/>
                         <outlet property="lblbtnback" destination="wpS-8O-DQi" id="EzM-fl-xhA"/>
                         <outlet property="lblwifiSignal" destination="VbR-zg-mjY" id="Mh4-mM-mCa"/>
+                        <outlet property="stackView" destination="qRE-uF-8GH" id="iSq-V0-8aA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WyY-pq-5Hu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -373,6 +406,7 @@
     </scenes>
     <resources>
         <image name="Back" width="512" height="512"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="images" width="225" height="225"/>
         <namedColor name="ControlCheckedColor">
             <color red="0.0030000000260770321" green="0.90600001811981201" blue="0.0040000001899898052" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

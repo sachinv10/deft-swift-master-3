@@ -174,6 +174,77 @@ extension DataFetchManagerFireBase {
         }
         
     }
+    func devidedetail(pcontrollerApplince: ControllerAppliance) ->  String{
+        
+       let aRoomId = pcontrollerApplince.roomId!
+        let controller_id = pcontrollerApplince.id
+            let aDispatchSemaphore = DispatchSemaphore(value: 0)
+            database.child("rooms").child(Auth.auth().currentUser!.uid).child(aRoomId).child("devices")
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<aDeviceIdArray.count {
+                            if controller_id == aRoomId{
+                                pcontrollerApplince.hardwareId = String(i)
+                            }
+                        }
+                       
+                    }
+                    aDispatchSemaphore.signal()
+                }
+            Database.database().reference()
+                .child("rooms")
+                .child(Auth.auth().currentUser!.uid)
+                .child(aRoomId)
+                .child("curtains")
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<aDeviceIdArray.count {
+                            if controller_id == aRoomId{
+                                pcontrollerApplince.hardwareId = String(i)
+                            }
+                        }
+
+                    }
+                    aDispatchSemaphore.signal()
+                }
+
+            Database.database().reference()
+                .child("rooms")
+                .child(Auth.auth().currentUser!.uid)
+                .child(aRoomId)
+                .child("remotes")
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<aDeviceIdArray.count {
+                            if controller_id == aRoomId{
+                                pcontrollerApplince.hardwareId = String(i)
+                            }
+                        }
+
+                    }
+                    aDispatchSemaphore.signal()
+                }
+            Database.database().reference()
+                .child("rooms")
+                .child(Auth.auth().currentUser!.uid)
+                .child(aRoomId)
+                .child("sensors")
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<aDeviceIdArray.count {
+                            if controller_id == aRoomId{
+                                pcontrollerApplince.hardwareId = String(i)
+                            }
+                        }
+
+                    }
+                    aDispatchSemaphore.signal()
+                }
+            _ = aDispatchSemaphore.wait(timeout: .distantFuture)
+       
+        return ""
+      //  return aFetchedRoomIdArray
+    }
     
     func dashboardDetails(completion pCompletion: @escaping (Error?, Array<Appliance>?, Array<Room>?) -> Void) {
         DispatchQueue.global(qos: .background).async {

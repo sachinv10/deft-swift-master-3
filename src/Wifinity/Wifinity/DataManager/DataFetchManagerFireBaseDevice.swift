@@ -338,6 +338,7 @@ extension DataFetchManagerFireBase {
                             if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
                                 aFetchedRoomIdArray.append(contentsOf: aDeviceIdArray)
                             }
+                            
                             aDispatchSemaphore.signal()
                         }
                     _ = aDispatchSemaphore.wait(timeout: .distantFuture)

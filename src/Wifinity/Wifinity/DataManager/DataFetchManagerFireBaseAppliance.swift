@@ -170,6 +170,190 @@ extension DataFetchManagerFireBase {
     }
     
     
+    func deleteOneController(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :ControllerAppliance) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            let controllerId = pAppliance.id
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                if (pAppliance.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
+                }
+                
+                // NO NEED TO update state in database
+               
+                
+                
+                let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
+                var aMessageField :DatabaseReference? = nil
+                aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId!)
+                var idcont = pAppliance.id
+               var conditions = idcont!.contains("C")
+                if conditions{
+                aMessageField?.child("devices").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let anArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<anArray.count{
+                        if controllerId == anArray[i] as String{
+                            pAppliance.hardwareId = String(i)
+                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            
+                          }
+                        }
+                    print(anArray)
+                    }
+                    aSwitchTypeDispatchSemaphore.signal()
+                }
+                }
+                conditions = idcont!.contains("I")
+                if conditions{
+                aMessageField?.child("remotes").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let anArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<anArray.count{
+                        if controllerId == anArray[i] as String{
+                            pAppliance.hardwareId = String(i)
+                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            
+                          }
+                        }
+                    print(anArray)
+                    }
+                    aSwitchTypeDispatchSemaphore.signal()
+                }
+                }
+                    
+                conditions = idcont!.contains("M0")
+                if conditions{
+                aMessageField?.child("curtains").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let anArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<anArray.count{
+                        if controllerId == anArray[i] as String{
+                            pAppliance.hardwareId = String(i)
+                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            
+                          }
+                        }
+                    print(anArray)
+                    }
+                    aSwitchTypeDispatchSemaphore.signal()
+                }
+                }
+                conditions = idcont!.contains("S")
+                if conditions{
+                aMessageField?.child("sensors").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let anArray = pDataSnapshot.value as? Array<String> {
+                        for i in 0..<anArray.count{
+                        if controllerId == anArray[i] as String{
+                            pAppliance.hardwareId = String(i)
+                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            
+                          }
+                        }
+                    print(anArray)
+                    }
+                    aSwitchTypeDispatchSemaphore.signal()
+                }
+                }
+                    
+            _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
+ 
+                
+             
+             } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError)
+            }
+        }
+        
+    }
+    func deleteOneControllerWithId(appliance pAppliance :ControllerAppliance) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            let controllerId = pAppliance.id
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                if (pAppliance.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
+                }
+                
+                // NO NEED TO update state in database
+           
+                let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
+                var aMessageField :DatabaseReference? = nil
+                aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId!).child("devices").child(pAppliance.hardwareId!)
+ 
+                aMessageField?.removeValue(completionBlock: { (pError, pDatabaseReference) in
+                    anError = pError
+                    aSwitchTypeDispatchSemaphore.signal()
+                })
+            _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
+ 
+             
+             } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+               
+            }
+        }
+        
+    }
+    func deleteController(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :ControllerAppliance) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                if (pAppliance.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
+                }
+                
+                // NO NEED TO update state in database
+                
+                // Send message and reset it
+               
+                let aMessageValue = "R"
+                anError = self.sendMessagereset(aMessageValue, entity: pAppliance)
+                if anError != nil {
+                    throw anError!
+                }
+                
+                // Update frequent usage count
+                
+                if anError != nil {
+                    throw anError!
+                }
+            } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError)
+            }
+        }
+        
+    }
     func updateAppliancePowerState(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1

@@ -61,8 +61,7 @@ class ControllerListViewController: BaseController {
             if pApplianceArray != nil {
                 
                 self.controllerApplince = try pApplianceArray!
-             //   print("divice list:\(SearchApplianceController.applinceId)")
-            }
+             }
             }catch let error{
                 print(error.localizedDescription)
             }
@@ -76,8 +75,7 @@ class ControllerListViewController: BaseController {
         self.appliances.removeAll()
         self.rooms.removeAll()
         self.filteredRooms.removeAll()
-     //   self.roomFilterTextField.text = nil
-        DispatchQueue.main.async {
+         DispatchQueue.main.async {
       //  ProgressOverlay.shared.show()
         DataFetchManager.shared.deviceDetails(completion: { (pError, pApplianceArray) in
          //   ProgressOverlay.shared.hide()
@@ -116,8 +114,8 @@ class ControllerListViewController: BaseController {
     @IBOutlet weak var controllertableview: UITableView!
     @IBOutlet weak var backbtnlable: UIButton!
     @IBAction func btnbacktoDashboard(_ sender: Any) {
-     
-        RoutingManager.shared.goBackToDashboard()
+        RoutingManager.shared.goToPreviousScreen(self)
+       // RoutingManager.shared.goBackToDashboard()
     }
     
 

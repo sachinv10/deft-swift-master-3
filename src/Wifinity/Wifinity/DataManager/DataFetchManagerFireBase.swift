@@ -435,4 +435,76 @@ extension DataFetchManagerFireBase {
         return aReturnVal
     }
     
+    func sendMessagereset(_ pMessage :String, entity pEntity :Any ) -> Error? {
+        var aReturnVal :Error? = nil
+        
+        do {
+            var flagmode: Bool = false
+            var aNodeId :String? = nil
+            var statusflag: Bool = false
+            
+            if let anAppliance = pEntity as? Appliance {
+                aNodeId = anAppliance.hardwareId
+            } else if let aCurtain = pEntity as? Curtain {
+                aNodeId = aCurtain.id
+            } else if let aRemote = pEntity as? Remote {
+                aNodeId = aRemote.hardwareId
+            } else if let aSensor = pEntity as? Sensor {
+                aNodeId = aSensor.id
+            } else if let aSchedule = pEntity as? Schedule {
+                aNodeId = aSchedule.id
+            } else if let aMood = pEntity as? Mood {
+                aNodeId = aMood.id
+                flagmode = true
+  
+            } else if let aLock = pEntity as? Lock {
+                aNodeId = aLock.id
+            } else if let deviceID = pEntity as? String {
+                aNodeId = deviceID
+            }else if let anAppliance = pEntity as? ControllerAppliance {
+                aNodeId = anAppliance.id
+            }
+            
+            if (aNodeId?.count ?? 0) <= 0 {
+                throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Command node ID is not available."])
+            }
+            
+            var aMessageField :DatabaseReference? = nil
+            aMessageField = self.database
+                .child("messages")
+                .child(aNodeId!)
+                .child("applianceData")
+                .child("message")
+            
+           
+            
+            // Send message
+            var aSetMessageError :Error? = nil
+            let aMessageDispatchSemaphore = DispatchSemaphore(value: 0)
+            aMessageField?.setValue(pMessage, withCompletionBlock: { (pError, pDatabaseReference) in
+                aSetMessageError = pError
+                aMessageDispatchSemaphore.signal()
+            })
+            _ = aMessageDispatchSemaphore.wait(timeout: .distantFuture)
+            if let anError = aSetMessageError {
+                throw anError
+            }
+            
+            // Reset message
+            var aResetMessageError :Error? = nil
+            let aResetMessageDispatchSemaphore = DispatchSemaphore(value: 0)
+            aMessageField?.setValue("aa", withCompletionBlock: { (pError, pDatabaseReference) in
+                aResetMessageError = pError
+                aResetMessageDispatchSemaphore.signal()
+            })
+            _ = aResetMessageDispatchSemaphore.wait(timeout: .distantFuture)
+            if let anError = aResetMessageError {
+                throw anError
+            }
+        } catch {
+            aReturnVal = error
+        }
+        
+        return aReturnVal
+    }
 }

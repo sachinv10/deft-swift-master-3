@@ -27,6 +27,8 @@ class DashboardController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       
         controllerflag = true
          self.view.backgroundColor = UIColor(named: "SecondaryLightestColor")
         leftmenubtn.setTitle("", for: .normal)
@@ -144,6 +146,7 @@ class DashboardController: BaseController {
             }
         }
     }
+    
     func UpdateAleart() {
  
         let alertController = UIAlertController(title: "Update!!!", message: "Newer update available and can be installed from the AppStore", preferredStyle: .alert)
@@ -158,9 +161,7 @@ class DashboardController: BaseController {
             (action: UIAlertAction!) in
         }
         alertController.addAction(cancelAction)
-        
         self.present(alertController, animated: true, completion: nil)
-      
     }
     func updateApptoAppstore(){
         if let url = URL(string: "https://apps.apple.com/in/app/wifinity-pro/id1576478142") {
@@ -172,7 +173,7 @@ class DashboardController: BaseController {
         controllerflag = false
     }
     func activatdatalistner()  {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7){
             print("get applianceDetails")
             for i in (0 ..< SearchApplianceController.applinceId.count) {
                 print(SearchApplianceController.applinceId[i])
@@ -197,10 +198,8 @@ class DashboardController: BaseController {
             do
             {
             if pApplianceArray != nil {
-                
                  self.appliances = try pApplianceArray!
-             //   print("divice list:\(SearchApplianceController.applinceId)")
-            }
+             }
             if pRoomArray != nil {
                 self.rooms = pRoomArray!
             }
@@ -211,8 +210,7 @@ class DashboardController: BaseController {
         
             })
     }
-    
-    
+        
     func updateAppliancePowerState(appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         let anAppliance = pAppliance.clone()
         
@@ -281,10 +279,11 @@ class DashboardController: BaseController {
     }
     var customView = UIView()
     let myFirstButton = UIButton()
+    let goodbyButton = UIButton()
 
     @IBAction func btnRightMenuBtn(_ sender: Any) {
         customView.isHidden = false
-        customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 50)
+        customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
            customView.backgroundColor = UIColor.white     //give color to the view
       //  customView.rightAnchor = self.view.center
         myFirstButton.setTitle("Controller Setting", for: .normal)
@@ -292,25 +291,47 @@ class DashboardController: BaseController {
         myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
         myFirstButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
         customView.addSubview(myFirstButton)
+        
+        goodbyButton.setTitle("Good Bye", for: .normal)
+        goodbyButton.setTitleColor(UIColor.black, for: .normal)
+        goodbyButton.frame = CGRect(x: 10, y: 50, width: 180, height: 50)
+        goodbyButton.addTarget(self, action: #selector(pressedGoodbye), for: .touchUpInside)
+        customView.addSubview(goodbyButton)
             self.view.addSubview(customView)
     }
 
     @objc func pressed(sender: UIButton!) {
         customView.isHidden = true
         self.didSelectControllerSetthingButton()
-      //  let alertView = UIAlertView();
-//        alertView.addButton(withTitle: "Ok");
-//        alertView.title = "title";
-//        alertView.message = "message";
-//        alertView.show();
     }
+    @objc func pressedGoodbye(sender: UIButton!) {
+        customView.isHidden = true
+        self.updateControllers()
+    }
+    
     
     @IBAction func didSelectMenuButton(_ pSender: UIButton?) {
         self.drawerController.toggle()
     }
     
 }
-
+extension DashboardController{
+    func updateControllers() {
+        for i in (0 ..< ControllerListViewController.contollerDeviceId.count) {
+            ProgressOverlay.shared.show()
+            print("get good bey controller=\(ControllerListViewController.contollerDeviceId.count)")
+            DataFetchManager.shared.updateDevice(completion: { (pError) in
+                ProgressOverlay.shared.hide()
+                if pError != nil {
+                    PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
+                    self.reloadAllView()
+                } else {
+                    self.reloadAllView()
+                }
+            }, deviceId: ControllerListViewController.contollerDeviceId[i])
+        }
+    }
+}
 
 extension DashboardController :DrawerControllerDelegate {
     func drawerController(_ pDrawerController: DrawerController, didSelectMenuWithUrc pUrc: String) {

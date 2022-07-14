@@ -65,6 +65,17 @@ class DataFetchManager: NSObject {
     func updateAppliancePowerState(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         self.dataFetchManagerFireBase.updateAppliancePowerState(completion: pCompletion, appliance: pAppliance, powerState: pPowerState)
     }
+    func deleteControllerState(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :ControllerAppliance) {
+        self.dataFetchManagerFireBase.deleteController(completion: pCompletion, appliance: pAppliance)
+    }
+    func deleteController(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :ControllerAppliance) {
+        self.dataFetchManagerFireBase.deleteOneController(completion: pCompletion, appliance: pAppliance)
+    }
+    
+    func getControllerId(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :ControllerAppliance) {
+        self.dataFetchManagerFireBase.devidedetail(array: [pAppliance.roomId!])
+       // self.dataFetchManagerFireBase.deleteOneController(completion: pCompletion, appliance: pAppliance)
+    }
     
     func updateApplianceDimmableValue(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, dimValue pDimValue :Int) {
         self.dataFetchManagerFireBase.updateApplianceDimmableValue(completion: pCompletion, appliance: pAppliance, dimValue: pDimValue)

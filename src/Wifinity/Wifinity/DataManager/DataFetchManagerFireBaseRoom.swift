@@ -74,7 +74,6 @@ extension DataFetchManagerFireBase {
               print(itemId)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                     let sd = ControllerListViewController.contollerDeviceId[itemId]
-                   
 //                    self.getDetailontime(id: sd, completion: {(pCompletion) in
 //                        aRoomArray?.append(pCompletion!)
 //                    } )
@@ -203,8 +202,9 @@ extension DataFetchManagerFireBase {
         ControllerListViewController.contollerDeviceId = self.devidedetail(array: aReturnVal!)!
         return aReturnVal
     }
-    
+  
     func devidedetail(array: Array<String>) -> Array<String>?{
+        var aaaDeviceIdArray = [String: String]()
         var aFetchedRoomIdArray = Array<String>()
         for aRoomId in array {
             let aDispatchSemaphore = DispatchSemaphore(value: 0)
@@ -217,7 +217,7 @@ extension DataFetchManagerFireBase {
                     if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
                         aFetchedRoomIdArray.append(contentsOf: aDeviceIdArray)
                    let sdx = self.deviceApplinceDetail(array: aDeviceIdArray)
-                        
+                       
                     }
                     aDispatchSemaphore.signal()
                 }

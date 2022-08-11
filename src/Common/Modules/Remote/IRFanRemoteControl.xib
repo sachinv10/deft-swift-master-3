@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,16 +12,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IRFanRemoteControl" customModule="Wifinity" customModuleProvider="target">
             <connections>
+                <outlet property="cctview" destination="aZg-4t-2oI" id="Sxy-XB-48u"/>
+                <outlet property="intview" destination="VCj-7Y-ZiJ" id="aVo-8u-1sa"/>
                 <outlet property="powerButton" destination="UZq-ci-xM9" id="Iws-NQ-HXA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="Tlp-eu-ddn">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+            <rect key="frame" x="0.0" y="0.0" width="322" height="522"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UZq-ci-xM9" userLabel="powerButton" customClass="AppToggleButton" customModule="Wifinity" customModuleProvider="target">
-                    <rect key="frame" x="132" y="0.0" width="56" height="56"/>
+                    <rect key="frame" x="133" y="0.0" width="56" height="56"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="bjD-tt-nrS"/>
@@ -34,7 +37,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJl-VQ-5Md" userLabel="buttonContainerView">
-                    <rect key="frame" x="15" y="76" width="290" height="208"/>
+                    <rect key="frame" x="16" y="76" width="290" height="208"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCI-k2-Lqa" userLabel="ledButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="90" height="56"/>
@@ -197,19 +200,189 @@
                         <constraint firstAttribute="trailing" secondItem="h9c-f2-4TZ" secondAttribute="trailing" id="zsz-bW-qez"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZg-4t-2oI">
+                    <rect key="frame" x="211.5" y="303" width="60" height="165"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CCT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiG-ja-dkK">
+                            <rect key="frame" x="0.0" y="72" width="60" height="21"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="textColor" systemColor="systemBlueColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBv-IA-phb">
+                            <rect key="frame" x="9" y="15" width="42" height="42"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="lgF-Qc-ESk"/>
+                                <constraint firstAttribute="width" constant="42" id="yZu-fb-ekz"/>
+                            </constraints>
+                            <buttonConfiguration key="configuration" style="plain" image="chevron.up" catalog="system" cornerStyle="dynamic">
+                                <backgroundConfiguration key="background" cornerRadius="21"/>
+                            </buttonConfiguration>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="21"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColo">
+                                    <color key="value" systemColor="systemTealColor"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didtappedIncreseCCT:" destination="-1" eventType="touchUpInside" id="bBF-Vn-EYo"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xTL-xa-nme">
+                            <rect key="frame" x="9" y="108" width="42" height="42"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="42" id="Gzk-kf-TgN"/>
+                                <constraint firstAttribute="height" constant="42" id="aBm-0R-Uvi"/>
+                            </constraints>
+                            <buttonConfiguration key="configuration" style="plain" image="chevron.down" catalog="system" cornerStyle="dynamic"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColo">
+                                    <color key="value" systemColor="systemTealColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="21"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didtappedReduceCCT:" destination="-1" eventType="touchUpInside" id="JM4-6j-6AM"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="24r-Fr-qPr"/>
+                        <constraint firstAttribute="height" constant="165" id="4yk-1E-cX8"/>
+                        <constraint firstItem="xTL-xa-nme" firstAttribute="top" secondItem="hiG-ja-dkK" secondAttribute="bottom" constant="15" id="5vU-WO-uZQ"/>
+                        <constraint firstItem="dBv-IA-phb" firstAttribute="top" secondItem="aZg-4t-2oI" secondAttribute="top" constant="15" id="Lm5-TD-YEP"/>
+                        <constraint firstItem="xTL-xa-nme" firstAttribute="centerX" secondItem="aZg-4t-2oI" secondAttribute="centerX" id="MzU-MQ-Vsg"/>
+                        <constraint firstItem="dBv-IA-phb" firstAttribute="centerX" secondItem="aZg-4t-2oI" secondAttribute="centerX" id="X3d-E9-KDl"/>
+                        <constraint firstItem="hiG-ja-dkK" firstAttribute="centerX" secondItem="aZg-4t-2oI" secondAttribute="centerX" id="anS-iZ-Q38"/>
+                        <constraint firstItem="hiG-ja-dkK" firstAttribute="height" secondItem="aZg-4t-2oI" secondAttribute="height" multiplier="0.127273" id="lFN-WB-fUR"/>
+                        <constraint firstItem="hiG-ja-dkK" firstAttribute="width" secondItem="aZg-4t-2oI" secondAttribute="width" id="uDt-3D-TdO"/>
+                        <constraint firstItem="hiG-ja-dkK" firstAttribute="centerY" secondItem="aZg-4t-2oI" secondAttribute="centerY" id="wN6-jI-SS0"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" name="ControlNormalColor"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VCj-7Y-ZiJ">
+                    <rect key="frame" x="66.5" y="303" width="60" height="165"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tqM-Sz-rHm">
+                            <rect key="frame" x="2.5" y="69.5" width="55.5" height="26"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="textColor" systemColor="systemBlueColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Re0-2b-Kmg">
+                            <rect key="frame" x="9" y="108" width="42" height="42"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="6b9-zn-NqC"/>
+                                <constraint firstAttribute="width" constant="42" id="bhJ-q1-pkV"/>
+                            </constraints>
+                            <buttonConfiguration key="configuration" style="plain" image="chevron.down" catalog="system" cornerStyle="dynamic">
+                                <backgroundConfiguration key="background"/>
+                            </buttonConfiguration>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="21"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" systemColor="systemTealColor"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didtappedReduceINT:" destination="-1" eventType="touchUpInside" id="8pn-A8-M9H"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVn-dG-JC9">
+                            <rect key="frame" x="9" y="15" width="42" height="42"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="503-vb-bgY"/>
+                                <constraint firstAttribute="width" constant="42" id="uXK-5J-LqX"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="chevron.up" catalog="system"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="21"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" systemColor="systemTealColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didtappedIncreseINT:" destination="-1" eventType="touchUpInside" id="iEP-Wj-tV7"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="tqM-Sz-rHm" firstAttribute="centerX" secondItem="VCj-7Y-ZiJ" secondAttribute="centerX" id="3Aw-jO-Gsm"/>
+                        <constraint firstItem="Re0-2b-Kmg" firstAttribute="centerX" secondItem="VCj-7Y-ZiJ" secondAttribute="centerX" id="5jY-Of-any"/>
+                        <constraint firstItem="tqM-Sz-rHm" firstAttribute="width" secondItem="VCj-7Y-ZiJ" secondAttribute="width" multiplier="0.923077" id="P8P-uy-E5i"/>
+                        <constraint firstItem="xVn-dG-JC9" firstAttribute="centerX" secondItem="VCj-7Y-ZiJ" secondAttribute="centerX" id="Y7I-bT-Rro"/>
+                        <constraint firstItem="xVn-dG-JC9" firstAttribute="top" secondItem="VCj-7Y-ZiJ" secondAttribute="top" constant="15" id="caT-56-fvj"/>
+                        <constraint firstItem="tqM-Sz-rHm" firstAttribute="height" secondItem="VCj-7Y-ZiJ" secondAttribute="height" multiplier="0.154982" id="kXB-WS-Rdh"/>
+                        <constraint firstItem="tqM-Sz-rHm" firstAttribute="centerY" secondItem="VCj-7Y-ZiJ" secondAttribute="centerY" id="xcY-tI-T7Z"/>
+                        <constraint firstAttribute="bottom" secondItem="Re0-2b-Kmg" secondAttribute="bottom" constant="15" id="yT3-N8-opP"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" red="0.11336006459746502" green="0.52255040525784313" blue="0.58277715817846432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="NKU-mE-pVZ"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="aZg-4t-2oI" firstAttribute="top" secondItem="AJl-VQ-5Md" secondAttribute="bottom" constant="19" id="0R4-2y-QIc"/>
                 <constraint firstItem="UZq-ci-xM9" firstAttribute="centerX" secondItem="Tlp-eu-ddn" secondAttribute="centerX" id="6ov-3h-lVD"/>
                 <constraint firstItem="UZq-ci-xM9" firstAttribute="top" secondItem="Tlp-eu-ddn" secondAttribute="top" id="8rr-0K-RIn"/>
+                <constraint firstItem="VCj-7Y-ZiJ" firstAttribute="centerX" secondItem="NKU-mE-pVZ" secondAttribute="centerX" multiplier="0.6" id="9dA-kS-0LI"/>
+                <constraint firstItem="VCj-7Y-ZiJ" firstAttribute="width" secondItem="aZg-4t-2oI" secondAttribute="width" id="Frz-Ln-qhP"/>
+                <constraint firstItem="VCj-7Y-ZiJ" firstAttribute="height" secondItem="aZg-4t-2oI" secondAttribute="height" id="KAO-lY-rkh"/>
                 <constraint firstItem="AJl-VQ-5Md" firstAttribute="centerX" secondItem="Tlp-eu-ddn" secondAttribute="centerX" id="Pp6-q1-nHQ"/>
+                <constraint firstItem="aZg-4t-2oI" firstAttribute="centerX" secondItem="NKU-mE-pVZ" secondAttribute="centerX" multiplier="1.5" id="XFw-3C-QXb"/>
+                <constraint firstItem="VCj-7Y-ZiJ" firstAttribute="centerY" secondItem="aZg-4t-2oI" secondAttribute="centerY" id="dJc-De-iCi"/>
                 <constraint firstItem="AJl-VQ-5Md" firstAttribute="top" secondItem="UZq-ci-xM9" secondAttribute="bottom" constant="20" id="iPg-QP-ojn"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-162.31884057971016" y="90.401785714285708"/>
+            <point key="canvasLocation" x="-160.86956521739131" y="158.03571428571428"/>
         </view>
     </objects>
     <designables>
@@ -243,8 +416,16 @@
     </designables>
     <resources>
         <image name="RemoteButtonPowerOn" width="256" height="256"/>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <image name="chevron.up" catalog="system" width="128" height="72"/>
+        <namedColor name="ControlNormalColor">
+            <color red="0.0" green="0.50499999523162842" blue="0.94800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

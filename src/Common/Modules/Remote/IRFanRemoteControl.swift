@@ -19,7 +19,7 @@ class IRFanRemoteControl: RemoteControl {
     }
     
     override var estimatedSize :CGSize {
-        return CGSize(width: 320.0, height: 320.0)
+        return CGSize(width: 320.0, height: 450.0)
     }
     
     
@@ -38,7 +38,8 @@ class IRFanRemoteControl: RemoteControl {
                 self.powerButton.isChecked = false
             }
         }
-        
+        cctview.layer.borderColor = UIColor.systemBlue.cgColor
+        intview.layer.borderColor = UIColor.systemBlue.cgColor
     }
     @IBAction private func didSelectLedButton(_ pSender: AppToggleButton) {
         if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.ledLed) {
@@ -158,10 +159,50 @@ class IRFanRemoteControl: RemoteControl {
             self.sendActions(for: UIControl.Event.valueChanged)
         }
     }
+    
+    @IBAction func didtappedReduceINT(_ sender: Any) {
+        print("Reduce INT")
+     
+        if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.Int_dowN) {
+            self._remoteKey = aRemoteKey
+            self.sendActions(for: UIControl.Event.valueChanged)
+        }
+    }
+    
+    @IBAction func didtappedIncreseINT(_ sender: Any) {
+        print("IncreseINT")
+        if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.Int_UP) {
+            self._remoteKey = aRemoteKey
+            self.sendActions(for: UIControl.Event.valueChanged)
+        }
+        
+    }
+    
+    @IBAction func didtappedIncreseCCT(_ sender: Any) {
+        print("IncreseCCT")
+        if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.CCT_UP) {
+            self._remoteKey = aRemoteKey
+            self.sendActions(for: UIControl.Event.valueChanged)
+        }
+    }
+    
+    
+    @IBOutlet weak var cctview: UIView!
+    @IBOutlet weak var intview: UIView!
+    
+    @IBAction func didtappedReduceCCT(_ sender: Any) {
+        print("ReduceCCT")
+        if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.CCT_DOWN) {
+            self._remoteKey = aRemoteKey
+            self.sendActions(for: UIControl.Event.valueChanged)
+        }
+    }
+    
+    
 }
 
 
-// MARK:- Selectors
+// MARK: - Selectors
 
 extension IRFanRemoteControl {
     

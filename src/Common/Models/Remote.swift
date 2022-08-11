@@ -484,6 +484,10 @@ class RemoteKey: NSObject {
         case moodLightStrobe = "STROBE"
         case moodLightFade = "FADE"
         case moodLightSmooth = "SMOOTH"
+        case Int_UP = "INT UP"
+        case Int_dowN = "INT DOWN"
+        case CCT_UP = "CCT UP"
+        case CCT_DOWN = "CCT DOWN"
         
         case none
     }

@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Firebase
+import FirebaseAuth
 class LoginController: BaseController {
     /**
     * Variable that will hold reference to email address text field.
@@ -54,7 +55,10 @@ class LoginController: BaseController {
             self.whiteOverlay = UIView(frame: self.view.bounds)
             self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
             self.view.addSubview(self.whiteOverlay!)
-            self.login()
+            if ((Auth.auth().currentUser?.uid) != nil){
+            RoutingManager.shared.gotoDashboard(controller: self)
+            }
+           // self.login()
         }else{
         
         self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])

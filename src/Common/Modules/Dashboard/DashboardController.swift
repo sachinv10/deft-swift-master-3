@@ -45,9 +45,18 @@ class DashboardController: BaseController {
         self.drawerController.close()
         self.drawerController.emailAddressLabel.text = DataFetchManager.shared.loggedInUser?.emailAddress
         self.applianceCollectionView.clipsToBounds = true
+      
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
+             applianceCollectionView.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
+             roomCollectionView.addGestureRecognizer(tapGestureRecognizer1)
+      
     }
     
     
+    @objc func didTapViewmenu(_ sender: UITapGestureRecognizer) {
+        customView.isHidden = true
+     }
     override func didTapView(_ pSender :UITapGestureRecognizer) {
         super.didTapView(pSender)
         
@@ -255,6 +264,9 @@ class DashboardController: BaseController {
                     DataFetchManager.shared.loggedInUser = nil
                     KeychainManager.shared.remove(valueForKey: "emailAddress")
                     KeychainManager.shared.remove(valueForKey: "password")
+                    do {
+                          try Auth.auth().signOut()
+                    } catch let signOutError as NSError {   print ("Error signing out: %@", signOutError)}
                     RoutingManager.shared.goBackToLogin()
                 } else {
                     PopupManager.shared.displayError(message: "Can not logout.", description: pError?.localizedDescription)

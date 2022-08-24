@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>CLIENT_ID</key>
 	<string>986225208621-e80hbcjj46u7spkvhg70slb1iq3dak8r.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
@@ -21,15 +23,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>wificontrol-a94cc.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:986225208621:ios:c55d781e1fa9c72ad137a4</string>
 	<key>DATABASE_URL</key>

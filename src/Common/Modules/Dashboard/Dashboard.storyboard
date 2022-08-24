@@ -475,7 +475,7 @@
                                     <action selector="didSelectMenuButton:" destination="YTv-lr-gAt" eventType="touchUpInside" id="kQt-Ej-hTx"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileDefault" translatesAutoresizingMaskIntoConstraints="NO" id="9DR-jh-LXZ">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginBanner" translatesAutoresizingMaskIntoConstraints="NO" id="9DR-jh-LXZ">
                                 <rect key="frame" x="147" y="94" width="120" height="120"/>
                                 <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -581,9 +581,9 @@
         <image name="DashboardMood" width="200" height="200"/>
         <image name="DashboardRemote" width="200" height="200"/>
         <image name="DashboardSensor" width="860" height="860"/>
+        <image name="LoginBanner" width="271" height="191"/>
         <image name="Menu" width="512" height="512"/>
         <image name="MenuClose" width="46" height="45"/>
-        <image name="ProfileDefault" width="512" height="512"/>
         <image name="images" width="225" height="225"/>
         <namedColor name="PrimaryDarkestColor">
             <color red="0.0" green="0.15299999713897705" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

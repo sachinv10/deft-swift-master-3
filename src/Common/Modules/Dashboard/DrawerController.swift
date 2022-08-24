@@ -31,9 +31,9 @@ class DrawerController: UIViewController {
         self.view.layer.shadowOpacity = 0.3
         
         self.iconImageView.layer.masksToBounds = false
-        self.iconImageView.layer.cornerRadius = self.iconImageView.frame.size.height / 2.0
-        self.iconImageView.layer.borderWidth = 1.0
-        self.iconImageView.layer.borderColor = UIColor.darkGray.cgColor
+//        self.iconImageView.layer.cornerRadius = self.iconImageView.frame.size.height / 2.0
+//        self.iconImageView.layer.borderWidth = 1.0
+//        self.iconImageView.layer.borderColor = UIColor.darkGray.cgColor
         
         let aTableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.menuTableView.frame.size.width, height: 19.0))
         let aLabel = UILabel()

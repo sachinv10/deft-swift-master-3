@@ -57,8 +57,9 @@ class LoginController: BaseController {
             self.view.addSubview(self.whiteOverlay!)
             if ((Auth.auth().currentUser?.uid) != nil){
             RoutingManager.shared.gotoDashboard(controller: self)
+            }else{
+                self.login()
             }
-           // self.login()
         }else{
         
         self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])

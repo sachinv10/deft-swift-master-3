@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var aUser :User?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        ProgressOverlay.shared.activityIndicatorViewStyle = UIActivityIndicatorView.Style.whiteLarge
+      //  ProgressOverlay.shared.activityIndicatorViewStyle = UIActivityIndicatorView.Style.whiteLarge
         
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.error)
@@ -65,7 +65,7 @@ extension AppDelegate :UNUserNotificationCenterDelegate {
     func registerForPushNotification() {
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
-        
+       //	 Messaging.messaging().isAutoInitEnabled = true
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (pGranted, pError) in
             DispatchQueue.main.async {
                 if pGranted {

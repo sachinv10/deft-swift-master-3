@@ -48,7 +48,7 @@ class LoginController: BaseController {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Database.database().isPersistenceEnabled = true
         if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
             self.emailAddressTextField.text = anEmailAddress
             self.passwordTextField.text = aPassword
@@ -81,8 +81,9 @@ class LoginController: BaseController {
         self.rememberMeCheckboxButton?.layer.cornerRadius = 4.0
         
         }
+  
     }
-    
+  
     
     override func viewDidAppear(_ pAnimated: Bool) {
         super.viewDidAppear(pAnimated)

@@ -278,7 +278,12 @@ extension RoutingManager {
     #endif
 }
 
-
+// MARK: - OFFLINE DATABASE
+extension RoutingManager{
+    func selectOflineTypeControllerUsingStoryboard() -> OfflineApplinceViewController {
+        return UIStoryboard(name: "Offline", bundle: Bundle.main).instantiateViewController(withIdentifier: "OfflineApplinceViewController") as! OfflineApplinceViewController
+    }
+}
 
 // MARK:- Appliance
 
@@ -355,10 +360,28 @@ extension RoutingManager {
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 
+    func gotoOffline(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectOfflineControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoOfflineApplinces(
+        controller pController :UIViewController, controllerId: [String]
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectOfflineApplincesControllerUsingStoryboard()
+            aDestinationController.controller_id = controllerId
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func selectOfflineApplincesControllerUsingStoryboard() -> OfflineApplinceViewController {
+        return UIStoryboard(name: "Offline", bundle: Bundle.main).instantiateViewController(withIdentifier: "OfflineApplinceViewController") as! OfflineApplinceViewController
+    }
     func selectOfferZonrControllerUsingStoryboard() -> OfferZoneViewController {
         return UIStoryboard(name: "OfferZone", bundle: Bundle.main).instantiateViewController(withIdentifier: "OfferZoneViewController") as! OfferZoneViewController
     }
-    
+    func selectOfflineControllerUsingStoryboard() -> PingViewController {
+        return UIStoryboard(name: "Offline", bundle: Bundle.main).instantiateViewController(withIdentifier: "PingViewController") as! PingViewController
+    }
     func selectCoreControllerUsingStoryboard() -> CoreViewController {
         return UIStoryboard(name: "Core", bundle: Bundle.main).instantiateViewController(withIdentifier: "CoreViewController") as! CoreViewController
     }

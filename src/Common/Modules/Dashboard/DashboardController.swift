@@ -27,7 +27,7 @@ class DashboardController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
        
         controllerflag = true
          self.view.backgroundColor = UIColor(named: "SecondaryLightestColor")
@@ -381,6 +381,8 @@ extension DashboardController :DrawerControllerDelegate {
             RoutingManager.shared.gotoOfferZone(controller: self)
         } else if pUrc == DrawerController.Menu.Core.urc {
             RoutingManager.shared.gotoCore(controller: self)
+        } else if pUrc == DrawerController.Menu.Offline.urc {
+            RoutingManager.shared.gotoOffline(controller: self) 
         }
     }
 }
@@ -534,7 +536,7 @@ extension DashboardController :RoomCollectionCellViewDelegate {
     func didSelectEnergyButton(_ pSender: RoomCollectionCellView) {
         if let anIndexPath = self.roomCollectionView.indexPathForItem(at: pSender.convert(CGPoint.zero, to: self.roomCollectionView)), anIndexPath.item < self.filteredRooms.count {
             let aSelectedRoom = self.filteredRooms[anIndexPath.item]
-            RoutingManager.shared.gotoEnergyDetails(controller: self, userId: DataFetchManager.shared.loggedInUser?.firebaseUserId ?? "", roomId: aSelectedRoom.id ?? "")
+            RoutingManager.shared.gotoEnergyDetails(controller: self, userId: Auth.auth().currentUser?.uid ?? "", roomId: aSelectedRoom.id ?? "")
         }
     }
     

@@ -497,7 +497,6 @@ extension DataContractManagerFireBase {
     
     static func appliances(any pAny :Any?) -> Array<Appliance>? {
         var aReturnVal :Array<Appliance>? = Array<Appliance>()
-        
         if let aDictArray = pAny as? Array<Dictionary<String,Any>?>
         , let anApplianceArray = DataContractManagerFireBase.appliances(array: aDictArray) {
             aReturnVal!.append(contentsOf: anApplianceArray)

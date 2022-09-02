@@ -56,6 +56,7 @@ class DrawerController: UIViewController {
             self.menus.append(Menu(icon: Menu.TankRegulators.icon, title: Menu.TankRegulators.title, urc: Menu.TankRegulators.urc))
         }
         self.menus.append(Menu(icon: Menu.Schedules.icon, title: Menu.Schedules.title, urc: Menu.Schedules.urc))
+        self.menus.append(Menu(icon: Menu.Offline.icon, title: Menu.Offline.title, urc: Menu.Offline.urc))
         self.menus.append(Menu(icon: Menu.Core.icon, title: Menu.Core.title, urc: Menu.Core.urc))
         self.menus.append(Menu(icon: Menu.OfferZone.icon, title: Menu.OfferZone.title, urc: Menu.OfferZone.urc))
         self.menus.append(Menu(icon: Menu.Notifications.icon, title: Menu.Notifications.title, urc: Menu.Notifications.urc))
@@ -300,6 +301,12 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
             static let icon = UIImage(named: "CoreBlackIcon")!
             static let title = "C.O.R.E."
             static let urc = "Core"
+        }
+        
+        struct Offline {
+            static let icon = UIImage(named: "offline_icon")!
+            static let title = "Offline"
+            static let urc = "Offline"
         }
         
     }

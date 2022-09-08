@@ -23,11 +23,9 @@ class FanRemoteControl :RemoteControl {
         return CGSize(width: 320.0, height: 320.0)
     }
     
-    
     override func setup() {
         super.setup()
     }
-    
     
     override func load(remote pRemote :Remote) {
         self.remote = pRemote
@@ -41,9 +39,7 @@ class FanRemoteControl :RemoteControl {
         }
         
     }
-    
 }
-
 
 // MARK:- Selectors
 

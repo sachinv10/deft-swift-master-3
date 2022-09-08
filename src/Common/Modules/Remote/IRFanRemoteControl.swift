@@ -42,7 +42,7 @@ class IRFanRemoteControl: RemoteControl {
         intview.layer.borderColor = UIColor.systemBlue.cgColor
     }
     @IBAction private func didSelectLedButton(_ pSender: AppToggleButton) {
-        if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.ledLed) {
+        if let aRemoteKey = self.remote?.keyWithTag(RemoteKey.Tag.led_light) {
             self._remoteKey = aRemoteKey
             self.sendActions(for: UIControl.Event.valueChanged)
         }

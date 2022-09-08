@@ -99,6 +99,7 @@ class DeviceSettingViewController: UIViewController {
         button2.setTitleColor(UIColor.black, for: .normal)
         button2.backgroundColor = UIColor.clear
         button2.translatesAutoresizingMaskIntoConstraints = false
+        button2.addTarget(self, action: #selector(MyResetView), for: .touchUpInside)
         button2.contentHorizontalAlignment = .left
         
         let button3 = UIButton()
@@ -118,6 +119,9 @@ class DeviceSettingViewController: UIViewController {
         stackView.spacing = 8.0
         stackView.addArrangedSubview(button2)
         stackView.addArrangedSubview(button3)
+    }
+    @objc func MyResetView() {
+        RoutingManager.shared.gotoResetControllerSetting(controller: self, controller: controllerApplince!)
     }
     var customView = UIView()
     var lablehead = UILabel()
@@ -238,13 +242,16 @@ class DeviceSettingViewController: UIViewController {
     }
     func activatelisner() {
       
-        Database.database().reference().child("devices").child((controllerApplince?.id)!).observe(.childChanged) { (snapshot, key) in
+        Database.database().reference().child("devices").child((controllerApplince?.id)!).observe(.value) { (snapshot, key) in
              print(snapshot)
-            var wifisign = snapshot.value
-            print(wifisign)
-             let wifist =  self.wifistrenthcalulation(wifis: wifisign as! String)
-             self.lblwifiSignal.text = "\(String(wifist)) %"
-                          
+            var wifisign = snapshot.value as! Dictionary<String,Any>
+            print(wifisign["wifiSignalStrength"])
+            if let wifiid = wifisign["wifiSignalStrength"]{
+                
+                    let wifist =  self.wifistrenthcalulation(wifis: wifiid as! String)
+                        self.lblwifiSignal.text = "\(String(wifist)) %"
+                
+            }
         }
     }
     

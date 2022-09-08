@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LedStripRemoteControl" customModule="DEFT" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LedStripRemoteControl" customModule="Wifinity" customModuleProvider="target">
             <connections>
                 <outlet property="powerButton" destination="RJ5-UC-yVD" id="mfk-2o-vGA"/>
             </connections>
@@ -18,7 +18,7 @@
         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ll7-IE-oHw">
             <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJ5-UC-yVD" userLabel="powerButton" customClass="AppToggleButton" customModule="DEFT" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJ5-UC-yVD" userLabel="powerButton" customClass="AppToggleButton" customModule="Wifinity" customModuleProvider="target">
                     <rect key="frame" x="132" y="0.0" width="56" height="56"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -35,7 +35,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1K-lx-JsG" userLabel="buttonContainerView">
                     <rect key="frame" x="15" y="76" width="290" height="132"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jE-2V-s8S" userLabel="ledButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jE-2V-s8S" userLabel="ledButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="90" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -50,7 +50,7 @@
                                 <action selector="didSelectLedButton:" destination="-1" eventType="touchUpInside" id="tHy-39-AP3"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2mA-Dn-Kly" userLabel="boostButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2mA-Dn-Kly" userLabel="boostButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="100" y="0.0" width="90" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -65,7 +65,7 @@
                                 <action selector="didSelectBoostButton:" destination="-1" eventType="touchUpInside" id="7Zx-da-Mzc"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNR-mH-gjy" userLabel="timerButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNR-mH-gjy" userLabel="timerButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="200" y="0.0" width="90" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -80,7 +80,7 @@
                                 <action selector="didSelectTimerButton:" destination="-1" eventType="touchUpInside" id="zGX-s7-tXE"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XgR-qN-sOJ" userLabel="sleepButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XgR-qN-sOJ" userLabel="sleepButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="76" width="90" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -95,7 +95,7 @@
                                 <action selector="didSelectSleepButton:" destination="-1" eventType="touchUpInside" id="ZCX-8s-C6P"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VhN-8b-0v1" userLabel="speedMinusButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VhN-8b-0v1" userLabel="speedMinusButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="100" y="76" width="90" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -110,7 +110,7 @@
                                 <action selector="didSelectSpeedMinusButton:" destination="-1" eventType="touchUpInside" id="sek-hA-DbV"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijy-7V-72b" userLabel="speedPlusButton" customClass="RemoteButton" customModule="DEFT" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ijy-7V-72b" userLabel="speedPlusButton" customClass="RemoteButton" customModule="Wifinity" customModuleProvider="target">
                             <rect key="frame" x="200" y="76" width="90" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>

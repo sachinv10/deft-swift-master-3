@@ -53,7 +53,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError, pRoom)
             }
         }
-        
     }
     
     func searchdevice(completion pCompletion: @escaping (Error?, Array<ControllerAppliance>?) -> Void) {

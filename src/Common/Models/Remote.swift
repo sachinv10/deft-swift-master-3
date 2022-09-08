@@ -79,6 +79,7 @@ class Remote: NSObject {
         
         if let aKeyArray = self.keys {
             for aKey in aKeyArray {
+                print(aKey.tag)
                 if aKey.tag == pTag {
                     aReturnVal = aKey
                     break
@@ -452,7 +453,8 @@ class RemoteKey: NSObject {
         case tvNumberSeven = "7"
         case tvNumberEight = "8"
         case tvNumberNine = "9"
-        
+       // LIGHT
+        case led_light = "LIGHT"
         case ledLed = "LED"
         case ledBoost = "BOOST"
         case ledTimer = "TIMER"

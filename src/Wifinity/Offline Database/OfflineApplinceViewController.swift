@@ -114,7 +114,7 @@ class OfflineApplinceViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         lblbackbtn.setTitle("", for: .normal)
-        
+            
        // for item in controller_id {
         getofflineMode(controller_id: "CS091651819470701")
       //  }

@@ -136,6 +136,10 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.recordRemoteKey(completion: pCompletion, remote: pRemote, remoteKey: pRemoteKey)
     }
     
+    // MARK:- Controller
+    func resetController(completion pCompletion: @escaping (Error?, Array<Appliance>?) -> Void, room ssid :String?,room password :String?, Applinces pApplinces :ControllerAppliance?, includeOnOnly pIncludeOnOnly :Bool) {
+        self.dataFetchManagerFireBase.resetController(completion: pCompletion, room: ssid, room: password, Applinces: pApplinces, includeOnOnly: pIncludeOnOnly)
+    }
     
     // MARK:- Sensor
     

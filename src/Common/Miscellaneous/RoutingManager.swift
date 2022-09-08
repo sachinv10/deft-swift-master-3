@@ -761,16 +761,24 @@ extension RoutingManager {
     }
     
 }
-// Mark:- Controller Setthing
+// MARK: - Controller Setthing
 extension RoutingManager{
     
     func searchControllerlistvcUsingStoryboard() -> ControllerListViewController {
         return UIStoryboard(name: "ContollerList", bundle: Bundle.main).instantiateViewController(withIdentifier: "ControllerListViewController") as! ControllerListViewController
     }
+    func ResetControllerlistvcUsingStoryboard() -> ResetWifiViewController {
+        return UIStoryboard(name: "ContollerList", bundle: Bundle.main).instantiateViewController(withIdentifier: "ResetWifiViewController") as! ResetWifiViewController
+    }
     
     func gotoSearchControllerSetting(controller pController :UIViewController) {
         let aDestinationController = self.searchControllerlistvcUsingStoryboard()
       //  aDestinationController.selectedRoom = pSelectedRoom
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoResetControllerSetting(controller pController :UIViewController, controller pcontroller: ControllerAppliance) {
+        let aDestinationController = self.ResetControllerlistvcUsingStoryboard()
+        aDestinationController.controllerApplince = pcontroller
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 }

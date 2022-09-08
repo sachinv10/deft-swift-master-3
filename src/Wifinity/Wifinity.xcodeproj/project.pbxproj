@@ -12,6 +12,7 @@
 		187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70622869906400CE4620 /* ControllerListViewController.swift */; };
 		187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */; };
 		187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */; };
+		1896876F28C76F8E000EF347 /* ResetWifiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */; };
 		189E97D728BDD29B00DDC2A5 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 189E97D628BDD29B00DDC2A5 /* Starscream */; };
 		189E97DB28BDDB9800DDC2A5 /* SwiftyPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */; };
 		189E97DD28BDDE2C00DDC2A5 /* PingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */; };
@@ -216,6 +217,7 @@
 		187F70622869906400CE4620 /* ControllerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerListViewController.swift; sourceTree = "<group>"; };
 		187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllrTableViewCell.swift; sourceTree = "<group>"; };
 		187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettingViewController.swift; sourceTree = "<group>"; };
+		1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetWifiViewController.swift; sourceTree = "<group>"; };
 		189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyPing.swift; path = "../../../../../../Documents/Sachin_ios/demo Project/SwiftyPing-master/Sources/SwiftyPing/SwiftyPing.swift"; sourceTree = "<group>"; };
 		189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingViewController.swift; sourceTree = "<group>"; };
 		189E97DE28BDE07D00DDC2A5 /* Offline.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Offline.storyboard; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 				187F70622869906400CE4620 /* ControllerListViewController.swift */,
 				187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */,
 				187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */,
+				1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */,
 			);
 			path = ControllerList;
 			sourceTree = "<group>";
@@ -1104,6 +1107,7 @@
 				3F60E75B258288640094823F /* SearchApplianceLedTableCellView.swift in Sources */,
 				47B23717282459D60048A87D /* OffersTableViewCell.swift in Sources */,
 				3F60E78A258288650094823F /* SearchRemoteController.swift in Sources */,
+				1896876F28C76F8E000EF347 /* ResetWifiViewController.swift in Sources */,
 				3F411D0D271DDB1F001DBB85 /* SelectDeviceTableCellView.swift in Sources */,
 				3F60E7A4258288650094823F /* ColorWheel.swift in Sources */,
 				3F60E76F258288640094823F /* SearchAppNotificationTypeTableCellView.swift in Sources */,

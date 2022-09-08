@@ -10,6 +10,7 @@ import Foundation
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
+import Firebase
 
 
 extension DataFetchManagerFireBase {
@@ -198,6 +199,117 @@ extension DataFetchManagerFireBase {
         
     }
     
+    func resetController(completion pCompletion: @escaping (Error?, Array<Appliance>?) -> Void, room uRoom :String?, room pRoom :String?, Applinces pcontroller :ControllerAppliance?, includeOnOnly pIncludeOnOnly :Bool) {
+   
+         DispatchQueue.global(qos: .background).async {
+             self.requestCount += 1
+ 
+             var anApplianceArray :Array<Appliance>?
+             var anError :Error?
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                var datadictionary: [String: AnyHashable] = [String: AnyHashable]()
+                datadictionary.updateValue(false, forKey: "wCommand")
+                datadictionary.updateValue(false, forKey: "xCommand")
+                datadictionary.updateValue(false, forKey: "yCommand")
+                
+                var dataidpass: [String: AnyHashable] = [String: AnyHashable]()
+                dataidpass.updateValue(pRoom, forKey: "password")
+                dataidpass.updateValue(uRoom, forKey: "ssid")
+                
+                // Fetch frequently operated appliances
+                let anApplianceDispatchSemaphore = DispatchSemaphore(value: 0)
+                var databaseref : DatabaseReference?
+                databaseref =  self.database
+                    .child("routerDetails")
+                    .child((pcontroller?.id) ?? "")
+                    print((pcontroller?.id) ?? "")
+                 databaseref?.updateChildValues(datadictionary)
+                //
+                var databaserefnc : DatabaseReference?
+                databaserefnc =  self.database.child("messages").child((pcontroller?.id) ?? "").child("applianceData").child("message")
+               
+                //  databaserefnc?.setValue("Y0120F")"
+                self.sendmsg(pMessage: "Y0120F", pApplinces: pcontroller!)
+            
+                
+               //  databaserefnc?.setValue("W012" + (uRoom ?? "") + "0F1")
+                self.sendmsg(pMessage: "W" + (uRoom ?? "") + "0F1", pApplinces: pcontroller!)
+        
+               
+             //   databaserefnc?.setValue("X012" + (pRoom ?? "") + "0F1")
+                self.sendmsg(pMessage: "X" + (pRoom ?? "") + "0F1", pApplinces: pcontroller!)
+           
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                self.database
+                    .child("routerDetails")
+                    .child((pcontroller?.id) ?? "")
+                    .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                        print(pDataSnapshot.value)
+                        print("router get ditail")
+                   //      self.log(dataSnapshot: pDataSnapshot)
+                     
+                        if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+                             if (aDict["wCommand"] as! Bool != false), (aDict["xCommand"] as! Bool != false){
+                                print("true")
+                             //    update database id and  passwd
+                                 databaseref?.child("temp").updateChildValues(dataidpass)
+                                 PopupManager.shared.displaySuccess(message: "Reset successfully", description: "")
+
+                            }
+                         }
+                        anApplianceDispatchSemaphore.signal()
+                    }
+                }
+                _ = anApplianceDispatchSemaphore.wait(timeout: .distantFuture)
+             } catch {
+                anError = error
+             }
+ 
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError, anApplianceArray)
+            }
+        }
+        
+    }
+    
+    func sendmsg(pMessage: String, pApplinces: ControllerAppliance)  {
+        // Send message
+       
+        do{
+        var aReturnVal :Error? = nil
+        var aMessageField: DatabaseReference?
+            aMessageField =  self.database.child("messages").child(pApplinces.id ?? "").child("applianceData").child("message")
+        var aSetMessageError :Error? = nil
+        let aMessageDispatchSemaphore = DispatchSemaphore(value: 0)
+        aMessageField?.setValue(pMessage, withCompletionBlock: { (pError, pDatabaseReference) in
+            aSetMessageError = pError
+            aMessageDispatchSemaphore.signal()
+        })
+        _ = aMessageDispatchSemaphore.wait(timeout: .distantFuture)
+        if let anError = aSetMessageError {
+            throw anError
+        }
+        
+        // Reset message
+        var aResetMessageError :Error? = nil
+        let aResetMessageDispatchSemaphore = DispatchSemaphore(value: 0)
+        aMessageField?.setValue("aa", withCompletionBlock: { (pError, pDatabaseReference) in
+            aResetMessageError = pError
+            aResetMessageDispatchSemaphore.signal()
+        })
+        _ = aResetMessageDispatchSemaphore.wait(timeout: .distantFuture)
+        if let anError = aResetMessageError {
+            throw anError
+        }
+        }catch{
+            
+        }
+        
+    }
     
     func recordRemoteKey(completion pCompletion: @escaping (Error?) -> Void, remote pRemote :Remote, remoteKey pRemoteKey :RemoteKey) {
         DispatchQueue.global(qos: .background).async {

@@ -29,22 +29,25 @@ class ControllerListViewController: BaseController {
     @IBOutlet weak var btnrightmenu: UIButton!
     @IBAction func btnmenu(_ sender: Any) {
       
-//            customView.isHidden = false
-//            customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
-//               customView.backgroundColor = UIColor.white     //give color to the view
-//          //  customView.rightAnchor = self.view.center
-//            myFirstButton.setTitle("Reset Controller", for: .normal)
-//            myFirstButton.setTitleColor(UIColor.black, for: .normal)
-//            myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
-//            myFirstButton.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
-//            customView.addSubview(myFirstButton)
-//       
+            customView.isHidden = false
+            customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 50)
+               customView.backgroundColor = UIColor.white     //give color to the view
+        customView.layer.borderColor = UIColor.gray.cgColor
+        customView.layer.cornerRadius = 10
+        customView.layer.borderWidth = 1
+          //  customView.rightAnchor = self.view.center
+            myFirstButton.setTitle("Reset Controller", for: .normal)
+            myFirstButton.setTitleColor(UIColor.black, for: .normal)
+            myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
+            myFirstButton.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
+            customView.addSubview(myFirstButton)
+       
 //        DeleteButton.setTitle("Delete Controller", for: .normal)
 //        DeleteButton.setTitleColor(UIColor.black, for: .normal)
 //        DeleteButton.frame = CGRect(x: 10, y: 50, width: 180, height: 50)
 //        DeleteButton.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
 //        customView.addSubview(DeleteButton)
-//        self.view.addSubview(customView)
+        self.view.addSubview(customView)
     }
     func getdata()  {
         
@@ -106,9 +109,9 @@ class ControllerListViewController: BaseController {
         }
         
     }
-    @objc func pressedmenu(sender: UIButton!) {
+     @objc func pressedmenu(sender: UIButton!) {
         customView.isHidden = true
-    //    self.didSelectControllerSetthingButton()
+         RoutingManager.shared.gotoResetAllControllerSetting(controller: self, controller: controllerApplince)
     
     }
     @IBOutlet weak var controllertableview: UITableView!

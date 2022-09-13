@@ -781,6 +781,16 @@ extension RoutingManager{
         aDestinationController.controllerApplince = pcontroller
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    
+    func AllResetControllerlistvcUsingStoryboard() -> ResetAllViewController {
+        return UIStoryboard(name: "ContollerList", bundle: Bundle.main).instantiateViewController(withIdentifier: "ResetAllViewController") as! ResetAllViewController
+    }
+    func gotoAllResetControllerSetting(controller pController :UIViewController, controller pcontroller: [ControllerAppliance]) {
+        let aDestinationController = self.AllResetControllerlistvcUsingStoryboard()
+         aDestinationController.controllerApplince = pcontroller
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+   
 }
 
 
@@ -838,16 +848,25 @@ extension RoutingManager {
     }
     
 }
-// MARK:- Controller Setting and device
+// MARK: - Controller Setting and device
 
 extension RoutingManager{
     func controllerDetailsControllerUsingStoryboard() -> DeviceSettingViewController {
         return UIStoryboard(name: "ContollerList", bundle: Bundle.main).instantiateViewController(withIdentifier: "DeviceSettingViewController") as! DeviceSettingViewController
     }
+    func ResetAllControllerlistvcUsingStoryboard() -> ResetAllWifiViewController {
+        return UIStoryboard(name: "ContollerList", bundle: Bundle.main).instantiateViewController(withIdentifier: "ResetAllWifiViewController") as! ResetAllWifiViewController
+        
+    }
     func gotoDeviceDetails(
         controller pController :UIViewController, selectedController pSelectedController :ControllerAppliance) {
         let aDestinationController = self.controllerDetailsControllerUsingStoryboard()
             aDestinationController.controllerApplince = pSelectedController
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoResetAllControllerSetting(controller pController :UIViewController, controller pApplinces: [ControllerAppliance]) {
+        let aDestinationController = self.ResetAllControllerlistvcUsingStoryboard()
+         aDestinationController.controllerApplince = pApplinces
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 }

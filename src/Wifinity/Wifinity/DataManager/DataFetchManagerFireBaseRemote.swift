@@ -234,10 +234,8 @@ extension DataFetchManagerFireBase {
                 //  databaserefnc?.setValue("Y0120F")"
                 self.sendmsg(pMessage: "Y0120F", pApplinces: pcontroller!)
             
-                
                //  databaserefnc?.setValue("W012" + (uRoom ?? "") + "0F1")
                 self.sendmsg(pMessage: "W" + (uRoom ?? "") + "0F1", pApplinces: pcontroller!)
-        
                
              //   databaserefnc?.setValue("X012" + (pRoom ?? "") + "0F1")
                 self.sendmsg(pMessage: "X" + (pRoom ?? "") + "0F1", pApplinces: pcontroller!)

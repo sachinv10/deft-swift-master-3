@@ -43,7 +43,9 @@ class DashboardController: BaseController {
         self.view.addSubview(self.drawerController.view)
         self.drawerController.didMove(toParent: self)
         self.drawerController.close()
-        self.drawerController.emailAddressLabel.text = DataFetchManager.shared.loggedInUser?.emailAddress
+        print("email=\(UserDefaults.standard.value(forKey: "emailAddress"))")
+        self.drawerController.emailAddressLabel.text = UserDefaults.standard.value(forKey: "emailAddress") as! String
+   //    self.drawerController.emailAddressLabel.text = DataFetchManager.shared.loggedInUser?.emailAddress
         self.applianceCollectionView.clipsToBounds = true
       
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
@@ -297,6 +299,8 @@ class DashboardController: BaseController {
         customView.isHidden = false
         customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
            customView.backgroundColor = UIColor.white     //give color to the view
+        customView.layer.borderColor = UIColor.gray.cgColor
+        customView.layer.cornerRadius = 10
       //  customView.rightAnchor = self.view.center
         myFirstButton.setTitle("Controller Setting", for: .normal)
         myFirstButton.setTitleColor(UIColor.black, for: .normal)

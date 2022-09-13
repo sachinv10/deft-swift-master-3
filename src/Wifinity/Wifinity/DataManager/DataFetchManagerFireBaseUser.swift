@@ -9,6 +9,7 @@ import UIKit
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
+import Firebase
 
 
 extension DataFetchManagerFireBase {

@@ -1397,12 +1397,12 @@
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.1.2;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1425,12 +1425,12 @@
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.1.2;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1584,7 +1584,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = exactVersion;
-				version = 9.1.0;
+				version = 9.6.0;
 			};
 		};
 		47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

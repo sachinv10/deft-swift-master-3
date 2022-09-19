@@ -136,8 +136,5 @@ extension ResetAllWifiViewController: ResetControllerTableCellViewDelegate{
                 
         }
      }
-    
-    
-    
 }
  

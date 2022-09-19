@@ -277,12 +277,16 @@ extension DataFetchManagerFireBase {
                             }
                         _ = anApplianceDispatchSemaphore.wait(timeout: .distantFuture)
                     }
-                    if aFetchedApplianceArray.count > 0 {
+                    do{  if aFetchedApplianceArray.count > 0 {
                         // Sort frequently operated appliances and take top 6
                         aFetchedApplianceArray.sort { (pLhs, pRhs) -> Bool in
                             return pLhs.operatedCount ?? 0 > pRhs.operatedCount ?? 0
                         }
                         anApplianceArray = Array(aFetchedApplianceArray.prefix(6))
+                    }
+                    }catch{
+                        print(error)
+                        print("Crash in Applinces")
                     }
                 }
                 

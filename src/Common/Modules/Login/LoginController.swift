@@ -49,17 +49,17 @@ class LoginController: BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Database.database().isPersistenceEnabled = true
-        if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
+        
+        if ((Auth.auth().currentUser?.uid) != nil){
+            demologin()
+        }else if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
             self.emailAddressTextField.text = anEmailAddress
             self.passwordTextField.text = aPassword
             self.whiteOverlay = UIView(frame: self.view.bounds)
             self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
             self.view.addSubview(self.whiteOverlay!)
-            if ((Auth.auth().currentUser?.uid) != nil){
-            RoutingManager.shared.gotoDashboard(controller: self)
-            }else{
-                self.login()
-            }
+            self.login()
+       
         }else{
         
         self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
@@ -131,6 +131,24 @@ class LoginController: BaseController {
             }
         
     }
+    func demologin(){
+        if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password"){
+            _ = KeychainManager.shared.save(key: "emailAddress", value: anEmailAddress)
+            _ = KeychainManager.shared.save(key: "password", value: aPassword)
+            let aUser = User()
+            aUser.emailAddress = Auth.auth().currentUser?.email
+            aUser.password = aPassword
+            aUser.firebaseUserId = Auth.auth().currentUser?.uid
+            DataFetchManager.shared.loggedInUser = aUser
+            RoutingManager.shared.gotoDashboard(controller: self)
+            self.whiteOverlay = UIView(frame: self.view.bounds)
+            self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
+            self.view.addSubview(self.whiteOverlay!)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                self.whiteOverlay?.isHidden = true
+            }
+        }
+    }
     func login() {
         let aUser = User()
         aUser.emailAddress = self.emailAddressTextField.text
@@ -138,19 +156,19 @@ class LoginController: BaseController {
         
         ProgressOverlay.shared.show()
         DataFetchManager.shared.login(completion: { (pError, pUser) in
-            ProgressOverlay.shared.hide()
+        ProgressOverlay.shared.hide()
             if pUser != nil {
                 if let anEmailAddress = self.emailAddressTextField.text, let aPassword = self.passwordTextField.text {
                     _ = KeychainManager.shared.save(key: "emailAddress", value: anEmailAddress)
                     _ = KeychainManager.shared.save(key: "password", value: aPassword)
-                }
+                   }
                 self.emailAddressTextField.text = nil
                 self.passwordTextField.text = nil
                 DataFetchManager.shared.loggedInUser = pUser
                 
                 self.saveAppNotificationSettings(completion: {
                     RoutingManager.shared.gotoDashboard(controller: self)
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
                         self.whiteOverlay?.isHidden = true
                     }
                 })

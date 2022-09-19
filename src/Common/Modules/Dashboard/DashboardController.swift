@@ -44,7 +44,7 @@ class DashboardController: BaseController {
         self.drawerController.didMove(toParent: self)
         self.drawerController.close()
         print("email=\(UserDefaults.standard.value(forKey: "emailAddress"))")
-        self.drawerController.emailAddressLabel.text = UserDefaults.standard.value(forKey: "emailAddress") as! String
+        self.drawerController.emailAddressLabel.text = UserDefaults.standard.value(forKey: "emailAddress") as? String
    //    self.drawerController.emailAddressLabel.text = DataFetchManager.shared.loggedInUser?.emailAddress
         self.applianceCollectionView.clipsToBounds = true
       
@@ -256,7 +256,7 @@ class DashboardController: BaseController {
         loadcollectionView()
     }
     
-    
+
     func logout() {
         ProgressOverlay.shared.show()
         self.clearAppNotificationSettings(completion: {
@@ -276,7 +276,6 @@ class DashboardController: BaseController {
             })
         })
     }
-    
     
     func clearAppNotificationSettings(completion pCompletion :@escaping(()->())) {
         if let aUserId = DataFetchManager.shared.loggedInUser?.firebaseUserId {
@@ -298,7 +297,7 @@ class DashboardController: BaseController {
     @IBAction func btnRightMenuBtn(_ sender: Any) {
         customView.isHidden = false
         customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
-           customView.backgroundColor = UIColor.white     //give color to the view
+        customView.backgroundColor = UIColor.white     //give color to the view
         customView.layer.borderColor = UIColor.gray.cgColor
         customView.layer.cornerRadius = 10
       //  customView.rightAnchor = self.view.center

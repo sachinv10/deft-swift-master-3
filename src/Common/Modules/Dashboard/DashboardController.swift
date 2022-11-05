@@ -386,6 +386,10 @@ extension DashboardController :DrawerControllerDelegate {
             RoutingManager.shared.gotoCore(controller: self)
         } else if pUrc == DrawerController.Menu.Offline.urc {
             RoutingManager.shared.gotoOffline(controller: self) 
+        }else if pUrc == DrawerController.Menu.Cameras.urc {
+            RoutingManager.shared.gotoCameras(controller: self)
+        }else if pUrc == DrawerController.Menu.HelpAndSuppor.urc {
+            RoutingManager.shared.gotoHelp(controller: self)
         }
     }
 }

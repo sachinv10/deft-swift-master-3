@@ -7,19 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1828BB952916891F00944793 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1828BB942916891F00944793 /* SubmitViewController.swift */; };
 		187EE9A3286EC46700DB3EC0 /* SharedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */; };
 		187F70612869900300CE4620 /* ContollerList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187F70602869900300CE4620 /* ContollerList.storyboard */; };
 		187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70622869906400CE4620 /* ControllerListViewController.swift */; };
 		187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */; };
 		187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */; };
 		1896876F28C76F8E000EF347 /* ResetWifiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */; };
+		1899F38428F6A263007CED70 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1899F38328F6A263007CED70 /* Reachability.swift */; };
+		189B30A22911058E00BC9721 /* wifi.gif in Resources */ = {isa = PBXBuildFile; fileRef = 189B30A12911058E00BC9721 /* wifi.gif */; };
+		189B30A42911202000BC9721 /* d2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 189B30A32911201F00BC9721 /* d2.gif */; };
 		189B74CC28C9E7A4001962D3 /* ResetAllWifiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B74CB28C9E7A4001962D3 /* ResetAllWifiViewController.swift */; };
+		189BC1392914E068007EAB3B /* CameraBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189BC1382914E068007EAB3B /* CameraBoard.storyboard */; };
+		189BC13D2914E2B2007EAB3B /* CamerasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BC13C2914E2B2007EAB3B /* CamerasViewController.swift */; };
 		189E97D728BDD29B00DDC2A5 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 189E97D628BDD29B00DDC2A5 /* Starscream */; };
 		189E97DB28BDDB9800DDC2A5 /* SwiftyPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */; };
 		189E97DD28BDDE2C00DDC2A5 /* PingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */; };
 		189E97DF28BDE07D00DDC2A5 /* Offline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189E97DE28BDE07D00DDC2A5 /* Offline.storyboard */; };
+		18A16EF9291628C00007C7C6 /* HelpAndSupport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */; };
+		18A16EFB291628EC0007C7C6 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */; };
+		18A16EFD291649F50007C7C6 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A16EFC291649F50007C7C6 /* SupportViewController.swift */; };
 		18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */; };
 		18EA947228CF2DB80034C291 /* ResetAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA947128CF2DB80034C291 /* ResetAllViewController.swift */; };
+		18EC357528EED17000FD1DAF /* RqTv.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18EC357428EED16F00FD1DAF /* RqTv.gif */; };
 		372D440F283F5F2A002F0F96 /* Core.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372D440E283F5F2A002F0F96 /* Core.storyboard */; };
 		372D4411283F5F52002F0F96 /* CoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4410283F5F52002F0F96 /* CoreViewController.swift */; };
 		372D4413283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */; };
@@ -214,18 +224,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1828BB942916891F00944793 /* SubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitViewController.swift; sourceTree = "<group>"; };
 		187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunction.swift; sourceTree = "<group>"; };
 		187F70602869900300CE4620 /* ContollerList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContollerList.storyboard; sourceTree = "<group>"; };
 		187F70622869906400CE4620 /* ControllerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerListViewController.swift; sourceTree = "<group>"; };
 		187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllrTableViewCell.swift; sourceTree = "<group>"; };
 		187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettingViewController.swift; sourceTree = "<group>"; };
 		1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetWifiViewController.swift; sourceTree = "<group>"; };
+		1899F38328F6A263007CED70 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		189B30A12911058E00BC9721 /* wifi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = wifi.gif; path = ../../../../../../Downloads/wifi.gif; sourceTree = "<group>"; };
+		189B30A32911201F00BC9721 /* d2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = d2.gif; path = "../../../../../../Documents/deft-swift-master/d2.gif"; sourceTree = "<group>"; };
 		189B74CB28C9E7A4001962D3 /* ResetAllWifiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetAllWifiViewController.swift; sourceTree = "<group>"; };
+		189BC1382914E068007EAB3B /* CameraBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CameraBoard.storyboard; sourceTree = "<group>"; };
+		189BC13C2914E2B2007EAB3B /* CamerasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasViewController.swift; sourceTree = "<group>"; };
 		189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyPing.swift; path = "../../../../../../Documents/Sachin_ios/demo Project/SwiftyPing-master/Sources/SwiftyPing/SwiftyPing.swift"; sourceTree = "<group>"; };
 		189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingViewController.swift; sourceTree = "<group>"; };
 		189E97DE28BDE07D00DDC2A5 /* Offline.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Offline.storyboard; sourceTree = "<group>"; };
+		18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpAndSupport.storyboard; sourceTree = "<group>"; };
+		18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
+		18A16EFC291649F50007C7C6 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
 		18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineApplinceViewController.swift; sourceTree = "<group>"; };
 		18EA947128CF2DB80034C291 /* ResetAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetAllViewController.swift; sourceTree = "<group>"; };
+		18EC357428EED16F00FD1DAF /* RqTv.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = RqTv.gif; path = ../../../../../../Downloads/RqTv.gif; sourceTree = "<group>"; };
 		372D440E283F5F2A002F0F96 /* Core.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Core.storyboard; sourceTree = "<group>"; };
 		372D4410283F5F52002F0F96 /* CoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreViewController.swift; sourceTree = "<group>"; };
 		372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseCore.swift; sourceTree = "<group>"; };
@@ -449,15 +469,38 @@
 			path = ControllerList;
 			sourceTree = "<group>";
 		};
+		189BC1372914DFF0007EAB3B /* Cameras */ = {
+			isa = PBXGroup;
+			children = (
+				189BC1382914E068007EAB3B /* CameraBoard.storyboard */,
+				189BC13C2914E2B2007EAB3B /* CamerasViewController.swift */,
+			);
+			path = Cameras;
+			sourceTree = "<group>";
+		};
 		189E97D928BDDB7200DDC2A5 /* Offline Database */ = {
 			isa = PBXGroup;
 			children = (
 				189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */,
 				189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */,
 				189E97DE28BDE07D00DDC2A5 /* Offline.storyboard */,
+				18EC357428EED16F00FD1DAF /* RqTv.gif */,
+				189B30A32911201F00BC9721 /* d2.gif */,
+				189B30A12911058E00BC9721 /* wifi.gif */,
 				18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */,
 			);
 			path = "Offline Database";
+			sourceTree = "<group>";
+		};
+		18A16EF7291622750007C7C6 /* Help and Support */ = {
+			isa = PBXGroup;
+			children = (
+				18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */,
+				18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */,
+				18A16EFC291649F50007C7C6 /* SupportViewController.swift */,
+				1828BB942916891F00944793 /* SubmitViewController.swift */,
+			);
+			path = "Help and Support";
 			sourceTree = "<group>";
 		};
 		372D440D283F5F1A002F0F96 /* Core */ = {
@@ -624,6 +667,7 @@
 				3F96CB2A25B5D9BE00523116 /* AppHeaderBarView.swift */,
 				3F96CB3425B5D9E600523116 /* AppHeaderBarView.xib */,
 				187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */,
+				1899F38328F6A263007CED70 /* Reachability.swift */,
 			);
 			path = Miscellaneous;
 			sourceTree = "<group>";
@@ -651,6 +695,8 @@
 		3F60E6E4258288640094823F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				18A16EF7291622750007C7C6 /* Help and Support */,
+				189BC1372914DFF0007EAB3B /* Cameras */,
 				372D440D283F5F1A002F0F96 /* Core */,
 				472685932824554B0058E92C /* OfferZone */,
 				3F411CF9271DDB1F001DBB85 /* Device */,
@@ -1013,15 +1059,18 @@
 			files = (
 				372D440F283F5F2A002F0F96 /* Core.storyboard in Resources */,
 				47B23718282459D60048A87D /* OffersTableViewCell.xib in Resources */,
+				189B30A42911202000BC9721 /* d2.gif in Resources */,
 				3F60E784258288650094823F /* ProjectorRemoteControl.xib in Resources */,
 				3F29A88725B3F53500F39867 /* Dashboard.storyboard in Resources */,
 				3F60E775258288640094823F /* DvdRemoteControl.xib in Resources */,
 				189E97DF28BDE07D00DDC2A5 /* Offline.storyboard in Resources */,
 				3755BACC283684A100D4C956 /* IRFanRemoteControl.xib in Resources */,
 				3F60E66B258284DC0094823F /* LaunchScreen.storyboard in Resources */,
+				18A16EF9291628C00007C7C6 /* HelpAndSupport.storyboard in Resources */,
 				3F60E6B7258285BA0094823F /* GoogleService-Info.plist in Resources */,
 				3F73FD3725B3F0D100204FEC /* Appliance.storyboard in Resources */,
 				3F29A85A25B3F35D00F39867 /* Sensor.storyboard in Resources */,
+				189BC1392914E068007EAB3B /* CameraBoard.storyboard in Resources */,
 				3F60E77F258288650094823F /* MoodLightRemoteControl.xib in Resources */,
 				3F60E741258288640094823F /* Common.xcassets in Resources */,
 				3F411D04271DDB1F001DBB85 /* Device.storyboard in Resources */,
@@ -1042,8 +1091,10 @@
 				3FA86E242678E1A100DC80EE /* Energy.storyboard in Resources */,
 				3F60E77B258288650094823F /* FanRemoteControl.xib in Resources */,
 				3F60E77D258288650094823F /* LedStripRemoteControl.xib in Resources */,
+				189B30A22911058E00BC9721 /* wifi.gif in Resources */,
 				3F29A86A25B3F40900F39867 /* Lock.storyboard in Resources */,
 				3F60E779258288640094823F /* DynamicButtonContainerView.xib in Resources */,
+				18EC357528EED17000FD1DAF /* RqTv.gif in Resources */,
 				3F60E773258288640094823F /* CircularDirectionButton.xib in Resources */,
 				3F60E666258284DB0094823F /* Main.storyboard in Resources */,
 				3F73FD4725B3F27900204FEC /* Remote.storyboard in Resources */,
@@ -1102,7 +1153,9 @@
 				3F60E783258288650094823F /* ProjectorRemoteControl.swift in Sources */,
 				3F60E766258288640094823F /* RoomCollectionCellView.swift in Sources */,
 				3F60E76C258288640094823F /* SearchAppNotificationController.swift in Sources */,
+				1899F38428F6A263007CED70 /* Reachability.swift in Sources */,
 				3F60E792258288650094823F /* NewScheduleController.swift in Sources */,
+				1828BB952916891F00944793 /* SubmitViewController.swift in Sources */,
 				3F60E6AA2582859F0094823F /* DataFetchManagerFireBaseSchedule.swift in Sources */,
 				3F38298725B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift in Sources */,
 				3F60E760258288640094823F /* SearchCurtainTableCellView.swift in Sources */,
@@ -1174,6 +1227,7 @@
 				3F60E770258288640094823F /* AcRemoteControl.swift in Sources */,
 				3F60E758258288640094823F /* User.swift in Sources */,
 				3FE2C27E2725C31300AC76EB /* Rule.swift in Sources */,
+				189BC13D2914E2B2007EAB3B /* CamerasViewController.swift in Sources */,
 				3F60E798258288650094823F /* SearchScheduleTableCellView.swift in Sources */,
 				3F60E6A62582859F0094823F /* DataFetchManagerFireBaseLock.swift in Sources */,
 				3F411D05271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift in Sources */,
@@ -1195,6 +1249,7 @@
 				3F60E77E258288650094823F /* MoodLightRemoteControl.swift in Sources */,
 				3F411D0B271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift in Sources */,
 				3F411D07271DDB1F001DBB85 /* NewDeviceController.swift in Sources */,
+				18A16EFD291649F50007C7C6 /* SupportViewController.swift in Sources */,
 				3F60E6A82582859F0094823F /* DataFetchManagerFireBaseRemote.swift in Sources */,
 				189E97DD28BDDE2C00DDC2A5 /* PingViewController.swift in Sources */,
 				3F60E789258288650094823F /* RemoteDetailsController.swift in Sources */,
@@ -1210,6 +1265,7 @@
 				3F60E763258288640094823F /* DrawerController.swift in Sources */,
 				3F040F7D258504480035ABAB /* Device.swift in Sources */,
 				3F60E74E258288640094823F /* UtilityManager.swift in Sources */,
+				18A16EFB291628EC0007C7C6 /* SelectTypeViewController.swift in Sources */,
 				3F60E750258288640094823F /* AppNotification.swift in Sources */,
 				3F60E6A32582859F0094823F /* DataFetchManagerFireBaseAppliance.swift in Sources */,
 				3F60E796258288650094823F /* ScheduleTitleTableCellView.swift in Sources */,

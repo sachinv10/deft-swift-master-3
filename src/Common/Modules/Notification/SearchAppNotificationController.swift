@@ -43,9 +43,9 @@ class SearchAppNotificationController: BaseController {
     
     
     private func searchAppNotification(appNotificationType pAppNotificationType :AppNotification.AppNotificationType, hardwareId pHardwareId :String?) {
-        // ProgressOverlay.shared.show()
-        DataFetchManager.shared.searchAppNotification(completion: { (pError, pAppNotificationArray) in
-            // ProgressOverlay.shared.hide()
+          ProgressOverlay.shared.show()
+        DataFetchManager.shared.searchAppNotificationMN(completion: { (pError, pAppNotificationArray) in
+              ProgressOverlay.shared.hide()
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not search notification", description: pError!.localizedDescription)
             } else {
@@ -157,6 +157,7 @@ extension SearchAppNotificationController :UITableViewDataSource, UITableViewDel
         if pIndexPath.row == self.appNotifications.count - 1 && self.isLastPage == false {
             if let anAppNotificationType = self.selectedAppNotificationType {
                 self.currentPageNumber += 1
+                print("currentPageNumber= \(currentPageNumber)")
                 self.searchAppNotification(appNotificationType: anAppNotificationType, hardwareId: self.selectedHardwareId)
             }
         }
@@ -169,5 +170,5 @@ extension SearchAppNotificationController :UITableViewDataSource, UITableViewDel
     func tableView(_ pTableView: UITableView, didSelectRowAt pIndexPath: IndexPath) {
         pTableView.deselectRow(at: pIndexPath, animated: true)
     }
-    
+     
 }

@@ -87,7 +87,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError)
             }
         }
-        
     }
     
     

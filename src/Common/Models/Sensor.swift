@@ -11,9 +11,10 @@ import UIKit
 class Sensor: NSObject {
     var id :String?
     var title :String?
-    
+    var controllerType :String?
     var roomId :String?
     var roomTitle :String?
+    var calibrated :Bool?
     var uidAssign :Bool?
     var lastOperation :String?
     var peopleCount :Int?
@@ -83,7 +84,7 @@ class Sensor: NSObject {
         aSensor.lastOperationTime = self.lastOperationTime
         aSensor.roomId = self.roomId
         aSensor.roomTitle = self.roomTitle
-        
+        aSensor.calibrated = self.calibrated
         aSensor.hardwareGeneration = self.hardwareGeneration
         
         aSensor.occupancyState = self.occupancyState

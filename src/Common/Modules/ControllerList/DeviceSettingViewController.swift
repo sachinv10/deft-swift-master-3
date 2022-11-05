@@ -15,6 +15,7 @@ class DeviceSettingViewController: UIViewController {
     
     @IBOutlet weak var backgroundview: UIView!
     var controllerApplince :ControllerAppliance?
+    var pSensor = Sensor()
     static var timestamp = Array<Dictionary<String,Any>>()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class DeviceSettingViewController: UIViewController {
                 
             }
         }
-        Refrashbtn.setTitle("", for: .normal)
+         Refrashbtn.setTitle("", for: .normal)
         self.stackviewfunc()
         self.activatelisner()
     }
@@ -110,6 +111,14 @@ class DeviceSettingViewController: UIViewController {
         button3.addTarget(self, action: #selector(MydeleteView), for: .touchUpInside)
         button3.contentHorizontalAlignment = .left
         
+        let button4 = UIButton()
+        button4.setTitle("Calibrate", for: .normal)
+        button4.backgroundColor = UIColor.clear
+        button4.setTitleColor(UIColor.black, for: .normal)
+        button4.translatesAutoresizingMaskIntoConstraints = false
+        button4.addTarget(self, action: #selector(MyCalibrateView), for: .touchUpInside)
+        button4.contentHorizontalAlignment = .left
+        
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.spacing = 0
@@ -119,9 +128,51 @@ class DeviceSettingViewController: UIViewController {
         stackView.spacing = 8.0
         stackView.addArrangedSubview(button2)
         stackView.addArrangedSubview(button3)
+        if "Lidar Sensor" == controllerApplince?.controllerType{
+            stackView.addArrangedSubview(button4)
+         }
+        
     }
     @objc func MyResetView() {
         RoutingManager.shared.gotoResetControllerSetting(controller: self, controller: controllerApplince!)
+    }
+    @objc func MyCalibrateView() {
+        var database = Database.database().reference()
+       
+        if let ids = controllerApplince?.id{
+            database = database.child("devices").child(ids)
+            pSensor.id = ids
+            database.updateChildValues(["calibrated": false])
+        }
+       
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.updateSensorCalibrate(completion: { (pError) in
+         //   ProgressOverlay.shared.hide()
+            if pError != nil {
+                PopupManager.shared.displayError(message: "Can not Calibrate", description: pError!.localizedDescription)
+                ProgressOverlay.shared.hide()
+            } else {
+               // PopupManager.shared.displaySuccess(message: "Calibrate successfully", description: "")
+//                pSensor.occupancyState = pOccupancyState
+//                self.reloadAllView()
+            }
+        }, sensor: pSensor)
+        DispatchQueue.main.asyncAfter(deadline: .now() ){
+            database.observe(.childChanged, with: { snapshot in
+          
+                    if let value = snapshot.value as? Bool {
+                        print(" controller value =\(value)")
+                        if value == true{
+                              PopupManager.shared.displaySuccess(message: "Calibrate successfully", description: "")
+                            ProgressOverlay.shared.hide()
+                        }
+                    }
+             
+            })
+ 
+ 
+ 
+        }
     }
     var customView = UIView()
     var lablehead = UILabel()
@@ -130,7 +181,6 @@ class DeviceSettingViewController: UIViewController {
     var btnAthontication = UIButton()
     var btnCancel = UIButton()
     @objc func MydeleteView() {
-        
         
         
         deleteView.isHidden = false
@@ -227,8 +277,6 @@ class DeviceSettingViewController: UIViewController {
     }
     func updateApplianceRefrashWifi(appliance pAppliance :ControllerAppliance) {
         let anAppliance = pAppliance.clone()
-      
-        
         
         ProgressOverlay.shared.show()
         DataFetchManager.shared.deleteControllerState(completion: { (pError) in

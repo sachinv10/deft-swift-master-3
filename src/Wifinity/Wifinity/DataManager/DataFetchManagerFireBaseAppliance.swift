@@ -354,6 +354,57 @@ extension DataFetchManagerFireBase {
         }
         
     }
+    func updateAppliancePowerStateOffline(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                if (pAppliance.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
+                }
+                
+                // NO NEED TO update state in database
+               // var dic = [AnyHashable: Any]
+                // Send message and reset it
+                var aDimValue = 0
+                if pAppliance.dimType == Appliance.DimType.rc {
+                    aDimValue = pAppliance.dimmableValue ?? 5
+                } else if pAppliance.dimType == Appliance.DimType.triac {
+                    aDimValue = pAppliance.dimmableValueTriac ?? 99
+                }
+                self.database
+                    .child("applianceDetails")
+                    .child(pAppliance.hardwareId ?? "").child(pAppliance.id ?? "").updateChildValues(["state": pPowerState])
+                
+              //   anError = self.sendMessage(aMessageValue, entity: pAppliance)
+                if anError != nil {
+                    throw anError!
+                }
+                
+                // Update frequent usage count
+                if let aCount = self.fetchApplianceProperty(pAppliance, propertyName: "applianceOperatedCount") as? Int {
+                    anError = self.updateApplianceProperty(pAppliance, propertyName: "applianceOperatedCount", propertyValue: aCount + 1)
+                }
+                if anError != nil {
+                    throw anError!
+                }
+            } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError)
+            }
+        }
+        
+    }
     func updateAppliancePowerState(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1
@@ -403,7 +454,39 @@ extension DataFetchManagerFireBase {
         
     }
     
-    
+    func updateOfflineApplianceDimmableValue(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, dimValue pDimValue :Int) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                self.database
+                    .child("applianceDetails")
+                    .child(pAppliance.hardwareId ?? "").child(pAppliance.id ?? "").updateChildValues(["dimableValue": pDimValue])
+              
+                // NO NEED TO update state in database
+                
+                // Send message and reset it
+//                let aMessageValue = Appliance.command(appliance: pAppliance, powerState: pAppliance.isOn, dimValue: pDimValue)
+//                anError = self.sendMessage(aMessageValue, entity: pAppliance)
+//                if anError != nil {
+//                    throw anError!
+//                }
+            } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError)
+            }
+        }
+        
+    }
     func updateApplianceDimmableValue(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, dimValue pDimValue :Int) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1

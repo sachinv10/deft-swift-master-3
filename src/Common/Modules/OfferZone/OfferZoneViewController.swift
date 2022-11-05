@@ -54,7 +54,9 @@ extension OfferZoneViewController {
         var request = URLRequest(url: url! as URL)
    
         request.httpMethod = "GET"
-        
+        if Reachabilityy.isConnectedToNetwork(){
+            print("Internet Connection Available!")
+       
         let dataTask = session.dataTask(with: request as URLRequest) { (data:Data?, response:URLResponse?, error:Error?) -> Void in do{
             if let jsonResult = try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
                 for (offerKey, _) in jsonResult {
@@ -91,6 +93,9 @@ extension OfferZoneViewController {
             print("done, error: \(error)")
         }
         dataTask.resume()
+    }else{
+            print("Internet Connection not Available!")
+        }
     }
     
     func setupofferTableView() {

@@ -24,6 +24,7 @@ class AppNotification: NSObject {
         case informationNotification = "Information Notification"
         case deviceOfflineNotification = "Device Offline Notification"
         case sensorNotification = "Sensor Notification"
+        case tempratureNotification = "Temperature Notification"
     }
 }
 

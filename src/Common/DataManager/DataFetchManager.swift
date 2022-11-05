@@ -62,6 +62,10 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.searchAppliance(completion: pCompletion, room: pRoom, includeOnOnly: pIncludeOnOnly)
     }
     
+    func updateAppliancePowerStateOffline(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
+        self.dataFetchManagerFireBase.updateAppliancePowerStateOffline(completion: pCompletion, appliance: pAppliance, powerState: pPowerState)
+    }
+    
     func updateAppliancePowerState(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         self.dataFetchManagerFireBase.updateAppliancePowerState(completion: pCompletion, appliance: pAppliance, powerState: pPowerState)
     }
@@ -79,6 +83,9 @@ class DataFetchManager: NSObject {
     
     func updateApplianceDimmableValue(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, dimValue pDimValue :Int) {
         self.dataFetchManagerFireBase.updateApplianceDimmableValue(completion: pCompletion, appliance: pAppliance, dimValue: pDimValue)
+    }
+    func updateOfflineApplianceDimmableValue(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, dimValue pDimValue :Int) {
+        self.dataFetchManagerFireBase.updateOfflineApplianceDimmableValue(completion: pCompletion, appliance: pAppliance, dimValue: pDimValue)
     }
     
     func updateAppliance(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, property1 pProperty1 :Int, property2 pProperty2 :Int, property3 pProperty3 :Int, glowPatternValue pGlowPatternValue :Int) {
@@ -162,6 +169,10 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateSensorBtnResetCounter(completion: pCompletion, sensor: pSensor)
     }
     
+    func updateSensorCalibrate(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
+        self.dataFetchManagerFireBase.updateSensorCalibrate(completion: pCompletion, sensor: pSensor)
+    }
+    
     func updateSensorbtnFixNow(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         self.dataFetchManagerFireBase.updateSensorBrnFixNow(completion: pCompletion, sensor: pSensor)
     }
@@ -241,6 +252,9 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.searchAppNotification(completion: pCompletion, appNotificationType: pAppNotificationType, hardwareId: pHardwareId, pageNumber: pPageNumber)
     }
     
+    func searchAppNotificationMN(completion pCompletion: @escaping (Error?, Array<AppNotification>?) -> Void, appNotificationType pAppNotificationType :AppNotification.AppNotificationType, hardwareId pHardwareId :String?, pageNumber pPageNumber :Int) {
+        self.dataFetchManagerFireBase.searchAppNotificationMN(completion: pCompletion, appNotificationType: pAppNotificationType, hardwareId: pHardwareId, pageNumber: pPageNumber)
+    }
     func saveAppNotificationSettings(completion pCompletion: @escaping (Error?, AppNotificationSettings?) -> Void, appNotificationSettings pAppNotificationSettings :AppNotificationSettings) {
         self.dataFetchManagerFireBase.saveAppNotificationSettings(completion: pCompletion, appNotificationSettings: pAppNotificationSettings)
     }

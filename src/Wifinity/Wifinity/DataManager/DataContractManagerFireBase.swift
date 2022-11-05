@@ -261,6 +261,9 @@ extension DataContractManagerFireBase {
             if let wifiSignalStrength = pDict["wifiSignalStrength"] as? String{
                 aDevice.wifiSignalStrength = wifiSignalStrength
             }
+            if let controllertype = pDict["controllerType"] as? String{
+                aDevice.controllerType = controllertype
+            }
             aDevice.clone()
             aReturnVal = aDevice
         }
@@ -1019,6 +1022,10 @@ extension DataContractManagerFireBase {
                 
                 aSensor.uidAssign = uidassin as? Bool
             }
+            if let controller_type = pDict["controllerType"]{
+                
+                aSensor.controllerType = controller_type as? String
+            }
             if let lastOperation = pDict["lastOperation"]{
                 
                 aSensor.lastOperation = lastOperation as? String
@@ -1056,6 +1063,13 @@ extension DataContractManagerFireBase {
             } else if let anOccupancyState = pDict["state"] as? Bool {
                 aSensor.occupancyState = anOccupancyState ? Sensor.OccupancyState.armed : Sensor.OccupancyState.disarmed
             }
+          //  calibrated
+            if let acalibrate = pDict["calibrated"] as? Bool {
+                aSensor.calibrated = acalibrate
+            }else{
+                aSensor.calibrated = false
+            }
+            
             
             if let aLightState = pDict["motionLightStatus"] as? Bool {
                 aSensor.lightState = aLightState ? Sensor.LightState.on : Sensor.LightState.off

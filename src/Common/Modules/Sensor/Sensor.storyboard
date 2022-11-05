@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -30,7 +30,7 @@
                                 <color key="backgroundColor" name="PrimaryLightestColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchSensorTableCellViewId" rowHeight="480" id="cwJ-R2-dsY" customClass="SearchSensorTableCellView" customModule="Wifinity" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="480"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="480"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cwJ-R2-dsY" id="U87-Xt-CxS">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="480"/>
@@ -452,7 +452,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOJ-Jz-Ddb">
-                                                                    <rect key="frame" x="309" y="4.5" width="75" height="31"/>
+                                                                    <rect key="frame" x="299.5" y="3" width="84.5" height="34.5"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="Fix Now"/>
                                                                     <connections>
@@ -479,7 +479,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EyV-Xg-ghE">
                                                                             <rect key="frame" x="0.0" y="0.0" width="5" height="30"/>
                                                                         </view>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPV-9B-hij">
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPV-9B-hij">
                                                                             <rect key="frame" x="20" y="0.0" width="90" height="30"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
@@ -488,7 +488,7 @@
                                                                                 <action selector="btnresetCountfun:" destination="cwJ-R2-dsY" eventType="touchUpInside" id="Lix-BR-Ttz"/>
                                                                             </connections>
                                                                         </button>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="au3-aO-ns1">
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="au3-aO-ns1">
                                                                             <rect key="frame" x="125" y="0.0" width="111" height="30"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
@@ -497,13 +497,13 @@
                                                                                 <action selector="didSelectAppNotificationButton:" destination="cwJ-R2-dsY" eventType="touchUpInside" id="Q8Q-cG-O9m"/>
                                                                             </connections>
                                                                         </button>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-da-iYL" customClass="AppToggleButton" customModule="Wifinity" customModuleProvider="target">
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcc-da-iYL" customClass="AppToggleButton" customModule="Wifinity" customModuleProvider="target">
                                                                             <rect key="frame" x="251" y="0.0" width="65" height="30"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                                                             <state key="normal" title="ONLINE"/>
                                                                         </button>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDa-yJ-XBa">
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDa-yJ-XBa">
                                                                             <rect key="frame" x="331" y="0.0" width="53" height="30"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                             <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
@@ -520,7 +520,7 @@
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="7LQ-5B-pNY"/>
+                                                                <constraint firstAttribute="height" constant="80" id="7LQ-5B-pNY"/>
                                                                 <constraint firstAttribute="trailing" secondItem="Q4i-Zv-CH0" secondAttribute="trailing" id="RY7-HK-r2M"/>
                                                                 <constraint firstItem="Q4i-Zv-CH0" firstAttribute="leading" secondItem="aTK-H2-sZp" secondAttribute="leading" id="tqO-4d-7JR"/>
                                                                 <constraint firstItem="Q4i-Zv-CH0" firstAttribute="centerY" secondItem="aTK-H2-sZp" secondAttribute="centerY" id="wxS-nB-OZm"/>
@@ -529,6 +529,36 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QX0-SG-rx0">
+                                                    <rect key="frame" x="11" y="435" width="392" height="46"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Before proceeding with the calibration, please make sure that the area uder the sensor is not occupied" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AfV-CA-0NU">
+                                                            <rect key="frame" x="0.0" y="0.0" width="392" height="28"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" name="ControlErrorColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XzU-v9-Cex">
+                                                            <rect key="frame" x="275" y="18" width="109" height="24"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="filled" title="Calibrate"/>
+                                                            <connections>
+                                                                <action selector="funcCalibratebtn:" destination="cwJ-R2-dsY" eventType="touchUpInside" id="0pp-sF-u9Y"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="XzU-v9-Cex" firstAttribute="height" secondItem="QX0-SG-rx0" secondAttribute="height" multiplier="0.515217" id="8Vq-kF-q2f"/>
+                                                        <constraint firstItem="AfV-CA-0NU" firstAttribute="height" secondItem="QX0-SG-rx0" secondAttribute="height" multiplier="0.608696" id="F1S-O6-ENI"/>
+                                                        <constraint firstItem="AfV-CA-0NU" firstAttribute="width" secondItem="QX0-SG-rx0" secondAttribute="width" id="Hio-LE-GMa"/>
+                                                        <constraint firstItem="XzU-v9-Cex" firstAttribute="width" secondItem="QX0-SG-rx0" secondAttribute="width" multiplier="0.278061" id="c90-OD-tEW"/>
+                                                        <constraint firstItem="AfV-CA-0NU" firstAttribute="centerX" secondItem="QX0-SG-rx0" secondAttribute="centerX" id="lTu-sR-ESe"/>
+                                                        <constraint firstAttribute="bottom" secondItem="XzU-v9-Cex" secondAttribute="bottom" multiplier="1.1" id="t97-Mw-VXV"/>
+                                                        <constraint firstAttribute="trailing" secondItem="XzU-v9-Cex" secondAttribute="trailing" constant="8" id="uGD-VC-I8j"/>
+                                                        <constraint firstItem="AfV-CA-0NU" firstAttribute="top" secondItem="QX0-SG-rx0" secondAttribute="top" id="zZD-17-Efy"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ZQf-Z4-Uhw" firstAttribute="leading" secondItem="uA8-xQ-0KW" secondAttribute="trailing" constant="10" id="0Yr-Wa-e87"/>
@@ -540,11 +570,15 @@
                                                 <constraint firstItem="L0K-fq-GQt" firstAttribute="top" secondItem="uA8-xQ-0KW" secondAttribute="bottom" constant="15" id="IKj-pl-OEq"/>
                                                 <constraint firstAttribute="trailing" secondItem="QWW-JZ-8l9" secondAttribute="trailing" constant="3" id="Msi-BS-cGg"/>
                                                 <constraint firstItem="uA8-xQ-0KW" firstAttribute="top" secondItem="U87-Xt-CxS" secondAttribute="top" constant="20" id="SW4-OE-6pK"/>
+                                                <constraint firstItem="QX0-SG-rx0" firstAttribute="centerX" secondItem="tSs-pj-xPw" secondAttribute="centerX" id="TEY-Pv-esr"/>
                                                 <constraint firstItem="9CY-r2-iJ3" firstAttribute="bottom" secondItem="uA8-xQ-0KW" secondAttribute="bottom" id="YM0-dE-enU"/>
                                                 <constraint firstItem="L0K-fq-GQt" firstAttribute="leading" secondItem="U87-Xt-CxS" secondAttribute="leading" constant="15" id="Zl4-V7-2gJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="L0K-fq-GQt" secondAttribute="trailing" constant="15" id="aRi-VI-q8x"/>
                                                 <constraint firstItem="9CY-r2-iJ3" firstAttribute="trailing" secondItem="uA8-xQ-0KW" secondAttribute="trailing" id="aa7-gh-oav"/>
                                                 <constraint firstItem="uA8-xQ-0KW" firstAttribute="leading" secondItem="U87-Xt-CxS" secondAttribute="leading" constant="15" id="bEx-bX-9qc"/>
+                                                <constraint firstItem="QX0-SG-rx0" firstAttribute="width" secondItem="tSs-pj-xPw" secondAttribute="width" multiplier="1.02083" id="bTt-hz-ZBg"/>
+                                                <constraint firstItem="QX0-SG-rx0" firstAttribute="top" secondItem="tSs-pj-xPw" secondAttribute="bottom" constant="20" id="e70-Fj-YRN"/>
+                                                <constraint firstItem="QX0-SG-rx0" firstAttribute="height" secondItem="tSs-pj-xPw" secondAttribute="height" multiplier="1.15" id="icg-by-ylD"/>
                                                 <constraint firstAttribute="trailing" secondItem="fyM-Zx-Ok6" secondAttribute="trailing" constant="15" id="q6P-eq-UZI"/>
                                                 <constraint firstItem="ZQf-Z4-Uhw" firstAttribute="centerY" secondItem="uA8-xQ-0KW" secondAttribute="centerY" id="w86-Vw-67W"/>
                                                 <constraint firstItem="Uof-L5-FrT" firstAttribute="top" secondItem="L0K-fq-GQt" secondAttribute="bottom" constant="20" id="wdA-LJ-Vij"/>
@@ -553,6 +587,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="PrimaryLightestColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" secondItem="geC-Na-FOD" secondAttribute="height" multiplier="12" id="Gxm-PA-CGw"/>
+                                            <constraint firstAttribute="width" secondItem="geC-Na-FOD" secondAttribute="width" multiplier="1.07812" id="QAB-ps-xhP"/>
+                                            <constraint firstItem="geC-Na-FOD" firstAttribute="centerX" secondItem="cwJ-R2-dsY" secondAttribute="centerX" id="Wiv-RK-S7T"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="actionButtonContainerView" destination="aTK-H2-sZp" id="FVr-Jt-v1S"/>
                                             <outlet property="appNotificationButton" destination="au3-aO-ns1" id="dF0-vl-iWq"/>
@@ -589,6 +628,7 @@
                                             <outlet property="temperatureValueLabel" destination="OrN-Re-n1F" id="8dv-c8-Kcf"/>
                                             <outlet property="textUidstatus" destination="fc7-mF-VTe" id="Kqw-6B-UNA"/>
                                             <outlet property="titleLabel" destination="ZQf-Z4-Uhw" id="ovz-eI-c8D"/>
+                                            <outlet property="viewCalibrate" destination="QX0-SG-rx0" id="Kj9-pP-Gf8"/>
                                             <outlet property="viewUidSatus" destination="geC-Na-FOD" id="5re-wk-twJ"/>
                                             <outlet property="wifinityOccupancySwitch" destination="7lG-nP-4tA" id="a1p-xy-odc"/>
                                         </connections>
@@ -1082,6 +1122,9 @@
     <resources>
         <image name="ChevronRight" width="384" height="384"/>
         <image name="SensorMiscellaneous" width="550" height="550"/>
+        <namedColor name="ControlErrorColor">
+            <color red="1" green="0.14900000393390656" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="PrimaryLightestColor">
             <color red="0.95499998331069946" green="0.98400002717971802" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

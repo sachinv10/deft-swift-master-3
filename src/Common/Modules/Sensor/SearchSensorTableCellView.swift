@@ -113,6 +113,7 @@ class SearchSensorTableCellView: UITableViewCell {
          
     }
     
+   
     @IBOutlet weak var btnfixnow: UIButton!
     
     func load(sensor pSensor :Sensor) {
@@ -127,7 +128,11 @@ class SearchSensorTableCellView: UITableViewCell {
             self.onlineIndicatorView.isHidden = true
         }
         self.titleLabel.text = pSensor.title
-        
+        if  pSensor.calibrated == false{
+            viewCalibrate.isHidden = false
+        }else{
+            viewCalibrate.isHidden = true
+        }
         
         if pSensor.hardwareGeneration == Device.HardwareGeneration.deft {
             self.deftOccupancyButton.isHidden = false
@@ -221,6 +226,9 @@ class SearchSensorTableCellView: UITableViewCell {
                 self.smokeContainerView.isHidden = true
                 self.co2ContainerView.isHidden = true
                 self.lpgContainerView.isHidden = true
+                if pSensor.controllerType == "Lidar Sensor"{
+                    syncButton.isHidden = true
+                }
                 self.lblIntensity.text = "Last Opration:"
                 print(pSensor.lastOperationTime)
                 if pSensor.lastOperation == "-1"{
@@ -229,7 +237,7 @@ class SearchSensorTableCellView: UITableViewCell {
                         self.lightValueLabel.text = "IN"
                 }
                
-                self.lblLastmotionOn.text = "Opration Time:"
+                self.lblLastmotionOn.text = "Operation Time:"
                 self.lblTemperature.text = "People Count"
             
                 self.temperatureValueLabel.text = String(format: ": %d", pSensor.peopleCount!)
@@ -279,11 +287,15 @@ class SearchSensorTableCellView: UITableViewCell {
                 self.actionButtonContainerView.isHidden = false
             }
         }
- 
            
         }
     }
     
+    @IBOutlet weak var viewCalibrate: UIView!
+    @IBAction func funcCalibratebtn(_ sender: Any) {
+       
+        self.delegate?.cellView(self)
+    }
     @IBOutlet weak var viewUidSatus: UIView!
     
     @IBOutlet weak var textUidstatus: UILabel!
@@ -346,6 +358,7 @@ protocol SearchSensorTableCellViewDelegate :AnyObject {
     func cellView(_ pSender: SearchSensorTableCellView, didChangeLightState pLightState :Sensor.LightState)
     func cellView(_ pSender: SearchSensorTableCellView, didChangeMotionState pMotionState :Sensor.MotionState)
     func cellView(_ pSender: SearchSensorTableCellView, didChangeSirenState pSirenState: Sensor.SirenState)
+    func cellView(_ pSender: SearchSensorTableCellView)
     func cellViewDidSelectSync(_ pSender: SearchSensorTableCellView)
     func cellViewDidSelectAppNotifications(_ pSender: SearchSensorTableCellView)
     func cellViewDidSelectFixnow(_ pindex: Int)

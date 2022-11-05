@@ -94,7 +94,7 @@ public class ProgressOverlay: NSObject {
     private var progressOverlayView :UIView?
     private var backgroundView :UIView?
     private var activityIndicatorView :UIActivityIndicatorView?
-    private let defaultBackgroundColor :UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1)
+    private let defaultBackgroundColor :UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
     private var messageLabel :UILabel?
     private let defaultMessageColor :UIColor = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
     

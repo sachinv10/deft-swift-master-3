@@ -366,15 +366,53 @@ extension RoutingManager {
         let aDestinationController = self.selectOfflineControllerUsingStoryboard()
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    func gotoCameras(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectCamerasControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoHelp(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectHelpControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoSupport(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectSupportControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoSubmitSupport(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectSubmitSupportControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
     func gotoOfflineApplinces(
-        controller pController :UIViewController, controllerId: [String]
+        controller pController :UIViewController, controllerId: [String], controller_kId: [String], alldatajson: [String]
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
         let aDestinationController = self.selectOfflineApplincesControllerUsingStoryboard()
             aDestinationController.controller_id = controllerId
+            aDestinationController.controller_Kid = controller_kId
+            aDestinationController.alldataJson = alldatajson
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     func selectOfflineApplincesControllerUsingStoryboard() -> OfflineApplinceViewController {
         return UIStoryboard(name: "Offline", bundle: Bundle.main).instantiateViewController(withIdentifier: "OfflineApplinceViewController") as! OfflineApplinceViewController
+    }
+    func selectCamerasControllerUsingStoryboard() -> CamerasViewController {
+        return UIStoryboard(name: "CameraBoard", bundle: Bundle.main).instantiateViewController(withIdentifier: "CamerasViewController") as! CamerasViewController
+    }
+    func selectHelpControllerUsingStoryboard() -> SelectTypeViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SelectTypeViewController") as! SelectTypeViewController
+    }
+    func selectSupportControllerUsingStoryboard() -> SupportViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SupportViewController") as! SupportViewController
+    }
+    func selectSubmitSupportControllerUsingStoryboard() -> SubmitViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubmitViewController") as! SubmitViewController
     }
     func selectOfferZonrControllerUsingStoryboard() -> OfferZoneViewController {
         return UIStoryboard(name: "OfferZone", bundle: Bundle.main).instantiateViewController(withIdentifier: "OfferZoneViewController") as! OfferZoneViewController

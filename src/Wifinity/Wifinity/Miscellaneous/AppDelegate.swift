@@ -61,7 +61,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 extension AppDelegate :UNUserNotificationCenterDelegate {
-    
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//
+//    }
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//      UserDefaults.standard.set(
+//        Date().timeIntervalSince1970,
+//        forKey: appEntereBGKey
+//      )
+//    }
     func registerForPushNotification() {
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self

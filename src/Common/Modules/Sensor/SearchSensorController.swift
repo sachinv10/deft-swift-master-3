@@ -65,9 +65,9 @@ class SearchSensorController: BaseController {
     override func reloadAllData() {
         self.sensors.removeAll()
         print("get sensors")
-        // ProgressOverlay.shared.show()
+       // ProgressOverlay.shared.show()
         DataFetchManager.shared.searchSensor(completion: { (pError, pSensorArray) in
-            // ProgressOverlay.shared.hide()
+            //  ProgressOverlay.shared.hide()
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not search sensors", description: pError!.localizedDescription)
             } else {
@@ -183,6 +183,21 @@ class SearchSensorController: BaseController {
         }, sensor: pSensor)
     }
     
+    func updateCalibrate(sensor pSensor :Sensor) {
+        let aSensor = pSensor.clone()
+        
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.updateSensorCalibrate(completion: { (pError) in
+            ProgressOverlay.shared.hide()
+            if pError != nil {
+                PopupManager.shared.displayError(message: "Can not update sensor.", description: pError!.localizedDescription)
+            } else {
+//                pSensor.occupancyState = pOccupancyState
+//                self.reloadAllView()
+            }
+        }, sensor: pSensor)
+    }
+    
     func updateSensorSync(sensor pSensor :Sensor) {
         let aSensor = pSensor.clone()
         
@@ -280,7 +295,6 @@ extension SearchSensorController :UITableViewDataSource, UITableViewDelegate {
      */
     func tableView(_ pTableView: UITableView, didSelectRowAt pIndexPath: IndexPath) {
         pTableView.deselectRow(at: pIndexPath, animated: true)
-        
         if pIndexPath.row < self.sensors.count {
             let aSelectedSensor = self.sensors[pIndexPath.row]
             if aSelectedSensor.hardwareGeneration != Device.HardwareGeneration.deft {
@@ -294,6 +308,15 @@ extension SearchSensorController :UITableViewDataSource, UITableViewDelegate {
 
 
 extension SearchSensorController :SearchSensorTableCellViewDelegate {
+    func cellView(_ pSender: SearchSensorTableCellView) {
+        print(pSender.sensor?.calibrated)
+        if let anIndexPath = self.sensorTableView.indexPath(for: pSender), anIndexPath.row < self.sensors.count {
+            let aSensor = self.sensors[anIndexPath.row]
+            self.updateCalibrate(sensor: aSensor)
+        }
+        
+    }
+    
     func cellViewResetCount(_ pSender: SearchSensorTableCellView) {
         if let anIndexPath = self.sensorTableView.indexPath(for: pSender), anIndexPath.row < self.sensors.count {
             let aSensor = self.sensors[anIndexPath.row]

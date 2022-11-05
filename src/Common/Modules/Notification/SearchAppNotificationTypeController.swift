@@ -39,6 +39,7 @@ class SearchAppNotificationTypeController: BaseController {
             self.appNotificationTypes.append(AppNotification.AppNotificationType.energyNotification)
             self.appNotificationTypes.append(AppNotification.AppNotificationType.schedularNotification)
             self.appNotificationTypes.append(AppNotification.AppNotificationType.deviceOfflineNotification)
+            self.appNotificationTypes.append(AppNotification.AppNotificationType.tempratureNotification)
         }
         self.appNotificationTypes.sort(by: {(pLhs, pRhs) in
             return pLhs.rawValue <= pRhs.rawValue

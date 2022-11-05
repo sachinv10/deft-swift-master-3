@@ -70,27 +70,27 @@ extension DataFetchManagerFireBase {
                 // Fetch rooms
                 let aRoomDispatchSemaphore = DispatchSemaphore(value: 0)
                 for itemId in (0 ..< ControllerListViewController.contollerDeviceId.count) {
-              print(itemId)
+                    print(itemId)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                    let sd = ControllerListViewController.contollerDeviceId[itemId]
-//                    self.getDetailontime(id: sd, completion: {(pCompletion) in
-//                        aRoomArray?.append(pCompletion!)
-//                    } )
-                self.database
-                        .child("devices")
-                    .child(sd)
-                    .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                        print(pDataSnapshot)
-                        if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
-                             if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
-                                aRoomArray?.append(controllerapp)
-                                 print(sd)
-                            }
-                        }
-                        aRoomDispatchSemaphore.signal()
-                    }
+                        let sd = ControllerListViewController.contollerDeviceId[itemId]
+                        //                    self.getDetailontime(id: sd, completion: {(pCompletion) in
+                        //                        aRoomArray?.append(pCompletion!)
+                        //                    } )
                         self.database
-                                .child("keepAliveTimeStamp")
+                            .child("devices")
+                            .child(sd)
+                            .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                                print(pDataSnapshot)
+                                if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+                                    if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
+                                        aRoomArray?.append(controllerapp)
+                                        print(sd)
+                                    }
+                                }
+                                aRoomDispatchSemaphore.signal()
+                            }
+                        self.database
+                            .child("keepAliveTimeStamp")
                             .child(sd)
                             .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                                 print(pDataSnapshot)
@@ -99,46 +99,46 @@ extension DataFetchManagerFireBase {
                                 }
                                 aRoomDispatchSemaphore.signal()
                             }
-                  }
+                    }
                 }
                 _ = aRoomDispatchSemaphore.wait(timeout: .distantFuture)
-             
-             } catch {
+                
+            } catch {
                 anError = error
-                 pCompletion(anError, aRoomArray)
+                pCompletion(anError, aRoomArray)
             }
             if aRoomArray?.count != nil{
-              
+                
             }
-        //    pCompletion(anError, aRoomArray)
+            //    pCompletion(anError, aRoomArray)
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                 self.requestCount -= 1
                 print("reran.......")
                 pCompletion(anError, aRoomArray)
-             }
+            }
             pCompletion(anError, aRoomArray)
         }
         
     }
     func getDetailontime(id: String, completion pCompletion: @escaping (ControllerAppliance?) -> Void) {
-    
+        
         let aRoomDispatchSemaphore = DispatchSemaphore(value: 0)
-           self.database
-                .child("devices")
+        self.database
+            .child("devices")
             .child(id)
             .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                 print(pDataSnapshot)
                 if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
-                     if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
-                     
-                         pCompletion(controllerapp)
-                       //  aRoomDispatchSemaphore.signal()
+                    if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
+                        
+                        pCompletion(controllerapp)
+                        //  aRoomDispatchSemaphore.signal()
                     }
                     
                 }
                 aRoomDispatchSemaphore.signal()
             }
-       // _ = aRoomDispatchSemaphore.wait(timeout: .distantFuture)
+        // _ = aRoomDispatchSemaphore.wait(timeout: .distantFuture)
     }
     func searchRoom(completion pCompletion: @escaping (Error?, Array<Room>?) -> Void) {
         DispatchQueue.global(qos: .background).async {
@@ -190,18 +190,20 @@ extension DataFetchManagerFireBase {
             .child(Auth.auth().currentUser!.uid)
             .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                 print(pDataSnapshot)
-               
+                
                 aReturnVal = (pDataSnapshot.value as? Dictionary<String,Any>)?.keys.map { String($0) }
                 var aReturnValx = (pDataSnapshot.value as? Dictionary<String,Dictionary<String,Any>>)
                 print(aReturnValx as Any)
                 aDispatchSemaphore.signal()
-             
+                
             }
         _ = aDispatchSemaphore.wait(timeout: .distantFuture)
-        ControllerListViewController.contollerDeviceId = self.devidedetail(array: aReturnVal!)!
+        if (aReturnVal != nil){
+            ControllerListViewController.contollerDeviceId = self.devidedetail(array: aReturnVal!)!
+        }
         return aReturnVal
     }
-  
+    
     func devidedetail(array: Array<String>) -> Array<String>?{
         var aaaDeviceIdArray = [String: String]()
         var aFetchedRoomIdArray = Array<String>()
@@ -215,8 +217,8 @@ extension DataFetchManagerFireBase {
                 .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                     if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
                         aFetchedRoomIdArray.append(contentsOf: aDeviceIdArray)
-                   let sdx = self.deviceApplinceDetail(array: aDeviceIdArray)
-                       
+                        let sdx = self.deviceApplinceDetail(array: aDeviceIdArray)
+                        
                     }
                     aDispatchSemaphore.signal()
                 }
@@ -256,34 +258,34 @@ extension DataFetchManagerFireBase {
                 }
             _ = aDispatchSemaphore.wait(timeout: .distantFuture)
         }
-      //  print(aFetchedRoomIdArray)
+        //  print(aFetchedRoomIdArray)
         return aFetchedRoomIdArray
     }
     func deviceApplinceDetail(array: Array<String>) -> Array<String>?{
         var aFetchedRoomIdArray = Array<String>()
         var aRoomArray :Array<ControllerAppliance>? = Array<ControllerAppliance>()
         let aDispatchSemaphore = DispatchSemaphore(value: 0)
-
+        
         for aRoomId in array {
             self.database.child("devices").child(aRoomId).observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                    print(pDataSnapshot)
-                    if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
-                         if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
-                           print(controllerapp)
-                             aRoomArray?.append(controllerapp)
-                             let viewobj = self.myfunc()
-                             viewobj.controllerApplince.append(controllerapp)
-                        }
+                print(pDataSnapshot)
+                if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+                    if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
+                        print(controllerapp)
+                        aRoomArray?.append(controllerapp)
+                        let viewobj = self.myfunc()
+                        viewobj.controllerApplince.append(controllerapp)
                     }
-                    aDispatchSemaphore.signal()
                 }
+                aDispatchSemaphore.signal()
+            }
         }
         return aFetchedRoomIdArray
     }
     func myfunc()-> ControllerListViewController{
         let storyboard = UIStoryboard(name: "ContollerList", bundle: Bundle.main)
-           var viewController = storyboard.instantiateViewController(withIdentifier: "ControllerListViewController") as! ControllerListViewController
+        var viewController = storyboard.instantiateViewController(withIdentifier: "ControllerListViewController") as! ControllerListViewController
         return viewController
     }
-    }
-   
+}
+

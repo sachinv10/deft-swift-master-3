@@ -290,6 +290,7 @@ class ControllerAppliance: NSObject {
     var wifiSignalStrength :String?
     var wifiSsid : String?
     var wifiPassword : String?
+    var controllerType : String?
     
     func clone() -> ControllerAppliance {
         let anAppliance = ControllerAppliance()

@@ -236,13 +236,12 @@ extension DataFetchManagerFireBase {
         }
         
     }
+    
     func updateSensorBtnResetCounter(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         DispatchQueue.global(qos: .background).async {
             DispatchQueue.global(qos: .background).async {
                 self.requestCount += 1
                
-                
-           
                 
                 var anError :Error?
                 
@@ -250,8 +249,6 @@ extension DataFetchManagerFireBase {
                     if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
                         throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
                     }
-                    
-                    
                     // Send message and reset it
                     var aMessageValue = ""
                     aMessageValue += ""
@@ -298,7 +295,54 @@ extension DataFetchManagerFireBase {
         }
         
     }
-    
+    func updateSensorCalibrate(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
+        DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .background).async {
+                self.requestCount += 1
+                let  dictionary:[String: Any] = ["config":"calibrate"]
+                
+                
+                var strings = ""
+                
+             //   let dictionary = ["aKey": "aValue", "anotherKey": "anotherValue"]
+                if let theJSONData = try? JSONSerialization.data(
+                    withJSONObject: dictionary,
+                    options: []) {
+                    let theJSONText = String(data: theJSONData,
+                                               encoding: .ascii)
+                    print("JSON string = \(theJSONText!)")
+                    strings = theJSONText!
+                }
+                
+                
+                var anError :Error?
+                
+                do {
+                    if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                        throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                    }
+                    
+                    // Send message and reset it
+                    var aMessageValue = ""
+                    aMessageValue += strings
+              
+                    anError = self.sendMessage(aMessageValue, entity: pSensor)
+                    if anError != nil {
+                        throw anError!
+                    }
+                } catch {
+                    anError = error
+                }
+                
+                DispatchQueue.main.async {
+                    self.requestCount -= 1
+                    pCompletion(anError)
+                }
+            }
+            
+        }
+        
+    }
     func updateSensorBrnFixNow(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         DispatchQueue.global(qos: .background).async {
             DispatchQueue.global(qos: .background).async {

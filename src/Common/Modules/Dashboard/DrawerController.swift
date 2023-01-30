@@ -53,8 +53,8 @@ class DrawerController: UIViewController {
         self.menus.append(Menu(icon: Menu.OnAppliance.icon, title: Menu.OnAppliance.title, urc: Menu.OnAppliance.urc))
         self.menus.append(Menu(icon: Menu.Locks.icon, title: Menu.Locks.title, urc: Menu.Locks.urc))
         if ConfigurationManager.shared.appType == ConfigurationManager.AppType.deft {
-            self.menus.append(Menu(icon: Menu.TankRegulators.icon, title: Menu.TankRegulators.title, urc: Menu.TankRegulators.urc))
         }
+         self.menus.append(Menu(icon: Menu.TankRegulators.icon, title: Menu.TankRegulators.title, urc: Menu.TankRegulators.urc))
         self.menus.append(Menu(icon: Menu.Schedules.icon, title: Menu.Schedules.title, urc: Menu.Schedules.urc))
         self.menus.append(Menu(icon: Menu.Offline.icon, title: Menu.Offline.title, urc: Menu.Offline.urc))
         self.menus.append(Menu(icon: Menu.Core.icon, title: Menu.Core.title, urc: Menu.Core.urc))
@@ -73,6 +73,8 @@ class DrawerController: UIViewController {
             self.menus.append(Menu(icon: Menu.Device.icon, title: Menu.Device.title, urc: Menu.Device.urc))
             self.menus.append(Menu(icon: Menu.Cameras.icon, title: Menu.Cameras.title, urc: Menu.Cameras.urc))
             self.menus.append(Menu(icon: Menu.HelpAndSuppor.icon, title: Menu.HelpAndSuppor.title, urc: Menu.HelpAndSuppor.urc))
+             self.menus.append(Menu(icon: Menu.VDP.icon, title: Menu.VDP.title, urc: Menu.VDP.urc))
+
         } else {
             self.menus.append(Menu(icon: Menu.SearchDevice.icon, title: Menu.SearchDevice.title, urc: Menu.SearchDevice.urc))
         }
@@ -314,6 +316,11 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
             static let icon = UIImage(named: "cameras")!
             static let title = "Camera"
             static let urc = "Cameras"
+        }
+        struct VDP {
+            static let icon = UIImage(named: "cameras")!
+            static let title = "VDP Camera"
+            static let urc = "VDP_Cameras"
         }
         struct HelpAndSuppor {
             static let icon = UIImage(named: "help_icon")!

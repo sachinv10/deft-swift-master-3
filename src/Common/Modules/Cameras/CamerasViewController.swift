@@ -46,8 +46,7 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    @IBOutlet weak var Webview: UIWebView!
-    let webView = UIWebView()
+ 
     @IBOutlet weak var camtableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -17,7 +17,8 @@ class NewDeviceConfigureDeviceController: BaseController {
     
     var device :Device?
     
-    
+    static var networkSsid = String()
+    static var networkPssword = String()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,6 +88,8 @@ class NewDeviceConfigureDeviceController: BaseController {
 extension NewDeviceConfigureDeviceController {
     
     @IBAction func didSelectDoneButton(_ pSender: UIButton) {
+        NewDeviceConfigureDeviceController.networkSsid = networkSsidTextField.text ?? ""
+        NewDeviceConfigureDeviceController.networkPssword = networkPasswordTextField.text ?? ""
         self.configureDevice()
     }
     

@@ -128,7 +128,9 @@ class DeviceSettingViewController: UIViewController {
         stackView.spacing = 8.0
         stackView.addArrangedSubview(button2)
         stackView.addArrangedSubview(button3)
+        print("lider=\(controllerApplince?.controllerType)")
         if "Lidar Sensor" == controllerApplince?.controllerType{
+            print("lider sensor")
             stackView.addArrangedSubview(button4)
          }
         
@@ -163,15 +165,13 @@ class DeviceSettingViewController: UIViewController {
                     if let value = snapshot.value as? Bool {
                         print(" controller value =\(value)")
                         if value == true{
-                              PopupManager.shared.displaySuccess(message: "Calibrate successfully", description: "")
                             ProgressOverlay.shared.hide()
+                              PopupManager.shared.displaySuccess(message: "Calibrate successfully", description: "")
+                           
                         }
                     }
              
             })
- 
- 
- 
         }
     }
     var customView = UIView()
@@ -181,7 +181,8 @@ class DeviceSettingViewController: UIViewController {
     var btnAthontication = UIButton()
     var btnCancel = UIButton()
     @objc func MydeleteView() {
-        
+        self.myTextField.delegate = self
+        self.myTextFieldpass.delegate = self
         
         deleteView.isHidden = false
         deleteView.frame = CGRect.init(x: backgroundview.frame.width / 20, y: backgroundview.frame.height / 2, width: backgroundview.frame.width / 1.11, height: backgroundview.frame.height / 3)
@@ -292,13 +293,14 @@ class DeviceSettingViewController: UIViewController {
       
         Database.database().reference().child("devices").child((controllerApplince?.id)!).observe(.value) { (snapshot, key) in
              print(snapshot)
-            var wifisign = snapshot.value as! Dictionary<String,Any>
-            print(wifisign["wifiSignalStrength"])
-            if let wifiid = wifisign["wifiSignalStrength"]{
-                
+            if snapshot.childrenCount > 0 {
+                var wifisign = snapshot.value as! Dictionary<String,Any>
+                print(wifisign["wifiSignalStrength"])
+                if let wifiid = wifisign["wifiSignalStrength"]{
                     let wifist =  self.wifistrenthcalulation(wifis: wifiid as! String)
-                        self.lblwifiSignal.text = "\(String(wifist)) %"
-                
+                    self.lblwifiSignal.text = "\(String(wifist)) %"
+                    
+                }
             }
         }
     }
@@ -325,6 +327,12 @@ class DeviceSettingViewController: UIViewController {
         }
     }
 }
+extension DeviceSettingViewController:  UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            self.view.endEditing(true)
+            return false
+        }
+}
 extension DeviceSettingViewController{
     func deletecontroller(appliance pAppliance :ControllerAppliance) {
         let anAppliance = pAppliance.clone()
@@ -335,7 +343,7 @@ extension DeviceSettingViewController{
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
             } else {
-
+                RoutingManager.shared.goBackToDashboard()
             }
         }, appliance: anAppliance)
         

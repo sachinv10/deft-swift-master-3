@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+
 class LoginController: BaseController {
     /**
     * Variable that will hold reference to email address text field.
@@ -48,7 +49,7 @@ class LoginController: BaseController {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        Database.database().isPersistenceEnabled = true
+      //   Database.database().isPersistenceEnabled = true
         
         if ((Auth.auth().currentUser?.uid) != nil){
             demologin()
@@ -59,7 +60,6 @@ class LoginController: BaseController {
             self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
             self.view.addSubview(self.whiteOverlay!)
             self.login()
-       
         }else{
         
         self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
@@ -81,7 +81,6 @@ class LoginController: BaseController {
         self.rememberMeCheckboxButton?.layer.cornerRadius = 4.0
         
         }
-  
     }
   
     
@@ -179,7 +178,6 @@ class LoginController: BaseController {
         }, user: aUser)
     }
     
-    
     func saveAppNotificationSettings(completion pCompletion :@escaping(()->())) {
         if let aUserId = DataFetchManager.shared.loggedInUser?.firebaseUserId
         , let anAppNotificationSettings = CacheManager.shared.appNotificationSettings(userId: aUserId) {
@@ -191,7 +189,9 @@ class LoginController: BaseController {
         }
     }
     
-    
+    @IBAction func didtappedCreateNewAccount(_ sender: Any) {
+        RoutingManager.shared.gotoCreateAccount(controller: self)
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }

@@ -375,6 +375,8 @@ extension DataFetchManagerFireBase {
               
             } else if let aLock = pEntity as? Lock {
                 aNodeId = aLock.id
+            }else if let aLock = pEntity as? TankRegulator {
+                aNodeId = aLock.id
             } else if let deviceID = pEntity as? String {
                 aNodeId = deviceID
             }

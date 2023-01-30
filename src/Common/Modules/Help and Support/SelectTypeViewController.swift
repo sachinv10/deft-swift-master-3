@@ -41,9 +41,9 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
         if name == "Support"{
             RoutingManager.shared.gotoSupport(controller: self)
         }else if name == "Product Manual"{
-            
+            RoutingManager.shared.gotoProductManual(controller: self)
         }else if name == "Contact"{
-            
+            makeACall()
         }
     }
      
@@ -51,8 +51,8 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     title = "Help"
-     subTitle = ""
+        title = "Help"
+        subTitle = ""
         typetableview.delegate = self
         typetableview.dataSource = self
         managetableview()
@@ -62,7 +62,14 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
     {
          self.view.backgroundColor = UIColor(named: "PrimaryLightestColor")
         dataArray = ["Support","Product Manual","Contact"]
-        
     }
-    
+        func makeACall() {
+            guard let url = URL(string: "tel://7767984645"),
+                UIApplication.shared.canOpenURL(url) else { return }
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
 }

@@ -52,6 +52,40 @@ extension RoutingManager {
         aDestinationController.emailAddress = pEmailAddress
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    
+    func CreateAccountControllerUsingStoryboard() -> CreateAccountViewController {
+        return UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "CreateAccountViewController") as! CreateAccountViewController
+    }
+    func gotoCreateAccount(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.CreateAccountControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    
+    func veryfyOtpControllerUsingStoryboard() -> OTPVerifyViewController {
+        return UIStoryboard(name: "Login", bundle: Bundle.main).instantiateViewController(withIdentifier: "OTPVerifyViewController") as! OTPVerifyViewController
+    }
+    // common
+    func demologin() -> UIStoryboard {
+      return UIStoryboard(name: "Login", bundle: Bundle.main)
+    }
+    func demolog(uiviwe: UIViewController, xstory: UIStoryboard) -> UIViewController {
+        xstory.instantiateViewController(withIdentifier: uiviwe.restorationIdentifier!)
+        return uiviwe
+    }
+    func gotoVerifyOtp(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, msg: String, userName: String, phoneN: String, password: String,otp: String, email: String) {
+        let aDestinationController = self.veryfyOtpControllerUsingStoryboard()
+            aDestinationController.msg = msg
+            aDestinationController.userName = userName
+            aDestinationController.phoneNumber = phoneN
+            aDestinationController.password = password
+            aDestinationController.OTP = otp
+            aDestinationController.email = email
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
 }
 
 
@@ -372,6 +406,19 @@ extension RoutingManager {
         let aDestinationController = self.selectCamerasControllerUsingStoryboard()
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    func gotoVDPCameras(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectVDPCamerasControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoVDPCustom(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false,vdpmodul: VDPModul) {
+        let aDestinationController = self.selectVDPCustommsgControllerUsingStoryboard()
+            aDestinationController.vdpmodule = vdpmodul
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
     func gotoHelp(
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
@@ -384,10 +431,38 @@ extension RoutingManager {
         let aDestinationController = self.selectSupportControllerUsingStoryboard()
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
-    func gotoSubmitSupport(
+    func gotoProductManual(
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectProductManualControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoSubmitSupport(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, name: String) {
         let aDestinationController = self.selectSubmitSupportControllerUsingStoryboard()
+            aDestinationController.appType = name
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoResolveVC(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectResolveVCControllerUsingStoryboard()
+         //   aDestinationController.appType = name
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoResolveDetialVC(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, pcomplent: Complents) {
+        let aDestinationController = self.selectResolvedetailVCControllerUsingStoryboard()
+             aDestinationController.pcomplent = pcomplent
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoOnGoingVC(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectOnGoingVCControllerUsingStoryboard()
+         //   aDestinationController.appType = name
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     func gotoOfflineApplinces(
@@ -405,14 +480,33 @@ extension RoutingManager {
     func selectCamerasControllerUsingStoryboard() -> CamerasViewController {
         return UIStoryboard(name: "CameraBoard", bundle: Bundle.main).instantiateViewController(withIdentifier: "CamerasViewController") as! CamerasViewController
     }
+    func selectVDPCamerasControllerUsingStoryboard() -> VDPListViewController {
+        return UIStoryboard(name: "VDP", bundle: Bundle.main).instantiateViewController(withIdentifier: "VDPListViewController") as! VDPListViewController
+    }
+    func selectVDPCustommsgControllerUsingStoryboard() -> CustomMsgViewController {
+        return UIStoryboard(name: "VDP", bundle: Bundle.main).instantiateViewController(withIdentifier: "CustomMsgViewController") as! CustomMsgViewController
+    }
     func selectHelpControllerUsingStoryboard() -> SelectTypeViewController {
         return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SelectTypeViewController") as! SelectTypeViewController
     }
     func selectSupportControllerUsingStoryboard() -> SupportViewController {
         return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SupportViewController") as! SupportViewController
     }
+    func selectProductManualControllerUsingStoryboard() -> ProductManualViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "ProductManualViewController") as! ProductManualViewController
+    }
+    
     func selectSubmitSupportControllerUsingStoryboard() -> SubmitViewController {
         return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SubmitViewController") as! SubmitViewController
+    }
+    func selectResolveVCControllerUsingStoryboard() -> ResolveIssueViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "ResolveIssueViewController") as! ResolveIssueViewController
+    }
+    func selectResolvedetailVCControllerUsingStoryboard() -> detailResolveViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "detailResolveViewController") as! detailResolveViewController
+    }
+    func selectOnGoingVCControllerUsingStoryboard() -> OnGoingIssieViewController {
+        return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "OnGoingIssieViewController") as! OnGoingIssieViewController
     }
     func selectOfferZonrControllerUsingStoryboard() -> OfferZoneViewController {
         return UIStoryboard(name: "OfferZone", bundle: Bundle.main).instantiateViewController(withIdentifier: "OfferZoneViewController") as! OfferZoneViewController
@@ -445,11 +539,20 @@ extension RoutingManager {
         aDestinationController.offerData = offerData
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
-    
-    
 }
 
-
+extension RoutingManager{
+    func selectvdpdetailControllerUsingStoryboard() -> VdpViewController {
+        return UIStoryboard(name: "VDP", bundle: Bundle.main).instantiateViewController(withIdentifier: "VdpViewController") as! VdpViewController
+    }
+    func gotoVDPPlay(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, Obj: VDPModul) {
+        let aDestinationController = self.selectvdpdetailControllerUsingStoryboard()
+            aDestinationController.vdpmodule = Obj
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+}
 
 // MARK:- Lock
 
@@ -468,7 +571,7 @@ extension RoutingManager {
 
 
 // MARK:- TankRegulator
-#if !APP_WIFINITY
+//#if !APP_WIFINITY
 
 extension RoutingManager {
     
@@ -483,7 +586,7 @@ extension RoutingManager {
     
 }
 
-#endif
+//#endif
 
 
 // MARK:- Schedule

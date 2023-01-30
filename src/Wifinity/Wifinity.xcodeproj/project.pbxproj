@@ -7,13 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1818345429261C9C007DAAC5 /* SearchTankRegulatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1818345329261C9C007DAAC5 /* SearchTankRegulatorViewController.swift */; };
+		1818345629261CF9007DAAC5 /* SearchTankRegulatorTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1818345529261CF9007DAAC5 /* SearchTankRegulatorTableCellView.swift */; };
+		1818345829261D1E007DAAC5 /* TankRegulator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1818345729261D1D007DAAC5 /* TankRegulator.storyboard */; };
+		1818345A29261D48007DAAC5 /* TankRegulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1818345929261D48007DAAC5 /* TankRegulator.swift */; };
+		1818345C29262DE8007DAAC5 /* DataFetchManagerFireBaseTankRegulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1818345B29262DE8007DAAC5 /* DataFetchManagerFireBaseTankRegulator.swift */; };
 		1828BB952916891F00944793 /* SubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1828BB942916891F00944793 /* SubmitViewController.swift */; };
 		187EE9A3286EC46700DB3EC0 /* SharedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */; };
 		187F70612869900300CE4620 /* ContollerList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 187F70602869900300CE4620 /* ContollerList.storyboard */; };
 		187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70622869906400CE4620 /* ControllerListViewController.swift */; };
 		187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */; };
 		187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */; };
+		1895A64529375F7B00FAD672 /* OTPVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1895A64429375F7B00FAD672 /* OTPVerifyViewController.swift */; };
 		1896876F28C76F8E000EF347 /* ResetWifiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */; };
+		1896A367291A819C00A4AA57 /* ProductManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896A366291A819C00A4AA57 /* ProductManualViewController.swift */; };
+		1896E9092937313800AE77CF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896E9082937313800AE77CF /* CreateAccountViewController.swift */; };
+		189793C42924F57300AD0320 /* detailResolveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189793C32924F57300AD0320 /* detailResolveViewController.swift */; };
 		1899F38428F6A263007CED70 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1899F38328F6A263007CED70 /* Reachability.swift */; };
 		189B30A22911058E00BC9721 /* wifi.gif in Resources */ = {isa = PBXBuildFile; fileRef = 189B30A12911058E00BC9721 /* wifi.gif */; };
 		189B30A42911202000BC9721 /* d2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 189B30A32911201F00BC9721 /* d2.gif */; };
@@ -24,11 +33,33 @@
 		189E97DB28BDDB9800DDC2A5 /* SwiftyPing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */; };
 		189E97DD28BDDE2C00DDC2A5 /* PingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */; };
 		189E97DF28BDE07D00DDC2A5 /* Offline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189E97DE28BDE07D00DDC2A5 /* Offline.storyboard */; };
+		189EA1C9292217EF009C7CFE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 189EA1C8292217EF009C7CFE /* FirebaseAuth */; };
+		189EA1CB292217EF009C7CFE /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 189EA1CA292217EF009C7CFE /* FirebaseDatabase */; };
+		189EA1CD292217EF009C7CFE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 189EA1CC292217EF009C7CFE /* FirebaseMessaging */; };
+		189EA1CF292217EF009C7CFE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 189EA1CE292217EF009C7CFE /* FirebaseStorage */; };
+		189EA1D129225A89009C7CFE /* ResolveIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EA1D029225A89009C7CFE /* ResolveIssueViewController.swift */; };
+		189EF1FE295EB40A00DA5EFD /* VDPListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EF1FD295EB40A00DA5EFD /* VDPListViewController.swift */; };
+		189EF201295EC76F00DA5EFD /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EF1FF295EC76F00DA5EFD /* ListTableViewCell.swift */; };
+		189EF202295EC76F00DA5EFD /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189EF200295EC76F00DA5EFD /* ListTableViewCell.xib */; };
+		189EF204295F14B700DA5EFD /* VDPModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EF203295F14B700DA5EFD /* VDPModul.swift */; };
+		18A1003C29769F3400DEA70E /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1003B29769F3400DEA70E /* LocalNotificationManager.swift */; };
 		18A16EF9291628C00007C7C6 /* HelpAndSupport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */; };
 		18A16EFB291628EC0007C7C6 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */; };
 		18A16EFD291649F50007C7C6 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A16EFC291649F50007C7C6 /* SupportViewController.swift */; };
+		18A3E45E297FAC5900FB0837 /* CustomMsgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3E45D297FAC5900FB0837 /* CustomMsgViewController.swift */; };
+		18A3E461297FB50600FB0837 /* CustommsgtblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */; };
+		18A3E462297FB50600FB0837 /* CustommsgtblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */; };
 		18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */; };
+		18B36C9A295966D20057779D /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C99295966D20057779D /* SocketIO */; };
+		18B36C9D2959676C0057779D /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C9C2959676C0057779D /* WebRTC */; };
+		18B36CA029596A910057779D /* VdpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B36C9F29596A910057779D /* VdpViewController.swift */; };
+		18B36CA229596BA20057779D /* RTCCustomFrameCapturer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */; };
+		18B36CA429596C390057779D /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B36CA329596C390057779D /* Modules.swift */; };
+		18B36CA629596E4D0057779D /* VDP.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18B36CA529596E4D0057779D /* VDP.storyboard */; };
+		18E537E1291D320200076F8F /* PdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E537E0291D320200076F8F /* PdfViewController.swift */; };
 		18EA947228CF2DB80034C291 /* ResetAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA947128CF2DB80034C291 /* ResetAllViewController.swift */; };
+		18EB2DBE2923556F00A22BBB /* OnGoingIssieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB2DBD2923556F00A22BBB /* OnGoingIssieViewController.swift */; };
+		18EB2DC02923C36100A22BBB /* HelpAndSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB2DBF2923C36100A22BBB /* HelpAndSupport.swift */; };
 		18EC357528EED17000FD1DAF /* RqTv.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18EC357428EED16F00FD1DAF /* RqTv.gif */; };
 		372D440F283F5F2A002F0F96 /* Core.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372D440E283F5F2A002F0F96 /* Core.storyboard */; };
 		372D4411283F5F52002F0F96 /* CoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4410283F5F52002F0F96 /* CoreViewController.swift */; };
@@ -38,9 +69,6 @@
 		37560E06283F794000041FD4 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37560E05283F794000041FD4 /* Core.swift */; };
 		37560E08283F80DB00041FD4 /* CoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37560E07283F80DB00041FD4 /* CoreTableViewCell.swift */; };
 		3F040F7D258504480035ABAB /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F040F7C258504480035ABAB /* Device.swift */; };
-		3F0AC4622695D67D0015F939 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0AC4612695D67D0015F939 /* FirebaseAuth */; };
-		3F0AC4642695D67D0015F939 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0AC4632695D67D0015F939 /* FirebaseDatabase */; };
-		3F0AC4662695D67D0015F939 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 3F0AC4652695D67D0015F939 /* FirebaseMessaging */; };
 		3F29A85A25B3F35D00F39867 /* Sensor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A85925B3F35D00F39867 /* Sensor.storyboard */; };
 		3F29A86225B3F3C600F39867 /* Mood.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A86125B3F3C600F39867 /* Mood.storyboard */; };
 		3F29A86A25B3F40900F39867 /* Lock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F29A86925B3F40900F39867 /* Lock.storyboard */; };
@@ -224,13 +252,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1818345329261C9C007DAAC5 /* SearchTankRegulatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTankRegulatorViewController.swift; sourceTree = "<group>"; };
+		1818345529261CF9007DAAC5 /* SearchTankRegulatorTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTankRegulatorTableCellView.swift; path = "../../../../../../../Documents/deft-swift-master 2/src/Common/Modules/TankRegulator/SearchTankRegulatorTableCellView.swift"; sourceTree = "<group>"; };
+		1818345729261D1D007DAAC5 /* TankRegulator.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = TankRegulator.storyboard; path = "../../../../../../../Documents/deft-swift-master 2/src/Common/Modules/TankRegulator/TankRegulator.storyboard"; sourceTree = "<group>"; };
+		1818345929261D48007DAAC5 /* TankRegulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TankRegulator.swift; path = "../../../../../../../Documents/deft-swift-master 2/src/Common/Models/TankRegulator.swift"; sourceTree = "<group>"; };
+		1818345B29262DE8007DAAC5 /* DataFetchManagerFireBaseTankRegulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataFetchManagerFireBaseTankRegulator.swift; path = "../../../../../../../Documents/deft-swift-master 2/src/DEFT/DEFT/DataManager/DataFetchManagerFireBaseTankRegulator.swift"; sourceTree = "<group>"; };
 		1828BB942916891F00944793 /* SubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitViewController.swift; sourceTree = "<group>"; };
 		187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunction.swift; sourceTree = "<group>"; };
 		187F70602869900300CE4620 /* ContollerList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContollerList.storyboard; sourceTree = "<group>"; };
 		187F70622869906400CE4620 /* ControllerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerListViewController.swift; sourceTree = "<group>"; };
 		187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllrTableViewCell.swift; sourceTree = "<group>"; };
 		187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettingViewController.swift; sourceTree = "<group>"; };
+		1895A64429375F7B00FAD672 /* OTPVerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPVerifyViewController.swift; sourceTree = "<group>"; };
 		1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetWifiViewController.swift; sourceTree = "<group>"; };
+		1896A366291A819C00A4AA57 /* ProductManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManualViewController.swift; sourceTree = "<group>"; };
+		1896E9082937313800AE77CF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		189793C32924F57300AD0320 /* detailResolveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailResolveViewController.swift; sourceTree = "<group>"; };
 		1899F38328F6A263007CED70 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		189B30A12911058E00BC9721 /* wifi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = wifi.gif; path = ../../../../../../Downloads/wifi.gif; sourceTree = "<group>"; };
 		189B30A32911201F00BC9721 /* d2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = d2.gif; path = "../../../../../../Documents/deft-swift-master/d2.gif"; sourceTree = "<group>"; };
@@ -240,11 +277,27 @@
 		189E97DA28BDDB9800DDC2A5 /* SwiftyPing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyPing.swift; path = "../../../../../../Documents/Sachin_ios/demo Project/SwiftyPing-master/Sources/SwiftyPing/SwiftyPing.swift"; sourceTree = "<group>"; };
 		189E97DC28BDDE2C00DDC2A5 /* PingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingViewController.swift; sourceTree = "<group>"; };
 		189E97DE28BDE07D00DDC2A5 /* Offline.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Offline.storyboard; sourceTree = "<group>"; };
+		189EA1D029225A89009C7CFE /* ResolveIssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolveIssueViewController.swift; sourceTree = "<group>"; };
+		189EF1FD295EB40A00DA5EFD /* VDPListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VDPListViewController.swift; sourceTree = "<group>"; };
+		189EF1FF295EC76F00DA5EFD /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		189EF200295EC76F00DA5EFD /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
+		189EF203295F14B700DA5EFD /* VDPModul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VDPModul.swift; sourceTree = "<group>"; };
+		18A1003B29769F3400DEA70E /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpAndSupport.storyboard; sourceTree = "<group>"; };
 		18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
 		18A16EFC291649F50007C7C6 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
+		18A3E45D297FAC5900FB0837 /* CustomMsgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMsgViewController.swift; sourceTree = "<group>"; };
+		18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommsgtblCell.swift; sourceTree = "<group>"; };
+		18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustommsgtblCell.xib; sourceTree = "<group>"; };
 		18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineApplinceViewController.swift; sourceTree = "<group>"; };
+		18B36C9F29596A910057779D /* VdpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VdpViewController.swift; sourceTree = "<group>"; };
+		18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCCustomFrameCapturer.swift; sourceTree = "<group>"; };
+		18B36CA329596C390057779D /* Modules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
+		18B36CA529596E4D0057779D /* VDP.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VDP.storyboard; sourceTree = "<group>"; };
+		18E537E0291D320200076F8F /* PdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewController.swift; sourceTree = "<group>"; };
 		18EA947128CF2DB80034C291 /* ResetAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetAllViewController.swift; sourceTree = "<group>"; };
+		18EB2DBD2923556F00A22BBB /* OnGoingIssieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnGoingIssieViewController.swift; sourceTree = "<group>"; };
+		18EB2DBF2923C36100A22BBB /* HelpAndSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpAndSupport.swift; sourceTree = "<group>"; };
 		18EC357428EED16F00FD1DAF /* RqTv.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = RqTv.gif; path = ../../../../../../Downloads/RqTv.gif; sourceTree = "<group>"; };
 		372D440E283F5F2A002F0F96 /* Core.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Core.storyboard; sourceTree = "<group>"; };
 		372D4410283F5F52002F0F96 /* CoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreViewController.swift; sourceTree = "<group>"; };
@@ -431,10 +484,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				47268592282451D80058E92C /* Kingfisher in Frameworks */,
-				3F0AC4662695D67D0015F939 /* FirebaseMessaging in Frameworks */,
-				3F0AC4622695D67D0015F939 /* FirebaseAuth in Frameworks */,
+				189EA1C9292217EF009C7CFE /* FirebaseAuth in Frameworks */,
+				18B36C9A295966D20057779D /* SocketIO in Frameworks */,
+				189EA1CD292217EF009C7CFE /* FirebaseMessaging in Frameworks */,
+				189EA1CB292217EF009C7CFE /* FirebaseDatabase in Frameworks */,
+				18B36C9D2959676C0057779D /* WebRTC in Frameworks */,
 				189E97D728BDD29B00DDC2A5 /* Starscream in Frameworks */,
-				3F0AC4642695D67D0015F939 /* FirebaseDatabase in Frameworks */,
+				189EA1CF292217EF009C7CFE /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +511,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1818345229261BFA007DAAC5 /* Tank Regulator */ = {
+			isa = PBXGroup;
+			children = (
+				1818345529261CF9007DAAC5 /* SearchTankRegulatorTableCellView.swift */,
+				1818345929261D48007DAAC5 /* TankRegulator.swift */,
+				1818345729261D1D007DAAC5 /* TankRegulator.storyboard */,
+				1818345329261C9C007DAAC5 /* SearchTankRegulatorViewController.swift */,
+			);
+			path = "Tank Regulator";
+			sourceTree = "<group>";
+		};
 		187F705F28697B6300CE4620 /* ControllerList */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,11 +563,34 @@
 			isa = PBXGroup;
 			children = (
 				18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */,
+				18EB2DBD2923556F00A22BBB /* OnGoingIssieViewController.swift */,
 				18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */,
 				18A16EFC291649F50007C7C6 /* SupportViewController.swift */,
 				1828BB942916891F00944793 /* SubmitViewController.swift */,
+				1896A366291A819C00A4AA57 /* ProductManualViewController.swift */,
+				18E537E0291D320200076F8F /* PdfViewController.swift */,
+				189EA1D029225A89009C7CFE /* ResolveIssueViewController.swift */,
+				189793C32924F57300AD0320 /* detailResolveViewController.swift */,
 			);
 			path = "Help and Support";
+			sourceTree = "<group>";
+		};
+		18B36C9E295968840057779D /* VDP */ = {
+			isa = PBXGroup;
+			children = (
+				18B36C9F29596A910057779D /* VdpViewController.swift */,
+				18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */,
+				18B36CA329596C390057779D /* Modules.swift */,
+				18B36CA529596E4D0057779D /* VDP.storyboard */,
+				189EF1FD295EB40A00DA5EFD /* VDPListViewController.swift */,
+				189EF1FF295EC76F00DA5EFD /* ListTableViewCell.swift */,
+				189EF200295EC76F00DA5EFD /* ListTableViewCell.xib */,
+				189EF203295F14B700DA5EFD /* VDPModul.swift */,
+				18A3E45D297FAC5900FB0837 /* CustomMsgViewController.swift */,
+				18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */,
+				18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */,
+			);
+			path = VDP;
 			sourceTree = "<group>";
 		};
 		372D440D283F5F1A002F0F96 /* Core */ = {
@@ -597,6 +687,7 @@
 				3F60E69D2582859F0094823F /* DataFetchManagerFireBaseMood.swift */,
 				3F60E69E2582859F0094823F /* DataFetchManagerFireBaseRemote.swift */,
 				3F60E69F2582859F0094823F /* DataFetchManagerFireBaseRoom.swift */,
+				1818345B29262DE8007DAAC5 /* DataFetchManagerFireBaseTankRegulator.swift */,
 				3F60E6A02582859F0094823F /* DataFetchManagerFireBaseSchedule.swift */,
 				3F60E6A12582859F0094823F /* DataFetchManagerFireBaseSensor.swift */,
 				3F68C9E5258A1D59002D44A4 /* DataFetchManagerFireBaseDevice.swift */,
@@ -688,6 +779,7 @@
 				3F040F7C258504480035ABAB /* Device.swift */,
 				3F60E6E3258288640094823F /* User.swift */,
 				37560E05283F794000041FD4 /* Core.swift */,
+				18EB2DBF2923C36100A22BBB /* HelpAndSupport.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -695,6 +787,8 @@
 		3F60E6E4258288640094823F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				18B36C9E295968840057779D /* VDP */,
+				1818345229261BFA007DAAC5 /* Tank Regulator */,
 				18A16EF7291622750007C7C6 /* Help and Support */,
 				189BC1372914DFF0007EAB3B /* Cameras */,
 				372D440D283F5F1A002F0F96 /* Core */,
@@ -756,6 +850,7 @@
 				3F60E6F3258288640094823F /* DrawerMenuTableCellView.swift */,
 				3F60E6F4258288640094823F /* FrequentlyOperatedCollectionCellView.swift */,
 				3F60E6F5258288640094823F /* RoomCollectionCellView.swift */,
+				18A1003B29769F3400DEA70E /* LocalNotificationManager.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -774,8 +869,10 @@
 			isa = PBXGroup;
 			children = (
 				3FA8416B274FD531007B274D /* Login.storyboard */,
+				1895A64429375F7B00FAD672 /* OTPVerifyViewController.swift */,
 				3F60E6FA258288640094823F /* LoginController.swift */,
 				3FA8416A274FD531007B274D /* ForgotPasswordController.swift */,
+				1896E9082937313800AE77CF /* CreateAccountViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -958,11 +1055,14 @@
 			);
 			name = Wifinity;
 			packageProductDependencies = (
-				3F0AC4612695D67D0015F939 /* FirebaseAuth */,
-				3F0AC4632695D67D0015F939 /* FirebaseDatabase */,
-				3F0AC4652695D67D0015F939 /* FirebaseMessaging */,
 				47268591282451D80058E92C /* Kingfisher */,
 				189E97D628BDD29B00DDC2A5 /* Starscream */,
+				189EA1C8292217EF009C7CFE /* FirebaseAuth */,
+				189EA1CA292217EF009C7CFE /* FirebaseDatabase */,
+				189EA1CC292217EF009C7CFE /* FirebaseMessaging */,
+				189EA1CE292217EF009C7CFE /* FirebaseStorage */,
+				18B36C99295966D20057779D /* SocketIO */,
+				18B36C9C2959676C0057779D /* WebRTC */,
 			);
 			productName = Wifinity;
 			productReference = 3F60E65B258284DB0094823F /* Wifinity.app */;
@@ -1036,10 +1136,12 @@
 			);
 			mainGroup = 3F60E652258284DB0094823F;
 			packageReferences = (
-				3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				189E97D528BDD29B00DDC2A5 /* XCRemoteSwiftPackageReference "Starscream" */,
 				189E97D828BDD2D200DDC2A5 /* XCRemoteSwiftPackageReference "swifter" */,
+				189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				18B36C98295966D20057779D /* XCRemoteSwiftPackageReference "socket" */,
+				18B36C9B2959676B0057779D /* XCRemoteSwiftPackageReference "WebRTC" */,
 			);
 			productRefGroup = 3F60E65C258284DB0094823F /* Products */;
 			projectDirPath = "";
@@ -1066,10 +1168,13 @@
 				189E97DF28BDE07D00DDC2A5 /* Offline.storyboard in Resources */,
 				3755BACC283684A100D4C956 /* IRFanRemoteControl.xib in Resources */,
 				3F60E66B258284DC0094823F /* LaunchScreen.storyboard in Resources */,
+				18A3E462297FB50600FB0837 /* CustommsgtblCell.xib in Resources */,
 				18A16EF9291628C00007C7C6 /* HelpAndSupport.storyboard in Resources */,
 				3F60E6B7258285BA0094823F /* GoogleService-Info.plist in Resources */,
 				3F73FD3725B3F0D100204FEC /* Appliance.storyboard in Resources */,
 				3F29A85A25B3F35D00F39867 /* Sensor.storyboard in Resources */,
+				1818345829261D1E007DAAC5 /* TankRegulator.storyboard in Resources */,
+				189EF202295EC76F00DA5EFD /* ListTableViewCell.xib in Resources */,
 				189BC1392914E068007EAB3B /* CameraBoard.storyboard in Resources */,
 				3F60E77F258288650094823F /* MoodLightRemoteControl.xib in Resources */,
 				3F60E741258288640094823F /* Common.xcassets in Resources */,
@@ -1079,6 +1184,7 @@
 				3F73FD3F25B3F1D800204FEC /* Curtain.storyboard in Resources */,
 				472685952824556E0058E92C /* OfferZone.storyboard in Resources */,
 				3F29A87225B3F45F00F39867 /* Schedule.storyboard in Resources */,
+				18B36CA629596E4D0057779D /* VDP.storyboard in Resources */,
 				3FA221C127038872006B8680 /* notify_sound.wav in Resources */,
 				187F70612869900300CE4620 /* ContollerList.storyboard in Resources */,
 				3F60E777258288640094823F /* DynamicButtonCollectionCellView.xib in Resources */,
@@ -1125,10 +1231,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				189EF204295F14B700DA5EFD /* VDPModul.swift in Sources */,
 				3F60E74D258288640094823F /* ProgressOverlay.swift in Sources */,
 				3F60E75C258288640094823F /* SearchApplianceTableCellView.swift in Sources */,
+				1896A367291A819C00A4AA57 /* ProductManualViewController.swift in Sources */,
 				3F60E78C258288650094823F /* TvRemoteControl.swift in Sources */,
 				3F60E7A2258288650094823F /* BrightnessPickerView.swift in Sources */,
+				1818345C29262DE8007DAAC5 /* DataFetchManagerFireBaseTankRegulator.swift in Sources */,
 				3F60E74C258288640094823F /* PopupManager.swift in Sources */,
 				3F60E753258288640094823F /* Mood.swift in Sources */,
 				3F60E74A258288640094823F /* ConfigurationManager.swift in Sources */,
@@ -1141,6 +1250,7 @@
 				3F60E74F258288640094823F /* Appliance.swift in Sources */,
 				3F411D08271DDB1F001DBB85 /* NewDeviceInputPasswordController.swift in Sources */,
 				3F66B9FC25F33210004DF705 /* AppNotificationSettingsController.swift in Sources */,
+				18A3E45E297FAC5900FB0837 /* CustomMsgViewController.swift in Sources */,
 				3F29A89725B3F63800F39867 /* RoutingManager.swift in Sources */,
 				47B23714282456730048A87D /* OfferZoneViewController.swift in Sources */,
 				3F60E6B1258285B10094823F /* AppDelegate.swift in Sources */,
@@ -1154,13 +1264,18 @@
 				3F60E766258288640094823F /* RoomCollectionCellView.swift in Sources */,
 				3F60E76C258288640094823F /* SearchAppNotificationController.swift in Sources */,
 				1899F38428F6A263007CED70 /* Reachability.swift in Sources */,
+				189EA1D129225A89009C7CFE /* ResolveIssueViewController.swift in Sources */,
 				3F60E792258288650094823F /* NewScheduleController.swift in Sources */,
 				1828BB952916891F00944793 /* SubmitViewController.swift in Sources */,
+				18B36CA029596A910057779D /* VdpViewController.swift in Sources */,
 				3F60E6AA2582859F0094823F /* DataFetchManagerFireBaseSchedule.swift in Sources */,
+				189793C42924F57300AD0320 /* detailResolveViewController.swift in Sources */,
 				3F38298725B43DC500CBF493 /* SelectApplianceTypeTableCellView.swift in Sources */,
 				3F60E760258288640094823F /* SearchCurtainTableCellView.swift in Sources */,
+				18E537E1291D320200076F8F /* PdfViewController.swift in Sources */,
 				3F60E787258288650094823F /* RemoteButton.swift in Sources */,
 				3F60E6A72582859F0094823F /* DataFetchManagerFireBaseMood.swift in Sources */,
+				1818345A29261D48007DAAC5 /* TankRegulator.swift in Sources */,
 				3755BACB283684A100D4C956 /* IRFanRemoteControl.swift in Sources */,
 				3F60E6A22582859F0094823F /* DataFetchManagerFireBase.swift in Sources */,
 				3F60E75B258288640094823F /* SearchApplianceLedTableCellView.swift in Sources */,
@@ -1169,6 +1284,7 @@
 				1896876F28C76F8E000EF347 /* ResetWifiViewController.swift in Sources */,
 				3F411D0D271DDB1F001DBB85 /* SelectDeviceTableCellView.swift in Sources */,
 				3F60E7A4258288650094823F /* ColorWheel.swift in Sources */,
+				1896E9092937313800AE77CF /* CreateAccountViewController.swift in Sources */,
 				3F60E76F258288640094823F /* SearchAppNotificationTypeTableCellView.swift in Sources */,
 				3FA8416F274FD57B007B274D /* RulePortalController.swift in Sources */,
 				3F60E75E258288640094823F /* SelectComponentTableCellView.swift in Sources */,
@@ -1179,6 +1295,7 @@
 				3F71E8AB25F3728800568D96 /* AppNotificationSettingsTableCellView.swift in Sources */,
 				3F60E752258288640094823F /* Lock.swift in Sources */,
 				3F60E743258288640094823F /* AppFloatingButton.swift in Sources */,
+				1818345429261C9C007DAAC5 /* SearchTankRegulatorViewController.swift in Sources */,
 				3F60E78F258288650094823F /* SelectRoomController.swift in Sources */,
 				187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */,
 				3F60E751258288640094823F /* Curtain.swift in Sources */,
@@ -1186,12 +1303,14 @@
 				3FA8416C274FD531007B274D /* ForgotPasswordController.swift in Sources */,
 				3F60E75A258288640094823F /* SearchApplianceController.swift in Sources */,
 				3F60E6A92582859F0094823F /* DataFetchManagerFireBaseRoom.swift in Sources */,
+				18A3E461297FB50600FB0837 /* CustommsgtblCell.swift in Sources */,
 				3F60E75F258288640094823F /* SearchCurtainController.swift in Sources */,
 				18EA947228CF2DB80034C291 /* ResetAllViewController.swift in Sources */,
 				37560E08283F80DB00041FD4 /* CoreTableViewCell.swift in Sources */,
 				3F60E79A258288650094823F /* SearchSensorTableCellView.swift in Sources */,
 				3F60E795258288650094823F /* ScheduleTimeTableCellView.swift in Sources */,
 				187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */,
+				18B36CA229596BA20057779D /* RTCCustomFrameCapturer.swift in Sources */,
 				372D4411283F5F52002F0F96 /* CoreViewController.swift in Sources */,
 				3F60E797258288650094823F /* SearchScheduleController.swift in Sources */,
 				189B74CC28C9E7A4001962D3 /* ResetAllWifiViewController.swift in Sources */,
@@ -1216,6 +1335,7 @@
 				3F60E77A258288650094823F /* FanRemoteControl.swift in Sources */,
 				3FE2C2802725C34200AC76EB /* SearchRuleTableCellView.swift in Sources */,
 				3F561C9A25A9B57900AAD474 /* AppBreadCrumbView.swift in Sources */,
+				18EB2DBE2923556F00A22BBB /* OnGoingIssieViewController.swift in Sources */,
 				3F38297F25B43CBF00CBF493 /* SelectApplianceTypeController.swift in Sources */,
 				189E97DB28BDDB9800DDC2A5 /* SwiftyPing.swift in Sources */,
 				3F60E76A258288640094823F /* SearchMoodController.swift in Sources */,
@@ -1223,6 +1343,7 @@
 				3F60E77C258288650094823F /* LedStripRemoteControl.swift in Sources */,
 				3F60E781258288650094823F /* NumberPadControl.swift in Sources */,
 				3F60E774258288640094823F /* DvdRemoteControl.swift in Sources */,
+				18B36CA429596C390057779D /* Modules.swift in Sources */,
 				3F411D0C271DDB1F001DBB85 /* SelectDeviceController.swift in Sources */,
 				3F60E770258288640094823F /* AcRemoteControl.swift in Sources */,
 				3F60E758258288640094823F /* User.swift in Sources */,
@@ -1233,6 +1354,7 @@
 				3F411D05271DDB1F001DBB85 /* NewDeviceConfigureDeviceController.swift in Sources */,
 				3F82C7D225D2851900F47CE8 /* SelectDimTypeController.swift in Sources */,
 				3F411D0A271DDB1F001DBB85 /* NewDeviceScanQrCodeController.swift in Sources */,
+				189EF201295EC76F00DA5EFD /* ListTableViewCell.swift in Sources */,
 				3F60E6A52582859F0094823F /* DataFetchManagerFireBaseCurtain.swift in Sources */,
 				37560E06283F794000041FD4 /* Core.swift in Sources */,
 				3F60E78E258288650094823F /* UpdateRemoteButtonController.swift in Sources */,
@@ -1243,6 +1365,7 @@
 				3F60E7A3258288650094823F /* ColorPickerControl.swift in Sources */,
 				3F38297425B42D2100CBF493 /* NewApplianceController.swift in Sources */,
 				3F411D06271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift in Sources */,
+				18A1003C29769F3400DEA70E /* LocalNotificationManager.swift in Sources */,
 				3F60E790258288650094823F /* SelectRoomTableCellView.swift in Sources */,
 				3F60E6AB2582859F0094823F /* DataFetchManagerFireBaseSensor.swift in Sources */,
 				3F60E746258288640094823F /* AppSwitch.swift in Sources */,
@@ -1250,6 +1373,9 @@
 				3F411D0B271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift in Sources */,
 				3F411D07271DDB1F001DBB85 /* NewDeviceController.swift in Sources */,
 				18A16EFD291649F50007C7C6 /* SupportViewController.swift in Sources */,
+				189EF1FE295EB40A00DA5EFD /* VDPListViewController.swift in Sources */,
+				1818345629261CF9007DAAC5 /* SearchTankRegulatorTableCellView.swift in Sources */,
+				18EB2DC02923C36100A22BBB /* HelpAndSupport.swift in Sources */,
 				3F60E6A82582859F0094823F /* DataFetchManagerFireBaseRemote.swift in Sources */,
 				189E97DD28BDDE2C00DDC2A5 /* PingViewController.swift in Sources */,
 				3F60E789258288650094823F /* RemoteDetailsController.swift in Sources */,
@@ -1267,6 +1393,7 @@
 				3F60E74E258288640094823F /* UtilityManager.swift in Sources */,
 				18A16EFB291628EC0007C7C6 /* SelectTypeViewController.swift in Sources */,
 				3F60E750258288640094823F /* AppNotification.swift in Sources */,
+				1895A64529375F7B00FAD672 /* OTPVerifyViewController.swift in Sources */,
 				3F60E6A32582859F0094823F /* DataFetchManagerFireBaseAppliance.swift in Sources */,
 				3F60E796258288650094823F /* ScheduleTitleTableCellView.swift in Sources */,
 				18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */,
@@ -1449,7 +1576,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
@@ -1458,7 +1585,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1477,7 +1604,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
@@ -1486,7 +1613,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.2;
+				MARKETING_VERSION = 2.1.3;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1635,12 +1762,28 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				kind = exactVersion;
-				version = 9.6.0;
+				branch = master;
+				kind = branch;
+			};
+		};
+		18B36C98295966D20057779D /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		18B36C9B2959676B0057779D /* XCRemoteSwiftPackageReference "WebRTC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stasel/WebRTC";
+			requirement = {
+				branch = latest;
+				kind = branch;
 			};
 		};
 		47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -1660,20 +1803,35 @@
 			package = 189E97D528BDD29B00DDC2A5 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
 		};
-		3F0AC4612695D67D0015F939 /* FirebaseAuth */ = {
+		189EA1C8292217EF009C7CFE /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		3F0AC4632695D67D0015F939 /* FirebaseDatabase */ = {
+		189EA1CA292217EF009C7CFE /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
 		};
-		3F0AC4652695D67D0015F939 /* FirebaseMessaging */ = {
+		189EA1CC292217EF009C7CFE /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3F0AC4602695D67D0015F939 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		189EA1CE292217EF009C7CFE /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		18B36C99295966D20057779D /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B36C98295966D20057779D /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
+		};
+		18B36C9C2959676C0057779D /* WebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18B36C9B2959676B0057779D /* XCRemoteSwiftPackageReference "WebRTC" */;
+			productName = WebRTC;
 		};
 		47268591282451D80058E92C /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -34,6 +34,7 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.checkInternetConnection(completion: pCompletion)
     }
     
+    
     func login(completion pCompletion: @escaping (Error?, User?) -> Void, user pUser :User) {
         self.dataFetchManagerFireBase.login(completion: pCompletion, user: pUser)
     }
@@ -216,7 +217,10 @@ class DataFetchManager: NSObject {
     func updateSensorNotificationSettings(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, fcmToken pFcmToken :String?, notificationSubscriptionState pNotificationSubscriptionState :Bool, notificationSoundState pNotificationSoundState :Bool) {
         self.dataFetchManagerFireBase.updateSensorNotificationSettings(completion: pCompletion, sensor: pSensor, fcmToken: pFcmToken, notificationSubscriptionState: pNotificationSubscriptionState, notificationSoundState: pNotificationSoundState)
     }
-    
+    //MARK: - Login
+    func verifyEmail(completion pCompletion: @escaping (Error?, String?) -> Void, email pEmail: String, Otp pOtp: String ) {
+         self.dataFetchManagerFireBase.veryfyEmail(completion: pCompletion, email: pEmail, otp: pOtp)
+    }
     
     // MARK:- Schedule
     
@@ -324,13 +328,13 @@ class DataFetchManager: NSObject {
     func deviceDetails(completion pCompletion: @escaping (Error?, Device?) -> Void, device pDevice :Device) {
         self.dataFetchManagerFireBase.deviceDetails(completion: pCompletion, device: pDevice)
     }
+    func searchVDPdevices(completion pCompletion: @escaping (Error?, Array<VDPModul>?) -> Void) {
+        self.dataFetchManagerFireBase.searchVDPdevices(completion: pCompletion)
+    }
     #endif
-    
-    #if !APP_WIFINITY
     func searchTankRegulator(completion pCompletion: @escaping (Error?, Array<TankRegulator>?) -> Void) {
         self.dataFetchManagerFireBase.searchTankRegulator(completion: pCompletion)
     }
-    
     func updateTankRegulatorAutoMode(completion pCompletion: @escaping (Error?) -> Void, tankRegulator pTankRegulator :TankRegulator, autoMode pAutoMode :Bool) {
         self.dataFetchManagerFireBase.updateTankRegulatorAutoMode(completion: pCompletion, tankRegulator: pTankRegulator, autoMode: pAutoMode)
     }
@@ -342,6 +346,23 @@ class DataFetchManager: NSObject {
     func updateTankRegulatorSync(completion pCompletion: @escaping (Error?) -> Void, tankRegulator pTankRegulator :TankRegulator) {
         self.dataFetchManagerFireBase.updateTankRegulatorSync(completion: pCompletion, tankRegulator: pTankRegulator)
     }
+    
+    #if !APP_WIFINITY
+//    func searchTankRegulator(completion pCompletion: @escaping (Error?, Array<TankRegulator>?) -> Void) {
+//        self.dataFetchManagerFireBase.searchTankRegulator(completion: pCompletion)
+//    }
+    
+//    func updateTankRegulatorAutoMode(completion pCompletion: @escaping (Error?) -> Void, tankRegulator pTankRegulator :TankRegulator, autoMode pAutoMode :Bool) {
+//        self.dataFetchManagerFireBase.updateTankRegulatorAutoMode(completion: pCompletion, tankRegulator: pTankRegulator, autoMode: pAutoMode)
+//    }
+//
+//    func updateTankRegulatorMotorPowerState(completion pCompletion: @escaping (Error?) -> Void, tankRegulator pTankRegulator :TankRegulator, motorPowerState pMotorPowerState :Bool) {
+//        self.dataFetchManagerFireBase.updateTankRegulatorMotorPowerState(completion: pCompletion, tankRegulator: pTankRegulator, motorPowerState: pMotorPowerState)
+//    }
+//
+//    func updateTankRegulatorSync(completion pCompletion: @escaping (Error?) -> Void, tankRegulator pTankRegulator :TankRegulator) {
+//        self.dataFetchManagerFireBase.updateTankRegulatorSync(completion: pCompletion, tankRegulator: pTankRegulator)
+//    }
     
     #endif
     

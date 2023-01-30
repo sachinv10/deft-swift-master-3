@@ -10,6 +10,7 @@ import Foundation
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
+import Firebase
 
 
 extension DataFetchManagerFireBase {
@@ -201,7 +202,6 @@ extension DataFetchManagerFireBase {
                         if controllerId == anArray[i] as String{
                             pAppliance.hardwareId = String(i)
                             self.deleteOneControllerWithId(appliance: pAppliance)
-                            
                           }
                         }
                     print(anArray)
@@ -259,6 +259,24 @@ extension DataFetchManagerFireBase {
                 }
                 }
                     
+                conditions = idcont!.contains("P")
+                if conditions{
+                aMessageField?.child("sensors").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let anArray = pDataSnapshot.value as? Array<String> {
+                       // for i in 0..<anArray.count{
+              //  if controllerId == anArray[i] as String{
+                        //    pAppliance.hardwareId = String(i)
+                            self.deleteOnePControllerWithId(appliance: pAppliance)
+                            
+                        //  }
+                     //   }
+                    print(anArray)
+                    }
+                    aSwitchTypeDispatchSemaphore.signal()
+                }
+                }
+                //remaining L and G
+                
             _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
  
                 
@@ -270,6 +288,45 @@ extension DataFetchManagerFireBase {
             DispatchQueue.main.async {
                 self.requestCount -= 1
                 pCompletion(anError)
+            }
+        }
+        
+    }
+    func deleteOnePControllerWithId(appliance pAppliance :ControllerAppliance) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            let controllerId = pAppliance.id
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                if (pAppliance.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
+                }
+                
+                // NO NEED TO update state in database
+           
+                let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
+                var aMessageField :DatabaseReference? = nil
+                aMessageField =  Database.database().reference().child("devices").child(pAppliance.id!)
+ 
+                aMessageField?.removeValue(completionBlock: { (pError, pDatabaseReference) in
+                    anError = pError
+                    aSwitchTypeDispatchSemaphore.signal()
+                })
+            _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
+ 
+             
+             } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+               
             }
         }
         

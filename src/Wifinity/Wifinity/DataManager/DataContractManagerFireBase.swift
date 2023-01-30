@@ -26,7 +26,123 @@ extension DataContractManagerFireBase {
     }
     
 }
+// MARK: - VDP
+extension DataContractManagerFireBase{
+    static func VDPdevices(dict pDict :Dictionary<String,Dictionary<String,Any>>) -> Array<VDPModul>? {
+        var aReturnVal :Array<VDPModul>? = Array<VDPModul>()
+        
+        for aTankRegulatorDict in pDict.values {
+            if let aTankRegulator = self.VDPRegulator(dict: aTankRegulatorDict) {
+                aReturnVal!.append(aTankRegulator)
+            }
+        }
+        if aReturnVal!.count <= 0 {
+            aReturnVal = nil
+        }
+        
+        return aReturnVal
+    }
+    
+    static func VDPRegulator(dict pDict :Dictionary<String,Any>) -> VDPModul? {
+        var aReturnVal :VDPModul? = nil
+        
+        let aTankRegulator = VDPModul()
+        
+        aTankRegulator.id = pDict["id"] as? String
+        
+        if let aValue = pDict["callStatus"] as? String {
+            aTankRegulator.callStatus = aValue
+        }
 
+        if let aValue = pDict["ip_address"] as? String {
+            aTankRegulator.ip_address = aValue
+        }
+        if let aValue = pDict["name"] as? String {
+            aTankRegulator.name = aValue
+        }
+        if let aValue = pDict["ssid"] as? String {
+            aTankRegulator.ssid = aValue
+        }
+        if let aValue = pDict["uid"] as? String {
+            aTankRegulator.uid = aValue
+        }
+        if let aValue = pDict["nightVision"] as? Bool {
+            aTankRegulator.nightVision = aValue
+        }
+        if let aValue = pDict["online"] as? Bool {
+            aTankRegulator.online = aValue
+        }
+        if let aValue = pDict["vdpFilter"] as? Bool {
+            aTankRegulator.vdpFilter = aValue
+        }
+        if let aValue = pDict["available"] as? Bool {
+            aTankRegulator.available = aValue
+        }
+
+        aReturnVal = aTankRegulator
+        return aReturnVal
+    }
+}
+// MARK: - WATTER CONTROLLER
+extension DataContractManagerFireBase{
+    static func tankRegulators(dict pDict :Dictionary<String,Dictionary<String,Any>>) -> Array<TankRegulator>? {
+        var aReturnVal :Array<TankRegulator>? = Array<TankRegulator>()
+        
+        for aTankRegulatorDict in pDict.values {
+            if let aTankRegulator = self.tankRegulator(dict: aTankRegulatorDict) {
+                aReturnVal!.append(aTankRegulator)
+            }
+        }
+        if aReturnVal!.count <= 0 {
+            aReturnVal = nil
+        }
+        
+        return aReturnVal
+    }
+    
+    static func tankRegulator(dict pDict :Dictionary<String,Any>) -> TankRegulator? {
+        var aReturnVal :TankRegulator? = nil
+        
+        let aTankRegulator = TankRegulator()
+        
+        aTankRegulator.id = pDict["id"] as? String
+        
+        if let aValue = pDict["name"] as? String {
+            aTankRegulator.title = aValue.capitalized
+        }
+        
+        if let aValue = pDict["tankCount"] as? Int {
+            aTankRegulator.tankCount = aValue
+        }
+        
+        if let aValue = pDict["autoModeActivated"] as? Bool {
+            aTankRegulator.isAutoModeActivated = aValue
+        }
+        
+        if let aValue = pDict["motorState"] as? Bool {
+            aTankRegulator.isMotorOn = aValue
+        }
+        
+        if let aValue = pDict["lowerTankFillPercentage1"] as? Int {
+            aTankRegulator.lowerTankFillPercent = aValue
+        }
+        
+        if let aValue = pDict["upperTankFillPercentage1"] as? Int {
+            aTankRegulator.upperTankFillPercent = aValue
+        }
+        
+        if let aValue = pDict["online"] as? Bool {
+            aTankRegulator.isOnline = aValue
+        }
+        
+        aReturnVal = aTankRegulator
+        
+        return aReturnVal
+    }
+    static func tankRegulatorMotorPowerStateCommandValue(_ pIsOn :Bool) -> String {
+        return pIsOn ? "7" : "8"
+    }
+}
 
 
 // MARK:- Room
@@ -410,6 +526,33 @@ extension DataContractManagerFireBase {
             aReturnVal = "Lock"
         case Device.HardwareType.gateLock:
             aReturnVal = "Gate Controller"
+        case .waterTank:
+            aReturnVal = "0 tank 1 level water level controller"
+        case .waterTank2:
+            aReturnVal = "0 tank 2 level water level controller"
+            break
+        case .CSoneSwitch:
+            aReturnVal = "5-switch"
+        case .CStwoSwitch:
+            aReturnVal = "2-switch"
+        case .CSthreeSwitch:
+            aReturnVal = "3-switch"
+        case .CSfourSwitch:
+            aReturnVal = "4-switch"
+        case .CSfiveSwitch:
+            aReturnVal = "5-switch"
+        case .CSsixSwitch:
+            aReturnVal = "6-switch"
+        case .CSsevenSwitch:
+            aReturnVal = "7-switch"
+        case .CSeightSwitch:
+            aReturnVal = "8-switch"
+        case .CSnineSwitch:
+            aReturnVal = "9-switch"
+        case .CStenSwitch:
+            aReturnVal = "10-switch"
+        case .Occupy:
+            aReturnVal = "Lider Sensor"
         }
         return aReturnVal
     }
@@ -486,6 +629,34 @@ extension DataContractManagerFireBase {
             aReturnVal = "Lock"
         case Device.HardwareType.gateLock:
             aReturnVal = "Gate Controller"
+        case .waterTank:
+            aReturnVal = "Water lervel Controller1"
+            break
+        case .waterTank2:
+            aReturnVal = "Water lervel Controller2"
+            break
+        case .CSoneSwitch:
+            aReturnVal = "5 Switch Controller"
+        case .CStwoSwitch:
+            aReturnVal = "2 Switch Controller"
+        case .CSthreeSwitch:
+            aReturnVal = "3 Switch Controller"
+        case .CSfourSwitch:
+            aReturnVal = "4 Switch Controller"
+        case .CSfiveSwitch:
+            aReturnVal = "5 Switch Controller"
+        case .CSsixSwitch:
+            aReturnVal = "6 Switch Controller"
+        case .CSsevenSwitch:
+            aReturnVal = "7 Switch Controller"
+        case .CSeightSwitch:
+            aReturnVal = "8 Switch Controller"
+        case .CSnineSwitch:
+            aReturnVal = "9 Switch Controller"
+        case .CStenSwitch:
+            aReturnVal = "10 Switch Controller"
+        case .Occupy:
+            aReturnVal = "Lider Sensor"
         }
         return aReturnVal
     }

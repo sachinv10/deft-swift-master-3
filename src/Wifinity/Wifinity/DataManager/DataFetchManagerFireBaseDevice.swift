@@ -84,7 +84,7 @@ extension DataFetchManagerFireBase {
                 var aDeviceDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
                 if let aHardwareType = pDevice.hardwareType {
                     aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeDatabaseValue(aHardwareType), forKey: "controllerType")
-                    aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "type")
+                //     aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "type")
                 }
                 if pDevice.hardwareType == Device.HardwareType.rollingCurtain || pDevice.hardwareType == Device.HardwareType.slidingCurtain {
                     aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_" + (pDevice.room?.id ?? "") + "_curtain", forKey: "filter")
@@ -99,7 +99,13 @@ extension DataFetchManagerFireBase {
                 } else if pDevice.hardwareType == Device.HardwareType.lock
                 || pDevice.hardwareType == Device.HardwareType.gateLock {
                     aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_lock", forKey: "filter")
-                } else {
+                } else if pDevice.hardwareType == Device.HardwareType.waterTank {
+                    aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_WaterLevelController", forKey: "filter")
+                } else if pDevice.hardwareType == Device.HardwareType.waterTank2 {
+                    aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_WaterLevelController", forKey: "filter")
+                }else if pDevice.hardwareType == Device.HardwareType.Occupy {
+                    aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_" + (pDevice.room?.id ?? "") + "_smartsensor", forKey: "filter")
+                }else {
                     aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_" + (pDevice.room?.id ?? ""), forKey: "filter")
                 }
                 aDeviceDict.updateValue(pDevice.id, forKey: "id")
@@ -152,6 +158,21 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue("NA", forKey: "lightIntensity")
                         aDeviceDict.updateValue(false, forKey: "state")
                         aDeviceDict.updateValue(0, forKey: "syncToggle")
+                    case .Occupy:
+                        if let aHardwareType = pDevice.hardwareType {
+                            aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "controllerSubType")
+                        }
+                        aDeviceDict.updateValue("-62", forKey: "wifiSignalStrength")
+                        aDeviceDict.updateValue("NA", forKey: "lastOperation")
+                        aDeviceDict.updateValue(0, forKey: "lastOperationTime")
+                        aDeviceDict.updateValue(0, forKey: "peopleCount")
+                        aDeviceDict.updateValue(false, forKey: "state")
+                        let timestamp = NSDate().timeIntervalSince1970
+                        aDeviceDict.updateValue(Int(timestamp * 100), forKey: "timeStamp")
+                        aDeviceDict.updateValue(false, forKey: "uidAssign")
+                        aDeviceDict.updateValue( NewDeviceConfigureDeviceController.networkPssword, forKey: "wifiPassword")
+                        aDeviceDict.updateValue( NewDeviceConfigureDeviceController.networkSsid, forKey: "wifiSsid")
+                        break
                     case Device.HardwareType.thermalSensor:
                         break
                     case Device.HardwareType.uvSensor:
@@ -176,6 +197,55 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.removeValue(forKey: "switchType")
                         aDeviceDict.removeValue(forKey: "switches")
                         break
+                    case .waterTank:
+                        if let aHardwareType = pDevice.hardwareType {
+                            aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeDatabaseValue(aHardwareType), forKey: "type")
+                        }
+                        aDeviceDict.updateValue(false, forKey: "autoModeActivated")
+                        aDeviceDict.updateValue(pDevice.id, forKey: "hardwareId")
+                        aDeviceDict.updateValue(false, forKey: "motorState")
+                        aDeviceDict.updateValue(false, forKey: "state")
+                        aDeviceDict.updateValue(1, forKey: "tankCount")
+                        aDeviceDict.updateValue(10, forKey: "tankFillPercentage")
+                        aDeviceDict.updateValue(2, forKey: "tankWaterLevel")
+                        aDeviceDict.updateValue("WaterLevelController", forKey: "controllerType")
+                        aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_WaterLevelController", forKey: "voice_filter")
+                        break
+                    case .waterTank2:
+                        if let aHardwareType = pDevice.hardwareType {
+                            aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeDatabaseValue(aHardwareType), forKey: "type")
+                        }
+                        aDeviceDict.updateValue(false, forKey: "autoModeActivated")
+                        aDeviceDict.updateValue(pDevice.id, forKey: "hardwareId")
+                        aDeviceDict.updateValue(false, forKey: "motorState")
+                        aDeviceDict.updateValue(false, forKey: "state")
+                        aDeviceDict.updateValue(1, forKey: "tankCount")
+                        aDeviceDict.updateValue(10, forKey: "tankFillPercentage")
+                        aDeviceDict.updateValue(2, forKey: "tankWaterLevel")
+                        aDeviceDict.updateValue("WaterLevelController", forKey: "controllerType")
+                        aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_WaterLevelController", forKey: "voice_filter")
+                        break
+                    case .CSoneSwitch,
+                            .CStwoSwitch,
+                            .CSthreeSwitch,
+                            .CSfourSwitch,
+                            .CSfiveSwitch,
+                            .CSsixSwitch,
+                            .CSsevenSwitch,
+                            .CSeightSwitch,
+                            .CSnineSwitch,
+                            .CStenSwitch:
+                        if let aHardwareType = pDevice.hardwareType {
+                            aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "type")
+                            
+                            aDeviceDict.updateValue(Device.getSwitchCount(hardwareType: aHardwareType), forKey: "switches")
+                        }
+                        let timestamp = NSDate().timeIntervalSince1970
+                        aDeviceDict.updateValue(Int(timestamp * 100), forKey: "timeStamp")
+                        aDeviceDict.updateValue( NewDeviceConfigureDeviceController.networkPssword, forKey: "wifiPassword")
+                        aDeviceDict.updateValue( NewDeviceConfigureDeviceController.networkSsid, forKey: "wifiSsid")
+                                break
+              
                     }
                 }
                 
@@ -230,11 +300,28 @@ extension DataFetchManagerFireBase {
                              , Device.HardwareType.ctSevenSwitch
                              , Device.HardwareType.ctEightSwitch
                              , Device.HardwareType.ctNineSwitch
-                             , Device.HardwareType.ctTenSwitch:
+                             , Device.HardwareType.ctTenSwitch,
+                               Device.HardwareType.waterTank
+                              ,Device.HardwareType.waterTank2
+                              ,Device.HardwareType.Occupy:
                             aNode = "devices"
                         case Device.HardwareType.lock
                              , Device.HardwareType.gateLock:
                             aNode = "locks"
+                        
+                        case .CSoneSwitch,
+                                .CStwoSwitch,
+                                .CSthreeSwitch,
+                                .CSfourSwitch,
+                                .CSfiveSwitch,
+                                .CSsixSwitch,
+                                .CSsevenSwitch,
+                                .CSeightSwitch,
+                                .CSnineSwitch,
+                                .CStenSwitch:
+                                break
+                        
+                      
                         }
                     }
                     

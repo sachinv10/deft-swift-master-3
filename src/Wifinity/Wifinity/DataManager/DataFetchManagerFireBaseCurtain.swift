@@ -121,5 +121,99 @@ extension DataFetchManagerFireBase {
         }
         
     }
+    func createEmailverification(emailstring: String) -> String {
+        var result = emailstring.replacingOccurrences(of: ".", with: "_",
+            options: NSString.CompareOptions.literal, range:nil)
+          result = result.replacingOccurrences(of: ",", with: "_",
+            options: NSString.CompareOptions.literal, range:nil)
+          result = result.replacingOccurrences(of: "$", with: "_",
+            options: NSString.CompareOptions.literal, range:nil)
+        result = result.replacingOccurrences(of: "]", with: "_",
+          options: NSString.CompareOptions.literal, range:nil)
+        result = result.replacingOccurrences(of: "[", with: "_",
+          options: NSString.CompareOptions.literal, range:nil)
+        result = result.replacingOccurrences(of: "#", with: "_",
+          options: NSString.CompareOptions.literal, range:nil)
+        
+        return result
+    }
+    func veryfyEmail(completion pCompletion: @escaping (Error?, String?) -> Void, email pemail :String?, otp pOtp :String?) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var aCurtainArray :String?
+            var anError :Error?
+            
+            var Loginparametor: Dictionary<String, Any>? = Dictionary<String, Any>()
+            Loginparametor?.updateValue(pemail, forKey: "emailId")
+            Loginparametor?.updateValue(pOtp, forKey: "verificationCode")
+            let timestamp = NSDate().timeIntervalSince1970
+            let timestamp1 = Int(timestamp * 1000)
+            OTPVerifyViewController.timestampfinal = timestamp1
+            Loginparametor?.updateValue(Int(timestamp1), forKey: "verifiedTime")
+            
+            // Fetch curtain IDs
+           var emailstring = String()
+                  let aCurtainDispatchSemaphore = DispatchSemaphore(value: 0)
+            let x = pemail?.split(separator: "@")
+            emailstring = String(x![0])
+            let result = self.createEmailverification(emailstring: emailstring)
+            OTPVerifyViewController.timestamp = result
+                            self.database
+                .child("emailVerification").child(result).updateChildValues(Loginparametor!, withCompletionBlock: {(error, pDataSnapshot)  in
+                    print(pDataSnapshot)
+ 
+                    if error == nil{
+                        
+                        let url = "http://34.68.55.33:3002/api-email"
+                        guard let serviceUrl = URL(string: url) else { return }
+                        
+                        do {
+                            var request = URLRequest(url: serviceUrl)
+                            request.httpMethod = "POST"
+                             request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                            let parameters = "code=\(pOtp!)&email=\(pemail!)"
+                            let postData =  parameters.data(using: .utf8)
+                            request.httpBody = postData
+                            request.timeoutInterval = 20
+                            let session = URLSession.shared
+                            session.dataTask(with: request) { (data, response, error) in
+                                if let response = response {
+                                }
+                                anError = error
+                                if let httpResponse = response as? HTTPURLResponse {
+                                    print(String(httpResponse.statusCode))
+                                }
+                                if let data = data {
+                                    do {
+                                        let json = try JSONSerialization.jsonObject(with: data, options:  JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                                        print(json)
+                                        aCurtainArray = json["status"] as? String
+                                        CreateAccountViewController.massege = json["message"] as! String
+                                    } catch {
+                                        print(error)
+                                    }
+                                }
+                                DispatchQueue.main.async {
+                                    self.requestCount -= 1
+                                    pCompletion(anError, aCurtainArray)
+                                }
+                            }.resume()
+                        
+                        } catch {
+                            anError = error
+                        }
+           
+                    }
     
+                                    aCurtainDispatchSemaphore.signal()
+                                })
+               _ = aCurtainDispatchSemaphore.wait(timeout: .distantFuture)
+            
+      
+            
+            
+        }
+        
+    }
 }

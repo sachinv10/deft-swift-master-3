@@ -66,7 +66,7 @@ class AppHeaderBarView: UIView {
             self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[aView]|", options: [], metrics: nil, views: ["aView":aView]))
         }
     }
-    
+     
     
     @IBAction func didSelectBackButton(_ pSender: UIButton?) {
         self.delegate?.appHeaderBarDidSelectBackButton(self)

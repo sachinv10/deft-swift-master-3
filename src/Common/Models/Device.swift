@@ -110,6 +110,22 @@ class Device: NSObject {
         // G is gate-controller-lock
         case gateLock
         
+        // G is  water tank
+        case waterTank
+        case waterTank2
+        
+        case CSoneSwitch
+        case CStwoSwitch
+        case CSthreeSwitch
+        case CSfourSwitch
+        case CSfiveSwitch
+        case CSsixSwitch
+        case CSsevenSwitch
+        case CSeightSwitch
+        case CSnineSwitch
+        case CStenSwitch
+        // Occupy sensor
+        case Occupy
         
         var prefix :String {
             var aReturnVal = ""
@@ -183,6 +199,33 @@ class Device: NSObject {
                 aReturnVal = "L"
             case HardwareType.gateLock:
                 aReturnVal = "G"
+                
+            case HardwareType.waterTank:
+                aReturnVal = "F01"
+            case HardwareType.waterTank2:
+                aReturnVal = "F02"
+            case .CSoneSwitch:
+                aReturnVal = "CS01"
+            case .CStwoSwitch:
+                aReturnVal = "CS02"
+            case .CSthreeSwitch:
+                aReturnVal = "CS03"
+            case .CSfourSwitch:
+                aReturnVal = "CS04"
+            case .CSfiveSwitch:
+                aReturnVal = "CS05"
+            case .CSsixSwitch:
+                aReturnVal = "CS06"
+            case .CSsevenSwitch:
+                aReturnVal = "CS07"
+            case .CSeightSwitch:
+                aReturnVal = "CS08"
+            case .CSnineSwitch:
+                aReturnVal = "CS09"
+            case .CStenSwitch:
+                aReturnVal = "CS10"
+            case .Occupy:
+                aReturnVal = "P00"
             }
             return aReturnVal
         }
@@ -276,6 +319,22 @@ extension Device {
             aReturnVal = HardwareType.lock
         } else if pId.hasPrefix(HardwareType.gateLock.prefix) == true {
             aReturnVal = HardwareType.gateLock
+        }else if pId.hasPrefix(HardwareType.waterTank.prefix) == true {
+            aReturnVal = HardwareType.waterTank
+        }else if pId.hasPrefix(HardwareType.waterTank2.prefix) == true {
+            aReturnVal = HardwareType.waterTank2
+        }else if pId.hasPrefix(HardwareType.CSoneSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSoneSwitch
+        }else if pId.hasPrefix(HardwareType.CStwoSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSoneSwitch
+        }else if pId.hasPrefix(HardwareType.CSthreeSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSoneSwitch
+        }else if pId.hasPrefix(HardwareType.CSfourSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSoneSwitch
+        }else if pId.hasPrefix(HardwareType.CSfiveSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSoneSwitch
+        }else if pId.hasPrefix(HardwareType.Occupy.prefix) == true {
+            aReturnVal = HardwareType.Occupy
         }
         
         return aReturnVal
@@ -353,6 +412,32 @@ extension Device {
         case Device.HardwareType.lock:
             aReturnVal = 1
         case Device.HardwareType.gateLock:
+            aReturnVal = 1
+        case Device.HardwareType.waterTank:
+            aReturnVal = 1
+        case Device.HardwareType.waterTank2:
+            aReturnVal = 2
+        case .CSoneSwitch:
+            aReturnVal = 5
+        case .CStwoSwitch:
+            aReturnVal = 2
+        case .CSthreeSwitch:
+            aReturnVal = 3
+        case .CSfourSwitch:
+            aReturnVal = 4
+        case .CSfiveSwitch:
+            aReturnVal = 5
+        case .CSsixSwitch:
+            aReturnVal = 6
+        case .CSsevenSwitch:
+            aReturnVal = 7
+        case .CSeightSwitch:
+            aReturnVal = 8
+        case .CSnineSwitch:
+            aReturnVal = 9
+        case .CStenSwitch:
+            aReturnVal = 10
+        case .Occupy:
             aReturnVal = 1
         }
         

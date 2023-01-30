@@ -26,8 +26,6 @@ class NewDeviceController: BaseController {
     
 }
 
-
-
 extension NewDeviceController {
     
     @IBAction func didSelectDoneButton(_ pSender: UIButton?) {

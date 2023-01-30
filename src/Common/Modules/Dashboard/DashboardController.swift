@@ -144,6 +144,7 @@ class DashboardController: BaseController {
       
     }
     func checkApplicationVersion(appversion: String) {
+
         if let uid = Auth.auth().currentUser?.uid{
             Database.database().reference().child("appVersion").queryOrdered(byChild: "ios")
             .observe(DataEventType.childAdded) {(pDataSnapshot) in
@@ -152,7 +153,8 @@ class DashboardController: BaseController {
                 var versioindic = (pDataSnapshot.value as? Array<String>)
                 if appversion != pDataSnapshot.value! as! String {
                     print("call to update version")
-                    self.UpdateAleart()
+                    LocalNotificationManager.shared.scheduleLocalNotification(title: "Update available!", body: "Update the Wifinity pro aplication to enjoy new features", timeInterval: 5)
+                  //  self.UpdateAleart()
                 }
             }
         }
@@ -355,8 +357,9 @@ extension DashboardController :DrawerControllerDelegate {
         } else if pUrc == DrawerController.Menu.Locks.urc {
             RoutingManager.shared.gotoSearchLock(controller: self)
         } else if pUrc == DrawerController.Menu.TankRegulators.urc {
-            #if !APP_WIFINITY
             RoutingManager.shared.gotoSearchTankRegulator(controller: self)
+            #if !APP_WIFINITY
+              //   RoutingManager.shared.gotoSearchTankRegulator(controller: self)
             #endif
         } else if pUrc == DrawerController.Menu.Schedules.urc {
             RoutingManager.shared.gotoSearchSchedule(controller: self)
@@ -390,6 +393,8 @@ extension DashboardController :DrawerControllerDelegate {
             RoutingManager.shared.gotoCameras(controller: self)
         }else if pUrc == DrawerController.Menu.HelpAndSuppor.urc {
             RoutingManager.shared.gotoHelp(controller: self)
+        }else if pUrc == DrawerController.Menu.VDP.urc {
+            RoutingManager.shared.gotoVDPCameras(controller: self)
         }
     }
 }

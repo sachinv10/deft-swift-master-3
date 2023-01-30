@@ -9,11 +9,12 @@
 import UIKit
 import WebKit
 import FirebaseAuth
+ 
 
 
 class EnergyDetailsController: BaseController {
     @IBOutlet weak var webView: WKWebView!
-    
+    var webViews: WKWebView!
     var userId: String?
     var roomId :String?
     

@@ -94,7 +94,8 @@ class Device: NSObject {
         case thermalSensor // S02 is thermal sensor
         case uvSensor // S03 is UV sensor
         case smartSecuritySensor // S04 is smart security sensor
-        
+        case smartSensorBattery // S10 is smart sensor battery
+        case smokeDetectorBattery // S11 is smoke detector battery
         // M00 is rolling curtain
         case rollingCurtain
         
@@ -180,6 +181,10 @@ class Device: NSObject {
                 aReturnVal = "S00"
             case HardwareType.smokeDetector:
                 aReturnVal = "S01"
+            case HardwareType.smartSensorBattery:
+                aReturnVal = "S10"
+            case HardwareType.smokeDetectorBattery:
+                aReturnVal = "S11"
             case HardwareType.thermalSensor:
                 aReturnVal = "S02"
             case HardwareType.uvSensor:
@@ -297,6 +302,10 @@ extension Device {
             aReturnVal = HardwareType.smartSensor
         } else if pId.hasPrefix(HardwareType.smokeDetector.prefix) == true {
             aReturnVal = HardwareType.smokeDetector
+        }  else if pId.hasPrefix(HardwareType.smartSensorBattery.prefix) == true {
+            aReturnVal = HardwareType.smartSensorBattery
+        } else if pId.hasPrefix(HardwareType.smokeDetectorBattery.prefix) == true {
+            aReturnVal = HardwareType.smokeDetectorBattery
         } else if pId.hasPrefix(HardwareType.thermalSensor.prefix) == true {
             aReturnVal = HardwareType.thermalSensor
         } else if pId.hasPrefix(HardwareType.uvSensor.prefix) == true {
@@ -393,6 +402,10 @@ extension Device {
         case Device.HardwareType.smartSensor:
             aReturnVal = 1
         case Device.HardwareType.smokeDetector:
+            aReturnVal = 1
+        case Device.HardwareType.smartSensorBattery:
+            aReturnVal = 1
+        case Device.HardwareType.smokeDetectorBattery:
             aReturnVal = 1
         case Device.HardwareType.thermalSensor:
             aReturnVal = 1

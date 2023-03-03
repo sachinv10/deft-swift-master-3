@@ -14,7 +14,6 @@ class SelectDeviceTableCellView: UITableViewCell {
     
     var shouldCheckForAddedApplianceCount :Bool = false
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

@@ -34,18 +34,50 @@ class SearchSensorController: BaseController {
         self.controllerflag = true
         activatdatalistner()
         reloadAllData()
+        // Add devices battery oprated smoke sensor
+      //  var reff = Database.database().reference().child("devices").child("S010101676531003").setValue(["adcThreshold": 200, "co2Threshold": 5, "controllerType" :"Battery Smoke Detector", "currentTemp": "NA", "filter": "wXxgF8zjX0bNsaavRCQA5UDIowy1_00_smartsensor", "co2":"00000", "id": "S010101676531003", "lastMotion": "NA", "lightIntensity": "NA", "lpg": "00000",  "lpgThreshold": 187, "motionLightStatus" :false, "name" :"Bt Smoke Detector1003", "online": true, "roomId" :"00", "roomName" :"Demo", "sirenStatus": true, "smoke": "00000", "smokeThreshold": 5, "state": true, "syncToggle" : 0, "timeStamp" : 1676533382000, "uid": "wXxgF8zjX0bNsaavRCQA5UDIowy1", "Batterysevermode": "Low","BatteryPercentage": "50"])
+       // S010101676531003
+        
+        // Add devices battery oprated smart sensor
+     //   let reff = Database.database().reference().child("devices").child("S0001676628338000").setValue(["alexaMotionEventTimestamp" :1676438026508, "controllerType" : "battery smart sensor", "currentTemp" : "0027",
+//        "filter" : "wXxgF8zjX0bNsaavRCQA5UDIowy1_00_smartsensor",
+//        "id" :"S0001676628338000",
+//        "lastMotion" : "NA",
+//        "lastMotionTimeStamp" : 1676628338000,
+//        "lightIntensity" : "360",
+//        "motionLightStatus" : true,
+//        "name": "Bt Smart Sense8000",
+//        "online" : true,
+//        "roomId": "00",
+//        "roomName" : "Demo",
+//        "sirenStatus" : false,
+//        "state" :false,
+//        "syncToggle" : 0,
+//        "timeStamp": 1676628338000,
+//        "uid":"wXxgF8zjX0bNsaavRCQA5UDIowy1",
+//        "Batterysevermode": "Low",
+//        "BatteryPercentage": "60"
+//        ])
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        print("did dis appear........")
+        print("mood lisner dissappear........")
         self.controllerflag = false
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()){
+            let aFilter = SearchSensorController.sensorId
+            Database.database().reference()
+                .child("devices")
+                .queryOrdered(byChild: "filter")
+                .queryEqual(toValue: aFilter).removeAllObservers()
+                    print("mood lisner dissappear........")
+        }
     }
     
     
     
     func activatdatalistner()  {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 2){
             print("applince id\(SearchSensorController.sensorId)")
             let aFilter = SearchSensorController.sensorId
             Database.database().reference()
@@ -57,7 +89,6 @@ class SearchSensorController: BaseController {
                     if self.controllerflag == true {
                         self.reloadAllData()
                     }
-                    
             }
         }
     }
@@ -214,8 +245,6 @@ class SearchSensorController: BaseController {
     
 }
 
-
-
 extension SearchSensorController :UITableViewDataSource, UITableViewDelegate {
     
     // MARK:- UITableView Methods
@@ -314,7 +343,6 @@ extension SearchSensorController :SearchSensorTableCellViewDelegate {
             let aSensor = self.sensors[anIndexPath.row]
             self.updateCalibrate(sensor: aSensor)
         }
-        
     }
     
     func cellViewResetCount(_ pSender: SearchSensorTableCellView) {

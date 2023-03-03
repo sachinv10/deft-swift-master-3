@@ -62,14 +62,12 @@ class ControllerListViewController: BaseController {
             do
             {
             if pApplianceArray != nil {
-                
                 self.controllerApplince = try pApplianceArray!
              }
             }catch let error{
                 print(error.localizedDescription)
             }
             self.reloadAllView()
-           
             })
         }
     }
@@ -145,6 +143,5 @@ extension ControllerListViewController: UITableViewDelegate,UITableViewDataSourc
         contollerapp.lastOperated = times["time"] as? Double
         RoutingManager.shared.gotoDeviceDetails(controller: self, selectedController: contollerapp)
     }
-    
     
 }

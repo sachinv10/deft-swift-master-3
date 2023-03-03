@@ -18,11 +18,15 @@
 		187F70642869906400CE4620 /* ControllerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70622869906400CE4620 /* ControllerListViewController.swift */; };
 		187F70682869C60D00CE4620 /* ControllrTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */; };
 		187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */; };
+		1884CE5C298CDB7000832D41 /* SpeakerboxCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1884CE5B298CDB7000832D41 /* SpeakerboxCallManager.swift */; };
+		1884CE5E298CDC1600832D41 /* ProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1884CE5D298CDC1600832D41 /* ProviderDelegate.swift */; };
+		1884CE60298CE9DD00832D41 /* SpeakerboxCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1884CE5F298CE9DC00832D41 /* SpeakerboxCall.swift */; };
 		1895A64529375F7B00FAD672 /* OTPVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1895A64429375F7B00FAD672 /* OTPVerifyViewController.swift */; };
 		1896876F28C76F8E000EF347 /* ResetWifiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */; };
 		1896A367291A819C00A4AA57 /* ProductManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896A366291A819C00A4AA57 /* ProductManualViewController.swift */; };
 		1896E9092937313800AE77CF /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1896E9082937313800AE77CF /* CreateAccountViewController.swift */; };
 		189793C42924F57300AD0320 /* detailResolveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189793C32924F57300AD0320 /* detailResolveViewController.swift */; };
+		18992F002988FC01009E6082 /* CallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18992EFF2988FC01009E6082 /* CallingViewController.swift */; };
 		1899F38428F6A263007CED70 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1899F38328F6A263007CED70 /* Reachability.swift */; };
 		189B30A22911058E00BC9721 /* wifi.gif in Resources */ = {isa = PBXBuildFile; fileRef = 189B30A12911058E00BC9721 /* wifi.gif */; };
 		189B30A42911202000BC9721 /* d2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 189B30A32911201F00BC9721 /* d2.gif */; };
@@ -50,6 +54,7 @@
 		18A3E461297FB50600FB0837 /* CustommsgtblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */; };
 		18A3E462297FB50600FB0837 /* CustommsgtblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */; };
 		18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */; };
+		18B12DCD2987DADB0091B462 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B12DCC2987DADB0091B462 /* CallManager.swift */; };
 		18B36C9A295966D20057779D /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C99295966D20057779D /* SocketIO */; };
 		18B36C9D2959676C0057779D /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C9C2959676C0057779D /* WebRTC */; };
 		18B36CA029596A910057779D /* VdpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B36C9F29596A910057779D /* VdpViewController.swift */; };
@@ -263,11 +268,15 @@
 		187F70622869906400CE4620 /* ControllerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerListViewController.swift; sourceTree = "<group>"; };
 		187F70662869C60D00CE4620 /* ControllrTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllrTableViewCell.swift; sourceTree = "<group>"; };
 		187FA68D286D687F00332C9D /* DeviceSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSettingViewController.swift; sourceTree = "<group>"; };
+		1884CE5B298CDB7000832D41 /* SpeakerboxCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerboxCallManager.swift; sourceTree = "<group>"; };
+		1884CE5D298CDC1600832D41 /* ProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDelegate.swift; sourceTree = "<group>"; };
+		1884CE5F298CE9DC00832D41 /* SpeakerboxCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerboxCall.swift; sourceTree = "<group>"; };
 		1895A64429375F7B00FAD672 /* OTPVerifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPVerifyViewController.swift; sourceTree = "<group>"; };
 		1896876E28C76F8E000EF347 /* ResetWifiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetWifiViewController.swift; sourceTree = "<group>"; };
 		1896A366291A819C00A4AA57 /* ProductManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManualViewController.swift; sourceTree = "<group>"; };
 		1896E9082937313800AE77CF /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		189793C32924F57300AD0320 /* detailResolveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailResolveViewController.swift; sourceTree = "<group>"; };
+		18992EFF2988FC01009E6082 /* CallingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingViewController.swift; sourceTree = "<group>"; };
 		1899F38328F6A263007CED70 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		189B30A12911058E00BC9721 /* wifi.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = wifi.gif; path = ../../../../../../Downloads/wifi.gif; sourceTree = "<group>"; };
 		189B30A32911201F00BC9721 /* d2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = d2.gif; path = "../../../../../../Documents/deft-swift-master/d2.gif"; sourceTree = "<group>"; };
@@ -290,6 +299,7 @@
 		18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommsgtblCell.swift; sourceTree = "<group>"; };
 		18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustommsgtblCell.xib; sourceTree = "<group>"; };
 		18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineApplinceViewController.swift; sourceTree = "<group>"; };
+		18B12DCC2987DADB0091B462 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
 		18B36C9F29596A910057779D /* VdpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VdpViewController.swift; sourceTree = "<group>"; };
 		18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCCustomFrameCapturer.swift; sourceTree = "<group>"; };
 		18B36CA329596C390057779D /* Modules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
@@ -589,6 +599,7 @@
 				18A3E45D297FAC5900FB0837 /* CustomMsgViewController.swift */,
 				18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */,
 				18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */,
+				18992EFF2988FC01009E6082 /* CallingViewController.swift */,
 			);
 			path = VDP;
 			sourceTree = "<group>";
@@ -702,6 +713,9 @@
 			isa = PBXGroup;
 			children = (
 				3F60E6B0258285B10094823F /* AppDelegate.swift */,
+				1884CE5B298CDB7000832D41 /* SpeakerboxCallManager.swift */,
+				1884CE5D298CDC1600832D41 /* ProviderDelegate.swift */,
+				1884CE5F298CE9DC00832D41 /* SpeakerboxCall.swift */,
 			);
 			path = Miscellaneous;
 			sourceTree = "<group>";
@@ -759,6 +773,7 @@
 				3F96CB3425B5D9E600523116 /* AppHeaderBarView.xib */,
 				187EE9A2286EC46700DB3EC0 /* SharedFunction.swift */,
 				1899F38328F6A263007CED70 /* Reachability.swift */,
+				18B12DCC2987DADB0091B462 /* CallManager.swift */,
 			);
 			path = Miscellaneous;
 			sourceTree = "<group>";
@@ -1234,6 +1249,7 @@
 				189EF204295F14B700DA5EFD /* VDPModul.swift in Sources */,
 				3F60E74D258288640094823F /* ProgressOverlay.swift in Sources */,
 				3F60E75C258288640094823F /* SearchApplianceTableCellView.swift in Sources */,
+				18B12DCD2987DADB0091B462 /* CallManager.swift in Sources */,
 				1896A367291A819C00A4AA57 /* ProductManualViewController.swift in Sources */,
 				3F60E78C258288650094823F /* TvRemoteControl.swift in Sources */,
 				3F60E7A2258288650094823F /* BrightnessPickerView.swift in Sources */,
@@ -1245,6 +1261,7 @@
 				3F60E799258288650094823F /* SearchSensorController.swift in Sources */,
 				3F82C7D325D2851900F47CE8 /* SelectDimTypeTableCellView.swift in Sources */,
 				3F60E742258288640094823F /* DataFetchManager.swift in Sources */,
+				1884CE60298CE9DD00832D41 /* SpeakerboxCall.swift in Sources */,
 				3FDA20CC26354542008C8DB7 /* SelectRemoteKeyTableCellView.swift in Sources */,
 				3F7044CB25A199EE00A967DA /* DataContractManagerFireBase.swift in Sources */,
 				3F60E74F258288640094823F /* Appliance.swift in Sources */,
@@ -1261,6 +1278,7 @@
 				3F60E76D258288640094823F /* SearchAppNotificationTableCellView.swift in Sources */,
 				3F60E791258288650094823F /* SearchRuleController.swift in Sources */,
 				3F60E783258288650094823F /* ProjectorRemoteControl.swift in Sources */,
+				1884CE5C298CDB7000832D41 /* SpeakerboxCallManager.swift in Sources */,
 				3F60E766258288640094823F /* RoomCollectionCellView.swift in Sources */,
 				3F60E76C258288640094823F /* SearchAppNotificationController.swift in Sources */,
 				1899F38428F6A263007CED70 /* Reachability.swift in Sources */,
@@ -1278,6 +1296,7 @@
 				1818345A29261D48007DAAC5 /* TankRegulator.swift in Sources */,
 				3755BACB283684A100D4C956 /* IRFanRemoteControl.swift in Sources */,
 				3F60E6A22582859F0094823F /* DataFetchManagerFireBase.swift in Sources */,
+				18992F002988FC01009E6082 /* CallingViewController.swift in Sources */,
 				3F60E75B258288640094823F /* SearchApplianceLedTableCellView.swift in Sources */,
 				47B23717282459D60048A87D /* OffersTableViewCell.swift in Sources */,
 				3F60E78A258288650094823F /* SearchRemoteController.swift in Sources */,
@@ -1318,6 +1337,7 @@
 				3F60E780258288650094823F /* NewRemoteController.swift in Sources */,
 				3F60E745258288640094823F /* AppSlider.swift in Sources */,
 				3F60E769258288640094823F /* LoginController.swift in Sources */,
+				1884CE5E298CDC1600832D41 /* ProviderDelegate.swift in Sources */,
 				3F60E772258288640094823F /* CircularDirectionButton.swift in Sources */,
 				3FA86E252678E1A100DC80EE /* EnergyDetailsController.swift in Sources */,
 				3F60E79B258288650094823F /* SensorDetailsController.swift in Sources */,
@@ -1576,16 +1596,16 @@
 				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1604,16 +1624,16 @@
 				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;

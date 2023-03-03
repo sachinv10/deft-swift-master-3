@@ -28,7 +28,6 @@ class DashboardController: BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-       
         controllerflag = true
          self.view.backgroundColor = UIColor(named: "SecondaryLightestColor")
         leftmenubtn.setTitle("", for: .normal)
@@ -52,7 +51,7 @@ class DashboardController: BaseController {
              applianceCollectionView.addGestureRecognizer(tapGestureRecognizer)
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
              roomCollectionView.addGestureRecognizer(tapGestureRecognizer1)
-      
+      //  UpdateVdpNotification()
     }
     
     
@@ -111,7 +110,8 @@ class DashboardController: BaseController {
         activatdatalistner()
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         print("appversion=\(appVersion!)")
-        checkApplicationVersion(appversion: appVersion!)
+      //  checkApplicationVersion(appversion: appVersion!)
+      
     }
     func loadcollectionView() {
         
@@ -143,6 +143,56 @@ class DashboardController: BaseController {
         }
       
     }
+    func UpdateVdpNotification(){
+        if let uid = Auth.auth().currentUser?.uid{
+            let ref =    Database.database().reference()
+                .child("vdpDeviceToken")
+                .child(uid)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                
+                ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
+                    let token = CacheManager.shared.fcmToken
+                    var randomNumber = Int(arc4random_uniform(100)) + 1
+                    let data: Optional<Any> = pDataSnapshot.value
+                    let update = parsefunction(data: data)
+                    
+                    if update == false
+                    {
+                      ref.child(String(describing: randomNumber)).setValue(token)
+                    }
+                 }
+            }
+        }
+    }
+    func parsefunction(data: Optional<Any>)-> Bool{
+        var update = false
+        if let dataArray = data as? [Any] {
+            let token = CacheManager.shared.fcmToken
+            for ix in dataArray {
+               print(ix)
+                if  ix as? String == token {
+                    update = true
+                }
+            }
+        }
+        var key = String()
+         if let x = data as? [String: Any]{
+             if x != nil{
+                 let token = CacheManager.shared.fcmToken
+                 for data in x{
+                     if data.value as! String == token{
+                         print(token!)
+                         update = true
+                         key = data.key as! String
+                     }
+                 }
+             }
+         }
+        return update
+    }
+        
+  
     func checkApplicationVersion(appversion: String) {
 
         if let uid = Auth.auth().currentUser?.uid{
@@ -262,6 +312,8 @@ class DashboardController: BaseController {
     func logout() {
         ProgressOverlay.shared.show()
         self.clearAppNotificationSettings(completion: {
+            let vdp = VDPListViewController()
+            vdp.removeTokenFunc()
             DataFetchManager.shared.logout(completion: { (pError) in
                 ProgressOverlay.shared.hide()
                 if pError == nil {
@@ -474,7 +526,7 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
         var aReturnVal :CGSize = CGSize(width: 100.0, height: 100.0)
         
         if pCollectionView.isEqual(self.applianceCollectionView) {
-            aReturnVal = CGSize(width: (self.applianceCollectionView.frame.size.width / 3) - 3, height: (self.applianceCollectionView.frame.size.width / 3) - 2)
+            aReturnVal = CGSize(width: (self.applianceCollectionView.frame.size.width / 3) - self.applianceCollectionView.frame.size.width * 0.01, height: (self.applianceCollectionView.frame.size.height / 2) - self.applianceCollectionView.frame.size.height * 0.02)
         } else if pCollectionView.isEqual(self.roomCollectionView) {
             if UtilityManager.shared.screenSizeType == UtilityManager.ScreenSizeType.small {
                 aReturnVal = CGSize(width: self.roomCollectionView.frame.size.width, height: 210.0)
@@ -485,6 +537,16 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
         
         return aReturnVal
     }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//           // set the minimum spacing between cells in the same row here
+//           return 10
+//       }
+
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+           // set the minimum spacing between rows of cells here
+           return 7
+       }
+
 }
 
 

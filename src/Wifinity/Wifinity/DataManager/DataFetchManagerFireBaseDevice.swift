@@ -90,6 +90,8 @@ extension DataFetchManagerFireBase {
                     aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_" + (pDevice.room?.id ?? "") + "_curtain", forKey: "filter")
                 } else if pDevice.hardwareType == Device.HardwareType.smartSensor
                 || pDevice.hardwareType == Device.HardwareType.smokeDetector
+                || pDevice.hardwareType == Device.HardwareType.smartSensorBattery
+                || pDevice.hardwareType == Device.HardwareType.smokeDetectorBattery
                 || pDevice.hardwareType == Device.HardwareType.thermalSensor
                 || pDevice.hardwareType == Device.HardwareType.uvSensor
                 || pDevice.hardwareType == Device.HardwareType.smartSecuritySensor {
@@ -144,6 +146,16 @@ extension DataFetchManagerFireBase {
                          , Device.HardwareType.ctNineSwitch
                          , Device.HardwareType.ctTenSwitch:
                         break
+                    case  Device.HardwareType.smartSensorBattery:
+                        aDeviceDict.updateValue("NA", forKey: "currentTemp")
+                        aDeviceDict.updateValue("NA", forKey: "lastMotion")
+                        aDeviceDict.updateValue("NA", forKey: "lightIntensity")
+                        aDeviceDict.updateValue(false, forKey: "state")
+                        aDeviceDict.updateValue(0, forKey: "syncToggle")
+                        aDeviceDict.updateValue("NA", forKey: "Batterysevermode")
+                        aDeviceDict.updateValue("NA", forKey: "BatteryPercentage")
+                        let timestamp = NSDate().timeIntervalSince1970
+                        aDeviceDict.updateValue(Int(timestamp * 100), forKey: "lastMotionTimeStamp")
                     case Device.HardwareType.smartSensor:
                         aDeviceDict.updateValue("NA", forKey: "currentTemp")
                         aDeviceDict.updateValue("NA", forKey: "lastMotion")
@@ -158,6 +170,18 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue("NA", forKey: "lightIntensity")
                         aDeviceDict.updateValue(false, forKey: "state")
                         aDeviceDict.updateValue(0, forKey: "syncToggle")
+                    case Device.HardwareType.smokeDetectorBattery:
+                        aDeviceDict.updateValue(200, forKey: "adcThreshold")
+                        aDeviceDict.updateValue(0, forKey: "co2Threshold")
+                        aDeviceDict.updateValue(0, forKey: "lpgThreshold")
+                        aDeviceDict.updateValue(0, forKey: "smokeThreshold")
+                        aDeviceDict.updateValue("NA", forKey: "lightIntensity")
+                        aDeviceDict.updateValue(false, forKey: "state")
+                        aDeviceDict.updateValue(0, forKey: "syncToggle")
+                        aDeviceDict.updateValue("NA", forKey: "Batterysevermode")
+                        aDeviceDict.updateValue("NA", forKey: "BatteryPercentage")
+                        let timestamp = NSDate().timeIntervalSince1970
+                        aDeviceDict.updateValue(Int(timestamp * 100), forKey: "lastMotionTimeStamp")
                     case .Occupy:
                         if let aHardwareType = pDevice.hardwareType {
                             aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "controllerSubType")
@@ -274,7 +298,9 @@ extension DataFetchManagerFireBase {
                              , Device.HardwareType.smokeDetector
                              , Device.HardwareType.thermalSensor
                              , Device.HardwareType.uvSensor
-                             , Device.HardwareType.smartSecuritySensor:
+                             , Device.HardwareType.smartSecuritySensor,
+                              .smartSensorBattery,
+                              .smokeDetectorBattery:
                             aNode = "sensors"
                         case Device.HardwareType.ir:
                             aNode = "remotes"
@@ -320,8 +346,6 @@ extension DataFetchManagerFireBase {
                                 .CSnineSwitch,
                                 .CStenSwitch:
                                 break
-                        
-                      
                         }
                     }
                     

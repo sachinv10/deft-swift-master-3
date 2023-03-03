@@ -27,7 +27,6 @@ class NewDeviceSelectRoomController: BaseController {
         self.roomNameTextField.text = self.device?.room?.title
     }
     
-    
     func gotoSelectRoom() {
         RoutingManager.shared.gotoSelectRoom(controller: self, roomSelectionType: SelectRoomController.SelectionType.room, delegate: self, shouldAllowAddRoom: true, selectedRooms: nil)
     }

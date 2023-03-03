@@ -69,38 +69,38 @@ extension DataFetchManagerFireBase {
                 
                 // Fetch rooms
                 let aRoomDispatchSemaphore = DispatchSemaphore(value: 0)
-                for itemId in (0 ..< ControllerListViewController.contollerDeviceId.count) {
-                    print(itemId)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                        let sd = ControllerListViewController.contollerDeviceId[itemId]
+                //for itemId in (0 ..< ControllerListViewController.contollerDeviceId.count) {
+                   // print(itemId)
+                    DispatchQueue.main.asyncAfter(deadline: .now()){
+                    //    let sd = ControllerListViewController.contollerDeviceId[itemId]
                         //                    self.getDetailontime(id: sd, completion: {(pCompletion) in
                         //                        aRoomArray?.append(pCompletion!)
                         //                    } )
                         self.database
                             .child("devices")
-                            .child(sd)
+                            .queryOrdered(byChild: "uid").queryEqual(toValue: Auth.auth().currentUser?.uid ?? "")
                             .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                                print(pDataSnapshot)
-                                if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
-                                    if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
-                                        aRoomArray?.append(controllerapp)
-                                        print(sd)
+                                if let aDict = pDataSnapshot.value as? [String:Any] {
+                                    for items in aDict{
+                                        if let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: items.value as! Dictionary<String,Any>){
+                                            aRoomArray?.append(controllerapp)
+                                        }
                                     }
                                 }
                                 aRoomDispatchSemaphore.signal()
                             }
-                        self.database
-                            .child("keepAliveTimeStamp")
-                            .child(sd)
-                            .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                                print(pDataSnapshot)
-                                if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
-                                    DeviceSettingViewController.timestamp.append(aDict)
-                                }
-                                aRoomDispatchSemaphore.signal()
-                            }
+//                        self.database
+//                            .child("keepAliveTimeStamp")
+//                            .child(sd)
+//                            .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+//                                print(pDataSnapshot)
+//                                if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+//                                    DeviceSettingViewController.timestamp.append(aDict)
+//                                }
+//                                aRoomDispatchSemaphore.signal()
+//                            }
                     }
-                }
+                //}
                 _ = aRoomDispatchSemaphore.wait(timeout: .distantFuture)
                 
             } catch {
@@ -111,7 +111,7 @@ extension DataFetchManagerFireBase {
                 
             }
             //    pCompletion(anError, aRoomArray)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.requestCount -= 1
                 print("reran.......")
                 pCompletion(anError, aRoomArray)

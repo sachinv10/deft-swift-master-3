@@ -12,6 +12,8 @@ import Foundation
 import WebRTC
 import Starscream
 import AVFAudio
+import Firebase
+import FirebaseDatabase
 
 let TAG = "ViewController"
 let AUDIO_TRACK_ID = "101"
@@ -56,32 +58,47 @@ extension VDPListViewController{
         cell.delegate = self
         return cell
     }
-    
+   
     func vdplist(listViewCellplay cell: ListTableViewCell) {
         print("play vdp list")
+        ProgressOverlay.shared.show()
       let vdpmodul = cell.vdpmodul
         vdpId = (vdpmodul?.id)!
         var frames = cell.view.frame
         frames.origin.y = 0.0
         remoteRenderer = RTCEAGLVideoView(frame: frames)
         remoteRenderer.contentMode = .scaleToFill
-     
         cell.self.view.addSubview(remoteRenderer)
         remoteRenderer.addSubview(cell.btnSpeaker)
         remoteRenderer.addSubview(cell.btnpause)
-        remoteRenderer.addSubview(cell.btnExpand)
+      //  remoteRenderer.addSubview(cell.btnExpand)
+        button.frame = cell.nextBtn.frame
         remoteRenderer.addSubview(cell.nextBtn)
-        
         cell.view.addSubview(cell.btnSpeaker)
+        
             myconnectfunc()
             initWebRTC();
         self.configureAudioSession()
         localAudioTrack = peerConnectionFactory.audioTrack(withTrackId: AUDIO_TRACK_ID)
         mediaStream = peerConnectionFactory.mediaStream(withStreamId: LOCAL_MEDIA_STREAM_ID)
         mediaStream.addAudioTrack(localAudioTrack)
-     
     }
     
+    func funcportratemode(cell: ListTableViewCell){
+        let vdpmodul = cell.vdpmodul
+          vdpId = (vdpmodul?.id)!
+          var frames = cell.view.frame
+          frames.origin.y = 0.0
+          remoteRenderer = RTCEAGLVideoView(frame: frames)
+          remoteRenderer.contentMode = .scaleToFill
+       
+          cell.self.view.addSubview(remoteRenderer)
+          remoteRenderer.addSubview(cell.btnSpeaker)
+          remoteRenderer.addSubview(cell.btnpause)
+          remoteRenderer.addSubview(cell.btnExpand)
+          remoteRenderer.addSubview(cell.nextBtn)
+          cell.view.addSubview(cell.btnSpeaker)
+    }
     func vdplist(listViewCellplaySpeker cell: ListTableViewCell) {
        print("output valum = \(rtcAudioSession.outputVolume)")
         if 0.0625 == rtcAudioSession.outputVolume{
@@ -91,6 +108,8 @@ extension VDPListViewController{
             speakerOn()
             cell.btnSpeaker.setImage(UIImage(systemName: "speaker.wave.2.fill"), for: .normal)
         }
+        
+        
 //        if cell.btnSpeaker.currentImage == UIImage(systemName: "speaker.wave.2.fill"){
 //            speakerOff()
 //            cell.btnSpeaker.setImage(UIImage(systemName: "speaker.slash.fill"), for: .normal)
@@ -115,42 +134,48 @@ extension VDPListViewController{
     }
     func vdplist(listViewCellExpand cell: ListTableViewCell) {
         
-        if viewExpand.isHidden{
-             var y = listTableview.frame
-            y.origin.y = 10.0
-            let width =  y.size.width
-            y.size.width = y.size.height
-            y.size.height = width
-            remoteRenderer.frame = y
-            remoteRenderer.center = viewExpand.center
-            viewExpand.isHidden = false
-        
-            viewExpand.addSubview(remoteRenderer)
-            remoteRenderer.addSubview(cell.btnExpand)
-            remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi / 2)
-        
-        }else{
-             viewExpand.isHidden = true
-            var y = cell.view.frame
-             y.origin.y = -15.0
-            let width =  y.size.width
-            y.size.width = y.size.height
-            y.size.height = width
-            remoteRenderer.frame = y
-            remoteRenderer.center = cell.view.center
-            remoteRenderer.addSubview(cell.btnExpand)
-            
-            cell.btnpause.isHidden = true
-            cell.nextBtn.isHidden = true
-            cell.view.addSubview(remoteRenderer)
-            remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi * 2)
-            
-//            viewExpand.isHidden = true
-//            remoteRenderer.addSubview(cell.btnplay)
-//            cell.view.addSubview(remoteRenderer)
+//        if viewExpand.isHidden{
+//            // landscape mode
+//             var y = listTableview.frame
+//            y.origin.y = 0.0
+//            let width =  y.size.width
+//            y.size.width = y.size.height
+//            y.size.height = self.view.frame.width
+//            remoteRenderer.frame = y
+//            cell.view.frame = y
+//            remoteRenderer.center = viewExpand.center
+//            viewExpand.isHidden = false
+//       //     remoteRenderer.addSubview(viewExpandBottom)
+//            viewExpand.addSubview(remoteRenderer)
+//            remoteRenderer.addSubview(cell.btnExpand)
 //            remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi / 2)
-//            listTableview.reloadData()
-        }
+//
+//        }else{
+//          //  portrate mode
+//          //  funcportratemode(cell: cell)
+//             viewExpand.isHidden = true
+//            var y = cell.self.view.frame
+//             y.origin.y = -25.0
+//            let width =  y.size.width
+//            y.size.width = y.size.height
+//            y.size.height = width
+//            remoteRenderer.frame = y
+//            remoteRenderer.center = cell.view.center
+//            cell.btnpause.isHidden = true
+//         //   cell.nextBtn.isHidden = true
+//            cell.view.addSubview(remoteRenderer)
+//            cell.nextBtn.frame = button.frame
+//            let btnf = cell.btnExpand.frame
+//            remoteRenderer.addSubview(cell.nextBtn)
+//            remoteRenderer.addSubview(cell.btnExpand)
+//            remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi * 2)
+//
+////            viewExpand.isHidden = true
+////            remoteRenderer.addSubview(cell.btnplay)
+////            cell.view.addSubview(remoteRenderer)
+////            remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi / 2)
+//            //  listTableview.reloadData()
+//        }
     }
     
     func vdplist(listViewToNextpage cell: ListTableViewCell) {
@@ -207,6 +232,7 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         
         return btn
     }()
+    
     let buttonconnect : UIButton = {
         var btn = UIButton()
         btn.backgroundColor = .red
@@ -216,7 +242,12 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     
     let viewExpand : UIView = {
         var views = UIView()
-       // views.backgroundColor = .gray
+         views.backgroundColor = .gray
+        return views
+    }()
+    let viewExpandBottom : UIView = {
+        var views = UIView()
+         views.backgroundColor = .gray
         return views
     }()
     private var webSocket : URLSessionWebSocketTask?
@@ -226,7 +257,17 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     }
     
     @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var lblDnd: UIButton!
     
+    @IBAction func blbDNDfunc(_ sender: Any) {
+        if lblDnd.currentImage == UIImage(systemName: "bell"){
+            removeTokenFunc()
+             lblDnd.setImage(UIImage(systemName: "bell.slash"), for: .normal)
+        }else{
+            UpdateVdpNotification()
+            lblDnd.setImage(UIImage(systemName: "bell"), for: .normal)
+            }
+    }
     func myconnectfunc()  {
         setupSocket()
         setupSocketEvents()
@@ -245,9 +286,13 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             var y = mainView.frame
             y.origin.y = -10.0
             viewExpand.frame = y
-            
+            y.origin.x = 0
+            y.size.height = 50
+            viewExpandBottom.frame = y
+            viewExpand.addSubview(viewExpandBottom)
             listTableview.addSubview(viewExpand)
             viewExpand.isHidden = true
+            print("tocken=\(String(describing: CacheManager.shared.fcmToken))")
             // play button
     //        myUlsetUp()
     //        myconnectfunc()
@@ -277,7 +322,16 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             super.viewWillAppear(animated)
             appDel.myOrientation = .portrait
             UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+            lblDnd.setTitle("", for: .normal)
             searchVDP()
+            checkTokenFunc(complition: { [self]data in
+                print("token available =\(data)")
+                if data == true{
+                    lblDnd.setImage(UIImage(systemName: "bell"), for: .normal)
+                }else{
+                    lblDnd.setImage(UIImage(systemName: "bell.slash"), for: .normal)
+                }
+            })
         }
     private func routeChange(_ n: Notification) {
      
@@ -396,9 +450,8 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             guard let resultNew = dataInfo as? [String:Any]else{
                 return
             }
-            
             let peer_id = resultNew["peer_id"]  as! String
-            //   let should_create_offer = resultNew["should_create_offer"]  as! Bool
+             //  let should_create_offer = resultNew["should_create_offer"]  as! Bool
             let session_description = resultNew["session_description"]  as? [String:Any]
             if session_description?["type"] as! String == "answer"{
                 print("answer")
@@ -407,9 +460,8 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
                 
             }else if session_description?["type"] as! String == "offer"{
                 print("offer")
-                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 0 )!, sdp: session_description!["sdp"] as! String)
-                // self.sendAnswer()
-                self.onOffer(sdp: sdp)
+//                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 0 )!, sdp: session_description!["sdp"] as! String)
+//                self.onOffer(sdp: sdp)
             }
             print("error session dis=\(arg.debugDescription)")
         }
@@ -753,12 +805,10 @@ extension VDPListViewController{
        remoteRenderView?.delegate = self
        remoteView = UIView()
        remoteView.addSubview(remoteRenderView!)
-       
       
    }
      func setupLocalTracks(){
             self.localVideoTrack = createVideoTrack()
-         
             self.localAudioTrack = createAudioTrack()
     }
     private func createAudioTrack() -> RTCAudioTrack {
@@ -826,9 +876,12 @@ extension VDPListViewController{
 extension VDPListViewController{
     //media stream
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd rtpReceiver: RTCRtpReceiver, streams mediaStreams: [RTCMediaStream]) {
-        print("Audio media stream=\(mediaStreams.first!.audioTracks)")
-        print("Video media stream=\(mediaStreams.first!.videoTracks)")
+        DispatchQueue.main.async {
+            ProgressOverlay.shared.hide()
+        }
         print("did add stream")
+        guard let tracks = mediaStreams.first?.videoTracks.first else{return}
+        let x = tracks
         self.remoteStream = mediaStreams.first
       
         if let track = mediaStreams.first!.videoTracks.first {
@@ -843,7 +896,7 @@ extension VDPListViewController{
             localAudioTrack = track
            
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-               self.speakerOn()
+                self.speakerOn()
                 self.muteAudio()
             }
 
@@ -874,6 +927,26 @@ extension VDPListViewController{
     /** Called when media is received on a new stream from remote peer. */
     public func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream){
         print("add new connection=\(stream.debugDescription)")
+        
+      guard let tracks = stream.videoTracks.first else{return}
+      let x = tracks
+        if let track = stream.videoTracks.first {
+            self.remoteStream = stream
+            remoteVideoTrack = track
+            print("video track faund")
+            remoteVideoTrack.add(remoteRenderer)
+        }
+        if let track = stream.audioTracks.first {
+           // remoteVideoTrack = track
+            print("audio track faund")
+            track.source.volume = 8
+            localAudioTrack = track
+           
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
+               self.speakerOn()
+               self.muteAudio()
+            }
+        }
         
 //          if let track = stream.videoTracks.first {
 //              print("video track faund")
@@ -1030,7 +1103,6 @@ extension VDPListViewController {
             self.rtcAudioSession.lockForConfiguration()
             do {
                  try self.rtcAudioSession.overrideOutputAudioPort(.none)
-                
                 try self.rtcAudioSession.setCategory(AVAudioSession.Category.playAndRecord.rawValue)
                // try self.rtcAudioSession.setMode(AVAudioSession.Mode.voiceChat.rawValue)
                try self.rtcAudioSession.overrideOutputAudioPort(.speaker)
@@ -1044,7 +1116,6 @@ extension VDPListViewController {
                 debugPrint("Error changeing AVAudioSession category: \(error)")
             }
             self.rtcAudioSession.unlockForConfiguration()
-            
           
         }
 }
@@ -1063,4 +1134,111 @@ extension VDPListViewController{
 //        }
     }
 }
- 
+extension VDPListViewController{
+    //update token
+    func UpdateVdpNotification(){
+        if let uid = Auth.auth().currentUser?.uid{
+            let ref =    Database.database().reference()
+                .child("vdpDeviceToken")
+                .child(uid)
+
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()) {
+                
+                ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
+                    let token = CacheManager.shared.fcmToken
+                    let randomNumber = Int(arc4random_uniform(100)) + 1
+                    let data: Optional<Any> = pDataSnapshot.value
+                    let update = parsefunction(data: data)
+                    if update == false
+                    {
+                      ref.child(String(describing: randomNumber)).setValue(token)
+                    }
+                 }
+            }
+        }
+    }
+    
+    func parsefunction(data: Optional<Any>)-> Bool{
+        var update = false
+        if let dataArray = data as? [Any] {
+            let token = CacheManager.shared.fcmToken
+            for ix in dataArray {
+               print(ix)
+                if  ix as? String == token {
+                    update = true
+                }
+            }
+        }
+        return update
+    }
+   //remove token
+    func removeTokenFunc(){
+        if let uid = Auth.auth().currentUser?.uid{
+            let ref =    Database.database().reference()
+                .child("vdpDeviceToken")
+            .child(uid)
+            
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()) {
+                var key = String()
+                ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
+                      let data: Optional<Any> = pDataSnapshot.value
+                    let token = CacheManager.shared.fcmToken
+                    let update = parsefunction(data: data)
+                    let x = data as? [String: Any]
+                    if x != nil{
+                        var update = false
+                        for data in x!{
+                            if data.value as! String == token{
+                                print(token!)
+                                update = true
+                               key = data.key as! String
+                            }
+                        }
+                        if update == false{
+                            print("not found")
+                          //  ref.child(String(describing: randomNumber)).setValue(token)
+                        }else{
+                            print("found =\(key)")
+                            ref.child(key as! String).removeValue()
+                        }
+                    }
+                 }
+            }
+        }
+    }
+    func checkTokenFunc(complition: @escaping(Bool)-> Void){
+        var update = false
+        if let uid = Auth.auth().currentUser?.uid{
+            let ref =    Database.database().reference()
+                .child("vdpDeviceToken")
+            .child(uid)
+      
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()) {
+                var key = String()
+                ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
+                      let data: Optional<Any> = pDataSnapshot.value
+                    let token = CacheManager.shared.fcmToken
+                     let x = data as? [String: Any]
+                    if x != nil{
+                       
+                        for data in x!{
+                            if data.value as! String == token{
+                                print(token!)
+                                update = true
+                               key = data.key as! String
+                            }
+                        }
+                        if update == false{
+                            print("not found")
+                            complition(update)
+                          //  ref.child(String(describing: randomNumber)).setValue(token)
+                        }else{
+                            print("found =\(key)")
+                            complition(update)
+                         }
+                    }
+                }
+            }
+        }
+    }
+}

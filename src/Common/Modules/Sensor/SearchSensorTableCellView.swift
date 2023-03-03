@@ -128,7 +128,7 @@ class SearchSensorTableCellView: UITableViewCell {
             self.onlineIndicatorView.isHidden = true
         }
         self.titleLabel.text = pSensor.title
-        if  pSensor.calibrated == false{
+        if  pSensor.calibrated == false, "Lidar Sensor" == pSensor.controllerType{
             viewCalibrate.isHidden = false
         }else{
             viewCalibrate.isHidden = true
@@ -212,6 +212,9 @@ class SearchSensorTableCellView: UITableViewCell {
         } else {
             self.selectionStyle = .default
             self.disclosureIndicatorImageView.isHidden = false
+            self.syncButton.isHidden = false
+            self.lblIntensity.text = "Light Intensity"
+            self.lblTemperature.text = "Temperature"
             
             let result = pSensor.id!.starts(with: "P001")
             if result{
@@ -247,7 +250,6 @@ class SearchSensorTableCellView: UITableViewCell {
                 }
                  if pSensor.uidAssign != true {
                     viewUidSatus.isHidden = false
-                    print(pSensor.uidAssign)
                     self.textUidstatus.text = "Device installation not done. click fix now to complete installations."
                 }
                 
@@ -267,6 +269,17 @@ class SearchSensorTableCellView: UITableViewCell {
                 self.sirenSwitchContainerView.isHidden = false
                 self.onlineSwitchContainerView.isHidden = true
                 self.actionButtonContainerView.isHidden = false
+         
+                if pSensor.controllerType == "Battery Smoke Detector"{
+                    self.syncButton.isHidden = true
+                    self.sirenSwitchContainerView.isHidden = true
+                    self.lightContainerView.isHidden = false
+                    self.temperatureContainerView.isHidden = false
+                    self.lblIntensity.text = "Battery Mode"
+                    self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode!))"
+                    self.lblTemperature.text = "Battery"
+                    self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage!)) %"
+                }
             } else {
                  if pSensor.hardwareType == Device.HardwareType.smartSecuritySensor {
                      self.lightContainerView.isHidden = true
@@ -285,6 +298,23 @@ class SearchSensorTableCellView: UITableViewCell {
                 self.sirenSwitchContainerView.isHidden = false
                 self.onlineSwitchContainerView.isHidden = true
                 self.actionButtonContainerView.isHidden = false
+                if pSensor.controllerType == "battery smart sensor"{
+                    self.smokeContainerView.isHidden = true
+                    self.co2ContainerView.isHidden = true
+                    self.lpgContainerView.isHidden = true
+                    self.lightSwitchContainerView.isHidden = true
+                    
+                    self.syncButton.isHidden = true
+                    self.sirenSwitchContainerView.isHidden = true
+                    self.lightContainerView.isHidden = false
+                    self.temperatureContainerView.isHidden = false
+                    
+                    self.lblIntensity.text = "Battery Mode"
+                    self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode!))"
+
+                    self.lblTemperature.text = "Battery"
+                    self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage!)) %"
+                }
             }
         }
            
@@ -293,7 +323,6 @@ class SearchSensorTableCellView: UITableViewCell {
     
     @IBOutlet weak var viewCalibrate: UIView!
     @IBAction func funcCalibratebtn(_ sender: Any) {
-       
         self.delegate?.cellView(self)
     }
     @IBOutlet weak var viewUidSatus: UIView!

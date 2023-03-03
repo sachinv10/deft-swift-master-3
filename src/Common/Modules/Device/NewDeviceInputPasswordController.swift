@@ -47,7 +47,6 @@ class NewDeviceInputPasswordController: BaseController {
             self.passwordTextField.isHidden = true
         }
     }
-    
 }
 
 

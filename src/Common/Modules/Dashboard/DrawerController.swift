@@ -56,6 +56,7 @@ class DrawerController: UIViewController {
         }
          self.menus.append(Menu(icon: Menu.TankRegulators.icon, title: Menu.TankRegulators.title, urc: Menu.TankRegulators.urc))
         self.menus.append(Menu(icon: Menu.Schedules.icon, title: Menu.Schedules.title, urc: Menu.Schedules.urc))
+        self.menus.append(Menu(icon: Menu.VDP.icon, title: Menu.VDP.title, urc: Menu.VDP.urc))
         self.menus.append(Menu(icon: Menu.Offline.icon, title: Menu.Offline.title, urc: Menu.Offline.urc))
         self.menus.append(Menu(icon: Menu.Core.icon, title: Menu.Core.title, urc: Menu.Core.urc))
         self.menus.append(Menu(icon: Menu.OfferZone.icon, title: Menu.OfferZone.title, urc: Menu.OfferZone.urc))
@@ -73,7 +74,7 @@ class DrawerController: UIViewController {
             self.menus.append(Menu(icon: Menu.Device.icon, title: Menu.Device.title, urc: Menu.Device.urc))
             self.menus.append(Menu(icon: Menu.Cameras.icon, title: Menu.Cameras.title, urc: Menu.Cameras.urc))
             self.menus.append(Menu(icon: Menu.HelpAndSuppor.icon, title: Menu.HelpAndSuppor.title, urc: Menu.HelpAndSuppor.urc))
-             self.menus.append(Menu(icon: Menu.VDP.icon, title: Menu.VDP.title, urc: Menu.VDP.urc))
+           
 
         } else {
             self.menus.append(Menu(icon: Menu.SearchDevice.icon, title: Menu.SearchDevice.title, urc: Menu.SearchDevice.urc))
@@ -319,7 +320,7 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
         }
         struct VDP {
             static let icon = UIImage(named: "cameras")!
-            static let title = "VDP Camera"
+            static let title = "Video Door Phone"
             static let urc = "VDP_Cameras"
         }
         struct HelpAndSuppor {

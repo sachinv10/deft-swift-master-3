@@ -91,6 +91,7 @@ class ResetAllWifiViewController: BaseController{
         tableview.delegate = self
         tableview.dataSource = self
         lblcontinuebtn.isHidden = true
+        lblcontinuebtn.isHidden = true
     }
     
  

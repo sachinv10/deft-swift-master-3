@@ -64,7 +64,6 @@ class SearchAppNotificationController: BaseController {
         }, appNotificationType: pAppNotificationType, hardwareId: pHardwareId, pageNumber: self.currentPageNumber)
     }
     
-    
     func reloadAllView() {
         if self.appNotifications.count <= 0 {
             self.appNotificationTableView.display(message: "No Notifications Available")
@@ -73,7 +72,6 @@ class SearchAppNotificationController: BaseController {
         }
         self.appNotificationTableView.reloadData()
     }
-    
 }
 
 
@@ -145,7 +143,6 @@ extension SearchAppNotificationController :UITableViewDataSource, UITableViewDel
         if aReturnVal == nil {
             aReturnVal = UITableViewCell()
         }
-        
         return aReturnVal!
     }
     

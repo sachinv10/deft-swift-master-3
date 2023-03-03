@@ -17,23 +17,15 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-
-//let TAG = "ViewController"
-//let AUDIO_TRACK_ID = "101"
-//let LOCAL_MEDIA_STREAM_ID =  "102"
-//protocol WebRTCClientDelegate: AnyObject {
-//    func webRTCClient( didDiscoverLocalCandidate candidate: RTCIceCandidate)
-//    func webRTCClient( didChangeConnectionState state: RTCIceConnectionState)
-//    func webRTCClient( didReceiveData data: Data)
-//}
-class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConnectionDelegate, RTCDataChannelDelegate, RTCVideoViewDelegate,WebRTCClientDelegate{
-    var vdpmodule: VDPModul!
+ 
+class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConnectionDelegate, RTCDataChannelDelegate, RTCVideoViewDelegate,WebRTCClientDelegate{
+    var vdpmodule: VDPModul?
     var mediaStream: RTCMediaStream!
     var remoteAudioTrack: RTCAudioTrack!
     var dataChannel: RTCDataChannel!
     var dataChannelRemote: RTCDataChannel!
     var roomName: String!
-    
+    var id = ""
     //MARK: - Properties
     
     var peerConnectionFactory: RTCPeerConnectionFactory! = nil
@@ -57,27 +49,29 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     private var customFrameCapturer: Bool = false
     weak var delegate: WebRTCClientDelegate?
     let manager = SocketManager(socketURL: URL(string: "https://vdp1.homeonetechnologies.in/")!, config: [.log(false), .compress])
-    // Create a socket.io client with a url string.
-   var sockets: [SocketIOClient]?
+    
     var socket: SocketIOClient? = nil
     var wsServerUrl: String! = nil
     var peerStarted: Bool = false
     
-    @IBOutlet weak var custommsgView: UIView!
-    @IBOutlet weak var missedcallView: UIView!
-    @IBOutlet weak var viewShowvdp: UIView!
-    @IBOutlet weak var lblMute: UIButton!
-    @IBOutlet weak var lblExpand: UIButton!
-    @IBOutlet weak var lblplay: UIButton!
+  
     
+    @IBOutlet weak var expandFooter: UIView!
+    @IBOutlet weak var lblExpand: UIButton!
+    @IBOutlet weak var missedcallView: UIView!
+    @IBOutlet weak var lblMute: UIButton!
+    
+    @IBOutlet weak var viewShowvdp: UIView!
+    @IBOutlet weak var lblexpandbtn: UIButton!
+    @IBOutlet weak var lblspeaker: UIButton!
     //botom line
     
-    @IBOutlet weak var lblDoorLock: UIButton!
     @IBOutlet weak var custommsgNavigatebtn: UIButton!
     @IBOutlet weak var missedCallNevigatebtn: UIButton!
-    @IBOutlet weak var lblspeaker: UIButton!
-    @IBOutlet weak var lblScreenShort: UIButton!
+  
+    
     @IBOutlet weak var lblVideo: UIButton!
+    @IBOutlet weak var lblScreenShort: UIButton!
     @IBOutlet weak var lblVideoRorate: UIButton!
     var database: DatabaseReference!
     // Button
@@ -141,10 +135,21 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         localAudioTrack = peerConnectionFactory.audioTrack(withTrackId: AUDIO_TRACK_ID)
         mediaStream = peerConnectionFactory.mediaStream(withStreamId: LOCAL_MEDIA_STREAM_ID)
         mediaStream.addAudioTrack(localAudioTrack)
-        NotificationCenter.default.addObserver(forName: AVAudioSession.routeChangeNotification, object: nil, queue: nil, using: routeChange)
+        
         viewExpand.frame = CGRect(x: 0, y: 130, width: self.view.frame.width, height: self.view.frame.height * 0.80)
-        viewExpand.isHidden = true
-        myExpandUlsetUp()
+         viewExpand.isHidden = true
+       //  myExpandUlsetUp()
+        vdpmodule = VDPModul()
+        if (socket == nil) {
+            ProgressOverlay.shared.show()
+            myconnectfunc()
+            timestamp()
+
+        }else{
+            socket?.disconnect()
+            socket = nil
+            timer.invalidate()
+        }
         self.view.addSubview(viewExpand)
 //        setupView()
 //        setupLocalTracks()
@@ -165,15 +170,16 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         buttonSpekerOff.frame = CGRect(x: self.view.frame.width/1.02 - 100, y: self.view.frame.height/1.4, width: 100, height: 50)
         self.view.addSubview(buttonSpekerOff)
         buttonSpekerOff.addTarget(self, action: #selector(btnSpekerOff), for: .touchUpInside)
-       
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        UpdateCallStatus()
+      //  ProgressOverlay.shared.show()
     }
     func vdpUisetup(){
-        lblDoorLock.setTitle("", for: .normal)
-        lblplay.setTitle("", for: .normal)
+        lblMenu.setTitle("", for: .normal)
+        lblCallEnd.setTitle("", for: .normal)
+        lblLock.setTitle("", for: .normal)
         lblMute.setTitle("", for: .normal)
         lblExpand.setTitle("", for: .normal)
         
@@ -181,24 +187,19 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
          lblScreenShort.setTitle("", for: .normal)
          lblVideo.setTitle("", for: .normal)
          lblVideoRorate.setTitle("", for: .normal)
-        missedCallNevigatebtn.setTitle("", for: .normal)
-        custommsgNavigatebtn.setTitle("", for: .normal)
-        lblexpandbtn.setTitle("", for: .normal)
-        lblexpandPlaybtn.setTitle("", for: .normal)
+         lblexpandbtn.setTitle("", for: .normal)
+         lblexpandPlaybtn.setTitle("", for: .normal)
          lblexpSpeaker.setTitle("", for: .normal)
          expandFooter.isHidden = true
-        demoview.isHidden = false
+     
         expandFooter.layer.zPosition = 1
         viewShowvdp.layer.zPosition = 0
         buttonMute.isHidden = true
         button.isHidden = true
         buttonSpekerOff.isHidden = true
         buttonconnect.isHidden = true
-        missedcallView.isHidden = true
-        custommsgView.layer.masksToBounds = true
-        custommsgView.layer.cornerRadius = 10
-        missedcallView.layer.cornerRadius = 10
-        missedcallView.layer.masksToBounds = true
+        
+        
         
         lblnightVision.layer.cornerRadius = 10
         lblnightVision.layer.masksToBounds = true
@@ -216,47 +217,26 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         lblblacknWihite.layer.borderWidth = 1
     }
     
+    @IBOutlet weak var lblMenu: UIButton!
+    @IBOutlet weak var lblexpandPlaybtn: UIButton!
     @IBOutlet weak var lblexpSpeaker: UIButton!
-    @IBOutlet weak var expandFooter: UIView!
-    @IBAction func didtappedMute(_ sender: Any) {
+     @IBAction func didtappedMute(_ sender: Any) {
         muttedTapped()
         print("didtapped Mute")
     }
-    @IBAction func didtappedPlay(_ sender: Any) {
-        print("didtapped play")
-        print(socket == nil)
-        
-        if (socket == nil) {
-            lblplay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            lblexpandPlaybtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            print("peerConnection NOT exist!")
-            ProgressOverlay.shared.show()
-            myconnectfunc()
-            timestamp()
-         
-        }else{
-            lblplay.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            lblexpandPlaybtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            socket?.disconnect()
-            socket = nil
-            timer.invalidate()
-        }
-    }
     
-    @IBOutlet weak var demoview: UIView!
     @IBOutlet weak var expandBottomview: UIView!
-    @IBOutlet weak var lblexpandPlaybtn: UIButton!
-    @IBOutlet weak var lblexpandbtn: UIButton!
     
-    @IBAction func lblexpand(_ sender: Any) {
-        print("didtapped Expand second")
+    
+    
+    
+    @IBAction func didtappedMunubtn(_ sender: Any) {
     }
     @IBAction func didtappedExpand(_ sender: Any) {
         print("didtapped Expand")
-      //  demoview.layer.zPosition = 1
         var frame = remoteRenderer.frame
         let w = self.view.frame.width
-        let h =  self.view.frame.height * 0.80
+        let h =  self.view.frame.height * 0.935
         if remoteRenderer.transform == CGAffineTransform(rotationAngle: .pi / 2){
             remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi * 2) //right portrate
             frame.origin.x = 0
@@ -282,20 +262,11 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
          //   expandBottomview.isHidden = true
             viewpause.backgroundColor = .black
             viewMute.isHidden = false
-             custommsgView.isHidden = false
             lblspeaker.isHidden = false
-            lblplay.isHidden = false
+            
             lblExpand.isHidden = false
             remoteRenderer.willRemoveSubview(lblexpandbtn)
-            var frames = lblTime.frame
-            let h = frames.height
-            frames.size.height = frames.width
-            frames.size.width = h
-            frames.origin.y = 7
-            lblTime.frame = frames
-            print(frames)
-            remoteRenderer.addSubview(lblTime)
-          //  lblTime.transform = CGAffineTransform(rotationAngle: 45 * .pi / 180)
+ 
         }else{
             expandFooter.isHidden = false
             expandFooter.addSubview(lblexpSpeaker)
@@ -305,25 +276,14 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
             viewpause.backgroundColor = .clear
           //  viewpause.isHidden = true
             viewMute.isHidden = true
-            custommsgView.isHidden = true
             lblspeaker.isHidden = true
-            lblplay.isHidden = true
+          
             lblExpand.isHidden = true
             let rotation = CGAffineTransform(rotationAngle: .pi / 2)
             lblexpSpeaker.transform = rotation
             lblexpandPlaybtn.transform = rotation
             lblexpandbtn.transform = rotation
-            var frames = lblTime.frame
-            let h = frames.height
-            frames.size.height = frames.width
-            frames.size.width = h
-            frames.origin.y = 7
-             lblTime.frame = frames
-            print(frames)
-           //  lblTime.transform = CGAffineTransform(rotationAngle: 90 * .pi / 180)
-             remoteRenderer.addSubview(lblTime)
-//            remoteRenderer.addSubview(lblexpandPlaybtn)
-           //  remoteRenderer.addSubview(lblexpandbtn)
+ 
             
            
         }
@@ -394,6 +354,8 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     }
     
     
+    @IBOutlet weak var lblLock: UIButton!
+    @IBOutlet weak var lblCallEnd: UIButton!
     @IBOutlet weak var lblblacknWihite: UIButton!
     @IBOutlet weak var lbldefault: UIButton!
     @IBOutlet weak var lblnightVision: UIButton!
@@ -410,14 +372,16 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
                 UIImageWriteToSavedPhotosAlbum(screenshot, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
             }
         }
-
     }
-    @IBAction func didtappedLockUn(_ sender: Any) {
-        PopupManager.shared.displayConfirmation(message: "Would you like to unlock door", description: "", completion: {
-            self.UpdateLock(cmd: "$L2#")
-        })
-      
-   }
+    
+    @IBAction func didtappedCallEnd(_ sender: Any) {
+        socket?.disconnect()
+        DispatchQueue.main.async() {
+            RoutingManager.shared.goBackToDashboard()
+        }
+     
+    }
+    
     @IBAction func didtappedBnW(_ sender: Any) {
         vdpEfectBlacknwhite()
     }
@@ -427,8 +391,10 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     @IBAction func didtappedNightVision(_ sender: Any) {
         vdpEfectNightVision()
     }
-    @IBAction func didtappedCustomMessage(_ sender: Any) {
-        RoutingManager.shared.gotoVDPCustom(controller: self,vdpmodul: vdpmodule)
+     @IBAction func didtappedLock(_ sender: Any) {
+         PopupManager.shared.displayConfirmation(message: "Would you like to unlock door", description: "", completion: {
+             self.UpdateLock(cmd: "$L2#")
+         })
     }
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
@@ -439,9 +405,7 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
             print(url)
         }
     }
-    private func routeChange(_ n: Notification) {
-        
-    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // exit
@@ -484,8 +448,9 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             let date = Date()
             let dateString = dateFormatter.string(from: date)
-               self.lblTime.text = dateString
-               self.lblTime.layer.zPosition = 1
+              // print("date\(dateString)")
+              // self.lblTime.text = dateString
+              // self.lblTime.layer.zPosition = 1
         }
     }
 
@@ -494,26 +459,7 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         return remoteView
     }
     
-    func UpdateLock(cmd: String){
-         let nodeid =  vdpmodule.id
-        let ref = self.database
-                       .child("vdpMessages")
-                       .child(nodeid ?? "")
-                       .child("vdpData")
-                       
-       // let ref = Database.database().reference().child("vdpMessages").child(vdpmodule.id!).child("vdpData")
-        ref.setValue(["message": cmd as Any], withCompletionBlock: {(error, DataSnapshot) in
-            if (error == nil){
-                print("update succesfully")
-            }
-        })
-        ref.setValue(["message": "aa" as Any], withCompletionBlock: {(error, DataSnapshot) in
-            if (error == nil){
-                print("lock update successfully")
-              //  PopupManager.shared.displaySuccess(message: "Message update successfully", description: "")
-            }
-        })
-    }
+    
     private func setupUI(){
         remoteView = UIView()
         let remoteVideoViewContainter = UIView(frame: CGRect(x: 0, y: 100, width: 640, height: 480))
@@ -558,7 +504,7 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         var dic2 = Dictionary<String, Any>()
         var dic1 = Dictionary<String, Any>()
         dic1 = ["whatever-you-want-here" :"stuff"]
-        dic2 = ["channel": vdpmodule.id, "userdata": dic1]
+        dic2 = ["channel": id, "userdata": dic1]
         //V001641534575660
         let jsonData = try! JSONSerialization.data(withJSONObject: dic2, options: [])
         let decoded = String(data: jsonData, encoding: .utf8)!
@@ -619,7 +565,6 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         // working
         socket?.on("removePeer") { (data, ack) in
             guard let dataInfo = data.first else { return }
-            print("remove Peer")
             print("Now this chat has \(dataInfo) users.")
         }
         
@@ -801,8 +746,7 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     }
    
 }
-extension VdpViewController{
-    
+extension CallingViewController{
     func sendOffer() {
         peerConnection = prepareNewConnection();
         peerConnection.offer(for: mediaConstraints) { (RTCSessionDescription, Error) in
@@ -996,7 +940,7 @@ extension VdpViewController{
         remoteRenderView?.frame = remoteView.frame
     }
 }
-extension VdpViewController{
+extension CallingViewController{
     func videoView(_ videoView: RTCVideoRenderer, didChangeVideoSize size: CGSize) {
         let isLandScape = size.width < size.height
         var renderView: RTCEAGLVideoView?
@@ -1029,68 +973,38 @@ extension VdpViewController{
     }
 }
 //MARK: - RTCPeerConnectionDelegate - begin
-extension VdpViewController{
+extension CallingViewController{
     //media stream
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd rtpReceiver: RTCRtpReceiver, streams mediaStreams: [RTCMediaStream]) {
-        DispatchQueue.main.async{
+        DispatchQueue.main.async {
             ProgressOverlay.shared.hide()
         }
-         print("media stream id = \(mediaStreams.first?.streamId)")
-         guard let tracks = mediaStreams.first?.videoTracks.first else{return}
-         let x = tracks
-        print("media track id = \(x.trackId)")
-//        print("Audio media stream=\(mediaStreams.first!.audioTracks)")
-//        print("Video media stream=\(mediaStreams.first!.videoTracks)")
-//        print("did add stream= \(mediaStreams.first)")
+        guard let tracks = mediaStreams.first?.videoTracks.first else{return}
+        let x = tracks
+        print("Audio media stream=\(mediaStreams.first?.audioTracks)")
+        print("Video media stream=\(mediaStreams.first?.videoTracks)")
+        print("did add stream= \(mediaStreams.first)")
         self.remoteStream = mediaStreams.first
-
+      
         if let track = mediaStreams.first!.videoTracks.first {
             remoteVideoTrack = track
             print("video track faund")
             remoteVideoTrack.add(remoteRenderer)
-            remoteVideoTrack.add(localRenderView!)
+          //  remoteVideoTrack.add(localRenderView!)
         }
         if let track = mediaStreams.first!.audioTracks.first {
            // remoteVideoTrack = track
             print("audio track faund")
             track.source.volume = 8
             localAudioTrack = track
-
-            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()) {
+           
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                self.speakerOn()
                 self.muteAudio()
             }
         }
     }
     
-//    func peerConnection(_ peerConnection: RTCPeerConnection, didAdd rtpReceiver: RTCRtpReceiver, streams mediaStreams: [RTCMediaStream]) {
-//
-//        print("did add stream")
-//        guard let tracks = mediaStreams.first?.videoTracks.first else{return}
-//        let x = tracks
-//        self.remoteStream = mediaStreams.first
-//
-//        if let track = mediaStreams.first!.videoTracks.first {
-//            remoteVideoTrack = track
-//            print("video track faund")
-//            remoteVideoTrack.add(remoteRenderer)
-//            remoteVideoTrack.add(localRenderView!)
-//        }
-//        if let track = mediaStreams.first!.audioTracks.first {
-//           // remoteVideoTrack = track
-//            print("audio track faund")
-//            track.source.volume = 8
-//            localAudioTrack = track
-//
-//            DispatchQueue.main.asyncAfter(deadline: .now()) {
-//                self.speakerOn()
-//                self.muteAudio()
-//            }
-//
-//        }
-//
-//
-//    }
     
 //    public func dataChannel(_ dataChannel: RTCDataChannel, didReceiveMessageWith buffer: RTCDataBuffer){
 //        print("iets ontvangen\(buffer.debugDescription)");
@@ -1113,16 +1027,21 @@ extension VdpViewController{
     /** Called when media is received on a new stream from remote peer. */
     public func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream){
         print("add new connection=\(stream.debugDescription)")
-         if (peerConnection == nil) {
+        
+//          if let track = stream.videoTracks.first {
+//              print("video track faund")
+//              track.add(remoteRenderView!)
+//          }
+        if (peerConnection == nil) {
             return
         }
         
         if let audioTrack = stream.audioTracks.first{
-            print("New audio track faund")
+            print("audio track faund")
             audioTrack.source.volume = 8
         }
         if (stream.videoTracks.count > 1) {
-            print("new Weird-looking stream: " + stream.description)
+            print("Weird-looking stream: " + stream.description)
             return
         }
     }
@@ -1149,6 +1068,7 @@ extension VdpViewController{
     /** Called any time the IceGatheringState changes. */
     public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState){
         print("didChange=\(newState)")
+        
     }
     
     
@@ -1202,7 +1122,7 @@ extension VdpViewController{
     }
 }
  // MARK:- Audio control
-extension VdpViewController {
+extension CallingViewController {
     func muteAudio() {
         self.setAudioEnabled(false)
     }
@@ -1284,13 +1204,13 @@ extension VdpViewController {
         }
 }
 extension RTCMTLVideoView {
-    func screenshot() -> UIImage? {
-        let renderer = UIGraphicsImageRenderer(size: bounds.size)
-        let image = renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
-        }
-        return image
-    }
+//    func screenshot() -> UIImage? {
+//        let renderer = UIGraphicsImageRenderer(size: bounds.size)
+//        let image = renderer.image { rendererContext in
+//            layer.render(in: rendererContext.cgContext)
+//        }
+//        return image
+//    }
 //    func takeScreenshot() -> UIImage? {
 //           UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.main.scale)
 //           guard let currentDrawable = self.currentDrawable else { return nil }
@@ -1299,7 +1219,7 @@ extension RTCMTLVideoView {
 //           return image
 //       }
 }
-extension VdpViewController{
+extension CallingViewController{
     func webRTCClient(didDiscoverLocalCandidate candidate: RTCIceCandidate) {
         
     }
@@ -1314,15 +1234,17 @@ extension VdpViewController{
 //        }
     }
 }
-extension VdpViewController{
+extension CallingViewController{
+  
     func vdpEfectNightVision(){
+        vdpmodule = vdpmodule?.clone()
         var nightVisioncmd = ""
-       if vdpmodule.nightVision{
+        if vdpmodule!.nightVision{
              nightVisioncmd = "$V10000000000#"
-           vdpmodule.nightVision = false
+            vdpmodule!.nightVision = false
        }else{
              nightVisioncmd = "$V20000000000#"
-           vdpmodule.nightVision = true
+            vdpmodule!.nightVision = true
        }
         
         UpdateVisionMode(cmd: nightVisioncmd)
@@ -1336,12 +1258,14 @@ extension VdpViewController{
         UpdateVisionMode(cmd: blacknWhitecmd)
     }
     func UpdateVisionMode(cmd: String){
-        let nodeid = vdpmodule.id
-        let ref = self.database
+        print(cmd)
+        let nodeid =  id
+       let ref = self.database
                        .child("messages")
-                       .child(nodeid!)
+                       .child(nodeid)
                        .child("applianceData")
                        
+       // let ref = Database.database().reference().child("vdpMessages").child(vdpmodule.id!).child("vdpData")
         ref.setValue(["message": cmd as Any], withCompletionBlock: {(error, DataSnapshot) in
             if (error == nil){
                 print("update succesfully")
@@ -1350,9 +1274,41 @@ extension VdpViewController{
         ref.setValue(["message": "aa" as Any], withCompletionBlock: {(error, DataSnapshot) in
             if (error == nil){
                 print("Message update successfully")
+              //  PopupManager.shared.displaySuccess(message: "Message update successfully", description: "")
             }
         })
     }
     
-    
+    func UpdateLock(cmd: String){
+        print(cmd)
+        let nodeid =  id
+        let ref = self.database
+                       .child("vdpMessages")
+                       .child(nodeid)
+                       .child("vdpData")
+                       
+       // let ref = Database.database().reference().child("vdpMessages").child(vdpmodule.id!).child("vdpData")
+        ref.setValue(["message": cmd as Any], withCompletionBlock: {(error, DataSnapshot) in
+            if (error == nil){
+                print("update succesfully")
+            }
+        })
+        ref.setValue(["message": "aa" as Any], withCompletionBlock: {(error, DataSnapshot) in
+            if (error == nil){
+                print("lock update successfully")
+              //  PopupManager.shared.displaySuccess(message: "Message update successfully", description: "")
+            }
+        })
+    }
+    func UpdateCallStatus(){
+      
+        let nodeid =  id
+        let ref = self.database
+                       .child("vdpDevices")
+                       .child(nodeid)
+                     
+        ref.updateChildValues(["callStatus":"Received"], withCompletionBlock: { error, datasnapshot in
+            print("call status update")
+        })
+    }
 }

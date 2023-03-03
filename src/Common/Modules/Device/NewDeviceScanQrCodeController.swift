@@ -111,6 +111,7 @@ class NewDeviceScanQrCodeController: BaseController {
                 "C01","C02","C03","C04","C05","C06","C07","C08","C09",
                 "CL",
                 "S00", "S01", "S02", "S03", "S04",
+                "S10","S11",
                 "L",
                 "G",
                 "M00", "M01",

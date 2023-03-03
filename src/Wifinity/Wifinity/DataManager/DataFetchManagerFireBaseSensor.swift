@@ -213,12 +213,16 @@ extension DataFetchManagerFireBase {
                     if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
                         throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
                     }
-                    
+                 //   $M2000#
                     // Send message and reset it
                     var aMessageValue = ""
                     aMessageValue += "$M"
                     aMessageValue += String(format: "%d", pOccupancyState.rawValue)
-                    aMessageValue += "002#"
+                    if pSensor.id?.prefix(3) == "S10" || pSensor.id?.prefix(3) == "S11"{
+                       aMessageValue += "000#"
+                    }else{
+                        aMessageValue += "002#"
+                    }
                     anError = self.sendMessage(aMessageValue, entity: pSensor)
                     if anError != nil {
                         throw anError!
@@ -464,7 +468,44 @@ extension DataFetchManagerFireBase {
         }
         
     }
-    
+    func updateSensorBatteryMode(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, tag: Int) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                // Send message and reset it
+                var aMessageValue = ""
+              
+                if tag == 1{
+                    aMessageValue += "$b100:2700#" // $b100:2700# : Battery saving mode low   45 min
+                }else if tag == 2{
+                    aMessageValue += "$b200:3600#" // $b200:3600# : Battery saving mode medium 60 min
+                }else if tag == 3{
+                    aMessageValue += "$b300:4500#" // $b300:4500# : Battery saving mode extreme 75 min
+                }
+                    
+               
+                anError = self.sendMessage(aMessageValue, entity: pSensor)
+                if anError != nil {
+                    throw anError!
+                }
+            } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError)
+            }
+        }
+        
+    }
     
     func updateSensorMotionLightState(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, lightState pLightState :Sensor.LightState, isSettings pIsSettings :Bool) {
         DispatchQueue.global(qos: .background).async {

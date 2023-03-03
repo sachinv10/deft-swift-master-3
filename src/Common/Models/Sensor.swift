@@ -19,6 +19,8 @@ class Sensor: NSObject {
     var lastOperation :String?
     var peopleCount :Int?
     var lastOperationTime :Double?
+    var Batterysevermode :String?
+    var BatteryPercentage :String?
     var hardwareGeneration :Device.HardwareGeneration?
     
     var hardwareType :Device.HardwareType? {
@@ -100,7 +102,8 @@ class Sensor: NSObject {
         aSensor.smoke = self.smoke
         aSensor.co2 = self.co2
         aSensor.lpg = self.lpg
-        
+        aSensor.Batterysevermode = self.Batterysevermode
+        aSensor.BatteryPercentage = self.BatteryPercentage
         return aSensor
     }
     

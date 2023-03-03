@@ -24,10 +24,14 @@ class ListTableViewCell: UITableViewCell {
     @IBOutlet weak var btnExpand: UIButton!
     @IBOutlet weak var btnpause: UIButton!
     @IBOutlet weak var btnSpeaker: UIButton!
+    @IBOutlet weak var lblOnline: UILabel!
+    
     weak var delegate: listViewDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        lblOnline.layer.cornerRadius = 5
+        lblOnline.layer.masksToBounds = true
         view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
         nextBtn.setTitle("", for: .normal)
@@ -52,7 +56,11 @@ class ListTableViewCell: UITableViewCell {
         vdpmodul = obj
         vdpmodul?.clone()
         lblName.text = obj.name
-        
+        if obj.online{
+            lblOnline.backgroundColor = .green
+        }else{
+            lblOnline.backgroundColor = .systemRed
+        }
     }
     @IBAction func didTappedPause(_ sender: Any) {
         print("didtapped pause")

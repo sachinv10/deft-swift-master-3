@@ -42,7 +42,7 @@ extension NewDeviceConnectDeviceHotspotController {
     
     func gotoNewDeviceConfigureDevice() {
         if let aDevice = self.device {
-            RoutingManager.shared.gotoNewDeviceConfigureDevice(controller: self, selectedDevice: aDevice)
+        RoutingManager.shared.gotoNewDeviceConfigureDevice(controller: self, selectedDevice: aDevice)
         }
     }
     

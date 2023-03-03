@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -13,19 +13,19 @@
         <!--New Device Scan Qr Code Controller-->
         <scene sceneID="R4l-4N-t3D">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceScanQrCodeControllerId" automaticallyAdjustsScrollViewInsets="NO" id="q0m-0l-AaJ" customClass="NewDeviceScanQrCodeController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceScanQrCodeControllerId" automaticallyAdjustsScrollViewInsets="NO" id="q0m-0l-AaJ" customClass="NewDeviceScanQrCodeController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="q7y-Ac-Ys2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDu-nQ-vIO" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDu-nQ-vIO" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="LVU-40-nCn"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3xw-FB-au7" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3xw-FB-au7" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="57" y="105" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="ControlNormalColor"/>
@@ -199,19 +199,19 @@ Scan the QR code provided with the device</string>
         <!--New Device Configure Device Controller-->
         <scene sceneID="Bpy-FA-KVv">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceConfigureDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="Jnw-Xe-Mry" customClass="NewDeviceConfigureDeviceController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceConfigureDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="Jnw-Xe-Mry" customClass="NewDeviceConfigureDeviceController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SUW-Q4-jK8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26E-CH-TFb" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26E-CH-TFb" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="HRY-S8-cd7"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvh-xs-CqZ" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvh-xs-CqZ" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="57" y="105" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="ControlNormalColor"/>
@@ -303,12 +303,12 @@ Scan the QR code provided with the device</string>
         <!--New Device Controller-->
         <scene sceneID="wzc-Bs-MhS">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="fKo-G6-t4F" customClass="NewDeviceController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="fKo-G6-t4F" customClass="NewDeviceController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bg2-Do-hTd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcs-25-UHN" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pcs-25-UHN" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -364,7 +364,7 @@ Scan the QR code provided with the device</string>
         <!--New Device Connect Device Hotspot Controller-->
         <scene sceneID="eo7-iw-nJm">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceConnectDeviceHotspotControllerId" automaticallyAdjustsScrollViewInsets="NO" id="9Le-Br-ThK" customClass="NewDeviceConnectDeviceHotspotController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceConnectDeviceHotspotControllerId" automaticallyAdjustsScrollViewInsets="NO" id="9Le-Br-ThK" customClass="NewDeviceConnectDeviceHotspotController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9q9-Wh-Y41">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -387,7 +387,7 @@ Scan the QR code provided with the device</string>
                                     <action selector="didSelectContinueButton:" destination="9Le-Br-ThK" eventType="touchUpInside" id="nMt-BE-g4v"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIc-8x-iTN" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIc-8x-iTN" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="57" y="105" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="ControlNormalColor"/>
@@ -407,7 +407,7 @@ Scan the QR code provided with the device</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fG-XB-Vvc" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fG-XB-Vvc" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -445,19 +445,19 @@ Scan the QR code provided with the device</string>
         <!--New Device Select Room Controller-->
         <scene sceneID="wEA-fF-Lu8">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceSelectRoomControllerId" automaticallyAdjustsScrollViewInsets="NO" id="yig-13-Rgh" customClass="NewDeviceSelectRoomController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceSelectRoomControllerId" automaticallyAdjustsScrollViewInsets="NO" id="yig-13-Rgh" customClass="NewDeviceSelectRoomController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Juy-yv-d35">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtB-rM-T9t" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FtB-rM-T9t" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="Fqn-ea-eBn"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZ2-O3-Wey" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZ2-O3-Wey" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="57" y="105" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="ControlNormalColor"/>
@@ -537,24 +537,24 @@ Scan the QR code provided with the device</string>
         <!--Select Device Controller-->
         <scene sceneID="mpR-X0-IOl">
             <objects>
-                <viewController storyboardIdentifier="SelectDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="oGB-Jb-8M9" customClass="SelectDeviceController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="oGB-Jb-8M9" customClass="SelectDeviceController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GZc-cA-TAc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owI-0F-B2F" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owI-0F-B2F" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="bgc-wl-P2t"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J8r-fz-vxT" customClass="AppTableView" customModule="DEFT" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J8r-fz-vxT" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="95" width="414" height="767"/>
                                 <color key="backgroundColor" name="PrimaryLightestColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectDeviceTableCellViewId" rowHeight="100" id="Wq7-Sg-4dh" customClass="SelectDeviceTableCellView" customModule="DEFT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectDeviceTableCellViewId" rowHeight="100" id="Wq7-Sg-4dh" customClass="SelectDeviceTableCellView" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wq7-Sg-4dh" id="g6p-57-7BO">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -643,7 +643,7 @@ Scan the QR code provided with the device</string>
         <!--New Device Reconnect Internet Controller-->
         <scene sceneID="HMf-fA-ekr">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceReconnectInternetControllerId" automaticallyAdjustsScrollViewInsets="NO" id="WcB-Ie-Ju6" customClass="NewDeviceReconnectInternetController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceReconnectInternetControllerId" automaticallyAdjustsScrollViewInsets="NO" id="WcB-Ie-Ju6" customClass="NewDeviceReconnectInternetController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qvd-iQ-ZNN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -666,7 +666,7 @@ Scan the QR code provided with the device</string>
                                     <action selector="didSelectContinueButton:" destination="WcB-Ie-Ju6" eventType="touchUpInside" id="lVw-3N-A3Q"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAP-yc-awJ" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAP-yc-awJ" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="57" y="105" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="ControlNormalColor"/>
@@ -686,7 +686,7 @@ Scan the QR code provided with the device</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYL-k4-TcM" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYL-k4-TcM" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -737,7 +737,7 @@ Scan the QR code provided with the device</string>
         <!--New Device Input Password Controller-->
         <scene sceneID="Xrh-x4-Fwl">
             <objects>
-                <viewController storyboardIdentifier="NewDeviceInputPasswordControllerId" automaticallyAdjustsScrollViewInsets="NO" id="q8B-eD-sbY" customClass="NewDeviceInputPasswordController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewDeviceInputPasswordControllerId" automaticallyAdjustsScrollViewInsets="NO" id="q8B-eD-sbY" customClass="NewDeviceInputPasswordController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wKF-sM-fjw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -760,7 +760,7 @@ Scan the QR code provided with the device</string>
                                     <action selector="didSelectContinueButton:" destination="q8B-eD-sbY" eventType="touchUpInside" id="wmX-YZ-QtF"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDV-Kq-yIO" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDV-Kq-yIO" userLabel="breadcrumbView" customClass="AppBreadCrumbView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="57" y="105" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" name="ControlNormalColor"/>
@@ -780,7 +780,7 @@ Scan the QR code provided with the device</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgp-Da-AJb" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgp-Da-AJb" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -830,24 +830,24 @@ Scan the QR code provided with the device</string>
         <!--Search Device Controller-->
         <scene sceneID="QRp-as-YXz">
             <objects>
-                <viewController storyboardIdentifier="SearchDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="DlQ-pS-AQV" customClass="SearchDeviceController" customModule="DEFT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchDeviceControllerId" automaticallyAdjustsScrollViewInsets="NO" id="DlQ-pS-AQV" customClass="SearchDeviceController" customModule="Wifinity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tbQ-Ty-yiG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61V-9K-xCk" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="DEFT" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61V-9K-xCk" userLabel="appHeaderBarView" customClass="AppHeaderBarView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="wzH-eT-wdI"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="23W-ff-js8" customClass="AppTableView" customModule="DEFT" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="23W-ff-js8" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="95" width="414" height="767"/>
                                 <color key="backgroundColor" name="PrimaryLightestColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchDeviceTableCellViewId" id="guZ-C8-Hme" customClass="SearchDeviceTableCellView" customModule="DEFT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="105"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchDeviceTableCellViewId" id="guZ-C8-Hme" customClass="SearchDeviceTableCellView" customModule="Wifinity" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="guZ-C8-Hme" id="hJ7-zb-VRA">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="105"/>
@@ -965,10 +965,10 @@ Scan the QR code provided with the device</string>
             <color red="0.0" green="0.50499999523162842" blue="0.94800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimaryDarkestColor">
-            <color red="0.0" green="0.21699999272823334" blue="0.22100000083446503" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.15299999713897705" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimaryLightestColor">
-            <color red="0.94499999284744263" green="0.9570000171661377" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.95499998331069946" green="0.98400002717971802" blue="0.98400002717971802" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryDarkestColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

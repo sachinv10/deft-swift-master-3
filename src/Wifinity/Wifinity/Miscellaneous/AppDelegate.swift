@@ -12,40 +12,52 @@ import Firebase
 import FirebaseMessaging
 import Messages
 import CallKit
-
-
+import PushKit
+ 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CXProviderDelegate {
+    func providerDidReset(_ provider: CXProvider) {
+        print("provider delegate")
+    }
+    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+        print("call answered")
+    }
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        print("call ended")
+    }
     var window: UIWindow?
     var gcmMessageIDKey = "gcm_msg_key"
     var aUser :User?
+    
+ 
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      //  ProgressOverlay.shared.activityIndicatorViewStyle = UIActivityIndicatorView.Style.whiteLarge
-        
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.error)
-        
          aUser = User()
-
         aUser!.firebaseUserId = UserDefaults.standard.value(forKey: "userId") as? String
     
         if let aUserId =  aUser!.firebaseUserId{
             if let aRootController = UIApplication.shared.keyWindow?.rootViewController {
                 if let aNavController = aRootController as? UINavigationController {
                     if let aLoginController = aNavController.viewControllers.first as? LoginController {
-                        aLoginController.gotochecken()
-                       // aNavController.popToViewController(aLoginController, animated: true)
+                         aLoginController.gotochecken()
+                         aNavController.popToViewController(aLoginController, animated: true)
                     }
                 }
             }
         }
-
+         
+        registerpushkit()
         self.registerForPushNotification()
         if UIApplication.shared.applicationState == .background {
                // App was launched due to Background Fetch event. No need for UI.
                return true
            }
         return true
+    }
+    func registerpushkit(){
+ 
     }
     var whiteOverlay :UIView?
     var orientationLock = UIInterfaceOrientationMask.portrait
@@ -56,27 +68,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-extension AppDelegate :UNUserNotificationCenterDelegate {
-//    func applicationDidEnterBackground(_ application: UIApplication) {
-//
-//    }
-//    func applicationDidEnterBackground(_ application: UIApplication) {
-//      UserDefaults.standard.set(
-//        Date().timeIntervalSince1970,
-//        forKey: appEntereBGKey
-//      )
-//    }
-    
+extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate {
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        print("call changed status: \(call)")
+        print("Call state changed: \(call.hasEnded)")
+    }
+  
     func registerForPushNotification() {
+        
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
         	 Messaging.messaging().isAutoInitEnabled = true
+        let callObserver = CXCallObserver()
+        callObserver.setDelegate(self, queue: nil)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (pGranted, pError) in
             DispatchQueue.main.async {
                 if pGranted {
                     UIApplication.shared.registerForRemoteNotifications()
                     print("Notification access granted")
-                    
+                    let content = UNMutableNotificationContent()
+                    content.sound = UNNotificationSound.default
                 } else {
                     print("Notification access denied")
                     var aMessage = "Failed to get authorization for user notification."
@@ -92,6 +103,8 @@ extension AppDelegate :UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken pDeviceToken: Data) {
         Messaging.messaging().apnsToken = pDeviceToken
+        let token = pDeviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+               print("Device Token: \(token)")
     }
     
     func application(_ pApplication: UIApplication, didFailToRegisterForRemoteNotificationsWithError pError: Error) {
@@ -101,48 +114,43 @@ extension AppDelegate :UNUserNotificationCenterDelegate {
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler pCompletionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        if notification.request.content.categoryIdentifier == "CALL_INCOMING" {
-                   print("incoming call")
-               }
-        pCompletionHandler([[.alert, .sound]])
+        var alertMsg = "Incoming Call"
+//                       var alert: UIAlertView!
+//                       alert = UIAlertView(title: "Incoming Call", message: alertMsg, delegate: nil, cancelButtonTitle: "OK", otherButtonTitles: "Answer")
+//                       alert.show()
+            if #available(iOS 14.0, *) {
+            let callManager = CallManager()
+                if notification.request.content.categoryIdentifier == "incomingCall" {
+                  //  callManager.showNotification()
+                       }
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        
+        pCompletionHandler([[.alert, .sound, .badge]])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("didreceive notification")
-//        if response.notification.request.content.categoryIdentifier == "CALL_INCOMING" {
-//                   // Perform actions for incoming call notifications
-//               }
-//        if response.actionIdentifier == "answerCall" {
-//            // Navigate to the call screen
-//            print("incoming answerCall")
-//            let callViewController = VdpViewController()
-//            let navigationController = window?.rootViewController as? UINavigationController
-//          //  navigationController?.pushViewController(callViewController, animated: true)
-//        } else if response.actionIdentifier == "declineCall" {
-//            // Navigate to the call log screen
-//            print("incoming declineCall")
-//            let callLogViewController = VdpViewController()
-//            let navigationController = window?.rootViewController as? UINavigationController
-//           // navigationController?.pushViewController(callLogViewController, animated: true)
-//        }
-        if response.notification.request.content.categoryIdentifier == "CALL_INCOMING" {
-                  if response.actionIdentifier == "answerCall" {
-                      // Perform actions for answering the call
-                      // You can use CallKit framework to answer the call
-                      let callController = CXCallController()
-                      let answerCallAction = CXAnswerCallAction(call: UUID(uuidString: response.notification.request.identifier)!)
-                      let transaction = CXTransaction(action: answerCallAction)
-                      callController.request(transaction) { error in
-                          if let error = error {
-                              print("Error answering call: \(error)")
-                          } else {
-                              print("Call answered successfully")
-                          }
-                      }
-                  } else if response.actionIdentifier == "declineCall" {
-                      // Perform actions for declining the call
-                  }
-              }
+        print("didreceive call notification")
+
+//        if response.notification.request.content.categoryIdentifier == "incomingCall" {
+//                  if response.actionIdentifier == "answer" {
+//                      let storyboard = UIStoryboard(name: "VDP", bundle: nil)
+//                      let vc = storyboard.instantiateViewController(withIdentifier: "CallingViewController") as! CallingViewController
+//                          vc.id = "V001641534575660"
+//                               let navigationController = window?.rootViewController as? UINavigationController
+//                                navigationController?.pushViewController(vc, animated: true)
+//                  } else if response.actionIdentifier == "reject" {
+//
+//                  }else if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier"{
+//                      let storyboard = UIStoryboard(name: "VDP", bundle: nil)
+//                      let vc = storyboard.instantiateViewController(withIdentifier: "CallingViewController") as! CallingViewController
+//                          vc.id = "V001641534575660"
+//                               let navigationController = window?.rootViewController as? UINavigationController
+//                                navigationController?.pushViewController(vc, animated: true)
+//                  }
+//              }
         completionHandler()
     }
     func application(_ application: UIApplication,
@@ -153,34 +161,41 @@ extension AppDelegate :UNUserNotificationCenterDelegate {
       // TODO: Handle data of notification
 
       // With swizzling disabled you must let Messaging know about the message, for Analytics
-      //  Messaging.messaging().appDidReceiveMessage(userInfo)
+          Messaging.messaging().appDidReceiveMessage(userInfo!)
         
-
       // Print message ID.
-          
+         
           if let messageID = userInfo {
-        print("Message ID: \(messageID)")
-              let callController = CXCallController()
-              let uuid = UUID()
-              let uuidString = uuid.uuidString
-              let uuidd = UUID(uuidString: uuidString)
-              let answerCallAction = CXAnswerCallAction(call: uuidd!)
-              let transaction = CXTransaction(action: answerCallAction)
-              callController.request(transaction) { error in
-                  if let error = error {
-                      print("Error answering call: \(error)")
-                  } else {
-                      print("Call answered successfully")
-                  }
+          print("Message ID: \(messageID)")
+             // let CustomView = CustomView()
+             
+           //   CustomView.setupViews()
+              if #available(iOS 14.0, *) {
+                  let callManager = CallManager()
+                  let uuid = UUID()
+                  
+                  callManager.reportIncommingCall(id: uuid, handel: "VDP Calling", window: window!, vdpid: messageID["hardwareId"] as! String)
+              //   callManager.displayIncomingCallAlert()
+                
+              } else {
+                  // Fallback on earlier versions
               }
       }
-
       // Print full message.
       print(userInfo)
+          print("background process=\(UIBackgroundFetchResult.newData)")
 
       return UIBackgroundFetchResult.newData
     }
+    
+ 
+    func callController(_ callController: CXCallController, didFailWithError error: Error) {
+        print("Error initiating call: \(error)")
+      }
 
+      func callController(_ callController: CXCallController, didChange call: CXCall) {
+        print("Call state changed: \(call.hasEnded)")
+      }
 }
 
  
@@ -190,5 +205,46 @@ extension AppDelegate: MessagingDelegate {
         let aTokenDict = ["token": pFcmToken ?? ""]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: aTokenDict)
         CacheManager.shared.fcmToken = pFcmToken
+    }
+}
+
+ 
+
+class CustomView: UIView {
+
+    let firstButton = UIButton(type: .system)
+    let secondButton = UIButton(type: .system)
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupViews()
+    }
+
+      func setupViews() {
+        addSubview(firstButton)
+        addSubview(secondButton)
+
+        firstButton.translatesAutoresizingMaskIntoConstraints = false
+        secondButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            firstButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            firstButton.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            firstButton.widthAnchor.constraint(equalToConstant: 100),
+            firstButton.heightAnchor.constraint(equalToConstant: 50),
+
+            secondButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            secondButton.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            secondButton.widthAnchor.constraint(equalToConstant: 100),
+            secondButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
+        firstButton.setTitle("Button 1", for: .normal)
+        secondButton.setTitle("Button 2", for: .normal)
     }
 }

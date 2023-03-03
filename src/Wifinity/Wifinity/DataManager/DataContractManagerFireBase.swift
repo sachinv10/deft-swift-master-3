@@ -337,12 +337,7 @@ extension DataContractManagerFireBase {
 
 // Mark:- Controller Setting
 extension DataContractManagerFireBase {
-    
-     
-    
-    
-    
-    
+
     static func devicecontroller(dict pDict :Dictionary<String,Any>) -> ControllerAppliance? {
         var aReturnVal :ControllerAppliance? = nil
         
@@ -507,6 +502,10 @@ extension DataContractManagerFireBase {
             aReturnVal = "smartSensor"
         case Device.HardwareType.smokeDetector:
             aReturnVal = "Smoke Detector"
+        case Device.HardwareType.smartSensorBattery:
+            aReturnVal = "battery smart sensor"
+        case Device.HardwareType.smokeDetectorBattery:
+            aReturnVal = "Battery Smoke Detector"
         case Device.HardwareType.thermalSensor:
             aReturnVal = "Thermal Sensor"
         case Device.HardwareType.uvSensor:
@@ -610,6 +609,10 @@ extension DataContractManagerFireBase {
             aReturnVal = "Smart Sensor"
         case Device.HardwareType.smokeDetector:
             aReturnVal = "Smoke Detector"
+        case Device.HardwareType.smartSensorBattery:
+            aReturnVal = "Smart Sensor Battery"
+        case Device.HardwareType.smokeDetectorBattery:
+            aReturnVal = "Smoke Detector Battery"
         case Device.HardwareType.thermalSensor:
             aReturnVal = "Thermal Sensor"
         case Device.HardwareType.uvSensor:
@@ -1192,6 +1195,13 @@ extension DataContractManagerFireBase {
             if let uidassin = pDict["uidAssign"]{
                 
                 aSensor.uidAssign = uidassin as? Bool
+            }
+            if let aBatteryMode = pDict["Batterysevermode"]{
+                
+                aSensor.Batterysevermode = aBatteryMode as? String
+            }
+            if let BatteryPercentage = pDict["BatteryPercentage"]{
+                aSensor.BatteryPercentage = BatteryPercentage as? String
             }
             if let controller_type = pDict["controllerType"]{
                 

@@ -40,7 +40,6 @@ class NewDeviceConfigureDeviceController: BaseController {
         super.reloadAllData()
     }
     
-    
     private func _configureDevice(device pDevice :Device) {
         let aDevice = pDevice.clone()
         

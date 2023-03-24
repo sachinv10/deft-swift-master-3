@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 import FirebaseAuth
- 
+
 
 
 class EnergyDetailsController: BaseController {
@@ -21,7 +21,7 @@ class EnergyDetailsController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.title = "ENERGY DETAILS"
         self.subTitle = nil
         
@@ -29,12 +29,12 @@ class EnergyDetailsController: BaseController {
         self.webView.scrollView.bounces = false
         
         if let aUserId = self.userId
-           , let aRoomId = self.roomId {
-            #if APP_WIFINITY
+            , let aRoomId = self.roomId {
+#if APP_WIFINITY
             let anEnergyUrl = URL(string: String(format: "http://energy.homeonetechnologies.in/energy/%@/%@", aUserId, aRoomId))
-            #else
+#else
             let anEnergyUrl = URL(string: String(format: "http://energy.homeonetechnologies.in/energy_deft/%@/%@", aUserId, aRoomId))
-            #endif
+#endif
             if let aUrl = anEnergyUrl {
                 self.webView.load(URLRequest(url: aUrl))
             }

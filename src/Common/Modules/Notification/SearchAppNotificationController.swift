@@ -24,7 +24,6 @@ class SearchAppNotificationController: BaseController {
         
         self.title = "NOTIFICATIONS"
         self.subTitle = self.selectedAppNotificationType?.rawValue
-        
         self.appNotificationTableView.tableFooterView = UIView()
         self.appNotificationTableView.delaysContentTouches = false
     }

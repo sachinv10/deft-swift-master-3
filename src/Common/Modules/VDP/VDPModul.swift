@@ -36,5 +36,5 @@ class VDPModul: NSObject {
         return aReturnVal
     }
     
-     
+    
 }

@@ -9,18 +9,18 @@
 import UIKit
 import SwiftUI
 struct CheckBox: View {
-
-  private let checked = Image("checkmark.square.fill")
-  private let unChecked = Image("checkmark.square")
-  @State private var isChecked: Bool = false
-
-  var body: some View {
-      ZStack {
-          isChecked == false ? unChecked : checked
-       }.onTapGesture {
-          isChecked.toggle()
-       }
-   }
+    
+    private let checked = Image("checkmark.square.fill")
+    private let unChecked = Image("checkmark.square")
+    @State private var isChecked: Bool = false
+    
+    var body: some View {
+        ZStack {
+            isChecked == false ? unChecked : checked
+        }.onTapGesture {
+            isChecked.toggle()
+        }
+    }
 }
 class SensorDetailsController: BaseController {
     @IBOutlet weak var motionLightContainerView: UIView!
@@ -47,6 +47,9 @@ class SensorDetailsController: BaseController {
     
     var selectedSensor :Sensor?
     
+    @IBOutlet weak var lblhighbtn: UIButton!
+    @IBOutlet weak var lbllowbtn: UIButton!
+    @IBOutlet weak var sensorSensitivityView: UIStackView!
     @IBOutlet weak var viewbatterySever: UIStackView!
     @IBOutlet weak var lblLowbtn: UIButton!
     @IBOutlet weak var lblhigh: UIButton!
@@ -72,7 +75,7 @@ class SensorDetailsController: BaseController {
             }
         }else if (sender as AnyObject).tag == 3{
             if lblhigh.currentImage == UIImage(systemName: "checkmark.square.fill"){
-               lblhigh.setImage(UIImage(systemName: "square"), for: .normal)
+                lblhigh.setImage(UIImage(systemName: "square"), for: .normal)
             }else{
                 lblhigh.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
                 lblBatterySever.setImage(UIImage(systemName: "square"), for: .normal)
@@ -82,19 +85,40 @@ class SensorDetailsController: BaseController {
         }
     }
     
+    
+    @IBAction func sensitivitySensorUpdate(_ sender: Any) {
+        if (sender as AnyObject).tag == 1{
+            if lbllowbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lbllowbtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
+                updateSensorSensitivityMode(sensor: selectedSensor!, tag: (sender as AnyObject).tag)
+            }
+        }else if (sender as AnyObject).tag == 3{
+            if lblhighbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lblhighbtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lbllowbtn.setImage(UIImage(systemName: "square"), for: .normal)
+                updateSensorSensitivityMode(sensor: selectedSensor!, tag: (sender as AnyObject).tag)
+
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.title = "SENSOR DETAILS"
         self.subTitle = self.selectedSensor?.title
         
-//        self.motionLightContainerView.isHidden = true
-//        self.sirenContainerView.isHidden = true
-//        self.smokeDetectorThresholdContainerView.isHidden = true
-//        self.notificationContainerView.isHidden = true
-//        self.viewbatterySever.isHidden = true
+        //        self.motionLightContainerView.isHidden = true
+        //        self.sirenContainerView.isHidden = true
+        //        self.smokeDetectorThresholdContainerView.isHidden = true
+        //        self.notificationContainerView.isHidden = true
+        //        self.viewbatterySever.isHidden = true
     }
- 
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.motionLightContainerView.isHidden = true
@@ -102,6 +126,8 @@ class SensorDetailsController: BaseController {
         self.smokeDetectorThresholdContainerView.isHidden = true
         self.notificationContainerView.isHidden = true
         self.viewbatterySever.isHidden = true
+        self.sensorSensitivityView.isHidden = true
+        self.lblBatterySever.isHidden = false
     }
     
     override func reloadAllData() {
@@ -143,14 +169,27 @@ class SensorDetailsController: BaseController {
         }
         
         self.sirenContainerView.isHidden = false
-        if selectedSensor?.controllerType == "Battery Smoke Detector"{
-            self.sirenContainerView.isHidden = true
-            self.viewbatterySever.isHidden = false
-        }
-        if selectedSensor?.controllerType == "battery smart sensor"{
+        if selectedSensor?.id?.prefix(3) == "S11"{
             self.sirenContainerView.isHidden = true
             self.viewbatterySever.isHidden = false
             self.motionLightContainerView.isHidden = true
+            self.sensorSensitivityView.isHidden = false
+            self.lblBatterySever.isHidden = true
+            self.lblLowbtn.setTitle("Balanced", for: .normal)
+            self.lbllowbtn.setTitle("Normal", for: .normal)
+            self.lblhighbtn.setTitle("High", for: .normal)
+            batterySeverModeUI(psensor: selectedSensor!)
+            sensitivityModeUpdate(pSensor: selectedSensor!)
+        }
+ 
+        if selectedSensor?.id?.prefix(3) == "S10"{
+            self.sirenContainerView.isHidden = true
+            self.viewbatterySever.isHidden = false
+            self.motionLightContainerView.isHidden = true
+            self.lblLowbtn.setTitle("Eco", for: .normal)
+          
+            // update battery sever mode
+            batterySeverModeUI(psensor: selectedSensor!)
         }
         if self.selectedSensor?.hardwareType == Device.HardwareType.smokeDetector {
             self.sirenSliderContainerView.isHidden = true
@@ -188,7 +227,50 @@ class SensorDetailsController: BaseController {
         self.notificationSubscriptionSwitch.isOn = self.selectedSensor?.notificationSettingsState ?? false
         self.notificationSoundSwitch.isOn = self.selectedSensor?.notificationSoundState ?? false
     }
-    
+    func sensitivityModeUpdate(pSensor: Sensor)  {
+        if pSensor.sensorSensitivity == "Low"{
+            if lbllowbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lbllowbtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
+             }
+        }else if pSensor.sensorSensitivity == "Extreme"{
+            if lblhighbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lblhighbtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lbllowbtn.setImage(UIImage(systemName: "square"), for: .normal)
+             }
+        }
+    }
+    func batterySeverModeUI(psensor: Sensor){
+        if psensor.Batterysevermode == "Eco"{
+            if lblLowbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblLowbtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lblLowbtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lblBatterySever.setImage(UIImage(systemName: "square"), for: .normal)
+                lblhigh.setImage(UIImage(systemName: "square"), for: .normal)
+            }
+        }else if psensor.Batterysevermode == "Balanced"{
+            if lblBatterySever.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblBatterySever.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lblBatterySever.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lblLowbtn.setImage(UIImage(systemName: "square"), for: .normal)
+                lblhigh.setImage(UIImage(systemName: "square"), for: .normal)
+            }
+        }else if  psensor.Batterysevermode == "Ultra"{
+            if lblhigh.currentImage == UIImage(systemName: "checkmark.square.fill"){
+                lblhigh.setImage(UIImage(systemName: "square"), for: .normal)
+            }else{
+                lblhigh.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+                lblBatterySever.setImage(UIImage(systemName: "square"), for: .normal)
+                lblLowbtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }
+        }
+    }
     
     func updateSensorMotionLightState(sensor pSensor :Sensor, lightState pLightState :Sensor.LightState) {
         let aSensor = pSensor.clone()
@@ -213,13 +295,23 @@ class SensorDetailsController: BaseController {
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not update sensor.", description: pError!.localizedDescription)
             } else {
-               
-                self.reloadAllView()
+                
+                //  self.reloadAllView()
             }
         }, sensor: aSensor, tag: tag)
     }
-    
-    
+    func updateSensorSensitivityMode(sensor pSensor :Sensor, tag: Int) {
+        let aSensor = pSensor.clone()
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.updateSensorSensitivityMode(completion: { (pError) in
+            ProgressOverlay.shared.hide()
+            if pError != nil {
+                PopupManager.shared.displayError(message: "Can not update sensor.", description: pError!.localizedDescription)
+            } else {
+                //  self.reloadAllView()
+            }
+        }, sensor: aSensor, tag: tag)
+    }
     func updateSensorMotionLightTimeout(sensor pSensor :Sensor, motionLightTimeout pMotionLightTimeout :Int) {
         let aSensor = pSensor.clone()
         
@@ -327,11 +419,11 @@ extension SensorDetailsController {
         if tag == 1{
             print("low")
             updateSensorBatteryMode(sensor: selectedSensor!, tag: tag)
-    //    $b100:2700# : Battery saving mode low   45 min
+            //    $b100:2700# : Battery saving mode low   45 min
         }else if tag == 2{
             updateSensorBatteryMode(sensor: selectedSensor!, tag: tag)
             print("medium")
-      //  $b200:3600# : Battery saving mode medium 60 min
+            //  $b200:3600# : Battery saving mode medium 60 min
         }else if tag == 3{
             updateSensorBatteryMode(sensor: selectedSensor!, tag: tag)
             print("high")

@@ -12,7 +12,7 @@ import FirebaseAuth
 import WebKit
 
 class ResetWifiViewController: BaseController, WKUIDelegate {
-    var controllerApplince :ControllerAppliance?
+    var controllerApplince :ControllerAppliance!
     @IBOutlet weak var webview2: WKWebView!
     @IBOutlet weak var webvewi: UIView!
     @IBOutlet weak var viewIdPassowrd: UIView!
@@ -42,15 +42,16 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
         myView.layer.borderWidth = 1
         myView.layer.borderColor = UIColor.gray.cgColor
         self.view.addSubview(myView)
-        
     }
     func uiSetup()  {
         lblc_name.layer.borderWidth = 1
         lblc_name.layer.borderColor = UIColor.gray.cgColor
         lblc_name.backgroundColor = UIColor(named: "PrimaryLightestColor")
         lblcontrollerName.text = controllerApplince?.name
-        lblwifiId_pass.text = "2> Once restarted connect to C0656526566565 Wifi, Password: 12345678"
-        if let idd = controllerApplince?.id, let pass = controllerApplince?.wifiPassword {
+        if let idd = controllerApplince.id{
+            lblwifiId_pass.text = "2> Once restarted connect to \(idd) Wifi, Password: 12345678"
+        }
+        if let idd = controllerApplince.id, let pass = controllerApplince.wifiPassword {
             lblwifiId_pass.text = "2> Once restarted connect to \(idd) Wifi, Password: \(pass)"
         }
         viewInstruction.layer.borderWidth = 1
@@ -60,14 +61,17 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
         viewIdPassowrd.layer.borderWidth = 1
         viewIdPassowrd.layer.borderColor = UIColor.gray.cgColor
         viewIdPassowrd.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        
+        self.txtfldSSID.delegate = self
+        self.txtfldPassword.delegate = self
     }
     
     func donefinc()  {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2){
             var dataidpass: [String: AnyHashable] = [String: AnyHashable]()
-            dataidpass.updateValue(self.txtfldPassword.text, forKey: "password")
-            dataidpass.updateValue(self.txtfldSSID.text, forKey: "ssid")
+            dataidpass.updateValue(self.txtfldPassword.text, forKey: "wifiPassword")
+            dataidpass.updateValue(self.txtfldSSID.text, forKey: "wifiSsid")
             var databaseref: DatabaseReference?
             databaseref =  Database.database().reference().child("routerDetails")
                 .child((self.controllerApplince?.id) ?? "")
@@ -78,6 +82,8 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
                     if (aDict["wCommand"] as! Bool != false), (aDict["xCommand"] as! Bool != false){
                         //    update database id and  passwd
                         databaseref?.child("temp").updateChildValues(dataidpass)
+                        Database.database().reference().child("devices").child(self.controllerApplince.id ?? "").updateChildValues(dataidpass)
+
                         PopupManager.shared.displaySuccess(message: "Reset successfully", description: "")
                     }
                 }
@@ -117,4 +123,10 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
         lblnext.setTitle("RELOAD", for: .normal)
         addview()
     }
+}
+extension ResetWifiViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            self.view.endEditing(true)
+            return false
+        }
 }

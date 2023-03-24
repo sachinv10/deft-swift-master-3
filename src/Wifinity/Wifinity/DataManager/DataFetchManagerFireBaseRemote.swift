@@ -253,7 +253,8 @@ extension DataFetchManagerFireBase {
                              if (aDict["wCommand"] as! Bool != false), (aDict["xCommand"] as! Bool != false){
                                 print("true")
                              //    update database id and  passwd
-                                 databaseref?.child("temp").updateChildValues(dataidpass)
+                                 self.database.child("temp").updateChildValues(dataidpass)
+                                 self.database.child("devices").child((pcontroller?.id) ?? "").updateChildValues(dataidpass)
                                  PopupManager.shared.displaySuccess(message: "Reset successfully", description: "")
 
                             }

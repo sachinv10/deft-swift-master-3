@@ -19,6 +19,7 @@ class DeviceSettingViewController: UIViewController {
     static var timestamp = Array<Dictionary<String,Any>>()
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Controller Settings"
         lblbtnback.setTitle("", for: .normal)
         view.backgroundColor = UIColor(named: "PrimaryLightestColor")
         lblHardwareId.text = controllerApplince?.id
@@ -213,7 +214,7 @@ class DeviceSettingViewController: UIViewController {
         self.deleteView.addSubview(myTextFieldpass)
         self.deleteView.addSubview(myTextField)
         
-        btnAthontication.setTitle("Athontication", for: .normal)
+        btnAthontication.setTitle("Authentication", for: .normal)
         btnAthontication.setTitleColor(UIColor.black, for: .normal)
         btnAthontication.frame = CGRect(x: 30, y: 175, width: 130, height: 50)
         btnAthontication.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
@@ -341,9 +342,11 @@ extension DeviceSettingViewController{
         DataFetchManager.shared.deleteController(completion: { (pError) in
         ProgressOverlay.shared.hide()
             if pError != nil {
-                PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
+                PopupManager.shared.displayError(message: "Can not delete controller.", description: pError!.localizedDescription)
             } else {
-                RoutingManager.shared.goBackToDashboard()
+                PopupManager.shared.displayError(message: "Controller deleted", description: "", completion: {
+                    RoutingManager.shared.goBackToDashboard()
+                })
             }
         }, appliance: anAppliance)
         

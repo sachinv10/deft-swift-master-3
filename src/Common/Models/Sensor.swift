@@ -21,6 +21,7 @@ class Sensor: NSObject {
     var lastOperationTime :Double?
     var Batterysevermode :String?
     var BatteryPercentage :String?
+    var sensorSensitivity :String?
     var hardwareGeneration :Device.HardwareGeneration?
     
     var hardwareType :Device.HardwareType? {

@@ -54,6 +54,7 @@
 		18A3E461297FB50600FB0837 /* CustommsgtblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */; };
 		18A3E462297FB50600FB0837 /* CustommsgtblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */; };
 		18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */; };
+		18AF6FAA29BB6634001AF76C /* iphone_marimba_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6FA929BB6634001AF76C /* iphone_marimba_sound.wav */; };
 		18B12DCD2987DADB0091B462 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B12DCC2987DADB0091B462 /* CallManager.swift */; };
 		18B36C9A295966D20057779D /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C99295966D20057779D /* SocketIO */; };
 		18B36C9D2959676C0057779D /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C9C2959676C0057779D /* WebRTC */; };
@@ -299,6 +300,7 @@
 		18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommsgtblCell.swift; sourceTree = "<group>"; };
 		18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustommsgtblCell.xib; sourceTree = "<group>"; };
 		18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineApplinceViewController.swift; sourceTree = "<group>"; };
+		18AF6FA929BB6634001AF76C /* iphone_marimba_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = iphone_marimba_sound.wav; path = ../../../iphone_marimba_sound.wav; sourceTree = "<group>"; };
 		18B12DCC2987DADB0091B462 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
 		18B36C9F29596A910057779D /* VdpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VdpViewController.swift; sourceTree = "<group>"; };
 		18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCCustomFrameCapturer.swift; sourceTree = "<group>"; };
@@ -1027,6 +1029,7 @@
 		3FA221BF27038872006B8680 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				18AF6FA929BB6634001AF76C /* iphone_marimba_sound.wav */,
 				3FA221C027038872006B8680 /* notify_sound.wav */,
 			);
 			path = Resources;
@@ -1212,6 +1215,7 @@
 				3FA86E242678E1A100DC80EE /* Energy.storyboard in Resources */,
 				3F60E77B258288650094823F /* FanRemoteControl.xib in Resources */,
 				3F60E77D258288650094823F /* LedStripRemoteControl.xib in Resources */,
+				18AF6FAA29BB6634001AF76C /* iphone_marimba_sound.wav in Resources */,
 				189B30A22911058E00BC9721 /* wifi.gif in Resources */,
 				3F29A86A25B3F40900F39867 /* Lock.storyboard in Resources */,
 				3F60E779258288640094823F /* DynamicButtonContainerView.xib in Resources */,
@@ -1596,7 +1600,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
@@ -1605,7 +1609,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.4;
+				MARKETING_VERSION = 2.1.7;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1624,7 +1628,7 @@
 				CODE_SIGN_ENTITLEMENTS = Wifinity/Wifinity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LXALYZT777;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Common/ThirdParty/**";
 				INFOPLIST_FILE = Wifinity/Info.plist;
@@ -1633,7 +1637,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.4;
+				MARKETING_VERSION = 2.1.7;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;

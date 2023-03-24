@@ -162,7 +162,8 @@ extension DataContractManagerFireBase {
             }
             
             if let aLastActive = aRoomDict["lastActive"] as? Int {
-                aRoom.lastActiveDate = Date(timeIntervalSince1970: TimeInterval(aLastActive))
+             let xValue = aLastActive / 1000
+               aRoom.lastActiveDate = Date(timeIntervalSince1970: TimeInterval(xValue))
             }
             
             aReturnVal!.append(aRoom)
@@ -1196,11 +1197,16 @@ extension DataContractManagerFireBase {
                 
                 aSensor.uidAssign = uidassin as? Bool
             }
-            if let aBatteryMode = pDict["Batterysevermode"]{
-                
-                aSensor.Batterysevermode = aBatteryMode as? String
+            if let aBatteryMode = pDict["batterySaverMode"]{
+                if aBatteryMode as? String == "1"{
+                    aSensor.Batterysevermode = "Eco"
+                }else if aBatteryMode as? String == "2"{
+                    aSensor.Batterysevermode = "Balanced"
+                }else if aBatteryMode as? String == "3"{
+                    aSensor.Batterysevermode = "Ultra"
+                }
             }
-            if let BatteryPercentage = pDict["BatteryPercentage"]{
+            if let BatteryPercentage = pDict["batteryPercentage"]{
                 aSensor.BatteryPercentage = BatteryPercentage as? String
             }
             if let controller_type = pDict["controllerType"]{
@@ -1215,6 +1221,15 @@ extension DataContractManagerFireBase {
                 
                 aSensor.peopleCount = peopleCount as? Int
             }
+            if let sensitivity = pDict["sensorSensitivity"]{
+                if "1" == sensitivity as! String{
+                    aSensor.sensorSensitivity = "Low"
+                }else if "3" == sensitivity as! String
+                {
+                    aSensor.sensorSensitivity = "Extreme"
+                }
+            }
+            
             if let lastOperationTime :Double = pDict["lastOperationTime"] as? Double{
                 let date = NSDate(timeIntervalSince1970: lastOperationTime / 1000)
                 //Date formatting
@@ -1236,7 +1251,6 @@ extension DataContractManagerFireBase {
             }
             
             aSensor.roomId = pDict["roomId"] as? String
-            
             aSensor.roomTitle = pDict["roomName"] as? String
             
             if let anOccupancyState = pDict["occupancyState"] as? Bool {
@@ -1250,7 +1264,6 @@ extension DataContractManagerFireBase {
             }else{
                 aSensor.calibrated = false
             }
-            
             
             if let aLightState = pDict["motionLightStatus"] as? Bool {
                 aSensor.lightState = aLightState ? Sensor.LightState.on : Sensor.LightState.off
@@ -1354,7 +1367,6 @@ extension DataContractManagerFireBase {
                 aSensor.sirenSettingsState = aSirenState == 2 ? Sensor.SirenState.on : Sensor.SirenState.off
             }
             aSensor.sirenTimeout = pDict["sirenTimeout"] as? Int
-            
             aReturnVal = aSensor
         }
         

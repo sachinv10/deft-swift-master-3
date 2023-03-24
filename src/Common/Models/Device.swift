@@ -89,7 +89,7 @@ class Device: NSObject {
         case ctNineSwitch
         case ctTenSwitch
         
-        case smartSensor // S00 is smart sensor
+        case smartSensor // S10 is smart sensor
         case smokeDetector // S01 is smoke detector
         case thermalSensor // S02 is thermal sensor
         case uvSensor // S03 is UV sensor

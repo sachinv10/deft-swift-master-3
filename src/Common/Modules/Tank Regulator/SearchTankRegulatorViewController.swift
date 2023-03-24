@@ -8,6 +8,8 @@
 
 import UIKit
 import Foundation
+import FirebaseDatabase
+import Firebase
 //import WebRTC
 class SearchTankRegulatorController: BaseController {
     @IBOutlet weak var tankRegulatorTableView: AppTableView!
@@ -16,7 +18,7 @@ class SearchTankRegulatorController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
         self.title = "WATER LEVEL CONTROLLERS"
         self.subTitle = nil
         
@@ -24,7 +26,9 @@ class SearchTankRegulatorController: BaseController {
         self.tankRegulatorTableView.delaysContentTouches = false
     }
     
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        
+       }
     override func reloadAllData() {
         self.tankRegulators.removeAll()
         

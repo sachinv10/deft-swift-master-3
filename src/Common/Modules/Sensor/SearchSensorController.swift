@@ -35,29 +35,29 @@ class SearchSensorController: BaseController {
         activatdatalistner()
         reloadAllData()
         // Add devices battery oprated smoke sensor
-      //  var reff = Database.database().reference().child("devices").child("S010101676531003").setValue(["adcThreshold": 200, "co2Threshold": 5, "controllerType" :"Battery Smoke Detector", "currentTemp": "NA", "filter": "wXxgF8zjX0bNsaavRCQA5UDIowy1_00_smartsensor", "co2":"00000", "id": "S010101676531003", "lastMotion": "NA", "lightIntensity": "NA", "lpg": "00000",  "lpgThreshold": 187, "motionLightStatus" :false, "name" :"Bt Smoke Detector1003", "online": true, "roomId" :"00", "roomName" :"Demo", "sirenStatus": true, "smoke": "00000", "smokeThreshold": 5, "state": true, "syncToggle" : 0, "timeStamp" : 1676533382000, "uid": "wXxgF8zjX0bNsaavRCQA5UDIowy1", "Batterysevermode": "Low","BatteryPercentage": "50"])
-       // S010101676531003
+        //  var reff = Database.database().reference().child("devices").child("S010101676531003").setValue(["adcThreshold": 200, "co2Threshold": 5, "controllerType" :"Battery Smoke Detector", "currentTemp": "NA", "filter": "wXxgF8zjX0bNsaavRCQA5UDIowy1_00_smartsensor", "co2":"00000", "id": "S010101676531003", "lastMotion": "NA", "lightIntensity": "NA", "lpg": "00000",  "lpgThreshold": 187, "motionLightStatus" :false, "name" :"Bt Smoke Detector1003", "online": true, "roomId" :"00", "roomName" :"Demo", "sirenStatus": true, "smoke": "00000", "smokeThreshold": 5, "state": true, "syncToggle" : 0, "timeStamp" : 1676533382000, "uid": "wXxgF8zjX0bNsaavRCQA5UDIowy1", "Batterysevermode": "Low","BatteryPercentage": "50"])
+        // S010101676531003
         
         // Add devices battery oprated smart sensor
-     //   let reff = Database.database().reference().child("devices").child("S0001676628338000").setValue(["alexaMotionEventTimestamp" :1676438026508, "controllerType" : "battery smart sensor", "currentTemp" : "0027",
-//        "filter" : "wXxgF8zjX0bNsaavRCQA5UDIowy1_00_smartsensor",
-//        "id" :"S0001676628338000",
-//        "lastMotion" : "NA",
-//        "lastMotionTimeStamp" : 1676628338000,
-//        "lightIntensity" : "360",
-//        "motionLightStatus" : true,
-//        "name": "Bt Smart Sense8000",
-//        "online" : true,
-//        "roomId": "00",
-//        "roomName" : "Demo",
-//        "sirenStatus" : false,
-//        "state" :false,
-//        "syncToggle" : 0,
-//        "timeStamp": 1676628338000,
-//        "uid":"wXxgF8zjX0bNsaavRCQA5UDIowy1",
-//        "Batterysevermode": "Low",
-//        "BatteryPercentage": "60"
-//        ])
+        //   let reff = Database.database().reference().child("devices").child("S0001676628338000").setValue(["alexaMotionEventTimestamp" :1676438026508, "controllerType" : "battery smart sensor", "currentTemp" : "0027",
+        //        "filter" : "wXxgF8zjX0bNsaavRCQA5UDIowy1_00_smartsensor",
+        //        "id" :"S0001676628338000",
+        //        "lastMotion" : "NA",
+        //        "lastMotionTimeStamp" : 1676628338000,
+        //        "lightIntensity" : "360",
+        //        "motionLightStatus" : true,
+        //        "name": "Bt Smart Sense8000",
+        //        "online" : true,
+        //        "roomId": "00",
+        //        "roomName" : "Demo",
+        //        "sirenStatus" : false,
+        //        "state" :false,
+        //        "syncToggle" : 0,
+        //        "timeStamp": 1676628338000,
+        //        "uid":"wXxgF8zjX0bNsaavRCQA5UDIowy1",
+        //        "Batterysevermode": "Low",
+        //        "BatteryPercentage": "60"
+        //        ])
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -69,10 +69,9 @@ class SearchSensorController: BaseController {
                 .child("devices")
                 .queryOrdered(byChild: "filter")
                 .queryEqual(toValue: aFilter).removeAllObservers()
-                    print("mood lisner dissappear........")
+            print("mood lisner dissappear........")
         }
     }
-    
     
     
     func activatdatalistner()  {
@@ -89,14 +88,14 @@ class SearchSensorController: BaseController {
                     if self.controllerflag == true {
                         self.reloadAllData()
                     }
-            }
+                }
         }
     }
     
     override func reloadAllData() {
         self.sensors.removeAll()
         print("get sensors")
-       // ProgressOverlay.shared.show()
+        // ProgressOverlay.shared.show()
         DataFetchManager.shared.searchSensor(completion: { (pError, pSensorArray) in
             //  ProgressOverlay.shared.hide()
             if pError != nil {
@@ -171,7 +170,6 @@ class SearchSensorController: BaseController {
     
     func updateSensorOccupancyState(sensor pSensor :Sensor, occupancyState pOccupancyState :Sensor.OccupancyState) {
         let aSensor = pSensor.clone()
-        
         ProgressOverlay.shared.show()
         DataFetchManager.shared.updateSensorOccupancyState(completion: { (pError) in
             ProgressOverlay.shared.hide()
@@ -186,15 +184,14 @@ class SearchSensorController: BaseController {
     
     func updateSensorBtnfixNow(sensor pSensor :Sensor) {
         let aSensor = pSensor.clone()
-        
         ProgressOverlay.shared.show()
         DataFetchManager.shared.updateSensorbtnFixNow(completion: { (pError) in
             ProgressOverlay.shared.hide()
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not update sensor.", description: pError!.localizedDescription)
             } else {
-//                pSensor.occupancyState = pOccupancyState
-//                self.reloadAllView()
+                //                pSensor.occupancyState = pOccupancyState
+                //                self.reloadAllView()
             }
         }, sensor: pSensor)
     }
@@ -208,23 +205,21 @@ class SearchSensorController: BaseController {
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not update sensor.", description: pError!.localizedDescription)
             } else {
-//                pSensor.occupancyState = pOccupancyState
-//                self.reloadAllView()
+                //                pSensor.occupancyState = pOccupancyState
+                //                self.reloadAllView()
             }
         }, sensor: pSensor)
     }
     
     func updateCalibrate(sensor pSensor :Sensor) {
         let aSensor = pSensor.clone()
-        
         ProgressOverlay.shared.show()
         DataFetchManager.shared.updateSensorCalibrate(completion: { (pError) in
             ProgressOverlay.shared.hide()
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not update sensor.", description: pError!.localizedDescription)
             } else {
-//                pSensor.occupancyState = pOccupancyState
-//                self.reloadAllView()
+                
             }
         }, sensor: pSensor)
     }

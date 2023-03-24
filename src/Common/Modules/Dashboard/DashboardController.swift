@@ -27,9 +27,9 @@ class DashboardController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         controllerflag = true
-         self.view.backgroundColor = UIColor(named: "SecondaryLightestColor")
+        self.view.backgroundColor = UIColor(named: "SecondaryLightestColor")
         leftmenubtn.setTitle("", for: .normal)
         if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity {
             self.titleLabel.text = "WIFINITY"
@@ -42,22 +42,24 @@ class DashboardController: BaseController {
         self.view.addSubview(self.drawerController.view)
         self.drawerController.didMove(toParent: self)
         self.drawerController.close()
-        print("email=\(UserDefaults.standard.value(forKey: "emailAddress"))")
         self.drawerController.emailAddressLabel.text = UserDefaults.standard.value(forKey: "emailAddress") as? String
-   //    self.drawerController.emailAddressLabel.text = DataFetchManager.shared.loggedInUser?.emailAddress
+        //    self.drawerController.emailAddressLabel.text = DataFetchManager.shared.loggedInUser?.emailAddress
         self.applianceCollectionView.clipsToBounds = true
-      
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
-             applianceCollectionView.addGestureRecognizer(tapGestureRecognizer)
+        applianceCollectionView.addGestureRecognizer(tapGestureRecognizer)
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
-             roomCollectionView.addGestureRecognizer(tapGestureRecognizer1)
-      //  UpdateVdpNotification()
+        roomCollectionView.addGestureRecognizer(tapGestureRecognizer1)
+        //  UpdateVdpNotification()
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        print("appversion=\(appVersion!)")
+        checkApplicationVersion(appversion: appVersion!)
     }
     
     
     @objc func didTapViewmenu(_ sender: UITapGestureRecognizer) {
         customView.isHidden = true
-     }
+    }
     override func didTapView(_ pSender :UITapGestureRecognizer) {
         super.didTapView(pSender)
         
@@ -71,84 +73,79 @@ class DashboardController: BaseController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        DispatchQueue.main.async {
-//        do{
-//        let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        aCollectionViewFlowLayout.scrollDirection = .vertical
-//        aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
-//           aCollectionViewFlowLayout.minimumLineSpacing = 1
-//            aCollectionViewFlowLayout.minimumInteritemSpacing = 1
-//            self.applianceCollectionView.clipsToBounds = true
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
-//            }
-//
-//        self.applianceCollectionView.delaysContentTouches = false
-//
-//        self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
-//        let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        aRoomCollectionViewFlowLayout.scrollDirection = .vertical
-//        aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
-//        aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
-//        aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
-//            self.roomCollectionView.clipsToBounds = true
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//                self.roomCollectionView.collectionViewLayout = aRoomCollectionViewFlowLayout
-//            }
-//        self.roomCollectionView.delaysContentTouches = false
-//        }catch let error{
-//            print(error.localizedDescription)
-//        }
-//      }
+        //        DispatchQueue.main.async {
+        //        do{
+        //        let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
+        //        aCollectionViewFlowLayout.scrollDirection = .vertical
+        //        aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
+        //           aCollectionViewFlowLayout.minimumLineSpacing = 1
+        //            aCollectionViewFlowLayout.minimumInteritemSpacing = 1
+        //            self.applianceCollectionView.clipsToBounds = true
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        //                self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
+        //            }
+        //
+        //        self.applianceCollectionView.delaysContentTouches = false
+        //
+        //        self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
+        //        let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
+        //        aRoomCollectionViewFlowLayout.scrollDirection = .vertical
+        //        aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
+        //        aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
+        //        aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
+        //            self.roomCollectionView.clipsToBounds = true
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        //                self.roomCollectionView.collectionViewLayout = aRoomCollectionViewFlowLayout
+        //            }
+        //        self.roomCollectionView.delaysContentTouches = false
+        //        }catch let error{
+        //            print(error.localizedDescription)
+        //        }
+        //      }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         controllerflag = true
         self.reloadAllData()
         activatdatalistner()
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        print("appversion=\(appVersion!)")
-      //  checkApplicationVersion(appversion: appVersion!)
-      
+        
     }
     func loadcollectionView() {
         
         do{
-        let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
-        aCollectionViewFlowLayout.scrollDirection = .vertical
-        aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
-           aCollectionViewFlowLayout.minimumLineSpacing = 1
+            let aCollectionViewFlowLayout = UICollectionViewFlowLayout()
+            aCollectionViewFlowLayout.scrollDirection = .vertical
+            aCollectionViewFlowLayout.itemSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: self.applianceCollectionView.frame.size.width)
+            aCollectionViewFlowLayout.minimumLineSpacing = 1
             aCollectionViewFlowLayout.minimumInteritemSpacing = 1
             self.applianceCollectionView.clipsToBounds = true
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
             }
-
-        self.applianceCollectionView.delaysContentTouches = false
-        self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
-        let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
-        aRoomCollectionViewFlowLayout.scrollDirection = .vertical
-        aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
-        aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
-        aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
+            
+            self.applianceCollectionView.delaysContentTouches = false
+            self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
+            let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
+            aRoomCollectionViewFlowLayout.scrollDirection = .vertical
+            aRoomCollectionViewFlowLayout.itemSize = CGSize(width: self.roomCollectionView.frame.size.width, height: self.roomCollectionView.frame.size.width)
+            aRoomCollectionViewFlowLayout.minimumLineSpacing = 1
+            aRoomCollectionViewFlowLayout.minimumInteritemSpacing = 1
             self.roomCollectionView.clipsToBounds = true
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.roomCollectionView.collectionViewLayout = aRoomCollectionViewFlowLayout
             }
-        self.roomCollectionView.delaysContentTouches = false
+            self.roomCollectionView.delaysContentTouches = false
         }catch let error{
             print(error.localizedDescription)
         }
-      
     }
     func UpdateVdpNotification(){
         if let uid = Auth.auth().currentUser?.uid{
             let ref =    Database.database().reference()
                 .child("vdpDeviceToken")
                 .child(uid)
-
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 
                 ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
@@ -159,9 +156,9 @@ class DashboardController: BaseController {
                     
                     if update == false
                     {
-                      ref.child(String(describing: randomNumber)).setValue(token)
+                        ref.child(String(describing: randomNumber)).setValue(token)
                     }
-                 }
+                }
             }
         }
     }
@@ -170,48 +167,48 @@ class DashboardController: BaseController {
         if let dataArray = data as? [Any] {
             let token = CacheManager.shared.fcmToken
             for ix in dataArray {
-               print(ix)
+                print(ix)
                 if  ix as? String == token {
                     update = true
                 }
             }
         }
         var key = String()
-         if let x = data as? [String: Any]{
-             if x != nil{
-                 let token = CacheManager.shared.fcmToken
-                 for data in x{
-                     if data.value as! String == token{
-                         print(token!)
-                         update = true
-                         key = data.key as! String
-                     }
-                 }
-             }
-         }
-        return update
-    }
-        
-  
-    func checkApplicationVersion(appversion: String) {
-
-        if let uid = Auth.auth().currentUser?.uid{
-            Database.database().reference().child("appVersion").queryOrdered(byChild: "ios")
-            .observe(DataEventType.childAdded) {(pDataSnapshot) in
-                print("appversion=\(appversion)")
-                print(pDataSnapshot.value!)
-                var versioindic = (pDataSnapshot.value as? Array<String>)
-                if appversion != pDataSnapshot.value! as! String {
-                    print("call to update version")
-                    LocalNotificationManager.shared.scheduleLocalNotification(title: "Update available!", body: "Update the Wifinity pro aplication to enjoy new features", timeInterval: 5)
-                  //  self.UpdateAleart()
+        if let x = data as? [String: Any]{
+            if x != nil{
+                let token = CacheManager.shared.fcmToken
+                for data in x{
+                    if data.value as! String == token{
+                        print(token!)
+                        update = true
+                        key = data.key as! String
+                    }
                 }
             }
+        }
+        return update
+    }
+    
+    
+    func checkApplicationVersion(appversion: String) {
+        
+        if let uid = Auth.auth().currentUser?.uid{
+            Database.database().reference().child("appVersion").queryOrdered(byChild: "ios")
+                .observe(DataEventType.childAdded) {(pDataSnapshot) in
+                    print("appversion=\(appversion)")
+                    print(pDataSnapshot.value!)
+                    var versioindic = (pDataSnapshot.value as? Array<String>)
+                    if appversion != pDataSnapshot.value! as! String {
+                        print("call to update version")
+                        LocalNotificationManager.shared.scheduleLocalNotification(title: "Update available!", body: "Update the Wifinity pro aplication to enjoy new features", timeInterval: 5)
+                        //  self.UpdateAleart()
+                    }
+                }
         }
     }
     
     func UpdateAleart() {
- 
+        
         let alertController = UIAlertController(title: "Update!!!", message: "Newer update available and can be installed from the AppStore", preferredStyle: .alert)
         // Create OK button
         let OKAction = UIAlertAction(title: "Update", style: .default) {
@@ -219,7 +216,7 @@ class DashboardController: BaseController {
             self.updateApptoAppstore()
         }
         alertController.addAction(OKAction)
-       
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
             (action: UIAlertAction!) in
         }
@@ -249,31 +246,31 @@ class DashboardController: BaseController {
         }
     }
     override func reloadAllData() {
-     
+        
         self.appliances.removeAll()
         self.rooms.removeAll()
         self.filteredRooms.removeAll()
         self.roomFilterTextField.text = nil
         
-     //   ProgressOverlay.shared.show()
+        //   ProgressOverlay.shared.show()
         DataFetchManager.shared.dashboardDetails(completion: { (pError, pApplianceArray, pRoomArray) in
-             ProgressOverlay.shared.hide()
+            ProgressOverlay.shared.hide()
             do
             {
-            if pApplianceArray != nil {
-                 self.appliances = try pApplianceArray!
-             }
-            if pRoomArray != nil {
-                self.rooms = pRoomArray!
-            }
+                if pApplianceArray != nil {
+                    self.appliances = try pApplianceArray!
+                }
+                if pRoomArray != nil {
+                    self.rooms = pRoomArray!
+                }
             }catch let error{
                 print(error.localizedDescription)
             }
             self.reloadAllView()
-        
-            })
+            
+        })
     }
-        
+    
     func updateAppliancePowerState(appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         let anAppliance = pAppliance.clone()
         
@@ -308,7 +305,7 @@ class DashboardController: BaseController {
         loadcollectionView()
     }
     
-
+    
     func logout() {
         ProgressOverlay.shared.show()
         self.clearAppNotificationSettings(completion: {
@@ -321,7 +318,7 @@ class DashboardController: BaseController {
                     KeychainManager.shared.remove(valueForKey: "emailAddress")
                     KeychainManager.shared.remove(valueForKey: "password")
                     do {
-                          try Auth.auth().signOut()
+                        try Auth.auth().signOut()
                     } catch let signOutError as NSError {   print ("Error signing out: %@", signOutError)}
                     RoutingManager.shared.goBackToLogin()
                 } else {
@@ -347,14 +344,14 @@ class DashboardController: BaseController {
     var customView = UIView()
     let myFirstButton = UIButton()
     let goodbyButton = UIButton()
-
+    
     @IBAction func btnRightMenuBtn(_ sender: Any) {
         customView.isHidden = false
         customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
         customView.backgroundColor = UIColor.white     //give color to the view
         customView.layer.borderColor = UIColor.gray.cgColor
         customView.layer.cornerRadius = 10
-      //  customView.rightAnchor = self.view.center
+        //  customView.rightAnchor = self.view.center
         myFirstButton.setTitle("Controller Setting", for: .normal)
         myFirstButton.setTitleColor(UIColor.black, for: .normal)
         myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
@@ -366,9 +363,9 @@ class DashboardController: BaseController {
         goodbyButton.frame = CGRect(x: 10, y: 50, width: 180, height: 50)
         goodbyButton.addTarget(self, action: #selector(pressedGoodbye), for: .touchUpInside)
         customView.addSubview(goodbyButton)
-            self.view.addSubview(customView)
+        self.view.addSubview(customView)
     }
-
+    
     @objc func pressed(sender: UIButton!) {
         customView.isHidden = true
         self.didSelectControllerSetthingButton()
@@ -410,31 +407,31 @@ extension DashboardController :DrawerControllerDelegate {
             RoutingManager.shared.gotoSearchLock(controller: self)
         } else if pUrc == DrawerController.Menu.TankRegulators.urc {
             RoutingManager.shared.gotoSearchTankRegulator(controller: self)
-            #if !APP_WIFINITY
-              //   RoutingManager.shared.gotoSearchTankRegulator(controller: self)
-            #endif
+#if !APP_WIFINITY
+            //   RoutingManager.shared.gotoSearchTankRegulator(controller: self)
+#endif
         } else if pUrc == DrawerController.Menu.Schedules.urc {
             RoutingManager.shared.gotoSearchSchedule(controller: self)
         } else if pUrc == DrawerController.Menu.Notifications.urc {
             RoutingManager.shared.gotoSearchAppNotificationType(controller: self)
         } else if pUrc == DrawerController.Menu.Rules.urc {
-            #if !APP_WIFINITY
+#if !APP_WIFINITY
             RoutingManager.shared.gotoRulePortal(controller: self)
-            #endif
+#endif
         } else if pUrc == DrawerController.Menu.Support.urc {
-            #if !APP_WIFINITY
+#if !APP_WIFINITY
             RoutingManager.shared.gotoSupportDetails(controller: self)
-            #endif
+#endif
         } else if pUrc == DrawerController.Menu.Logout.urc {
             self.logout()
         } else if pUrc == DrawerController.Menu.Device.urc {
-            #if APP_WIFINITY
+#if APP_WIFINITY
             RoutingManager.shared.gotoNewDevice(controller: self)
-            #endif
+#endif
         } else if pUrc == DrawerController.Menu.SearchDevice.urc {
-            #if !APP_WIFINITY
+#if !APP_WIFINITY
             RoutingManager.shared.gotoSearchDevice(controller: self)
-            #endif
+#endif
         } else if pUrc == DrawerController.Menu.OfferZone.urc {
             RoutingManager.shared.gotoOfferZone(controller: self)
         } else if pUrc == DrawerController.Menu.Core.urc {
@@ -471,22 +468,22 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     /*
-    func collectionView(_ pCollectionView: UICollectionView, viewForSupplementaryElementOfKind pKind: String, at pIndexPath: IndexPath) -> UICollectionReusableView {
-        var aReturnVal :UICollectionReusableView = UICollectionReusableView()
-        
-        if pKind == UICollectionView.elementKindSectionHeader {
-            let aSectionHeader = pCollectionView.dequeueReusableSupplementaryView(ofKind: pKind, withReuseIdentifier: "DashboardCollectionHeaderViewId", for: pIndexPath) as! DashboardCollectionHeaderView
-            if pCollectionView.isEqual(self.applianceCollectionView) {
-                aSectionHeader.titleLabel.text = "Frequently Operated"
-            } else if pCollectionView.isEqual(self.roomCollectionView) {
-                aSectionHeader.titleLabel.text = "Rooms"
-            }
-            aReturnVal = aSectionHeader
-        }
-        
-        return aReturnVal
-    }
- */
+     func collectionView(_ pCollectionView: UICollectionView, viewForSupplementaryElementOfKind pKind: String, at pIndexPath: IndexPath) -> UICollectionReusableView {
+     var aReturnVal :UICollectionReusableView = UICollectionReusableView()
+     
+     if pKind == UICollectionView.elementKindSectionHeader {
+     let aSectionHeader = pCollectionView.dequeueReusableSupplementaryView(ofKind: pKind, withReuseIdentifier: "DashboardCollectionHeaderViewId", for: pIndexPath) as! DashboardCollectionHeaderView
+     if pCollectionView.isEqual(self.applianceCollectionView) {
+     aSectionHeader.titleLabel.text = "Frequently Operated"
+     } else if pCollectionView.isEqual(self.roomCollectionView) {
+     aSectionHeader.titleLabel.text = "Rooms"
+     }
+     aReturnVal = aSectionHeader
+     }
+     
+     return aReturnVal
+     }
+     */
     
     func collectionView(_ pCollectionView: UICollectionView, cellForItemAt pIndexPath: IndexPath) -> UICollectionViewCell {
         var aReturnVal :UICollectionViewCell?
@@ -516,11 +513,11 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let aReturnVal :CGSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: 50.0)
-        return aReturnVal
-    }
- */
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+     let aReturnVal :CGSize = CGSize(width: self.applianceCollectionView.frame.size.width, height: 50.0)
+     return aReturnVal
+     }
+     */
     
     func collectionView(_ pCollectionView: UICollectionView, layout pCollectionViewLayout: UICollectionViewLayout, sizeForItemAt pIndexPath: IndexPath) -> CGSize {
         var aReturnVal :CGSize = CGSize(width: 100.0, height: 100.0)
@@ -534,19 +531,18 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
                 aReturnVal = CGSize(width: self.roomCollectionView.frame.size.width, height: 160.0)
             }
         }
-        
         return aReturnVal
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//           // set the minimum spacing between cells in the same row here
-//           return 10
-//       }
-
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-           // set the minimum spacing between rows of cells here
-           return 7
-       }
-
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    //           // set the minimum spacing between cells in the same row here
+    //           return 10
+    //       }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        // set the minimum spacing between rows of cells here
+        return 7
+    }
+    
 }
 
 
@@ -579,11 +575,9 @@ extension DashboardController :RoomCollectionCellViewDelegate {
     }
     
     func didSelectControllerSetthingButton() {
-        
-          //  let aSelectedRoom = self.filteredRooms[1]
-          //  RoutingManager.shared.gotoSearchControllerSetting(controller: self, selectedRoom: aSelectedRoom)
+        //  let aSelectedRoom = self.filteredRooms[1]
+        //  RoutingManager.shared.gotoSearchControllerSetting(controller: self, selectedRoom: aSelectedRoom)
         RoutingManager.shared.gotoSearchControllerSetting(controller: self)
-        
     }
     
     func didSelectRemoteButton(_ pSender: RoomCollectionCellView) {
@@ -613,7 +607,6 @@ extension DashboardController :RoomCollectionCellViewDelegate {
             RoutingManager.shared.gotoEnergyDetails(controller: self, userId: Auth.auth().currentUser?.uid ?? "", roomId: aSelectedRoom.id ?? "")
         }
     }
-    
 }
 
 
@@ -644,7 +637,6 @@ extension DashboardController {
             aReturnVal = false
             self.drawerController.open()
         }
-        
         return aReturnVal
     }
     

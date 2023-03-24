@@ -197,8 +197,10 @@ class DataFetchManager: NSObject {
     func updateSensorBatteryMode(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, tag: Int) {
         self.dataFetchManagerFireBase.updateSensorBatteryMode(completion: pCompletion, sensor: pSensor, tag: tag)
     }
-    
-    func updateSensorMotionLightTimeout(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, motionLightTimeout pMotionLightTimeout :Int) {
+    func updateSensorSensitivityMode(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, tag: Int) {
+        self.dataFetchManagerFireBase.updateSensorSensitivityMode(completion: pCompletion, sensor: pSensor, tag: tag)
+    }
+     func updateSensorMotionLightTimeout(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, motionLightTimeout pMotionLightTimeout :Int) {
         self.dataFetchManagerFireBase.updateSensorMotionLightTimeout(completion: pCompletion, sensor: pSensor, motionLightTimeout: pMotionLightTimeout)
     }
     

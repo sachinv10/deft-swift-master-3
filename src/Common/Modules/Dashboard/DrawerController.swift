@@ -309,7 +309,7 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
         }
         
         struct Offline {
-            static let icon = UIImage(named: "offline_icon")!
+            static let icon = UIImage(named: "wifioff")!
             static let title = "Offline Mode"
             static let urc = "Offline"
         }
@@ -319,12 +319,12 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
             static let urc = "Cameras"
         }
         struct VDP {
-            static let icon = UIImage(named: "cameras")!
+            static let icon = UIImage(named: "VDP_icon-01")!
             static let title = "Video Door Phone"
             static let urc = "VDP_Cameras"
         }
         struct HelpAndSuppor {
-            static let icon = UIImage(named: "help_icon")!
+            static let icon = UIImage(named: "technical-support")!
             static let title = "Help And Support"
             static let urc = "HelpAndSupport"
         }

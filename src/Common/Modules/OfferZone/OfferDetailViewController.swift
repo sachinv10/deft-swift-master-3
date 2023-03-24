@@ -52,7 +52,6 @@ class OfferDetailViewController: UIViewController {
                 validTill.text = strDate
             }
         }
-
     }
 
 

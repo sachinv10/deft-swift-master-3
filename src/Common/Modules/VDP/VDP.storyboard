@@ -178,6 +178,9 @@
                                         <rect key="frame" x="177.66666666666669" y="17.666666666666686" width="43" height="35"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="didtappedRecordVideo:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="irP-9L-A7a"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yux-P8-RYz">
                                         <rect key="frame" x="103" y="17.666666666666686" width="45" height="35"/>
@@ -603,6 +606,9 @@
                                                 <rect key="frame" x="19.999999999999993" y="12.666666666666686" width="92.333333333333314" height="45"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="camera.fill" catalog="system" imagePlacement="top" subtitle="Image click"/>
+                                                <connections>
+                                                    <action selector="didtappedScreenShot:" destination="hpb-5N-2gz" eventType="touchUpInside" id="k41-kj-1iM"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4u8-9l-0dz">
                                                 <rect key="frame" x="141.33333333333334" y="11" width="104" height="48"/>
@@ -838,7 +844,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="331.66666666666669" height="57"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NUa-tI-pWp">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NUa-tI-pWp" customClass="AppTableView" customModule="Wifinity" customModuleProvider="target">
                                         <rect key="frame" x="8" y="65" width="374" height="690"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>

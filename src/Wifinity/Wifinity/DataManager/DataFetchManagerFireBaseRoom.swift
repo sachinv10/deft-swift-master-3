@@ -102,13 +102,11 @@ extension DataFetchManagerFireBase {
                     }
                 //}
                 _ = aRoomDispatchSemaphore.wait(timeout: .distantFuture)
-                
             } catch {
                 anError = error
                 pCompletion(anError, aRoomArray)
             }
             if aRoomArray?.count != nil{
-                
             }
             //    pCompletion(anError, aRoomArray)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -130,11 +128,9 @@ extension DataFetchManagerFireBase {
                 print(pDataSnapshot)
                 if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
                     if  let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: aDict){
-                        
                         pCompletion(controllerapp)
                         //  aRoomDispatchSemaphore.signal()
                     }
-                    
                 }
                 aRoomDispatchSemaphore.signal()
             }

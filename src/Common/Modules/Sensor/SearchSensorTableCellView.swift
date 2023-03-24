@@ -110,10 +110,10 @@ class SearchSensorTableCellView: UITableViewCell {
         }else{
             return "\(String(Int(year))) year ago"
         }
-         
+        
     }
     
-   
+    
     @IBOutlet weak var btnfixnow: UIButton!
     
     func load(sensor pSensor :Sensor) {
@@ -215,6 +215,7 @@ class SearchSensorTableCellView: UITableViewCell {
             self.syncButton.isHidden = false
             self.lblIntensity.text = "Light Intensity"
             self.lblTemperature.text = "Temperature"
+            self.lblLastmotionOn.text = "Last Motion On"
             
             let result = pSensor.id!.starts(with: "P001")
             if result{
@@ -237,87 +238,93 @@ class SearchSensorTableCellView: UITableViewCell {
                 if pSensor.lastOperation == "-1"{
                     self.lightValueLabel.text =  "OUT"
                 }else{
-                        self.lightValueLabel.text = "IN"
+                    self.lightValueLabel.text = "IN"
                 }
-               
+                
                 self.lblLastmotionOn.text = "Operation Time:"
                 self.lblTemperature.text = "People Count"
-            
+                
                 self.temperatureValueLabel.text = String(format: ": %d", pSensor.peopleCount!)
                 if pSensor.lastOperationTime! != nil{
-                let day = timeDateComvetor(time: pSensor.lastOperationTime!)
-                self.motionValueLabel.text = day
+                    let day = timeDateComvetor(time: pSensor.lastOperationTime!)
+                    self.motionValueLabel.text = day
                 }
-                 if pSensor.uidAssign != true {
+                if pSensor.uidAssign != true {
                     viewUidSatus.isHidden = false
                     self.textUidstatus.text = "Device installation not done. click fix now to complete installations."
                 }
                 
             }else{
-            
-            if pSensor.hardwareType == Device.HardwareType.smokeDetector {
-                self.lightContainerView.isHidden = true
-                self.motionContainerView.isHidden = true
-                self.temperatureContainerView.isHidden = true
                 
-                self.smokeContainerView.isHidden = false
-                self.co2ContainerView.isHidden = false
-                self.lpgContainerView.isHidden = false
-                
-                self.motionSwitchContainerView.isHidden = true
-                self.lightSwitchContainerView.isHidden = true
-                self.sirenSwitchContainerView.isHidden = false
-                self.onlineSwitchContainerView.isHidden = true
-                self.actionButtonContainerView.isHidden = false
-         
-                if pSensor.controllerType == "Battery Smoke Detector"{
-                    self.syncButton.isHidden = true
-                    self.sirenSwitchContainerView.isHidden = true
-                    self.lightContainerView.isHidden = false
-                    self.temperatureContainerView.isHidden = false
-                    self.lblIntensity.text = "Battery Mode"
-                    self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode!))"
-                    self.lblTemperature.text = "Battery"
-                    self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage!)) %"
-                }
-            } else {
-                 if pSensor.hardwareType == Device.HardwareType.smartSecuritySensor {
-                     self.lightContainerView.isHidden = true
+                if pSensor.hardwareType == Device.HardwareType.smokeDetector ||  pSensor.hardwareType == Device.HardwareType.smokeDetectorBattery {
+                    self.lightContainerView.isHidden = true
+                    self.motionContainerView.isHidden = true
+                    self.temperatureContainerView.isHidden = true
+                    
+                    self.smokeContainerView.isHidden = false
+                    self.co2ContainerView.isHidden = false
+                    self.lpgContainerView.isHidden = false
+                    
+                    self.motionSwitchContainerView.isHidden = true
+                    self.lightSwitchContainerView.isHidden = true
+                    self.sirenSwitchContainerView.isHidden = false
+                    self.onlineSwitchContainerView.isHidden = true
+                    self.actionButtonContainerView.isHidden = false
+                    
+                    if ((pSensor.id?.prefix(3)) == "S11"){
+                        self.syncButton.isHidden = true
+                        self.sirenSwitchContainerView.isHidden = true
+                        self.lightContainerView.isHidden = false
+                        self.temperatureContainerView.isHidden = false
+                        self.motionContainerView.isHidden = false
+                        self.smokeContainerView.isHidden = true
+                        self.co2ContainerView.isHidden = true
+                        self.lpgContainerView.isHidden = true
+                        self.lblIntensity.text = "Battery Mode"
+                        self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode ?? ""))"
+                        self.lblLastmotionOn.text = "Sensitivity"
+                        self.motionValueLabel.text = ":\(pSensor.sensorSensitivity ?? "")"
+                        self.lblTemperature.text = "Battery"
+                        self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage ?? "")) %"
+                        
+                    }
                 } else {
-                    self.lightContainerView.isHidden = false
-                }
-                self.motionContainerView.isHidden = false
-                self.temperatureContainerView.isHidden = false
-                
-                self.smokeContainerView.isHidden = true
-                self.co2ContainerView.isHidden = true
-                self.lpgContainerView.isHidden = true
-                
-                self.motionSwitchContainerView.isHidden = true
-                self.lightSwitchContainerView.isHidden = false
-                self.sirenSwitchContainerView.isHidden = false
-                self.onlineSwitchContainerView.isHidden = true
-                self.actionButtonContainerView.isHidden = false
-                if pSensor.controllerType == "battery smart sensor"{
+                    if pSensor.hardwareType == Device.HardwareType.smartSecuritySensor {
+                        self.lightContainerView.isHidden = true
+                    } else {
+                        self.lightContainerView.isHidden = false
+                    }
+                    self.motionContainerView.isHidden = false
+                    self.temperatureContainerView.isHidden = false
+                    
                     self.smokeContainerView.isHidden = true
                     self.co2ContainerView.isHidden = true
                     self.lpgContainerView.isHidden = true
-                    self.lightSwitchContainerView.isHidden = true
                     
-                    self.syncButton.isHidden = true
-                    self.sirenSwitchContainerView.isHidden = true
-                    self.lightContainerView.isHidden = false
-                    self.temperatureContainerView.isHidden = false
-                    
-                    self.lblIntensity.text = "Battery Mode"
-                    self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode!))"
-
-                    self.lblTemperature.text = "Battery"
-                    self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage!)) %"
+                    self.motionSwitchContainerView.isHidden = true
+                    self.lightSwitchContainerView.isHidden = false
+                    self.sirenSwitchContainerView.isHidden = false
+                    self.onlineSwitchContainerView.isHidden = true
+                    self.actionButtonContainerView.isHidden = false
+                    if ((pSensor.id?.prefix(3)) == "S10"){  // battery smart sensor
+                        self.smokeContainerView.isHidden = true
+                        self.co2ContainerView.isHidden = true
+                        self.lpgContainerView.isHidden = true
+                        self.lightSwitchContainerView.isHidden = true
+                        
+                        self.syncButton.isHidden = true
+                        self.sirenSwitchContainerView.isHidden = true
+                        self.lightContainerView.isHidden = false
+                        self.temperatureContainerView.isHidden = false
+                        
+                        self.lblIntensity.text = "Battery Mode"
+                        self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode ?? ""))"
+                        
+                        self.lblTemperature.text = "Battery"
+                        self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage ?? "")) %"
+                    }
                 }
             }
-        }
-           
         }
     }
     
@@ -332,7 +339,6 @@ class SearchSensorTableCellView: UITableViewCell {
     @IBAction func btnFixnowFunc(_ sender: Any) {
         let sensorvalue = ((sender as AnyObject).tag)!
         self.delegate?.cellViewDidSelectFixnow(sensorvalue)
-        
     }
     @IBOutlet weak var lblLastmotionOn: UILabel!
     

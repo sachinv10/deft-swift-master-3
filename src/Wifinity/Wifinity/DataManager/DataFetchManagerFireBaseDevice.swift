@@ -82,6 +82,8 @@ extension DataFetchManagerFireBase {
                 
                 // Save device
                 var aDeviceDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
+                // save sensor setting
+                var aSensorDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
                 if let aHardwareType = pDevice.hardwareType {
                     aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeDatabaseValue(aHardwareType), forKey: "controllerType")
                 //     aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "type")
@@ -152,10 +154,21 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue("NA", forKey: "lightIntensity")
                         aDeviceDict.updateValue(false, forKey: "state")
                         aDeviceDict.updateValue(0, forKey: "syncToggle")
-                        aDeviceDict.updateValue("NA", forKey: "Batterysevermode")
-                        aDeviceDict.updateValue("NA", forKey: "BatteryPercentage")
+                        aDeviceDict.updateValue("1", forKey: "batterySaverMode")
+                        aDeviceDict.updateValue("90", forKey: "batteryPercentage")
                         let timestamp = NSDate().timeIntervalSince1970
                         aDeviceDict.updateValue(Int(timestamp * 100), forKey: "lastMotionTimeStamp")
+                        
+                        aSensorDict.updateValue("3", forKey: "batterySaverMode")
+                        aSensorDict.updateValue("0010", forKey: "motionTimeOutExtreme")
+                        aSensorDict.updateValue("0030", forKey: "motionTimeOutLow")
+                        aSensorDict.updateValue("0020", forKey: "motionTimeOutMedium")
+                        aSensorDict.updateValue("1200", forKey: "wakeUpTimeExtreme")
+                        aSensorDict.updateValue("2", forKey: "sensorState")
+                        aSensorDict.updateValue("2700", forKey: "wakeUpTime")
+                        aSensorDict.updateValue("4500", forKey: "wakeUpTimeExtreme")
+                        aSensorDict.updateValue("2700", forKey: "wakeUpTimeLow")
+                        aSensorDict.updateValue("3600", forKey: "wakeUpTimeMedium")
                     case Device.HardwareType.smartSensor:
                         aDeviceDict.updateValue("NA", forKey: "currentTemp")
                         aDeviceDict.updateValue("NA", forKey: "lastMotion")
@@ -178,8 +191,9 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue("NA", forKey: "lightIntensity")
                         aDeviceDict.updateValue(false, forKey: "state")
                         aDeviceDict.updateValue(0, forKey: "syncToggle")
-                        aDeviceDict.updateValue("NA", forKey: "Batterysevermode")
-                        aDeviceDict.updateValue("NA", forKey: "BatteryPercentage")
+                        aDeviceDict.updateValue("1", forKey: "batterySaverMode")
+                        aDeviceDict.updateValue("90", forKey: "batteryPercentage")
+                        aDeviceDict.updateValue("3", forKey: "sensorSensitivity")
                         let timestamp = NSDate().timeIntervalSince1970
                         aDeviceDict.updateValue(Int(timestamp * 100), forKey: "lastMotionTimeStamp")
                     case .Occupy:
@@ -387,7 +401,7 @@ extension DataFetchManagerFireBase {
                 || pDevice.hardwareType == Device.HardwareType.smokeDetector
                 || pDevice.hardwareType == Device.HardwareType.thermalSensor
                 || pDevice.hardwareType == Device.HardwareType.uvSensor
-                || pDevice.hardwareType == Device.HardwareType.smartSecuritySensor {
+                || pDevice.hardwareType == Device.HardwareType.smartSecuritySensor{
                     var aSensorSettingsDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
                     aSensorSettingsDict.updateValue(434, forKey: "lightIntensityLimit")
                     aSensorSettingsDict.updateValue(1, forKey: "motionLightState")
@@ -395,7 +409,7 @@ extension DataFetchManagerFireBase {
                     aSensorSettingsDict.updateValue(2, forKey: "motionNotificateState")
                     aSensorSettingsDict.updateValue(1, forKey: "sirenState")
                     aSensorSettingsDict.updateValue(1, forKey: "sirenTimeout")
-                    
+
                     let aSaveSensorDispatchSemaphore = DispatchSemaphore(value: 0)
                     self.database
                         .child("sensorSetting")
@@ -405,6 +419,38 @@ extension DataFetchManagerFireBase {
                             aSaveSensorDispatchSemaphore.signal()
                         })
                     _ = aSaveSensorDispatchSemaphore.wait(timeout: .distantFuture)
+                }
+                if pDevice.hardwareType == Device.HardwareType.smartSensorBattery {
+                    var aSensorSettingsDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
+                    aSensorSettingsDict.updateValue("4500", forKey: "wakeUpTimeExtreme")
+                    aSensorSettingsDict.updateValue("2500", forKey: "wakeUpTimeLow")
+                    aSensorSettingsDict.updateValue("3600", forKey: "wakeUpTimeMedium")
+                    aSensorSettingsDict.updateValue("1", forKey: "sensorState")
+                    aSensorSettingsDict.updateValue("1", forKey: "batterySaverMode")
+                    aSensorSettingsDict.updateValue("0010", forKey: "motionTimeOutExtreme")
+                    aSensorSettingsDict.updateValue("0030", forKey: "motionTimeOutLow")
+                    aSensorSettingsDict.updateValue("0020", forKey: "motionTimeOutMedium")
+                    self.database
+                        .child("sensorSetting")
+                        .child(pDevice.id!)
+                        .setValue(aSensorSettingsDict, withCompletionBlock: { (pError, pDatabaseReference) in
+                            anError = pError
+                        })
+                }else if pDevice.hardwareType == Device.HardwareType.smokeDetectorBattery{
+                    var aSensorSettingsDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
+                    aSensorSettingsDict.updateValue("3", forKey: "batterySaverMode")
+                    aSensorSettingsDict.updateValue("3", forKey: "sensorSensitivity")
+                    aSensorSettingsDict.updateValue("1", forKey: "sensorState")
+                    aSensorSettingsDict.updateValue("0600", forKey: "wakeUpTime")
+                    aSensorSettingsDict.updateValue("1200", forKey: "wakeUpTimeExtreme")
+                    aSensorSettingsDict.updateValue("0600", forKey: "wakeUpTimeLow")
+                    aSensorSettingsDict.updateValue("0900", forKey: "wakeUpTimeMedium")
+                    self.database
+                        .child("sensorSetting")
+                        .child(pDevice.id!)
+                        .setValue(aSensorSettingsDict, withCompletionBlock: { (pError, pDatabaseReference) in
+                            anError = pError
+                        })
                 }
             } catch {
                 anError = error

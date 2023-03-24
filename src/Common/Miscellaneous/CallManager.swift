@@ -35,8 +35,9 @@ class CallManager: NSObject,CXProviderDelegate, CXCallObserverDelegate {
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         print("call answere")
         DispatchQueue.global(qos: .background).async {
-             self.declineCall()
             self.gotoCallingvc()
+           // self.declineCall()
+            
         }
       
          provider.invalidate()
@@ -49,7 +50,7 @@ class CallManager: NSObject,CXProviderDelegate, CXCallObserverDelegate {
         print("call started in proveder")
     }
     
-    func displayIncomingCallAlert() {
+    func displayIncomingCallAlert(userInfo: [AnyHashable: Any]) {
         let center = UNUserNotificationCenter.current()
 
             let answerAction = UNNotificationAction(identifier: "answer", title: "Answer", options: [.foreground])
@@ -59,16 +60,14 @@ class CallManager: NSObject,CXProviderDelegate, CXCallObserverDelegate {
             center.setNotificationCategories([category])
             let content = UNMutableNotificationContent()
             content.title = "VDP Incoming Call"
-            content.body = "Do a long press"
-            content.sound = .default
-            content.sound = UNNotificationSound.default
+            content.body = "Please long press to answer the call"
             content.categoryIdentifier = "incomingCall"
-        
+            content.userInfo = ["hardwareId":"\(userInfo["hardwareId"]!)"]
+            content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "iphone_marimba_sound.wav"))
         do{
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
             let request = UNNotificationRequest(identifier: "incomingCall", content: content, trigger: trigger)
             center.add(request)
-            
         }catch let error as NSError {
             print("Error: \(error.localizedDescription)")
         }

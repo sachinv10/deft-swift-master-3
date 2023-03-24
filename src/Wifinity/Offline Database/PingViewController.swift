@@ -162,15 +162,13 @@ class PingViewController: UIViewController, WebSocketDelegate{
                     }
                 }
             } )
-            
         }
     }
     var controller_id = [String]()
     var controller_KComand = [String]()
     @IBAction func stop(_ sender: Any) {
-        ping?.stopPinging()
-        //   RoutingManager.shared.goToPreviousScreen(self)
-        
+            ping?.stopPinging()
+            RoutingManager.shared.goToPreviousScreen(self)
     }
     func GotoApplinceController()  {
         RoutingManager.shared.gotoOfflineApplinces(controller: self, controllerId: controller_id, controller_kId: controller_KComand, alldatajson: alldata)

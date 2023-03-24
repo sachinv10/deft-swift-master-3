@@ -682,7 +682,7 @@
                                 <rect key="frame" x="0.0" y="95" width="414" height="767"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bgh-fj-1R6">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="710.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="dca-qk-xfR" userLabel="motionLightContainerView">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
@@ -1068,13 +1068,13 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JuS-9I-3Df" userLabel="notificationContainerView">
-                                                <rect key="frame" x="0.0" y="568" width="414" height="142.5"/>
+                                                <rect key="frame" x="0.0" y="568" width="414" height="175.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XV3-go-OSi" userLabel="notificationSubscriptionSwitchContainerView">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Battery sever :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQl-y0-2mx">
-                                                                <rect key="frame" x="16" y="20" width="122" height="23"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Battery saver mode :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQl-y0-2mx">
+                                                                <rect key="frame" x="16" y="20" width="174.5" height="23"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -1088,30 +1088,30 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZb-Gs-3Mr" userLabel="notificationSubscriptionSwitchContainerView">
-                                                        <rect key="frame" x="0.0" y="63" width="414" height="59.5"/>
+                                                        <rect key="frame" x="0.0" y="63" width="414" height="92.5"/>
                                                         <subviews>
                                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8fg-UJ-m8w">
-                                                                <rect key="frame" x="149" y="12.5" width="116" height="35"/>
+                                                                <rect key="frame" x="144.5" y="19" width="125" height="54.5"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Medium" imagePadding="4"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Balanced" imagePadding="4"/>
                                                                 <connections>
                                                                     <action selector="batterySeverbtn:" destination="FsK-gD-QH0" eventType="touchUpInside" id="S9z-9Z-kaC"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYh-Tl-OgD">
-                                                                <rect key="frame" x="25" y="13" width="102" height="35"/>
+                                                                <rect key="frame" x="8" y="13" width="129" height="35"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Low" imagePadding="4"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Eco" imagePadding="4"/>
                                                                 <connections>
                                                                     <action selector="batterySeverbtn:" destination="FsK-gD-QH0" eventType="touchUpInside" id="msE-MH-p46"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ro1-Xi-Mal">
-                                                                <rect key="frame" x="280" y="13" width="116" height="35"/>
+                                                                <rect key="frame" x="278" y="13" width="120" height="35"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="high" imagePadding="4"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Ultra" imagePadding="4"/>
                                                                 <connections>
                                                                     <action selector="batterySeverbtn:" destination="FsK-gD-QH0" eventType="touchUpInside" id="N33-js-bqu"/>
                                                                 </connections>
@@ -1120,13 +1120,13 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="8fg-UJ-m8w" firstAttribute="centerX" secondItem="yZb-Gs-3Mr" secondAttribute="centerX" id="EW2-0x-pyy"/>
-                                                            <constraint firstItem="8fg-UJ-m8w" firstAttribute="width" secondItem="yZb-Gs-3Mr" secondAttribute="width" multiplier="0.281159" id="Vy1-t6-fT2"/>
+                                                            <constraint firstItem="8fg-UJ-m8w" firstAttribute="width" secondItem="yZb-Gs-3Mr" secondAttribute="width" multiplier="0.301159" id="Vy1-t6-fT2"/>
                                                             <constraint firstItem="8fg-UJ-m8w" firstAttribute="height" secondItem="yZb-Gs-3Mr" secondAttribute="height" multiplier="0.588235" id="Wnr-wp-6QT"/>
                                                             <constraint firstItem="8fg-UJ-m8w" firstAttribute="centerY" secondItem="yZb-Gs-3Mr" secondAttribute="centerY" id="zNv-cP-bRs"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8Z-Hq-W21" userLabel="cellSeparatorContainerView">
-                                                        <rect key="frame" x="0.0" y="122.5" width="414" height="20"/>
+                                                        <rect key="frame" x="0.0" y="155.5" width="414" height="20"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCS-wv-iZa" userLabel="cellSeparatorView">
                                                                 <rect key="frame" x="0.0" y="18.5" width="414" height="1.5"/>
@@ -1145,6 +1145,87 @@
                                                         </constraints>
                                                     </view>
                                                 </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Dqo-Mm-C8g" userLabel="notificationContainerView">
+                                                <rect key="frame" x="0.0" y="743.5" width="414" height="142.5"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sx1-AB-rIg" userLabel="notificationSubscriptionSwitchContainerView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Sensor Sensitivity :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaB-bw-OKr">
+                                                                <rect key="frame" x="16" y="20" width="160.5" height="23"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="RaB-bw-OKr" firstAttribute="leading" secondItem="Sx1-AB-rIg" secondAttribute="leading" constant="16" id="W3A-90-86r"/>
+                                                            <constraint firstAttribute="bottom" secondItem="RaB-bw-OKr" secondAttribute="bottom" constant="20" id="dda-VA-S5s"/>
+                                                            <constraint firstItem="RaB-bw-OKr" firstAttribute="top" secondItem="Sx1-AB-rIg" secondAttribute="top" constant="20" id="wB3-JW-nnM"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJM-Vg-Gea" userLabel="notificationSubscriptionSwitchContainerView">
+                                                        <rect key="frame" x="0.0" y="63" width="414" height="59.5"/>
+                                                        <subviews>
+                                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbr-Pa-71N">
+                                                                <rect key="frame" x="239.5" y="12.5" width="142" height="35"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="142" id="MgY-4u-s0V"/>
+                                                                    <constraint firstAttribute="height" constant="35" id="rd6-em-gP7"/>
+                                                                </constraints>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Extreme" imagePadding="4"/>
+                                                                <connections>
+                                                                    <action selector="sensitivitySensorUpdate:" destination="FsK-gD-QH0" eventType="touchUpInside" id="Qg9-Mq-M8P"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cJ-RX-wcD">
+                                                                <rect key="frame" x="40" y="12.5" width="127" height="35"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="35" id="0Ng-2w-9x6"/>
+                                                                    <constraint firstAttribute="width" constant="127" id="Zbs-rL-7HC"/>
+                                                                </constraints>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" image="square" catalog="system" imagePlacement="leading" title="Low" imagePadding="4"/>
+                                                                <connections>
+                                                                    <action selector="sensitivitySensorUpdate:" destination="FsK-gD-QH0" eventType="touchUpInside" id="xEn-Zz-27p"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="4cJ-RX-wcD" firstAttribute="centerY" secondItem="qJM-Vg-Gea" secondAttribute="centerY" id="ArN-d5-iZI"/>
+                                                            <constraint firstItem="4cJ-RX-wcD" firstAttribute="centerX" secondItem="qJM-Vg-Gea" secondAttribute="centerX" multiplier="0.5" id="WUW-CW-HF8"/>
+                                                            <constraint firstItem="rbr-Pa-71N" firstAttribute="centerY" secondItem="4cJ-RX-wcD" secondAttribute="centerY" id="pDC-Pf-IpW"/>
+                                                            <constraint firstItem="rbr-Pa-71N" firstAttribute="centerX" secondItem="qJM-Vg-Gea" secondAttribute="centerX" multiplier="1.5" id="xCu-6w-l35"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9w-8K-shD" userLabel="cellSeparatorContainerView">
+                                                        <rect key="frame" x="0.0" y="122.5" width="414" height="20"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uB8-96-BNc" userLabel="cellSeparatorView">
+                                                                <rect key="frame" x="0.0" y="18.5" width="414" height="1.5"/>
+                                                                <color key="backgroundColor" name="SecondaryLightestColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="1.5" id="QOj-EG-kxA"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="uB8-96-BNc" firstAttribute="leading" secondItem="c9w-8K-shD" secondAttribute="leading" id="1iq-0T-6u6"/>
+                                                            <constraint firstAttribute="trailing" secondItem="uB8-96-BNc" secondAttribute="trailing" id="7E4-TW-NYe"/>
+                                                            <constraint firstAttribute="height" constant="20" id="FTF-cp-u3P"/>
+                                                            <constraint firstAttribute="bottom" secondItem="uB8-96-BNc" secondAttribute="bottom" id="jeN-N4-e2C"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="qJM-Vg-Gea" firstAttribute="width" secondItem="Sx1-AB-rIg" secondAttribute="width" id="AGi-rk-d26"/>
+                                                    <constraint firstItem="qJM-Vg-Gea" firstAttribute="height" secondItem="Sx1-AB-rIg" secondAttribute="height" multiplier="0.944444" id="q5V-fv-kqZ"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -1179,6 +1260,8 @@
                         <outlet property="lblBatterySever" destination="8fg-UJ-m8w" id="fYf-b0-aBj"/>
                         <outlet property="lblLowbtn" destination="GYh-Tl-OgD" id="TiV-hf-0SU"/>
                         <outlet property="lblhigh" destination="Ro1-Xi-Mal" id="sKD-Y5-w3i"/>
+                        <outlet property="lblhighbtn" destination="rbr-Pa-71N" id="Obs-51-JuQ"/>
+                        <outlet property="lbllowbtn" destination="4cJ-RX-wcD" id="6hw-0h-IYi"/>
                         <outlet property="lpgThresholdSlider" destination="h0j-Lb-CNv" id="PPJ-50-1kh"/>
                         <outlet property="motionLightContainerView" destination="dca-qk-xfR" id="2Ho-eN-FAb"/>
                         <outlet property="motionLightIntensityContainerView" destination="t7K-sM-3OH" id="ULn-vx-Mad"/>
@@ -1188,6 +1271,7 @@
                         <outlet property="notificationContainerView" destination="cF6-Sj-CUS" id="R4e-Xr-nQc"/>
                         <outlet property="notificationSoundSwitch" destination="IOz-ve-tLT" id="t5H-QA-YIO"/>
                         <outlet property="notificationSubscriptionSwitch" destination="OW5-cM-JDi" id="ogd-rr-Mx9"/>
+                        <outlet property="sensorSensitivityView" destination="Dqo-Mm-C8g" id="SH3-A7-WMM"/>
                         <outlet property="sirenContainerView" destination="ICu-Sx-fjG" id="y2z-Wu-08P"/>
                         <outlet property="sirenSliderContainerView" destination="jpe-aU-LQC" id="ifk-Xu-DEE"/>
                         <outlet property="sirenSwitch" destination="pg1-G5-hpZ" id="NQo-Uw-Y3Z"/>

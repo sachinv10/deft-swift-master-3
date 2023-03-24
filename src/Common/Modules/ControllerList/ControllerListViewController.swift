@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class ControllerListViewController: BaseController {
     var appliances :Array<Appliance> = Array<Appliance>()
@@ -28,7 +31,6 @@ class ControllerListViewController: BaseController {
     let DeleteButton = UIButton()
     @IBOutlet weak var btnrightmenu: UIButton!
     @IBAction func btnmenu(_ sender: Any) {
-      
             customView.isHidden = false
             customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 50)
                customView.backgroundColor = UIColor.white     //give color to the view
@@ -68,7 +70,18 @@ class ControllerListViewController: BaseController {
                 print(error.localizedDescription)
             }
             self.reloadAllView()
+            self.getTimestamp()
             })
+        }
+    }
+    func getTimestamp() {
+        for items in controllerApplince{
+            Database.database().reference().child("keepAliveTimeStamp").child(items.id ?? "")
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+                        DeviceSettingViewController.timestamp.append(aDict)
+                    }
+                }
         }
     }
     override func reloadAllData() {
@@ -100,18 +113,15 @@ class ControllerListViewController: BaseController {
     func reloadAllView(){
         DispatchQueue.main.async {
             // Update UI
-        
             self.view.endEditing(true)
             self.controllertableview.reloadData()
             print("data get success")
         }
-        
     }
      @objc func pressedmenu(sender: UIButton!) {
-        customView.isHidden = true
+         customView.isHidden = true
          RoutingManager.shared.gotoResetAllControllerSetting(controller: self, controller: controllerApplince)
-    
-    }
+     }
     @IBOutlet weak var controllertableview: UITableView!
     @IBOutlet weak var backbtnlable: UIButton!
     @IBAction func btnbacktoDashboard(_ sender: Any) {
@@ -126,19 +136,16 @@ extension ControllerListViewController: UITableViewDelegate,UITableViewDataSourc
         let applinceobj = controllerApplince.count
         print(applinceobj)
         return applinceobj
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ControllrTableViewCell
         let applinceobj = controllerApplince[indexPath.row]
         cell.load(cellobj: applinceobj)
-        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let times = DeviceSettingViewController.timestamp[indexPath.row]
-        
         let contollerapp = controllerApplince[indexPath.row]
         contollerapp.lastOperated = times["time"] as? Double
         RoutingManager.shared.gotoDeviceDetails(controller: self, selectedController: contollerapp)

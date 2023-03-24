@@ -278,7 +278,6 @@ class Appliance: NSObject {
 class ControllerAppliance: NSObject {
     
     var id :String?
-    
     var name :String?
     var roomName :String?
     var online :Bool?

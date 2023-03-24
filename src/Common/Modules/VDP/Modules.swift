@@ -17,7 +17,7 @@ class MyModel: Codable {
     var msgContent: String
     var msgType: String
     var msgId: String
-
+    
     init(msgContent: String, msgType: String, msgId: String) {
         self.msgContent = msgContent
         self.msgType = msgType

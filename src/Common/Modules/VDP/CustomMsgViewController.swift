@@ -27,14 +27,14 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
     }
     
     
-//appHeaderBarView
+    //appHeaderBarView
     
     @IBOutlet weak var tableview: UITableView!
     var vdpmodule: VDPModul!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-     }
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "Custom Messages"
@@ -51,44 +51,44 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
     }
     var myCustomMsgArray :Array<MyModel> = Array<MyModel>()
     override func reloadAllData() {
-      var ref = Database.database().reference()
-    
+        var ref = Database.database().reference()
+        
         do {
             if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
                 throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
             }
             ref.child("vdpCustomMessages").child(vdpmodule.id!)
                 .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                     // Fetch objects
-                 
+                    // Fetch objects
+                    
                     if let aDict = pDataSnapshot.value as? Dictionary<String,Dictionary<String,Any>> {
                         for item in aDict{
                             let dicvalue = item.value as Dictionary<String, Any>
-                           let mydataobj = self.dataparse(obj: dicvalue)
+                            let mydataobj = self.dataparse(obj: dicvalue)
                             self.myCustomMsgArray.append(mydataobj)
-                         }
+                        }
                         if  self.myCustomMsgArray.count > 0{
                             self.tableview.reloadData()
                         }
-                     }
-                 }
+                    }
+                }
         } catch {
-           
+            
         }
     }
     func dataparse(obj: Dictionary<String, Any>) -> MyModel{
         var myModel: MyModel?
         do{
             let jsonData = try JSONSerialization.data(withJSONObject: obj, options: [])
-              myModel = try JSONDecoder().decode(MyModel.self, from: jsonData)
+            myModel = try JSONDecoder().decode(MyModel.self, from: jsonData)
             print(myModel)
         }catch{
             
         }
         return myModel!
     }
-
-
+    
+    
     var editview = UIView()
     var hedinglbl = UILabel()
     var txtfld = UITextField()
@@ -106,7 +106,7 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
         hedinglbl.frame =  CGRect(x: 10, y: 0, width: self.view.frame.width * 0.70, height: 50)
         hedinglbl.text = obj.msgType
         hedinglbl.tintColor = .white
-       // hedinglbl.textAlignment = .center
+        // hedinglbl.textAlignment = .center
         editview.addSubview(hedinglbl)
         
         txtfld.frame =  CGRect(x: 10, y: 40, width: 400, height: 50)
@@ -117,7 +117,7 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
         editview.addSubview(txtfld)
         
         cancelbtn.frame =  CGRect(x: 50, y: 110, width: 100, height: 40)
-         cancelbtn.backgroundColor = .red
+        cancelbtn.backgroundColor = .red
         cancelbtn.layer.cornerRadius = 7
         cancelbtn.setTitle("Cancel", for: .normal)
         cancelbtn.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
@@ -146,7 +146,7 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
         let myDictionary = ["type":"voiceMessage", selectedmodel.msgType: txtfld.text] as [String : Any]
         
         if let jsonData = try? JSONSerialization.data(withJSONObject: myDictionary, options: .prettyPrinted),
-        let jsonString = String(data: jsonData, encoding: .utf8) {
+           let jsonString = String(data: jsonData, encoding: .utf8) {
             print(jsonString)
             let ref = Database.database().reference().child("vdpMessages").child(vdpmodule.id!).child("vdpData")
             ref.setValue(["message": jsonString as Any], withCompletionBlock: {(error, DataSnapshot) in
@@ -161,7 +161,6 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
                 }
             })
         }
-        
     }
 }
 extension CustomMsgViewController: CustmsgProtocall{

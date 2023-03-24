@@ -219,11 +219,14 @@ extension DataFetchManagerFireBase {
                     aMessageValue += "$M"
                     aMessageValue += String(format: "%d", pOccupancyState.rawValue)
                     if pSensor.id?.prefix(3) == "S10" || pSensor.id?.prefix(3) == "S11"{
-                       aMessageValue += "000#"
+                      // aMessageValue += "000#"
+                      //  manage sensor func
+                        self.updateBatteryOperatedState(sensor: pSensor, state: pOccupancyState)
                     }else{
                         aMessageValue += "002#"
+                        anError = self.sendMessage(aMessageValue, entity: pSensor)
                     }
-                    anError = self.sendMessage(aMessageValue, entity: pSensor)
+                 
                     if anError != nil {
                         throw anError!
                     }
@@ -240,7 +243,24 @@ extension DataFetchManagerFireBase {
         }
         
     }
-    
+    func updateBatteryOperatedState(sensor: Sensor, state: Sensor.OccupancyState){
+        database.child("sensorSetting").child(sensor.id ?? "").updateChildValues(["sensorState":"\(state.rawValue)"], withCompletionBlock: {error, DatabaseReference in
+            if (error != nil){
+                print("error= \(error)")
+            }
+        })
+        var currentState = false
+        if state.rawValue == 1{
+            currentState = false
+        }else{
+            currentState = true
+        }
+        database.child("devices").child(sensor.id ?? "").updateChildValues(["state":currentState], withCompletionBlock: {error, DatabaseReference in
+            if (error != nil){
+                print("")
+            }
+        })
+    }
     func updateSensorBtnResetCounter(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         DispatchQueue.global(qos: .background).async {
             DispatchQueue.global(qos: .background).async {
@@ -480,21 +500,13 @@ extension DataFetchManagerFireBase {
                 }
                 
                 // Send message and reset it
-                var aMessageValue = ""
-              
-                if tag == 1{
-                    aMessageValue += "$b100:2700#" // $b100:2700# : Battery saving mode low   45 min
-                }else if tag == 2{
-                    aMessageValue += "$b200:3600#" // $b200:3600# : Battery saving mode medium 60 min
-                }else if tag == 3{
-                    aMessageValue += "$b300:4500#" // $b300:4500# : Battery saving mode extreme 75 min
-                }
-                    
+                self.database.child("sensorSetting").child(pSensor.id ?? "").updateChildValues(["batterySaverMode": String(describing: tag)], withCompletionBlock: {error, databasseref in
+                    if (error != nil){
+                        print("error =\(String(describing: error))")
+                    }
+                })
                
-                anError = self.sendMessage(aMessageValue, entity: pSensor)
-                if anError != nil {
-                    throw anError!
-                }
+                    //batterySaverMode
             } catch {
                 anError = error
             }
@@ -507,6 +519,38 @@ extension DataFetchManagerFireBase {
         
     }
     
+    func updateSensorSensitivityMode(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, tag: Int) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                // Send message and reset it
+                self.database.child("sensorSetting").child(pSensor.id ?? "").updateChildValues(["sensorSensitivity": String(describing: tag)], withCompletionBlock: {error, databasseref in
+                    if (error != nil){
+                        print("error =\(String(describing: error))")
+                    }
+                })
+               
+                    
+               
+              
+            } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError)
+            }
+        }
+        
+    }
     func updateSensorMotionLightState(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, lightState pLightState :Sensor.LightState, isSettings pIsSettings :Bool) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1

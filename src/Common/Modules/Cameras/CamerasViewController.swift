@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
+import FirebaseAuth
 class camtableCell: UITableViewCell{
     
     @IBOutlet weak var lblName: UILabel!
@@ -45,7 +48,7 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
             UIApplication.shared.open(url)
         }
     }
-    
+   
  
     @IBOutlet weak var camtableview: UITableView!
     override func viewDidLoad() {
@@ -56,6 +59,11 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
         camtableview.dataSource = self
         datamanage()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+     //   self.demokeyMap()
+    }
+    
     var dataArray: Array = Array<Dictionary<String,Any>>()
     func datamanage()  {
         var dictinary: Dictionary = Dictionary<String, Any>()
@@ -76,4 +84,63 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
         print(dataArray)
         camtableview.reloadData()
     }
+
+}
+// MARK : - DEMO
+extension CamerasViewController{
+    func demokeyMap() {
+        var xSensor = Sensor()
+        let uid = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("devices").queryOrdered(byChild: "uid").queryEqual(toValue: uid).observe(.value, with: {(DataSnapshot) in
+            print(DataSnapshot.value as Any)
+            let json = DataSnapshot.value as! Dictionary<String, Any>
+            if let aDict = DataSnapshot.value as? Dictionary<String, Any> {
+                do{
+                    for item in aDict.values{
+                    let jsonData = try JSONSerialization.data(withJSONObject: item, options: [])
+                    if let jsonString = String(data: jsonData, encoding: .utf8) {
+                        print(jsonString)
+                        let data = jsonString.data(using: .utf8)
+                        let decoder = JSONDecoder()
+                        let response = try decoder.decode(ResponseDevice.self, from: data!)
+                        print(response.name)
+                     }
+                    }
+                }catch{
+                    
+                }
+            }
+            
+//            do{
+//                let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
+//                if let jsonString = String(data: jsonData, encoding: .utf8) {
+//                    print(jsonString)
+//                    let data = jsonString.data(using: .utf8)
+//                    let response = try decoder.decode(ResponseDemo.self, from: data!)
+//             print(response.sensorSensitivity)
+//                }
+//
+//            }catch{
+//
+//            }
+         })
+    }
+}
+struct ResponseDemo: Codable {
+    let wakeUpTimeMedium: String
+    let sensorSensitivity: String
+    let batterySaverMode: String
+    let wakeUpTimeLow: String
+    let sensorState: String
+}
+struct Response: Codable {
+    let name: String
+    let age: Int
+}
+struct ResponseDevice: Codable {
+    let controllerType: String
+    let id: String
+    let name: String
+    let roomName: String
+    let uid: String
 }

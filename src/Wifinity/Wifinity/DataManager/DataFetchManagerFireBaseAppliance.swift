@@ -201,7 +201,9 @@ extension DataFetchManagerFireBase {
                         for i in 0..<anArray.count{
                         if controllerId == anArray[i] as String{
                             pAppliance.hardwareId = String(i)
-                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            self.deleteOneControllerWithId(complition: {error in
+                                pCompletion(error)
+                            },appliance: pAppliance)
                           }
                         }
                     print(anArray)
@@ -216,7 +218,9 @@ extension DataFetchManagerFireBase {
                         for i in 0..<anArray.count{
                         if controllerId == anArray[i] as String{
                             pAppliance.hardwareId = String(i)
-                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            self.deleteOneControllerWithId(complition: {error in
+                                pCompletion(error)
+                            },appliance: pAppliance)
                             
                           }
                         }
@@ -233,7 +237,9 @@ extension DataFetchManagerFireBase {
                         for i in 0..<anArray.count{
                         if controllerId == anArray[i] as String{
                             pAppliance.hardwareId = String(i)
-                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            self.deleteOneControllerWithId(complition: {error in
+                                pCompletion(error)
+                            },appliance: pAppliance)
                             
                           }
                         }
@@ -249,7 +255,9 @@ extension DataFetchManagerFireBase {
                         for i in 0..<anArray.count{
                         if controllerId == anArray[i] as String{
                             pAppliance.hardwareId = String(i)
-                            self.deleteOneControllerWithId(appliance: pAppliance)
+                            self.deleteOneControllerWithId(complition: {error in
+                                pCompletion(error)
+                            },appliance: pAppliance)
                             
                           }
                         }
@@ -287,7 +295,7 @@ extension DataFetchManagerFireBase {
             
             DispatchQueue.main.async {
                 self.requestCount -= 1
-                pCompletion(anError)
+             //   pCompletion(anError)
             }
         }
         
@@ -331,7 +339,7 @@ extension DataFetchManagerFireBase {
         }
         
     }
-    func deleteOneControllerWithId(appliance pAppliance :ControllerAppliance) {
+    func deleteOneControllerWithId(complition pcompliton: @escaping(Error?) -> Void,appliance pAppliance :ControllerAppliance) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1
             let controllerId = pAppliance.id
@@ -352,6 +360,11 @@ extension DataFetchManagerFireBase {
                 var aMessageField :DatabaseReference? = nil
                 aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId!).child("devices").child(pAppliance.hardwareId!)
  
+                Database.database().reference().child("devices").child(pAppliance.id ?? "").removeValue(completionBlock: { (pError, pDatabaseReference) in
+                    anError = pError
+                    pcompliton(anError)
+                    print("controller deleted")
+                 })
                 aMessageField?.removeValue(completionBlock: { (pError, pDatabaseReference) in
                     anError = pError
                     aSwitchTypeDispatchSemaphore.signal()
@@ -842,9 +855,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(returnValue)
             }
         }
-        
-        
-        
-        
+
     }
 }

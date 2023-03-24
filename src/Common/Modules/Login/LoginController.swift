@@ -49,8 +49,9 @@ class LoginController: BaseController {
     */
     override func viewDidLoad() {
         super.viewDidLoad()
-      //   Database.database().isPersistenceEnabled = true
-        
+          Database.database().isPersistenceEnabled = true
+        let dataRef = Database.database().reference().child("devices")
+            dataRef.keepSynced(true)
         if ((Auth.auth().currentUser?.uid) != nil){
             demologin()
         }else if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {

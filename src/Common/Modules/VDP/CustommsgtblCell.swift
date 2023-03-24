@@ -10,7 +10,7 @@ protocol CustmsgProtocall: AnyObject{
     func cellCustommsg(cell: CustommsgtblCell)
 }
 class CustommsgtblCell: UITableViewCell {
-
+    
     @IBOutlet weak var lbldiscreption: UILabel!
     @IBOutlet weak var lblWelcomemsge: UILabel!
     
@@ -29,7 +29,7 @@ class CustommsgtblCell: UITableViewCell {
     var delegate: CustmsgProtocall?
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     

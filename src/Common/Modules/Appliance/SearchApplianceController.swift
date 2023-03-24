@@ -133,9 +133,9 @@ class SearchApplianceController: BaseController {
     override func reloadAllData() {
         self.appliances.removeAll()
         print("data load applinces")
-         ProgressOverlay.shared.show()
+        // ProgressOverlay.shared.show()
         DataFetchManager.shared.searchAppliance(completion: { (pError, pApplianceArray,pDevicesArray) in
-             ProgressOverlay.shared.hide()
+           //  ProgressOverlay.shared.hide()
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not search appliances", description: pError!.localizedDescription)
             } else {
@@ -158,7 +158,6 @@ class SearchApplianceController: BaseController {
                 } else {
                     self.setBottomContainerView(hidden: false)
                 }
-                
                 self.reloadAllView()
             }
         }, room: self.selectedRoom, includeOnOnly: self.selectedRoom == nil)
@@ -233,9 +232,9 @@ class SearchApplianceController: BaseController {
     
     func updateControllers() {
         for deviceId in devices {
-            ProgressOverlay.shared.show()
+         //   ProgressOverlay.shared.show()
             DataFetchManager.shared.updateDevice(completion: { (pError) in
-                ProgressOverlay.shared.hide()
+             //   ProgressOverlay.shared.hide()
                 if pError != nil {
                     PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
                     self.reloadAllView()
@@ -543,7 +542,6 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
         return true
     }
     
-    
     func tableView(_ pTableView: UITableView, commit pEditingStyle: UITableViewCell.EditingStyle, forRowAt pIndexPath: IndexPath) {
         if pEditingStyle == .delete {
             if pIndexPath.row < self.appliances.count {
@@ -639,7 +637,7 @@ extension SearchApplianceController :DynamicButtonContainerViewDelegate {
                 let minavrg = xy/cnt
                 let maxavrg = xyz/cnt
              let aDimmableValueTriac = Double(averageValue)
-            let aDimmableValueMin = Double(xy/cnt)
+             let aDimmableValueMin = Double(xy/cnt)
                 
         var aDimmableValue = ((Double(pDimmableValue) * ((Double(maxavrg) - Double(minavrg)) / 100.0)) + Double(minavrg))
                 
@@ -650,7 +648,6 @@ extension SearchApplianceController :DynamicButtonContainerViewDelegate {
                 }
                 aDimmableValues = Int(aDimmableValue)
                 print(aDimmableValues)
-    
         }
         }
         self.updateDimableValueControllers(dimValue: aDimmableValues)

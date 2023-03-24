@@ -121,7 +121,7 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
             if #available(iOS 14.0, *) {
             let callManager = CallManager()
                 if notification.request.content.categoryIdentifier == "incomingCall" {
-                  //  callManager.showNotification()
+                    // callManager.showNotification()
                        }
         } else {
             // Fallback on earlier versions
@@ -134,23 +134,27 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print("didreceive call notification")
 
-//        if response.notification.request.content.categoryIdentifier == "incomingCall" {
-//                  if response.actionIdentifier == "answer" {
-//                      let storyboard = UIStoryboard(name: "VDP", bundle: nil)
-//                      let vc = storyboard.instantiateViewController(withIdentifier: "CallingViewController") as! CallingViewController
-//                          vc.id = "V001641534575660"
-//                               let navigationController = window?.rootViewController as? UINavigationController
-//                                navigationController?.pushViewController(vc, animated: true)
-//                  } else if response.actionIdentifier == "reject" {
-//
-//                  }else if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier"{
-//                      let storyboard = UIStoryboard(name: "VDP", bundle: nil)
-//                      let vc = storyboard.instantiateViewController(withIdentifier: "CallingViewController") as! CallingViewController
-//                          vc.id = "V001641534575660"
-//                               let navigationController = window?.rootViewController as? UINavigationController
-//                                navigationController?.pushViewController(vc, animated: true)
-//                  }
-//              }
+        if response.notification.request.content.categoryIdentifier == "incomingCall" {
+            let id = response.notification.request.content.userInfo
+            if let h_id = id["hardwareId"]{
+                if response.actionIdentifier == "answer" {
+                    
+                    let storyboard = UIStoryboard(name: "VDP", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "CallingViewController") as! CallingViewController
+                    vc.id = h_id as! String // "V001641534575660"
+                    let navigationController = window?.rootViewController as? UINavigationController
+                    navigationController?.pushViewController(vc, animated: true)
+                } else if response.actionIdentifier == "reject" {
+                    
+                }else if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier"{
+                    let storyboard = UIStoryboard(name: "VDP", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "CallingViewController") as! CallingViewController
+                    vc.id = h_id as! String
+                    let navigationController = window?.rootViewController as? UINavigationController
+                    navigationController?.pushViewController(vc, animated: true)
+                }
+               }
+              }
         completionHandler()
     }
     func application(_ application: UIApplication,
@@ -174,8 +178,8 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
                   let callManager = CallManager()
                   let uuid = UUID()
                   
-                  callManager.reportIncommingCall(id: uuid, handel: "VDP Calling", window: window!, vdpid: messageID["hardwareId"] as! String)
-              //   callManager.displayIncomingCallAlert()
+                //  callManager.reportIncommingCall(id: uuid, handel: "VDP Calling", window: window!, vdpid: messageID["hardwareId"] as! String)
+                  callManager.displayIncomingCallAlert(userInfo: messageID)
                 
               } else {
                   // Fallback on earlier versions

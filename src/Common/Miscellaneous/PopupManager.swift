@@ -47,7 +47,6 @@ class PopupManager: NSObject {
         self.topViewController()!.present(anAlertController, animated: true, completion: nil)
     }
     
-    
     /**
      * Method that displays success to user.
      * @param: pMessage. String. Message to be displayed.

@@ -85,45 +85,46 @@ class OnGoingIssieViewController: BaseController {
         Database.database().reference().child("complaints").queryOrdered(byChild: "filter")
             .queryEqual(toValue: uid)
             .observeSingleEvent(of: .value, with: { snapshot in
-            print(snapshot.value as! Dictionary<String,AnyObject>)
-                print("data=\( snapshot.value as? Array<Dictionary<String,Any>?>)")
-                
-                self.dictionary = snapshot.value as! Dictionary<String,AnyObject>
-                let  USD = snapshot.value.map { ($0 as! [String: AnyObject]) }
-                print("data=\(USD)")
-               // self.dictionaryfinal = USD!
-                 
-                for x in self.dictionary{
-                    var pcomp = Complents()
-                 var pcomplent = pcomp.clone()
-                    let registId = x.key
-                    let y = x.value
-                    print(y["uid"]!)
-                    pcomplent.uid = y["uid"]! as! String
-                    pcomplent.descriptionn = y["description"]! as! String
-                    pcomplent.emailId = y["emailId"]! as! String
-                    pcomplent.filter = y["filter"]! as! String
-                    pcomplent.issueRaisedTime = y["issueRaisedTime"]! as! Int
-                    pcomplent.issueResolvedTime = y["issueResolvedTime"]! as! Int
-                    pcomplent.issueStatus = y["issueStatus"]! as! String
-                    pcomplent.issueType = y["issueType"]! as! String
-                    pcomplent.mobileNumber = y["mobileNumber"]! as! String
-//                    if y["resolveOtp"] != nil{
-//                        pcomplent.resolveOtp = y["resolveOtp"]! as! Int
-//                    }
-                //    pcomplent.resolvedBy = y["resolvedBy"]! as! String
-                    pcomplent.ticketId = y["ticketId"]! as! String
-                    pcomplent.uid = y["uid"]! as! String
-                    if y["issueType"]! as! String == "Hardware"{
-                        let devices = y["devices"] as! [Dictionary<String,AnyObject>]
-                        for item in devices{
-                            pcomplent.controllerName = "\(item["name"]!) of \(item["roomName"]!)"
-                        }
-                    }
+         //   print(snapshot.value as! Dictionary<String,AnyObject>)
+       let data = snapshot.value as? Array<Dictionary<String,Any>?>
+                if let x = snapshot.value, 0 < data?.count ?? 0{
+                    self.dictionary = snapshot.value as! Dictionary<String,AnyObject>
+                    let  USD = snapshot.value.map { ($0 as! [String: AnyObject]) }
+                    print("data=\(USD)")
+                    // self.dictionaryfinal = USD!
                     
-                     self.complentArray.append(pcomplent)
-                  }
-                self.tableview.reloadData()
+                    for x in self.dictionary{
+                        var pcomp = Complents()
+                        var pcomplent = pcomp.clone()
+                        let registId = x.key
+                        let y = x.value
+                        print(y["uid"]!)
+                        pcomplent.uid = y["uid"]! as! String
+                        pcomplent.descriptionn = y["description"]! as! String
+                        pcomplent.emailId = y["emailId"]! as! String
+                        pcomplent.filter = y["filter"]! as! String
+                        pcomplent.issueRaisedTime = y["issueRaisedTime"]! as! Int
+                        pcomplent.issueResolvedTime = y["issueResolvedTime"]! as! Int
+                        pcomplent.issueStatus = y["issueStatus"]! as! String
+                        pcomplent.issueType = y["issueType"]! as! String
+                        pcomplent.mobileNumber = y["mobileNumber"]! as! String
+                        //                    if y["resolveOtp"] != nil{
+                        //                        pcomplent.resolveOtp = y["resolveOtp"]! as! Int
+                        //                    }
+                        //    pcomplent.resolvedBy = y["resolvedBy"]! as! String
+                        pcomplent.ticketId = y["ticketId"]! as! String
+                        pcomplent.uid = y["uid"]! as! String
+                        if y["issueType"]! as! String == "Hardware"{
+                            let devices = y["devices"] as! [Dictionary<String,AnyObject>]
+                            for item in devices{
+                                pcomplent.controllerName = "\(item["name"]!) of \(item["roomName"]!)"
+                            }
+                        }
+                        
+                        self.complentArray.append(pcomplent)
+                    }
+                    self.tableview.reloadData()
+                }
             })
     }
     var complentArray = [Complents]()

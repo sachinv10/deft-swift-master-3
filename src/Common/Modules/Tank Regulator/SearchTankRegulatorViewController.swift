@@ -24,11 +24,26 @@ class SearchTankRegulatorController: BaseController {
         
         self.tankRegulatorTableView.tableFooterView = UIView()
         self.tankRegulatorTableView.delaysContentTouches = false
+        datalisner()
     }
-    
+    func datalisner(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+            for i in (0 ..< self.tankRegulators.count) {
+ 
+                Database.database().reference().child("devices").child( self.tankRegulators[i].id!).observe(.childChanged) { (snapshot, key) in
+                    self.reloadAllData()
+                }
+            }
+        }
+    }
     override func viewDidDisappear(_ animated: Bool) {
-        
-       }
+        DispatchQueue.main.asyncAfter(deadline: .now()){
+            for i in (0 ..< self.tankRegulators.count) {
+                print(SearchApplianceController.applinceId[i])
+                Database.database().reference().child("devices").child( self.tankRegulators[i].id!).removeAllObservers()
+            }
+        }
+    }
     override func reloadAllData() {
         self.tankRegulators.removeAll()
         

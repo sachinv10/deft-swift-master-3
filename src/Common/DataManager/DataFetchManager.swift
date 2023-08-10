@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SocketIO
 
 /**
 * Class that implements Codable and serializes response of HTTP API objects.
@@ -149,7 +149,11 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.resetController(completion: pCompletion, room: ssid, room: password, Applinces: pApplinces, includeOnOnly: pIncludeOnOnly)
     }
     
-    // MARK:- Sensor
+    // MARK: - VDP
+    func updateVdpFanState(completion pCompletion: @escaping (Error?) -> Void, vdpmodule pvdpmodul :VDPModul) {
+        self.dataFetchManagerFireBase.updateVdpFanState(completion: pCompletion, vdpModule: pvdpmodul)
+    }
+    // MARK: - Sensor
     
     func searchSensor(completion pCompletion: @escaping (Error?, Array<Sensor>?) -> Void, room pRoom :Room?) {
         self.dataFetchManagerFireBase.searchSensor(completion: pCompletion, room: pRoom)
@@ -166,6 +170,7 @@ class DataFetchManager: NSObject {
     func updateSensorOccupancyState(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, occupancyState pOccupancyState :Sensor.OccupancyState) {
         self.dataFetchManagerFireBase.updateSensorOccupancyState(completion: pCompletion, sensor: pSensor, occupancyState: pOccupancyState)
     }
+    
     func updateSensorbtncounterReset(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         self.dataFetchManagerFireBase.updateSensorBtnResetCounter(completion: pCompletion, sensor: pSensor)
     }
@@ -276,8 +281,19 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.saveMood(completion: pCompletion, mood: pMood)
     }
     
-    func searchMood(completion pCompletion: @escaping (Error?, Array<Mood>?) -> Void, room pRoom :Room?) {
+    func searchMood(completion pCompletion: @escaping (Error?, String?, Array<Mood>?) -> Void, room pRoom :Room?) {
         self.dataFetchManagerFireBase.searchMood(completion: pCompletion, room: pRoom)
+    }
+    
+    func selectAppliances(completion pCompletion: @escaping (Error?, Array<MoodAppliances>?) -> Void, room pRoom :Room?) {
+        self.dataFetchManagerFireBase.selectAppliances(completion: pCompletion, room: pRoom)
+    }
+    
+    func createNewMood(completion pCompletion: @escaping (Error?, MoodAppliances?) -> Void, Mood pMood :Mood?) {
+        self.dataFetchManagerFireBase.createNewMood(completion: pCompletion, mood: pMood)
+    }
+    func selectRemoteKeys(completion pCompletion: @escaping (Error?,  Array<RemoteKey>?) -> Void, room pRoom :Room?, applianeslist papplianeslist: applianeslist?) {
+        self.dataFetchManagerFireBase.selectRemoteKeys(completion: pCompletion, room: pRoom, applianeslist: papplianeslist)
     }
     
     func moodDetails(completion pCompletion: @escaping (Error?, Mood?) -> Void, mood pMood :Mood) {
@@ -288,6 +304,9 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateMoodPowerState(completion: pCompletion, mood: pMood, powerState: pPowerState)
     }
     
+    func deleteMood(mood pmood: Mood, pcomplition: @escaping(Error?)-> Void) {
+        self.dataFetchManagerFireBase.deleteMoods(pmood: pmood, complition: pcomplition)
+    }
     func deleteMood(completion pCompletion: @escaping (Error?, Mood?) -> Void, mood pMood :Mood) {
         self.dataFetchManagerFireBase.deleteMood(completion: pCompletion, mood: pMood)
     }
@@ -304,6 +323,10 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.saveSchedule(completion: pCompletion, schedule: pSchedule)
     }
     
+    func saveCore(completion pCompletion: @escaping (Error?, Core?) -> Void, core pCore :Core) {
+        self.dataFetchManagerFireBase.saveCore(completion: pCompletion, core: pCore)
+        self.dataFetchManagerFireBase.saveCoreForBackend(completion: pCompletion, core: pCore)
+    }
     func coreList(completion pCompletion: @escaping (Error?, [Core]?) -> Void) {
         self.dataFetchManagerFireBase.coreList(completion: pCompletion)
     }
@@ -313,6 +336,9 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateCoreData(completion: pCompletion, pcore: core)
     }
     
+    func deleteCore(completion pCompletion: @escaping (Error?) -> Void, pCore pcore :Core) {
+        self.dataFetchManagerFireBase.deleteCore(completion: pCompletion, core: pcore)
+    }
     #if APP_WIFINITY
     func configureDevice(completion pCompletion: @escaping (Error?, Device?) -> Void, device pDevice :Device) {
         self.dataFetchManagerFireBase.configureDevice(completion: pCompletion, device: pDevice)
@@ -335,6 +361,9 @@ class DataFetchManager: NSObject {
     }
     func searchVDPdevices(completion pCompletion: @escaping (Error?, Array<VDPModul>?) -> Void) {
         self.dataFetchManagerFireBase.searchVDPdevices(completion: pCompletion)
+    }
+    func verifyMobilenumber(complition pcomplition: @escaping(Error?,UserVerify?)-> Void)  {
+        self.dataFetchManagerFireBase.verifyMobileNumber(complition: pcomplition)
     }
     #endif
     func searchTankRegulator(completion pCompletion: @escaping (Error?, Array<TankRegulator>?) -> Void) {
@@ -380,4 +409,13 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateRuleState(completion: pCompletion, rule: pRule, state: pState)
     }
     
+    // MARK: - VDP
+    
+    func vdpConnectionUrl(completion pCompletion: @escaping (SocketIOClient?) -> Void, socket psocket: SocketIOClient?) {
+        self.dataFetchManagerFireBase.vdpSocketConnection(completion: pCompletion, socket: psocket )
+    }
+    // MARK: - BUY PRODUCT
+    func selectProductList(completion pCompletion: @escaping (Error?, Array<Ecommerce>?) -> Void) {
+        self.dataFetchManagerFireBase.selectProductList(completion: pCompletion)
+    }
 }

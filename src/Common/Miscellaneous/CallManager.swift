@@ -52,7 +52,8 @@ class CallManager: NSObject,CXProviderDelegate, CXCallObserverDelegate {
     
     func displayIncomingCallAlert(userInfo: [AnyHashable: Any]) {
         let center = UNUserNotificationCenter.current()
-
+        var vdx = DashboardController()
+            vdx.loadVdp()
             let answerAction = UNNotificationAction(identifier: "answer", title: "Answer", options: [.foreground])
             let rejectAction = UNNotificationAction(identifier: "reject", title: "Reject", options: [.destructive])
 
@@ -138,7 +139,9 @@ let provider = CXProvider(configuration: CXProviderConfiguration())
     func declineCall() {
         DispatchQueue.global(qos: .background).async { [self] in
         guard let call = callController.callObserver.calls.first else { return }
-        provider.reportCall(with: call.uuid, endedAt: nil, reason: .failed)
+        provider.reportCall(with: call.uuid, endedAt: nil, reason: .remoteEnded)
+          //  UIApplication.shared.open(NSURL(string: "whatsapp://send?phone=+919689374439")! as URL)
+
         }
      }
 }

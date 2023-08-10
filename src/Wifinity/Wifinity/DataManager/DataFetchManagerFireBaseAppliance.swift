@@ -134,10 +134,11 @@ extension DataFetchManagerFireBase {
                     var aFetchedApplianceArray = Array<Appliance>()
                     for aDeviceId in aDeviceIdArray {
                         let aDispatchSemaphore = DispatchSemaphore(value: 0)
-                        self.database
+                    var databs = self.database
                             .child("applianceDetails")
                             .child(aDeviceId)
-                            .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                        databs.keepSynced(true)
+                        databs.observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                                 if let anArray = DataContractManagerFireBase.appliances(any: pDataSnapshot.value) {
                                     aFetchedApplianceArray.append(contentsOf: anArray)
                                 }
@@ -167,7 +168,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError, anApplianceArray,deviceIdArray)
             }
         }
-        
     }
     
     
@@ -192,7 +192,7 @@ extension DataFetchManagerFireBase {
                 
                 let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
                 var aMessageField :DatabaseReference? = nil
-                aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId!)
+                aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId ?? "00")
                 var idcont = pAppliance.id
                var conditions = idcont!.contains("C")
                 if conditions{
@@ -283,11 +283,24 @@ extension DataFetchManagerFireBase {
                     aSwitchTypeDispatchSemaphore.signal()
                 }
                 }
+                conditions = idcont!.contains("V")
+                if conditions{
+                 
+                       // for i in 0..<anArray.count{
+              //  if controllerId == anArray[i] as String{
+                        //    pAppliance.hardwareId = String(i)
+                     
+                    self.deleteOnevdpControllerWithId(complition: { error in
+                        pCompletion(error)
+                    }, appliance: pAppliance)
+                           
+                        //  }
+                     //   }
+               
+               
+                }
                 //remaining L and G
-                
             _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
- 
-                
              
              } catch {
                 anError = error
@@ -299,6 +312,56 @@ extension DataFetchManagerFireBase {
             }
         }
         
+    }
+    func deleteOnevdpControllerWithId(complition pcomplition: @escaping (Error?) -> Void ,appliance pAppliance :ControllerAppliance) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            let controllerId = pAppliance.id
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                if (pAppliance.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
+                }
+                
+                // NO NEED TO update state in database
+           
+                let aSwitchTypeDispatchSemaphoree = DispatchSemaphore(value: 0)
+                var aMessageFieldv :DatabaseReference? = nil
+                aMessageFieldv =  Database.database().reference().child("vdpCustomMessages").child(pAppliance.id!)
+ 
+                aMessageFieldv?.removeValue(completionBlock: { (pError, pDatabaseReference) in
+                    anError = pError
+                    aSwitchTypeDispatchSemaphoree.signal()
+                })
+            _ = aSwitchTypeDispatchSemaphoree.wait(timeout: .distantFuture)
+                
+                let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
+                var aMessageField :DatabaseReference? = nil
+                aMessageField =  Database.database().reference().child("vdpDevices").child(pAppliance.id!)
+ 
+                aMessageField?.removeValue(completionBlock: { (pError, pDatabaseReference) in
+                    anError = pError
+                    pcomplition(anError)
+                    aSwitchTypeDispatchSemaphore.signal()
+                })
+            _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
+ 
+             
+             } catch {
+                anError = error
+                 pcomplition(anError)
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+               
+            }
+        }
     }
     func deleteOnePControllerWithId(appliance pAppliance :ControllerAppliance) {
         DispatchQueue.global(qos: .background).async {
@@ -337,7 +400,6 @@ extension DataFetchManagerFireBase {
                
             }
         }
-        
     }
     func deleteOneControllerWithId(complition pcompliton: @escaping(Error?) -> Void,appliance pAppliance :ControllerAppliance) {
         DispatchQueue.global(qos: .background).async {

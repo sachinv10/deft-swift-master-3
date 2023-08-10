@@ -21,7 +21,7 @@ class NewScheduleController: BaseController {
     var editedScheduleRooms :Array<Room>?
     var editedScheduleTime :String?
     var editedScheduleRepetitions :Array<Schedule.Day>?
-    
+    var repetedOnce: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +81,7 @@ class NewScheduleController: BaseController {
     
     func saveSchedule(schedule pSchedule :Schedule) {
         let aSchedule = pSchedule.clone()
-        
-        ProgressOverlay.shared.show()
+         ProgressOverlay.shared.show()
         DataFetchManager.shared.saveSchedule(completion: { (pError, pSchedule) in
             ProgressOverlay.shared.hide()
             if pError != nil {
@@ -108,7 +107,9 @@ class NewScheduleController: BaseController {
             }
             
             let aRooms = self.editedScheduleRooms ?? self.schedule?.rooms
-            
+            if aRooms?.count ?? 0 <= 0{
+                throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Please select appliances"])
+            }
             var aTime = self.editedScheduleTime ?? self.schedule?.time
             if (aTime?.count ?? 0) <= 0 {
                 let aDateFormatter = DateFormatter()
@@ -126,12 +127,12 @@ class NewScheduleController: BaseController {
             aSchedule.rooms = aRooms
             aSchedule.time = aTime
             aSchedule.repetitions = aRepetitions
+            aSchedule.repeatOnce = repetedOnce
             self.saveSchedule(schedule: aSchedule)
         } catch {
             PopupManager.shared.displayError(message: error.localizedDescription, description: nil)
         }
     }
-    
 }
 
 
@@ -229,9 +230,9 @@ extension NewScheduleController :UITableViewDataSource, UITableViewDelegate {
                     aCellView.delegate = self
                     aCellView.selectionStyle = UITableViewCell.SelectionStyle.none
                     if let aRepetitionArray = self.editedScheduleRepetitions {
-                        aCellView.load(scheduleDays: aRepetitionArray)
+                        aCellView.load(scheduleDays: aRepetitionArray, scheduler: repetedOnce)
                     } else if let aRepetitionArray = self.schedule?.repetitions {
-                        aCellView.load(scheduleDays: aRepetitionArray)
+                        aCellView.load(scheduleDays: aRepetitionArray, scheduler: schedule?.repeatOnce ?? false)
                     }
                     aReturnVal = aCellView
                 }
@@ -256,11 +257,10 @@ extension NewScheduleController :UITableViewDataSource, UITableViewDelegate {
         , pIndexPath.row < self.cellTypes.count{
             let aCellType = self.cellTypes[pIndexPath.row]
             if aCellType == CellType.components {
-                RoutingManager.shared.gotoSelectRoom(controller: self, roomSelectionType: SelectRoomController.SelectionType.components, delegate: self, shouldAllowAddRoom: false, selectedRooms: self.editedScheduleRooms ?? self.schedule?.rooms)
+                RoutingManager.shared.gotoSelectRoom(controller: self, shouldIfConditionAddRoom: false, shouldThenConditionAddRoom: false, roomSelectionType: SelectRoomController.SelectionType.components, delegate: self, shouldAllowAddRoom: false, selectedRooms: self.editedScheduleRooms ?? self.schedule?.rooms)
             }
         }
     }
-    
 }
 
 
@@ -270,10 +270,8 @@ extension NewScheduleController :SelectRoomControllerDelegate {
     func selectRoomController(_ pSender: SelectRoomController, didSelectRooms pRoomArray: Array<Room>?) {
         self.editedScheduleRooms = pRoomArray
         self.reloadAllView()
-        
         RoutingManager.shared.goBackToController(self)
     }
-
 }
 
 
@@ -302,6 +300,7 @@ extension NewScheduleController : ScheduleTimeTableCellViewDelegate {
 extension NewScheduleController : ScheduleRepeatTableCellViewDelegate {
     
     func scheduleRepeatTableCellView(_ pSender: ScheduleRepeatTableCellView, didChangeValue pValue: Array<Schedule.Day>?) {
+        repetedOnce = pSender.repeatOncebtn.isOn
         self.editedScheduleRepetitions = pValue
     }
     

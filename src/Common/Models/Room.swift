@@ -12,13 +12,16 @@ class Room: NSObject {
     var id :String?
     var title :String?
     var lastActiveDate :Date?
-    
+    var devices :Array<String>?
+    var curtainId :Array<String>?
+    var remoteId :Array<String>?
     var appliances :Array<Appliance>?
     var curtains :Array<Curtain>?
     var remotes :Array<Remote>?
     var moodOnRemotes :Array<Remote>?
     var moodOffRemotes :Array<Remote>?
     var sensors :Array<Sensor>?
+    var lastActivityRoom: String?
     
     override init() {
         

@@ -55,6 +55,8 @@ class ProductManualViewController: BaseController {
         subTitle = ""
         tableviewProduct.delegate = self
         tableviewProduct.dataSource = self
+        view.backgroundColor = UIColor(named: "PrimaryLightestColor")
+
       //  let ref = storage.reference(withPath:"gs://wificontrol-a94cc.appspot.com/Pdf Product Manual")
 //        guard let url = URL(string: "Wifinity/Wifinity_Smart_Sensor.pdf")else{return}
 //        let downloadTask = ref.write(toFile: url) { url, error in

@@ -44,7 +44,7 @@ class detailResolveViewController: BaseController {
         lblTecketId.text = pcomplent.ticketId
         lblIssueResolveBy.text = pcomplent.resolvedBy
         lblDiscreption.text = pcomplent.descriptionn
-        lblHardwareName.text = pcomplent.controllerName
+        lblHardwareName.text = pcomplent.controllerName 
         lblhardwareandRoom.text = ""
     }
 }

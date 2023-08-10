@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import WebRTC
+import Starscream
 /**
  The ProgressOverlay creates an overlay that can be used to indicate any application activity and to disable user interaction with the application for some time.
  */
@@ -229,8 +230,35 @@ public class ProgressOverlay: NSObject {
         self.messageLabel!.text = self.message
         self.messageLabel!.isHidden = self.message == nil
     }
+    let activityIndicators = UIActivityIndicatorView(style: .white)
+
+    // for vdp only
+    public func activityIndicatorStart(view: RTCEAGLVideoView) {
+        
+            activityIndicators.color = .white
+            activityIndicators.center = view.center
+            
+            view.addSubview(activityIndicators)
+            activityIndicators.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7){
+            self.stopAnimation()
+        }
+    }
     
-    
+    public func activityIndicatorStart(view: RTCMTLVideoView) {
+        
+            activityIndicators.color = .white
+            activityIndicators.center = view.center
+            
+            view.addSubview(activityIndicators)
+            activityIndicators.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7){
+            self.stopAnimation()
+        }
+    }
+   public func stopAnimation()  {
+        activityIndicators.stopAnimating()
+    }
     /**
      The function allows to hide the progress overlay.
      

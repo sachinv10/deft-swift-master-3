@@ -17,6 +17,7 @@ class SearchApplianceTableCellView: UITableViewCell {
     @IBOutlet weak var onOffSwitch: AppSwitch!
     @IBOutlet weak var slider: AppSlider!
     
+    @IBOutlet weak var titleContaintView: UIView!
     @IBOutlet weak var btnbackgroundhandel: UIButton!
     var sliderTimer: Timer?
     
@@ -27,13 +28,13 @@ class SearchApplianceTableCellView: UITableViewCell {
     var showDisclosureIndicator :Bool = false {
         didSet {
             if self.showDisclosureIndicator {
-                self.disclosureIndicatorImageView.isHidden = false
+          //      self.disclosureIndicatorImageView.isHidden = false
                 self.selectionStyle = UITableViewCell.SelectionStyle.default
-                self.containerViewTrailingConstraint.constant = 30
+          //      self.containerViewTrailingConstraint.constant = 30
             } else {
-                self.disclosureIndicatorImageView.isHidden = true
+             //   self.disclosureIndicatorImageView.isHidden = true
                 self.selectionStyle = UITableViewCell.SelectionStyle.none
-                self.containerViewTrailingConstraint.constant = 15
+            //    self.containerViewTrailingConstraint.constant = 15
             }
         }
     }
@@ -56,11 +57,19 @@ class SearchApplianceTableCellView: UITableViewCell {
         self.titleLabel.textColor = UIColor.darkGray
         self.roomTitleLabel.textColor = UIColor.gray
         
-        self.slider.minimumTrackTintColor = UIColor(named: "ControlCheckedColor")
-        self.slider.maximumTrackTintColor = UIColor(named: "ControlNormalColor")
+        self.slider.minimumTrackTintColor = UIColor(hex: "#A48DC1")
+     //   UIColor(named: "ControlCheckedColor")
+        self.slider.maximumTrackTintColor = UIColor(hex: "#DABBFF")
         btnbackgroundhandel.setTitle("", for: .normal)
-      //  btnbackgroundhandel.contentEdgeInsets = UIEdgeInsets(top: 60, left: -115, bottom: 50, right: 50)
-    }
+        // UI changes
+        titleContaintView.layer.borderColor = UIColor(hex: "#7749A6").cgColor
+        titleContaintView.layer.borderWidth = 2
+        titleContaintView.layer.masksToBounds = true
+        titleContaintView.layer.cornerRadius = 10
+        onOffSwitch.isHidden = true
+        disclosureIndicatorImageView.isHidden = true
+        
+     }
     
     var propObserve = 1 {
         willSet {
@@ -95,6 +104,7 @@ class SearchApplianceTableCellView: UITableViewCell {
         self.onOffSwitch.isOn = pAppliance.isOn
         if ConfigurationManager.shared.appType == .wifinity {
             self.onOffSwitch.isEnabled = pAppliance.isOnline == true
+            titleContaintView.backgroundColor = pAppliance.isOn == true ? UIColor(hex: "#F8E8BE") : UIColor.clear
         }
         
         self.slider.isHidden = true
@@ -199,10 +209,10 @@ class SearchApplianceTableCellView: UITableViewCell {
     
     
     static func cellHeight(appliance pAppliance :Appliance) -> CGFloat {
-        var aReturnVal :CGFloat = 80.0
+        var aReturnVal :CGFloat = 100.0
         
         if pAppliance.isOn && pAppliance.isDimmable {
-            aReturnVal = 125.0
+            aReturnVal = 145.0
         }
         
         return aReturnVal
@@ -242,7 +252,6 @@ class SearchApplianceTableCellView: UITableViewCell {
         })
     }
 }
-
 
 
 protocol SearchApplianceTableCellViewDelegate :AnyObject {

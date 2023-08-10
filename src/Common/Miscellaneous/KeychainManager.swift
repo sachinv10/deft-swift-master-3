@@ -34,7 +34,6 @@ class KeychainManager: NSObject {
                 aReturnVal = NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not save data."])
             }
         }
-        
         return aReturnVal
     }
     

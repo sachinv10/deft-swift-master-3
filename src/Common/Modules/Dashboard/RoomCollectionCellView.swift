@@ -21,11 +21,28 @@ class RoomCollectionCellView: UICollectionViewCell {
     
     weak var delegate :RoomCollectionCellViewDelegate?
     
+    let messageLabel = UILabel()
+       
+       override init(frame: CGRect) {
+           super.init(frame: frame)
+           messageLabel.text = "No data found"
+           messageLabel.textAlignment = .center
+           messageLabel.translatesAutoresizingMaskIntoConstraints = false
+           contentView.addSubview(messageLabel)
+           NSLayoutConstraint.activate([
+               messageLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+               messageLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+           ])
+       }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        // Your initialization code goes here
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        self.backgroundColor =  UIColor(hex: "#FEFEFE")
         self.titleLabel.textColor = UIColor.darkGray
         self.dateLabel.textColor = UIColor.gray
     }
@@ -33,19 +50,17 @@ class RoomCollectionCellView: UICollectionViewCell {
     
     func load(room pRoom :Room) {
         self.titleLabel.text = pRoom.title
-        self.dateLabel.text = "Last Active On " + (pRoom.lastActiveDateText ?? "")
+       // self.dateLabel.text = "Last Active On " + (pRoom.lastActiveDateText ?? "")
+        self.dateLabel.text = "Last Active On " + (pRoom.lastActivityRoom ?? "")
     }
-    
     
     @IBAction func didSelectApplianceButton(_ pSender: UIButton?) {
         self.delegate?.didSelectApplianceButton(self)
     }
     
-    
     @IBAction func didSelectCurtainButton(_ pSender: UIButton?) {
         self.delegate?.didSelectCurtainButton(self)
     }
-    
     
     @IBAction func didSelectRemoteButton(_ pSender: UIButton?) {
         self.delegate?.didSelectRemoteButton(self)
@@ -91,9 +106,9 @@ class RoomCollectionCellButton :UIButton {
         self.layer.borderColor = self.tintColor.cgColor
         self.layer.cornerRadius = self.frame.size.height / 2.0
         if UtilityManager.shared.screenSizeType == UtilityManager.ScreenSizeType.small {
-            self.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+            self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
-            self.imageEdgeInsets = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+            self.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         }
     }
     

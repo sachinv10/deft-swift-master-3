@@ -15,16 +15,17 @@ class onGoingCell: UITableViewCell{
         super.awakeFromNib()
         // Initialization code
         self.backgroundColor = UIColor(named: "PrimaryLightestColor")
-      //  viewHardare.isHidden = true
+        //  viewHardare.isHidden = true
         stackview.layer.borderColor = UIColor.gray.cgColor
         stackview.layer.borderWidth = 1
         stackview.layer.cornerRadius = 7
-       // stackview.sha
+        // stackview.sha
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         
     }
     
-//  otp view
+    
+    //  otp view
     @IBOutlet weak var lblDiscription: UILabel!
     @IBOutlet weak var lblStatus: UILabel!
     @IBOutlet weak var lblIssueType: UILabel!
@@ -42,26 +43,28 @@ class onGoingCell: UITableViewCell{
     @IBOutlet weak var lblhardwareName: UILabel!
     //  @IBOutlet weak var lblname: UILabel!
     func load(obj: Complents){
+        
+        viewOtp.isHidden = !(obj.checked ?? false)
+        viewHardare.isHidden = !(obj.checked ?? false) && (obj.controllerName != nil)
+        
         lblComplentId.text = obj.ticketId
         let time = Double(obj.issueRaisedTime ?? 0)
-       let x = SharedFunction.shared.gotoTimetampTodayConvert(time: time / 1000)
-          lblTime.text = x
+        let x = SharedFunction.shared.gotoTimetampTodayConvert(time: time / 1000)
+        lblTime.text = x
         
-      //  lblOtp.text = obj.resolveOtp
+        //  lblOtp.text = obj.resolveOtp
         lblIssueType.text = "Issue Type: \(obj.issueType!)"
         lblStatus.text = "Status: \(obj.issueStatus!)"
         lblDiscription.text = obj.descriptionn
-        
-        if obj.issueType == "Hardware"{
-            viewHardare.isHidden = false
-            Hardwaretype.text = obj.issueType
-            lblhardwareName.text = obj.controllerName
-        }else{
-             viewHardare.isHidden = true
-
+        if !viewHardare.isHidden{
+            if obj.issueType == "Hardware"{
+                viewHardare.isHidden = false
+                Hardwaretype.text = obj.issueType
+                lblhardwareName.text = obj.controllerName
+            }else{
+                viewHardare.isHidden = true
+            }
         }
-           
-        
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -73,25 +76,27 @@ class OnGoingIssieViewController: BaseController {
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "Ongoing issue"
+        subTitle = nil
         tableview.dataSource = self
         tableview.delegate = self
         getdata()
+        view.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        
     }
     var dictionary: Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
     var dictionaryfinal = [String: AnyObject]()
     func getdata(){
         let uid = Auth.auth().currentUser!.uid + "_inProgress"
+        Database.database().reference().child("complaints").keepSynced(true)
         Database.database().reference().child("complaints").queryOrdered(byChild: "filter")
             .queryEqual(toValue: uid)
             .observeSingleEvent(of: .value, with: { snapshot in
-         //   print(snapshot.value as! Dictionary<String,AnyObject>)
-       let data = snapshot.value as? Array<Dictionary<String,Any>?>
+                let data = snapshot.value as? Dictionary<String,Any>
                 if let x = snapshot.value, 0 < data?.count ?? 0{
                     self.dictionary = snapshot.value as! Dictionary<String,AnyObject>
                     let  USD = snapshot.value.map { ($0 as! [String: AnyObject]) }
                     print("data=\(USD)")
-                    // self.dictionaryfinal = USD!
                     
                     for x in self.dictionary{
                         var pcomp = Complents()
@@ -116,11 +121,12 @@ class OnGoingIssieViewController: BaseController {
                         pcomplent.uid = y["uid"]! as! String
                         if y["issueType"]! as! String == "Hardware"{
                             let devices = y["devices"] as! [Dictionary<String,AnyObject>]
+                            var strarray: Array<String> = Array<String>()
                             for item in devices{
-                                pcomplent.controllerName = "\(item["name"]!) of \(item["roomName"]!)"
+                                strarray.append("\(item["name"]!) of \(item["roomName"]!)")
                             }
+                            pcomplent.controllerName = strarray.joined(separator: "\n")
                         }
-                        
                         self.complentArray.append(pcomplent)
                     }
                     self.tableview.reloadData()
@@ -128,7 +134,7 @@ class OnGoingIssieViewController: BaseController {
             })
     }
     var complentArray = [Complents]()
-     
+    
 }
 extension OnGoingIssieViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -137,7 +143,7 @@ extension OnGoingIssieViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellO", for: indexPath) as! onGoingCell
-         let obj = complentArray[indexPath.row]
+        let obj = complentArray[indexPath.row]
         cell.load(obj: obj)
         return cell
     }
@@ -145,8 +151,15 @@ extension OnGoingIssieViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didselect cell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellO", for: indexPath) as! onGoingCell
-        cell.viewHardare.isHidden = true
-        self.tableview.reloadData()
+        let obj = complentArray[indexPath.row]
+        if obj.checked == true{
+            obj.checked = false
+        }else
+        { obj.checked = true
+        }
+        complentArray[indexPath.row] = obj
+        self.tableview.reloadRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        //  self.tableview.reloadData()
     }
- 
+    
 }

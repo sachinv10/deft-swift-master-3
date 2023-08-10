@@ -200,7 +200,33 @@ extension DataFetchManagerFireBase {
         }
         
     }
-    
+    func updateVdpFanState(completion pCompletion: @escaping (Error?) -> Void, vdpModule pvdpModule :VDPModul) {
+        DispatchQueue.global(qos: .background).async {
+           
+                self.requestCount += 1
+                var anError :Error?
+                do {
+                    if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                        throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                    }
+                     // Send message and reset it
+                    var aMessageValue = ""
+                    aMessageValue += "$V00100000000#" // vdp fan off cmd
+                        anError = self.sendMessage(aMessageValue, entity: pvdpModule)
+                    if anError != nil {
+                        throw anError!
+                    }
+                } catch {
+                    anError = error
+                }
+                
+                DispatchQueue.main.async {
+                    self.requestCount -= 1
+                    pCompletion(anError)
+                }
+            }
+
+    }
     
     func updateSensorOccupancyState(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, occupancyState pOccupancyState :Sensor.OccupancyState) {
         DispatchQueue.global(qos: .background).async {

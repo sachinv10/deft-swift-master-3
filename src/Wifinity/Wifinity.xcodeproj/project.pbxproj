@@ -46,6 +46,7 @@
 		189EF201295EC76F00DA5EFD /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EF1FF295EC76F00DA5EFD /* ListTableViewCell.swift */; };
 		189EF202295EC76F00DA5EFD /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189EF200295EC76F00DA5EFD /* ListTableViewCell.xib */; };
 		189EF204295F14B700DA5EFD /* VDPModul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EF203295F14B700DA5EFD /* VDPModul.swift */; };
+		189F453529EFC5EA001BA2A7 /* SocketConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189F453429EFC5EA001BA2A7 /* SocketConnection.swift */; };
 		18A1003C29769F3400DEA70E /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1003B29769F3400DEA70E /* LocalNotificationManager.swift */; };
 		18A16EF9291628C00007C7C6 /* HelpAndSupport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */; };
 		18A16EFB291628EC0007C7C6 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */; };
@@ -53,8 +54,16 @@
 		18A3E45E297FAC5900FB0837 /* CustomMsgViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3E45D297FAC5900FB0837 /* CustomMsgViewController.swift */; };
 		18A3E461297FB50600FB0837 /* CustommsgtblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */; };
 		18A3E462297FB50600FB0837 /* CustommsgtblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */; };
+		18A45B6529FBD4E700E3426B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18A45B6429FBD4E700E3426B /* Profile.storyboard */; };
+		18A45B6729FBD5C600E3426B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A45B6629FBD5C600E3426B /* ProfileViewController.swift */; };
 		18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */; };
+		18ABDB282A1CEC8B00415897 /* AddNewMoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ABDB272A1CEC8B00415897 /* AddNewMoodViewController.swift */; };
+		18ACDEFC29FD486500EFC3F6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ACDEFB29FD486500EFC3F6 /* ChangePasswordViewController.swift */; };
+		18AD605A29DE8B840091CA6C /* VdpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD605929DE8B840091CA6C /* VdpManager.swift */; };
+		18AD605C29DE969F0091CA6C /* DataFetchManagerFireBaseVdp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AD605B29DE969F0091CA6C /* DataFetchManagerFireBaseVdp.swift */; };
+		18ADCFE62A285F7B00768FB7 /* RemoteKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADCFE52A285F7B00768FB7 /* RemoteKeysViewController.swift */; };
 		18AF6FAA29BB6634001AF76C /* iphone_marimba_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18AF6FA929BB6634001AF76C /* iphone_marimba_sound.wav */; };
+		18B023C12A389E7C00CBAA91 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B023C02A389E7C00CBAA91 /* ProductDetailViewController.swift */; };
 		18B12DCD2987DADB0091B462 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B12DCC2987DADB0091B462 /* CallManager.swift */; };
 		18B36C9A295966D20057779D /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C99295966D20057779D /* SocketIO */; };
 		18B36C9D2959676C0057779D /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 18B36C9C2959676C0057779D /* WebRTC */; };
@@ -62,11 +71,26 @@
 		18B36CA229596BA20057779D /* RTCCustomFrameCapturer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */; };
 		18B36CA429596C390057779D /* Modules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B36CA329596C390057779D /* Modules.swift */; };
 		18B36CA629596E4D0057779D /* VDP.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18B36CA529596E4D0057779D /* VDP.storyboard */; };
+		18B580812A3DA96700B8BFDA /* YourOrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B580802A3DA96700B8BFDA /* YourOrderListViewController.swift */; };
+		18B580852A3DB62300B8BFDA /* OrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B580832A3DB62300B8BFDA /* OrderListCell.swift */; };
+		18B580862A3DB62300B8BFDA /* OrderListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B580842A3DB62300B8BFDA /* OrderListCell.xib */; };
+		18B5E3C32A1F2C44002FBDEB /* SelectAppliancViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B5E3C22A1F2C44002FBDEB /* SelectAppliancViewController.swift */; };
+		18B5E3C52A1F5D17002FBDEB /* MoodAppliances.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B5E3C42A1F5D17002FBDEB /* MoodAppliances.swift */; };
+		18B94E9C2A581C950080A681 /* WaterLevelWebviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B94E9B2A581C950080A681 /* WaterLevelWebviewViewController.swift */; };
+		18C7CF952A403866008363AE /* CreateNewCoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7CF942A403866008363AE /* CreateNewCoreViewController.swift */; };
+		18CBE3412A36F124005C8196 /* BuyProduct.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE3402A36F124005C8196 /* BuyProduct.storyboard */; };
+		18CBE3432A36F15A005C8196 /* BuyProducListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE3422A36F15A005C8196 /* BuyProducListViewController.swift */; };
+		18CBE3482A372921005C8196 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE3462A372921005C8196 /* TableViewCell.swift */; };
+		18CBE3492A372921005C8196 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CBE3472A372921005C8196 /* TableViewCell.xib */; };
+		18CBE34B2A3741C0005C8196 /* BuyProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE34A2A3741C0005C8196 /* BuyProduct.swift */; };
+		18CBE34D2A374A14005C8196 /* DataFetchManagerFireBaseBuyProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBE34C2A374A14005C8196 /* DataFetchManagerFireBaseBuyProduct.swift */; };
+		18E4CFDF2A42FE9E004C9CF5 /* SwiftClockUI in Frameworks */ = {isa = PBXBuildFile; productRef = 18E4CFDE2A42FE9E004C9CF5 /* SwiftClockUI */; };
 		18E537E1291D320200076F8F /* PdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E537E0291D320200076F8F /* PdfViewController.swift */; };
 		18EA947228CF2DB80034C291 /* ResetAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EA947128CF2DB80034C291 /* ResetAllViewController.swift */; };
 		18EB2DBE2923556F00A22BBB /* OnGoingIssieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB2DBD2923556F00A22BBB /* OnGoingIssieViewController.swift */; };
 		18EB2DC02923C36100A22BBB /* HelpAndSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB2DBF2923C36100A22BBB /* HelpAndSupport.swift */; };
 		18EC357528EED17000FD1DAF /* RqTv.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18EC357428EED16F00FD1DAF /* RqTv.gif */; };
+		18F10D2A2A3AF1EA00225BC0 /* productDemoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F10D292A3AF1EA00225BC0 /* productDemoDetailViewController.swift */; };
 		372D440F283F5F2A002F0F96 /* Core.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372D440E283F5F2A002F0F96 /* Core.storyboard */; };
 		372D4411283F5F52002F0F96 /* CoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4410283F5F52002F0F96 /* CoreViewController.swift */; };
 		372D4413283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */; };
@@ -292,6 +316,7 @@
 		189EF1FF295EC76F00DA5EFD /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		189EF200295EC76F00DA5EFD /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
 		189EF203295F14B700DA5EFD /* VDPModul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VDPModul.swift; sourceTree = "<group>"; };
+		189F453429EFC5EA001BA2A7 /* SocketConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketConnection.swift; sourceTree = "<group>"; };
 		18A1003B29769F3400DEA70E /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		18A16EF8291628C00007C7C6 /* HelpAndSupport.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HelpAndSupport.storyboard; sourceTree = "<group>"; };
 		18A16EFA291628EC0007C7C6 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
@@ -299,18 +324,40 @@
 		18A3E45D297FAC5900FB0837 /* CustomMsgViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMsgViewController.swift; sourceTree = "<group>"; };
 		18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommsgtblCell.swift; sourceTree = "<group>"; };
 		18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustommsgtblCell.xib; sourceTree = "<group>"; };
+		18A45B6429FBD4E700E3426B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		18A45B6629FBD5C600E3426B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		18AA5F4028C09A3500D99665 /* OfflineApplinceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineApplinceViewController.swift; sourceTree = "<group>"; };
+		18ABDB272A1CEC8B00415897 /* AddNewMoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMoodViewController.swift; sourceTree = "<group>"; };
+		18ACDEFB29FD486500EFC3F6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		18AD605929DE8B840091CA6C /* VdpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VdpManager.swift; sourceTree = "<group>"; };
+		18AD605B29DE969F0091CA6C /* DataFetchManagerFireBaseVdp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseVdp.swift; sourceTree = "<group>"; };
+		18ADCFE52A285F7B00768FB7 /* RemoteKeysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteKeysViewController.swift; sourceTree = "<group>"; };
 		18AF6FA929BB6634001AF76C /* iphone_marimba_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = iphone_marimba_sound.wav; path = ../../../iphone_marimba_sound.wav; sourceTree = "<group>"; };
+		18B023C02A389E7C00CBAA91 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		18B12DCC2987DADB0091B462 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
 		18B36C9F29596A910057779D /* VdpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VdpViewController.swift; sourceTree = "<group>"; };
 		18B36CA129596BA20057779D /* RTCCustomFrameCapturer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RTCCustomFrameCapturer.swift; sourceTree = "<group>"; };
 		18B36CA329596C390057779D /* Modules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modules.swift; sourceTree = "<group>"; };
 		18B36CA529596E4D0057779D /* VDP.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VDP.storyboard; sourceTree = "<group>"; };
+		18B580802A3DA96700B8BFDA /* YourOrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourOrderListViewController.swift; sourceTree = "<group>"; };
+		18B580832A3DB62300B8BFDA /* OrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListCell.swift; sourceTree = "<group>"; };
+		18B580842A3DB62300B8BFDA /* OrderListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderListCell.xib; sourceTree = "<group>"; };
+		18B5E3C22A1F2C44002FBDEB /* SelectAppliancViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAppliancViewController.swift; sourceTree = "<group>"; };
+		18B5E3C42A1F5D17002FBDEB /* MoodAppliances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodAppliances.swift; sourceTree = "<group>"; };
+		18B94E9B2A581C950080A681 /* WaterLevelWebviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterLevelWebviewViewController.swift; sourceTree = "<group>"; };
+		18C7CF942A403866008363AE /* CreateNewCoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewCoreViewController.swift; sourceTree = "<group>"; };
+		18CBE3402A36F124005C8196 /* BuyProduct.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BuyProduct.storyboard; sourceTree = "<group>"; };
+		18CBE3422A36F15A005C8196 /* BuyProducListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyProducListViewController.swift; sourceTree = "<group>"; };
+		18CBE3462A372921005C8196 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		18CBE3472A372921005C8196 /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		18CBE34A2A3741C0005C8196 /* BuyProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyProduct.swift; sourceTree = "<group>"; };
+		18CBE34C2A374A14005C8196 /* DataFetchManagerFireBaseBuyProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseBuyProduct.swift; sourceTree = "<group>"; };
 		18E537E0291D320200076F8F /* PdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfViewController.swift; sourceTree = "<group>"; };
 		18EA947128CF2DB80034C291 /* ResetAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetAllViewController.swift; sourceTree = "<group>"; };
 		18EB2DBD2923556F00A22BBB /* OnGoingIssieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnGoingIssieViewController.swift; sourceTree = "<group>"; };
 		18EB2DBF2923C36100A22BBB /* HelpAndSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpAndSupport.swift; sourceTree = "<group>"; };
 		18EC357428EED16F00FD1DAF /* RqTv.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = RqTv.gif; path = ../../../../../../Downloads/RqTv.gif; sourceTree = "<group>"; };
+		18F10D292A3AF1EA00225BC0 /* productDemoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = productDemoDetailViewController.swift; sourceTree = "<group>"; };
 		372D440E283F5F2A002F0F96 /* Core.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Core.storyboard; sourceTree = "<group>"; };
 		372D4410283F5F52002F0F96 /* CoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreViewController.swift; sourceTree = "<group>"; };
 		372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetchManagerFireBaseCore.swift; sourceTree = "<group>"; };
@@ -499,6 +546,7 @@
 				189EA1C9292217EF009C7CFE /* FirebaseAuth in Frameworks */,
 				18B36C9A295966D20057779D /* SocketIO in Frameworks */,
 				189EA1CD292217EF009C7CFE /* FirebaseMessaging in Frameworks */,
+				18E4CFDF2A42FE9E004C9CF5 /* SwiftClockUI in Frameworks */,
 				189EA1CB292217EF009C7CFE /* FirebaseDatabase in Frameworks */,
 				18B36C9D2959676C0057779D /* WebRTC in Frameworks */,
 				189E97D728BDD29B00DDC2A5 /* Starscream in Frameworks */,
@@ -530,6 +578,7 @@
 				1818345929261D48007DAAC5 /* TankRegulator.swift */,
 				1818345729261D1D007DAAC5 /* TankRegulator.storyboard */,
 				1818345329261C9C007DAAC5 /* SearchTankRegulatorViewController.swift */,
+				18B94E9B2A581C950080A681 /* WaterLevelWebviewViewController.swift */,
 			);
 			path = "Tank Regulator";
 			sourceTree = "<group>";
@@ -587,6 +636,16 @@
 			path = "Help and Support";
 			sourceTree = "<group>";
 		};
+		18A45B6129FBD43F00E3426B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				18A45B6429FBD4E700E3426B /* Profile.storyboard */,
+				18A45B6629FBD5C600E3426B /* ProfileViewController.swift */,
+				18ACDEFB29FD486500EFC3F6 /* ChangePasswordViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		18B36C9E295968840057779D /* VDP */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,13 +661,48 @@
 				18A3E45F297FB50600FB0837 /* CustommsgtblCell.swift */,
 				18A3E460297FB50600FB0837 /* CustommsgtblCell.xib */,
 				18992EFF2988FC01009E6082 /* CallingViewController.swift */,
+				18AD605929DE8B840091CA6C /* VdpManager.swift */,
+				189F453429EFC5EA001BA2A7 /* SocketConnection.swift */,
 			);
 			path = VDP;
+			sourceTree = "<group>";
+		};
+		18B580822A3DB5C600B8BFDA /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				18B580802A3DA96700B8BFDA /* YourOrderListViewController.swift */,
+				18B580832A3DB62300B8BFDA /* OrderListCell.swift */,
+				18B580842A3DB62300B8BFDA /* OrderListCell.xib */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		18C7CF932A40352B008363AE /* CreateNew */ = {
+			isa = PBXGroup;
+			children = (
+				18C7CF942A403866008363AE /* CreateNewCoreViewController.swift */,
+			);
+			path = CreateNew;
+			sourceTree = "<group>";
+		};
+		18CBE33F2A36F048005C8196 /* BuyProduct */ = {
+			isa = PBXGroup;
+			children = (
+				18B580822A3DB5C600B8BFDA /* Order */,
+				18CBE3402A36F124005C8196 /* BuyProduct.storyboard */,
+				18CBE3422A36F15A005C8196 /* BuyProducListViewController.swift */,
+				18CBE3462A372921005C8196 /* TableViewCell.swift */,
+				18CBE3472A372921005C8196 /* TableViewCell.xib */,
+				18B023C02A389E7C00CBAA91 /* ProductDetailViewController.swift */,
+				18F10D292A3AF1EA00225BC0 /* productDemoDetailViewController.swift */,
+			);
+			path = BuyProduct;
 			sourceTree = "<group>";
 		};
 		372D440D283F5F1A002F0F96 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				18C7CF932A40352B008363AE /* CreateNew */,
 				372D440E283F5F2A002F0F96 /* Core.storyboard */,
 				372D4410283F5F52002F0F96 /* CoreViewController.swift */,
 				37560E07283F80DB00041FD4 /* CoreTableViewCell.swift */,
@@ -707,6 +801,8 @@
 				3FE2C2812725C42100AC76EB /* DataFetchManagerFireBaseRule.swift */,
 				3F7044CA25A199EE00A967DA /* DataContractManagerFireBase.swift */,
 				372D4412283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift */,
+				18AD605B29DE969F0091CA6C /* DataFetchManagerFireBaseVdp.swift */,
+				18CBE34C2A374A14005C8196 /* DataFetchManagerFireBaseBuyProduct.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -797,6 +893,7 @@
 				3F60E6E3258288640094823F /* User.swift */,
 				37560E05283F794000041FD4 /* Core.swift */,
 				18EB2DBF2923C36100A22BBB /* HelpAndSupport.swift */,
+				18CBE34A2A3741C0005C8196 /* BuyProduct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -804,6 +901,8 @@
 		3F60E6E4258288640094823F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				18CBE33F2A36F048005C8196 /* BuyProduct */,
+				18A45B6129FBD43F00E3426B /* Profile */,
 				18B36C9E295968840057779D /* VDP */,
 				1818345229261BFA007DAAC5 /* Tank Regulator */,
 				18A16EF7291622750007C7C6 /* Help and Support */,
@@ -900,6 +999,10 @@
 				3F29A86125B3F3C600F39867 /* Mood.storyboard */,
 				3F60E6FC258288640094823F /* SearchMoodController.swift */,
 				3F60E6FD258288640094823F /* SearchMoodTableCellView.swift */,
+				18ABDB272A1CEC8B00415897 /* AddNewMoodViewController.swift */,
+				18B5E3C22A1F2C44002FBDEB /* SelectAppliancViewController.swift */,
+				18B5E3C42A1F5D17002FBDEB /* MoodAppliances.swift */,
+				18ADCFE52A285F7B00768FB7 /* RemoteKeysViewController.swift */,
 			);
 			path = Mood;
 			sourceTree = "<group>";
@@ -1081,6 +1184,7 @@
 				189EA1CE292217EF009C7CFE /* FirebaseStorage */,
 				18B36C99295966D20057779D /* SocketIO */,
 				18B36C9C2959676C0057779D /* WebRTC */,
+				18E4CFDE2A42FE9E004C9CF5 /* SwiftClockUI */,
 			);
 			productName = Wifinity;
 			productReference = 3F60E65B258284DB0094823F /* Wifinity.app */;
@@ -1160,6 +1264,7 @@
 				189EA1C7292217EF009C7CFE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				18B36C98295966D20057779D /* XCRemoteSwiftPackageReference "socket" */,
 				18B36C9B2959676B0057779D /* XCRemoteSwiftPackageReference "WebRTC" */,
+				18E4CFDD2A42FE9E004C9CF5 /* XCRemoteSwiftPackageReference "SwiftClockUI" */,
 			);
 			productRefGroup = 3F60E65C258284DB0094823F /* Products */;
 			projectDirPath = "";
@@ -1194,9 +1299,11 @@
 				1818345829261D1E007DAAC5 /* TankRegulator.storyboard in Resources */,
 				189EF202295EC76F00DA5EFD /* ListTableViewCell.xib in Resources */,
 				189BC1392914E068007EAB3B /* CameraBoard.storyboard in Resources */,
+				18CBE3492A372921005C8196 /* TableViewCell.xib in Resources */,
 				3F60E77F258288650094823F /* MoodLightRemoteControl.xib in Resources */,
 				3F60E741258288640094823F /* Common.xcassets in Resources */,
 				3F411D04271DDB1F001DBB85 /* Device.storyboard in Resources */,
+				18B580862A3DB62300B8BFDA /* OrderListCell.xib in Resources */,
 				3F60E782258288650094823F /* NumberPadControl.xib in Resources */,
 				3F60E78D258288650094823F /* TvRemoteControl.xib in Resources */,
 				3F73FD3F25B3F1D800204FEC /* Curtain.storyboard in Resources */,
@@ -1219,7 +1326,9 @@
 				189B30A22911058E00BC9721 /* wifi.gif in Resources */,
 				3F29A86A25B3F40900F39867 /* Lock.storyboard in Resources */,
 				3F60E779258288640094823F /* DynamicButtonContainerView.xib in Resources */,
+				18A45B6529FBD4E700E3426B /* Profile.storyboard in Resources */,
 				18EC357528EED17000FD1DAF /* RqTv.gif in Resources */,
+				18CBE3412A36F124005C8196 /* BuyProduct.storyboard in Resources */,
 				3F60E773258288640094823F /* CircularDirectionButton.xib in Resources */,
 				3F60E666258284DB0094823F /* Main.storyboard in Resources */,
 				3F73FD4725B3F27900204FEC /* Remote.storyboard in Resources */,
@@ -1252,10 +1361,14 @@
 			files = (
 				189EF204295F14B700DA5EFD /* VDPModul.swift in Sources */,
 				3F60E74D258288640094823F /* ProgressOverlay.swift in Sources */,
+				18B580812A3DA96700B8BFDA /* YourOrderListViewController.swift in Sources */,
 				3F60E75C258288640094823F /* SearchApplianceTableCellView.swift in Sources */,
+				18C7CF952A403866008363AE /* CreateNewCoreViewController.swift in Sources */,
 				18B12DCD2987DADB0091B462 /* CallManager.swift in Sources */,
+				18ADCFE62A285F7B00768FB7 /* RemoteKeysViewController.swift in Sources */,
 				1896A367291A819C00A4AA57 /* ProductManualViewController.swift in Sources */,
 				3F60E78C258288650094823F /* TvRemoteControl.swift in Sources */,
+				18A45B6729FBD5C600E3426B /* ProfileViewController.swift in Sources */,
 				3F60E7A2258288650094823F /* BrightnessPickerView.swift in Sources */,
 				1818345C29262DE8007DAAC5 /* DataFetchManagerFireBaseTankRegulator.swift in Sources */,
 				3F60E74C258288640094823F /* PopupManager.swift in Sources */,
@@ -1297,6 +1410,7 @@
 				18E537E1291D320200076F8F /* PdfViewController.swift in Sources */,
 				3F60E787258288650094823F /* RemoteButton.swift in Sources */,
 				3F60E6A72582859F0094823F /* DataFetchManagerFireBaseMood.swift in Sources */,
+				18ACDEFC29FD486500EFC3F6 /* ChangePasswordViewController.swift in Sources */,
 				1818345A29261D48007DAAC5 /* TankRegulator.swift in Sources */,
 				3755BACB283684A100D4C956 /* IRFanRemoteControl.swift in Sources */,
 				3F60E6A22582859F0094823F /* DataFetchManagerFireBase.swift in Sources */,
@@ -1325,6 +1439,7 @@
 				187EE9A3286EC46700DB3EC0 /* SharedFunction.swift in Sources */,
 				3FA8416C274FD531007B274D /* ForgotPasswordController.swift in Sources */,
 				3F60E75A258288640094823F /* SearchApplianceController.swift in Sources */,
+				18CBE3482A372921005C8196 /* TableViewCell.swift in Sources */,
 				3F60E6A92582859F0094823F /* DataFetchManagerFireBaseRoom.swift in Sources */,
 				18A3E461297FB50600FB0837 /* CustommsgtblCell.swift in Sources */,
 				3F60E75F258288640094823F /* SearchCurtainController.swift in Sources */,
@@ -1343,6 +1458,7 @@
 				3F60E769258288640094823F /* LoginController.swift in Sources */,
 				1884CE5E298CDC1600832D41 /* ProviderDelegate.swift in Sources */,
 				3F60E772258288640094823F /* CircularDirectionButton.swift in Sources */,
+				18B580852A3DB62300B8BFDA /* OrderListCell.swift in Sources */,
 				3FA86E252678E1A100DC80EE /* EnergyDetailsController.swift in Sources */,
 				3F60E79B258288650094823F /* SensorDetailsController.swift in Sources */,
 				3F60E744258288640094823F /* AppSegmentButton.swift in Sources */,
@@ -1353,16 +1469,21 @@
 				372D4413283F652C002F0F96 /* DataFetchManagerFireBaseCore.swift in Sources */,
 				3F60E6A42582859F0094823F /* DataFetchManagerFireBaseAppNotification.swift in Sources */,
 				3F60E788258288650094823F /* RemoteControl.swift in Sources */,
+				18CBE3432A36F15A005C8196 /* BuyProducListViewController.swift in Sources */,
 				3F60E747258288640094823F /* AppTableView.swift in Sources */,
 				3F60E785258288650094823F /* RectangularDirectionButton.swift in Sources */,
 				3F60E778258288640094823F /* DynamicButtonContainerView.swift in Sources */,
 				3F60E77A258288650094823F /* FanRemoteControl.swift in Sources */,
+				18F10D2A2A3AF1EA00225BC0 /* productDemoDetailViewController.swift in Sources */,
 				3FE2C2802725C34200AC76EB /* SearchRuleTableCellView.swift in Sources */,
+				18B5E3C52A1F5D17002FBDEB /* MoodAppliances.swift in Sources */,
 				3F561C9A25A9B57900AAD474 /* AppBreadCrumbView.swift in Sources */,
 				18EB2DBE2923556F00A22BBB /* OnGoingIssieViewController.swift in Sources */,
 				3F38297F25B43CBF00CBF493 /* SelectApplianceTypeController.swift in Sources */,
+				18CBE34D2A374A14005C8196 /* DataFetchManagerFireBaseBuyProduct.swift in Sources */,
 				189E97DB28BDDB9800DDC2A5 /* SwiftyPing.swift in Sources */,
 				3F60E76A258288640094823F /* SearchMoodController.swift in Sources */,
+				18AD605A29DE8B840091CA6C /* VdpManager.swift in Sources */,
 				3F60E756258288640094823F /* Schedule.swift in Sources */,
 				3F60E77C258288650094823F /* LedStripRemoteControl.swift in Sources */,
 				3F60E781258288650094823F /* NumberPadControl.swift in Sources */,
@@ -1389,6 +1510,8 @@
 				3F60E7A3258288650094823F /* ColorPickerControl.swift in Sources */,
 				3F38297425B42D2100CBF493 /* NewApplianceController.swift in Sources */,
 				3F411D06271DDB1F001DBB85 /* NewDeviceConnectDeviceHotspotController.swift in Sources */,
+				18B94E9C2A581C950080A681 /* WaterLevelWebviewViewController.swift in Sources */,
+				18CBE34B2A3741C0005C8196 /* BuyProduct.swift in Sources */,
 				18A1003C29769F3400DEA70E /* LocalNotificationManager.swift in Sources */,
 				3F60E790258288650094823F /* SelectRoomTableCellView.swift in Sources */,
 				3F60E6AB2582859F0094823F /* DataFetchManagerFireBaseSensor.swift in Sources */,
@@ -1396,17 +1519,21 @@
 				3F60E77E258288650094823F /* MoodLightRemoteControl.swift in Sources */,
 				3F411D0B271DDB1F001DBB85 /* NewDeviceSelectRoomController.swift in Sources */,
 				3F411D07271DDB1F001DBB85 /* NewDeviceController.swift in Sources */,
+				18B023C12A389E7C00CBAA91 /* ProductDetailViewController.swift in Sources */,
 				18A16EFD291649F50007C7C6 /* SupportViewController.swift in Sources */,
 				189EF1FE295EB40A00DA5EFD /* VDPListViewController.swift in Sources */,
 				1818345629261CF9007DAAC5 /* SearchTankRegulatorTableCellView.swift in Sources */,
+				18B5E3C32A1F2C44002FBDEB /* SelectAppliancViewController.swift in Sources */,
 				18EB2DC02923C36100A22BBB /* HelpAndSupport.swift in Sources */,
 				3F60E6A82582859F0094823F /* DataFetchManagerFireBaseRemote.swift in Sources */,
+				18ABDB282A1CEC8B00415897 /* AddNewMoodViewController.swift in Sources */,
 				189E97DD28BDDE2C00DDC2A5 /* PingViewController.swift in Sources */,
 				3F60E789258288650094823F /* RemoteDetailsController.swift in Sources */,
 				3FE2C2822725C42100AC76EB /* DataFetchManagerFireBaseRule.swift in Sources */,
 				187FA68E286D687F00332C9D /* DeviceSettingViewController.swift in Sources */,
 				3F60E76E258288640094823F /* SearchAppNotificationTypeController.swift in Sources */,
 				3F60E761258288640094823F /* DashboardCollectionHeaderView.swift in Sources */,
+				18AD605C29DE969F0091CA6C /* DataFetchManagerFireBaseVdp.swift in Sources */,
 				3F60E794258288650094823F /* ScheduleRepeatTableCellView.swift in Sources */,
 				3F60E762258288640094823F /* DashboardController.swift in Sources */,
 				3F66BA0125F33DCF004DF705 /* CacheManager.swift in Sources */,
@@ -1422,6 +1549,7 @@
 				3F60E796258288650094823F /* ScheduleTitleTableCellView.swift in Sources */,
 				18AA5F4128C09A3600D99665 /* OfflineApplinceViewController.swift in Sources */,
 				3F60E78B258288650094823F /* SearchRemoteTableCellView.swift in Sources */,
+				189F453529EFC5EA001BA2A7 /* SocketConnection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1609,7 +1737,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.7;
+				MARKETING_VERSION = 2.2.6;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1637,7 +1765,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.7;
+				MARKETING_VERSION = 2.2.6;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-DAPP_WIFINITY";
 				PRODUCT_BUNDLE_IDENTIFIER = com.homeonetechnologies.wifinitypro.app;
@@ -1810,6 +1938,14 @@
 				kind = branch;
 			};
 		};
+		18E4CFDD2A42FE9E004C9CF5 /* XCRemoteSwiftPackageReference "SwiftClockUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/renaudjenny/SwiftClockUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		47268590282451D80058E92C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -1856,6 +1992,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18B36C9B2959676B0057779D /* XCRemoteSwiftPackageReference "WebRTC" */;
 			productName = WebRTC;
+		};
+		18E4CFDE2A42FE9E004C9CF5 /* SwiftClockUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18E4CFDD2A42FE9E004C9CF5 /* XCRemoteSwiftPackageReference "SwiftClockUI" */;
+			productName = SwiftClockUI;
 		};
 		47268591282451D80058E92C /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

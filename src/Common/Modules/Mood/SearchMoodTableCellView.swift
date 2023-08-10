@@ -13,6 +13,7 @@ class SearchMoodTableCellView: UITableViewCell {
     @IBOutlet weak var applianceCountLabel: UILabel!
     @IBOutlet weak var curtainCountLabel: UILabel!
     @IBOutlet weak var remoteCountLabel: UILabel!
+    @IBOutlet weak var lblMenubtn: UIButton!
     
     @IBOutlet weak var onOffSwitch: AppSwitch!
     
@@ -23,6 +24,7 @@ class SearchMoodTableCellView: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        lblMenubtn.setTitle("", for: .normal)
     }
     
     
@@ -52,6 +54,8 @@ class SearchMoodTableCellView: UITableViewCell {
         return aReturnVal
     }
     
+  
+    
 }
 
 
@@ -60,9 +64,15 @@ extension SearchMoodTableCellView {
     @IBAction func onOffSwitchDidChangeValue(_ pSender: AppSwitch) {
         self.delegate?.cellView(self, didChangePowerState: self.onOffSwitch.isOn)
     }
+    @IBAction func didTappedMenubtn(_ sender: Any) {
+        print("menu btn")
+        delegate?.cellView(self)
+    }
+    
 }
 
 
 protocol SearchMoodTableCellViewDelegate :AnyObject {
     func cellView(_ pSender: SearchMoodTableCellView, didChangePowerState pPowerState :Bool)
+    func cellView(_ pSender: SearchMoodTableCellView)
 }

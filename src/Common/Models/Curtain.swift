@@ -18,7 +18,38 @@ class Curtain: NSObject {
     var hardwareGeneration :Device.HardwareGeneration?
     
     var isOnline :Bool?
-    
+    var selectedAppType: String{
+       var returnVal = ""
+       switch scheduleLevel{
+       case 2:
+           returnVal = "When Curtain is Open"
+       case 1:
+           returnVal = "When Curtain is close"
+       case 3:
+           returnVal = "When Curtain is pouse"
+       case .none:
+           break
+       case .some(_):
+           break
+       }
+       return returnVal
+   }
+    var selectedcurtainThan: String{
+       var returnVal = ""
+       switch scheduleLevel{
+       case 2:
+           returnVal = "Open \(String(describing: title ?? ""))"
+       case 1:
+           returnVal = "close \(String(describing: title ?? ""))"
+       case 3:
+           returnVal = "pouse"
+       case .none:
+           break
+       case .some(_):
+           break
+       }
+       return returnVal
+   }
     var type :CurtainType? {
         didSet {
             self.updateIcon()
@@ -39,11 +70,11 @@ class Curtain: NSObject {
     private func updateIcon() {
         switch self.type {
         case .rolling:
-            self._icon = UIImage(named: "CurtainRolling")
+            self._icon = UIImage(named: "curtainsRoom")
         case .ac:
             self._icon = UIImage(named: "CurtainAc")
         default:
-            self._icon = UIImage(named: "CurtainRolling")
+            self._icon = UIImage(named: "curtainsRoom")
         }
     }
     
@@ -86,6 +117,7 @@ class Curtain: NSObject {
     enum CurtainType :String {
         case rolling = "Rolling"
         case ac = "AC"
+        case sliding = "Sliding"
     }
     
     

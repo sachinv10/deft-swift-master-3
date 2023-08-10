@@ -89,6 +89,7 @@ extension DataFetchManagerFireBase {
                                 }
                                 aRoomDispatchSemaphore.signal()
                             }
+                        
 //                        self.database
 //                            .child("keepAliveTimeStamp")
 //                            .child(sd)
@@ -102,6 +103,18 @@ extension DataFetchManagerFireBase {
                     }
                 //}
                 _ = aRoomDispatchSemaphore.wait(timeout: .distantFuture)
+                self.database
+                    .child("vdpDevices")
+                    .queryOrdered(byChild: "uid").queryEqual(toValue: Auth.auth().currentUser?.uid ?? "")
+                    .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                        if let aDict = pDataSnapshot.value as? [String:Any] {
+                            for items in aDict{
+                                if let controllerapp =  DataContractManagerFireBase.devicecontroller(dict: items.value as! Dictionary<String,Any>){
+                                    aRoomArray?.append(controllerapp)
+                                }
+                            }
+                        }
+                     }
             } catch {
                 anError = error
                 pCompletion(anError, aRoomArray)
@@ -214,7 +227,6 @@ extension DataFetchManagerFireBase {
                     if let aDeviceIdArray = pDataSnapshot.value as? Array<String> {
                         aFetchedRoomIdArray.append(contentsOf: aDeviceIdArray)
                         let sdx = self.deviceApplinceDetail(array: aDeviceIdArray)
-                        
                     }
                     aDispatchSemaphore.signal()
                 }
@@ -282,6 +294,31 @@ extension DataFetchManagerFireBase {
         let storyboard = UIStoryboard(name: "ContollerList", bundle: Bundle.main)
         var viewController = storyboard.instantiateViewController(withIdentifier: "ControllerListViewController") as! ControllerListViewController
         return viewController
+    }
+    func verifyMobileNumber(complition pcomplition: @escaping(Error?, UserVerify?)-> Void) {
+        var userverifyy = UserVerify()
+        var error: Error?
+  
+            if let uid = Auth.auth().currentUser?.uid{
+                Database.database().reference().child("standaloneUserDetails").child(uid).observeSingleEvent(of: .value, with: {DataSnapshot in
+                    do{
+                        let xd = try? DataSnapshot.value as? Dictionary<String,Any>
+                        userverifyy.numberVerified = xd?["numberVerified"] as? String
+                        userverifyy.phoneNumber = xd?["phoneNumber"] as? String
+                        
+                        userverifyy.dob = xd?["dob"] as? String
+                        userverifyy.email = xd?["email"] as? String
+                        
+                        userverifyy.userName = xd?["userName"] as? String
+                        userverifyy.flatNumber = xd?["flatNumber"] as? String
+                        
+                        userverifyy = userverifyy.clone()
+                    }catch let errors{
+                        error = errors
+                    }
+                    pcomplition(error, userverifyy)
+                })
+            }
     }
 }
 

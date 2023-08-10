@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  WebSocket-Tutorial
 //
-//  Created by omair khan on 05/01/2022.
+//  Created by Sachin on 05/01/2022.
 //
 
 import UIKit
@@ -19,7 +19,7 @@ import FirebaseDatabase
 
 
 class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConnectionDelegate, RTCDataChannelDelegate, RTCVideoViewDelegate,WebRTCClientDelegate{
-    var vdpmodule: VDPModul?
+    var vdpmodule: VDPModul!
     var mediaStream: RTCMediaStream!
     var remoteAudioTrack: RTCAudioTrack!
     var dataChannel: RTCDataChannel!
@@ -141,8 +141,12 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         viewExpand.isHidden = true
         //  myExpandUlsetUp()
         vdpmodule = VDPModul()
-        
-        
+        ProgressOverlay.shared.activityIndicatorStart(view: remoteRenderer)
+        DataFetchManager.shared.checkInternetConnection { (pError) in
+            if pError != nil{
+                PopupManager.shared.displayError(message: "Opps!", description: "No internet connection")
+            }
+        }
         if (socket == nil) {
             //  ProgressOverlay.shared.show()
             icecandidate = false
@@ -178,11 +182,47 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        CURRENT_VC = "CallingViewController"
+        updateFanState()
         UpdateCallStatus()
         //  ProgressOverlay.shared.show()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleAudioInterruption), name:
+                                                        UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    func updateFanState()  {
+        vdpmodule.id = id
+        vdpmodule = vdpmodule.clone()
+        DataFetchManager.shared.updateVdpFanState(completion: {error in
+            do{
+                if error != nil{
+                    print("error updateing fan mode")
+             //   throw ""
+            }
+            }catch{
+                
+            }
+        }, vdpmodule: vdpmodule)
+     }
+    @objc func handleAudioInterruption(){
+        print("screen in background")
+        if (socket == nil) {
+            icecandidate = false
+            myconnectfunc()
+            timestamp()
+            
+        }else{
+            icecandidate = true
+            socket?.disconnect()
+            socket = nil
+            timer.invalidate()
+        }
+        socket?.disconnect()
+        if peerConnection != nil{
+            peerConnection.close()
+        }
     }
     func vdpUisetup(){
-        lblMenu.setTitle("", for: .normal)
+     //   lblMenu.setTitle("", for: .normal)
         lblCallEnd.setTitle("", for: .normal)
         lblLock.setTitle("", for: .normal)
         lblMute.setTitle("", for: .normal)
@@ -196,15 +236,13 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         lblexpandPlaybtn.setTitle("", for: .normal)
         lblexpSpeaker.setTitle("", for: .normal)
         expandFooter.isHidden = true
-        
+        viewpause.layer.zPosition = 1
         expandFooter.layer.zPosition = 1
         viewShowvdp.layer.zPosition = 0
         buttonMute.isHidden = true
         button.isHidden = true
         buttonSpekerOff.isHidden = true
         buttonconnect.isHidden = true
-        
-        
         
         lblnightVision.layer.cornerRadius = 10
         lblnightVision.layer.masksToBounds = true
@@ -245,6 +283,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             frame.origin.y = 1
             frame.size.height = 270
             remoteRenderer.frame = frame
+            remoteRenderer.videoContentMode = .scaleToFill
         }else if remoteRenderer.transform == CGAffineTransform(rotationAngle: .pi * 2){
             remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi / 2)//landscap
             frame.origin.x = 0
@@ -262,7 +301,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         if viewMute.isHidden {
             expandFooter.isHidden = true
             //   expandBottomview.isHidden = true
-            viewpause.backgroundColor = .black
+           // viewpause.backgroundColor = .black
             viewMute.isHidden = false
             lblspeaker.isHidden = false
             
@@ -285,7 +324,6 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             lblexpSpeaker.transform = rotation
             lblexpandPlaybtn.transform = rotation
             lblexpandbtn.transform = rotation
-            
             
             
         }
@@ -377,7 +415,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     @IBAction func didtappedCallEnd(_ sender: Any) {
         socket?.disconnect()
         DispatchQueue.main.async() {
-            RoutingManager.shared.goBackToDashboard()
+            RoutingManager.shared.goToPreviousScreen(self)
         }
     }
     
@@ -385,7 +423,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         vdpEfectBlacknwhite()
     }
     @IBAction func didtappedDefault(_ sender: Any) {
-        vdpEfectDefault()
+        vdpEfectDefault(sender: sender)
     }
     @IBAction func didtappedNightVision(_ sender: Any) {
         vdpEfectNightVision()
@@ -408,6 +446,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // exit
+        NotificationCenter.default.removeObserver(self)
         socket?.disconnect()
         if peerConnection != nil{
             peerConnection.close()
@@ -470,6 +509,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         remoteVideoViewContainter.addSubview(remoteVideoView)
         
     }
+    
     func getRoomName() -> String {
         return (roomName == nil || roomName.isEmpty) ? "_defaultroom": roomName;
     }
@@ -494,6 +534,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         socket?.disconnect()
+        CURRENT_VC = ""
     }
     var responceDetail: ResponceResult!
     func setupSocketEvents() {
@@ -509,6 +550,10 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         // working
         socket?.on(clientEvent: .connect) {data, ack in
             print("Connected")
+            var dic2 = Dictionary<String, Any>()
+            var dic1 = Dictionary<String, Any>()
+            dic1 = ["whatever-you-want-here" :"stuff"]
+            dic2 = ["channel": self.id, "userdata": dic1]
             self.socket?.emit("join", dic2)
         }
         // working
@@ -586,7 +631,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             let peer_id = resultNew["peer_id"]  as! String
             
             print("icecandidate = \(peer_id)")
-            if peer_id == self.responceDetail.peer_id{
+            if self.icecandidate == true{
                 //   let should_create_offer = resultNew["should_create_offer"]  as! Bool
                 let json = resultNew["ice_candidate"]  as? [String:Any]
                 let candidate = RTCIceCandidate(
@@ -785,7 +830,7 @@ extension CallingViewController{
             "sdp"  : sdp.sdp.description as String
         ]
         let json1:[String: Any] = [
-            "peer_id" : responceDetail.peer_id as String,
+            "peer_id" : (responceDetail.peer_id ?? "") as String,
             "session_description"  : json]
         sigSend(msg: json1 as NSDictionary);
     }
@@ -875,8 +920,12 @@ extension CallingViewController{
     
     func prepareNewConnection() -> RTCPeerConnection {
         var icsServers: [RTCIceServer] = []
+        icsServers.append(RTCIceServer(urlStrings: ["stun:stun1.l.google.com:19302"]))
+        icsServers.append(RTCIceServer(urlStrings: ["turn:43.204.19.95:3478"], username:"home",credential: "home1234"))
         icsServers.append(RTCIceServer(urlStrings: ["stun:relay.metered.ca:80"]))
         icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:80"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
+        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:443"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
+        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:443?transport=tcp"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
         
         let rtcConfig: RTCConfiguration = RTCConfiguration()
         rtcConfig.tcpCandidatePolicy = RTCTcpCandidatePolicy.disabled
@@ -981,7 +1030,7 @@ extension CallingViewController{
     //media stream
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd rtpReceiver: RTCRtpReceiver, streams mediaStreams: [RTCMediaStream]) {
         DispatchQueue.main.async {
-            //   ProgressOverlay.shared.hide()
+             ProgressOverlay.shared.stopAnimation()
         }
         guard let tracks = mediaStreams.first?.videoTracks.first else{return}
         let x = tracks
@@ -1254,13 +1303,19 @@ extension CallingViewController{
         
         UpdateVisionMode(cmd: nightVisioncmd)
     }
-    func vdpEfectDefault(){
-        let defaultcmd = "$V01000000000#"
-        UpdateVisionMode(cmd: defaultcmd)
+    func vdpEfectDefault(sender: Any){
+        if lbldefault.currentImage == UIImage(named: "checkmark.square.fill"){
+            let defaultcmd = "$V01000000000#"
+            UpdateVisionMode(cmd: defaultcmd)
+            
+        }else if lbldefault.currentImage == UIImage(named: "square"){
+            let blacknWhitecmd = "$V02000000000#"
+            UpdateVisionMode(cmd: blacknWhitecmd)
+        }
     }
     func vdpEfectBlacknwhite(){
         let blacknWhitecmd = "$V02000000000#"
-        UpdateVisionMode(cmd: blacknWhitecmd)
+       // UpdateVisionMode(cmd: blacknWhitecmd)
     }
     func UpdateVisionMode(cmd: String){
         print(cmd)
@@ -1281,7 +1336,7 @@ extension CallingViewController{
             }
         })
     }
-    
+        
     func UpdateLock(cmd: String){
         print(cmd)
         let nodeid =  id

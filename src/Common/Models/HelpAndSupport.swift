@@ -20,7 +20,7 @@ class Complents: NSObject {
     var ticketId :String?
     var uid :String?
     var controllerName :String?
-    
+    var checked :Bool?
     func clone() -> Complents{
         var pComplent = Complents()
         pComplent.descriptionn = self.descriptionn

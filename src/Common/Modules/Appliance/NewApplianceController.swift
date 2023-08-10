@@ -21,9 +21,12 @@ class NewApplianceController: BaseController {
     @IBOutlet weak var dimmableValueMaxSlider: AppSlider!
     
     @IBOutlet weak var dimableValueMaxView: UIView!
+    @IBOutlet weak var lblDeletebtn: UIButton!
+    
     var room :Room?
     
     var appliance :Appliance?
+    var delegate: SelectedAppliandesDelegate?
     
     var editedApplianceDevice :Device?
     var editedApplianceName :String?
@@ -41,13 +44,15 @@ class NewApplianceController: BaseController {
         if self.appliance != nil {
             self.title = "APPLIANCE DETAILS"
             self.subTitle = self.appliance?.title
+             lblDeletebtn.isHidden = false
             if self.appliance?.dimType == .triac {
                 
             }
         } else {
             self.title = "NEW APPLIANCE"
             self.subTitle = self.room?.title
-        }
+            lblDeletebtn.isHidden = true
+         }
 
         self.applianceNameTextField.addTarget(self, action: #selector(self.applianceNameTextFieldDidChangeValue(_:)), for: UIControl.Event.editingChanged)
         self.applianceDeviceTextField.delegate = self
@@ -280,6 +285,11 @@ class NewApplianceController: BaseController {
         } catch {
             PopupManager.shared.displayError(message: error.localizedDescription, description: nil)
         }
+    }
+    
+    @IBAction func didtappedDeletebtn(_ sender: Any) {
+        let x = appliance?.clone() ?? Appliance()
+         delegate?.didtappedBacktoController(obj: x as Any)
     }
     
 }

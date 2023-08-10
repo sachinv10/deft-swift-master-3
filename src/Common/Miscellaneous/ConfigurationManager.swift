@@ -30,7 +30,7 @@ class ConfigurationManager: NSObject {
     #endif
     
     var newDeviceConfigureNetworkUrlString :String {
-        return "http://192.168.4.1/"
+        return "http://192.168.4.1/setting"
     }
     
     var moodActivateUrlString :String {

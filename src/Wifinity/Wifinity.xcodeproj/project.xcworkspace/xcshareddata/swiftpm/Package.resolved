@@ -24,7 +24,7 @@
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
         "branch" : "master",
-        "revision" : "b8c85f7bdb778312eb8354f8b1f24cca19ddc780"
+        "revision" : "9613e1e536016b54475d3ae9fb1b05267ba02d77"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
       "state" : {
-        "revision" : "71eb6700dd53a851473c48d392f00a3ab26699a6",
-        "version" : "10.1.0"
+        "revision" : "04351180d4c757c6c16127cb57b685fff9ef260b",
+        "version" : "10.6.0"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/gtm-session-fetcher.git",
       "state" : {
-        "revision" : "efda500b6d9858d38a76dbfbfa396bd644692e4a",
-        "version" : "3.0.0"
+        "revision" : "96d7cc73a71ce950723aa3c50ce4fb275ae180b8",
+        "version" : "3.1.0"
       }
     },
     {
@@ -136,6 +136,24 @@
       }
     },
     {
+      "identity" : "swift-snapshot-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-snapshot-testing.git",
+      "state" : {
+        "revision" : "cef5b3f6f11781dd4591bdd1dd0a3d22bd609334",
+        "version" : "1.11.0"
+      }
+    },
+    {
+      "identity" : "swiftclockui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/renaudjenny/SwiftClockUI",
+      "state" : {
+        "revision" : "b4977887fcfd42201a709357076e3f111ff23c97",
+        "version" : "2.0.0"
+      }
+    },
+    {
       "identity" : "swifter",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/httpswift/swifter",
@@ -150,7 +168,7 @@
       "location" : "https://github.com/stasel/WebRTC",
       "state" : {
         "branch" : "latest",
-        "revision" : "8f5471584d4f5c6e9cf0d16f302f28b4a6584583"
+        "revision" : "a08c6eecc40dce290b108bb9bb53040c0b478077"
       }
     }
   ],

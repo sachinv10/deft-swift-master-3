@@ -281,12 +281,17 @@ class SearchSensorTableCellView: UITableViewCell {
                         self.co2ContainerView.isHidden = true
                         self.lpgContainerView.isHidden = true
                         self.lblIntensity.text = "Battery Mode"
-                        self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode ?? ""))"
+                        if pSensor.Batterysevermode != nil{
+                            self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode ?? ""))"
+                        }else{self.lightValueLabel.text = "NA"}
                         self.lblLastmotionOn.text = "Sensitivity"
                         self.motionValueLabel.text = ":\(pSensor.sensorSensitivity ?? "")"
                         self.lblTemperature.text = "Battery"
-                        self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage ?? "")) %"
-                        
+                        if (pSensor.sensorSensitivity != nil){
+                            self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage ?? "")) %"
+                        }else{
+                            self.temperatureValueLabel.text = "NA"
+                        }
                     }
                 } else {
                     if pSensor.hardwareType == Device.HardwareType.smartSecuritySensor {
@@ -318,10 +323,13 @@ class SearchSensorTableCellView: UITableViewCell {
                         self.temperatureContainerView.isHidden = false
                         
                         self.lblIntensity.text = "Battery Mode"
-                        self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode ?? ""))"
-                        
+                        if (pSensor.Batterysevermode != nil){
+                            self.lightValueLabel.text = ":\(String(describing: pSensor.Batterysevermode ?? ""))"
+                        }else{self.lightValueLabel.text = "NA"}
                         self.lblTemperature.text = "Battery"
-                        self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage ?? "")) %"
+                        if (pSensor.BatteryPercentage != nil){
+                            self.temperatureValueLabel.text = ":\(String(describing: pSensor.BatteryPercentage ?? "")) %"
+                        }else{ self.temperatureValueLabel.text = "NA"}
                     }
                 }
             }

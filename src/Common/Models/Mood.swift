@@ -13,9 +13,17 @@ class Mood: NSObject {
     var id :String?
     var uuid :String?
     var title :String?
+    var applianceDetails :String?
+    var applianceSelected = Array<String?>()
+    var offAppliances = Array<String?>()
+    var moodOnStaticCommand = Array<String?>()
+
+    var returnCommand : String?
     
+    var curtainSelected: String?
+    var lightCount: Int?
     var isOn :Bool = false
-    
+    var CurtanStatus: CurtanStatus? = .On
     var room :Room?
     
     var applianceCount :Int?
@@ -80,14 +88,19 @@ class Mood: NSObject {
         case remoteKey = "REMOTE_KEY"
     }
     
-    
+    enum CurtanStatus: String{
+        case On = "2"
+        case Off = "1"
+    }
     func clone() -> Mood {
         let aReturnVal = Mood()
         
         aReturnVal.id = self.id
         aReturnVal.uuid = self.uuid
         aReturnVal.title = self.title
-        
+        aReturnVal.applianceDetails = self.applianceDetails
+        aReturnVal.applianceSelected = self.applianceSelected
+        aReturnVal.lightCount = self.lightCount
         aReturnVal.isOn = self.isOn
         
         aReturnVal.room = self.room?.clone()
@@ -97,5 +110,17 @@ class Mood: NSObject {
         aReturnVal.curtainCount = self.curtainCount
         
         return aReturnVal
+    }
+    func remove() {
+        self.applianceDetails = nil
+        self.applianceSelected.removeAll()
+        self.offAppliances.removeAll()
+        self.moodOnStaticCommand.removeAll()
+        self.returnCommand = nil
+        self.curtainSelected = nil
+        self.lightCount = nil
+        self.applianceCount = nil
+        self.curtainCount = nil
+        self.remoteCount = nil
     }
 }

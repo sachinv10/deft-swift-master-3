@@ -2,7 +2,7 @@
 //  CustommsgtblCell.swift
 //  Wifinity
 //
-//  Created by Apple on 24/01/23.
+//  Created by Sachin on 24/01/23.
 //
 
 import UIKit

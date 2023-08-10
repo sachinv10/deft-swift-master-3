@@ -118,7 +118,9 @@ class NewDeviceScanQrCodeController: BaseController {
                 "I",
                 "CS01", "CS02","CS03","CS04","CS05","CS06","CS07","CS08","CS09",
                 "P00",
-                "F01","F02"
+                "F01","F02",
+                "V00"
+                
             ]
             for aSupportedIdPrefix in aSupportedIdPrefixArray {
                 if anId?.starts(with: aSupportedIdPrefix) == true {

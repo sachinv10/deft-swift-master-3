@@ -12,7 +12,7 @@ class Schedule: NSObject {
     var id :String?
     var uuid :String?
     var title :String?
-    
+    var repeatOnce :Bool?
     var isOn :Bool = false
     var time :String?
     var repetitions :Array<Day>?
@@ -138,7 +138,7 @@ class Schedule: NSObject {
         aReturnVal.id = self.id
         aReturnVal.uuid = self.uuid
         aReturnVal.title = self.title
-        
+        aReturnVal.repeatOnce = self.repeatOnce
         aReturnVal.time = self.time
         aReturnVal.repetitions = self.repetitions
         

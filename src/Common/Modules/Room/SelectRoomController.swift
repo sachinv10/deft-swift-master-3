@@ -25,7 +25,8 @@ class SelectRoomController: BaseController {
     
     var shouldAllowAddRoom = true
     
-    
+    var shouldIfConditionAddRoom: Bool = false
+    var shouldThenConditionAddRoom: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -250,7 +251,14 @@ extension SelectRoomController :UITableViewDataSource, UITableViewDelegate {
                     aRoom.remotes = aSelectedRoom.remotes
                     aRoom.sensors = aSelectedRoom.sensors
                 }
-                RoutingManager.shared.gotoSelectComponent(controller: self, componentTypes: [.appliance, .curtain, .remoteKey, .sensor], selectedRoom: aRoom, delegate: self)
+                if shouldIfConditionAddRoom == true{
+                    aRoom.remoteId?.removeAll()
+                    RoutingManager.shared.gotoSelectComponent(controller: self, componentTypes: [.appliance, .curtain, .sensor], selectedRoom: aRoom, delegate: self)
+                }else if shouldThenConditionAddRoom == true{
+                    RoutingManager.shared.gotoSelectComponent(controller: self, componentTypes: [.appliance, .curtain, .remoteKey], selectedRoom: aRoom, delegate: self)
+                }else{
+                    RoutingManager.shared.gotoSelectComponent(controller: self, componentTypes: [.appliance, .curtain, .remoteKey, .sensor], selectedRoom: aRoom, delegate: self)
+                }
             }
         }
     }

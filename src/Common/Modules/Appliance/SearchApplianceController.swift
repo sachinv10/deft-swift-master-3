@@ -25,7 +25,10 @@ class SearchApplianceController: BaseController {
         return [
             UIAction(title: "Goodbye", image: nil, handler: { (_) in
                 self.didSelectGoodbye()
-            })
+            }),
+            UIAction(title: "Add Appliance", image: nil, handler: { (_) in
+                self.addAppliance()
+             })
         ]
     }
     static var applinceId = [String]() {
@@ -57,12 +60,11 @@ class SearchApplianceController: BaseController {
 
         if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity {
             if self.selectedRoom != nil {
-                self.addButton.isHidden = false
+                self.addButton.isHidden = true
             }
         }
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         applianceTableView.addGestureRecognizer(longPress)
-    
     }
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
@@ -72,7 +74,7 @@ class SearchApplianceController: BaseController {
                 
                 if self.isDetailsViewAvailable && indexPath.row < self.appliances.count {
                     let aSelectedAppliance = self.appliances[indexPath.row]
-                    RoutingManager.shared.gotoApplianceDetails(controller: self, selectedAppliance: aSelectedAppliance)
+                    RoutingManager.shared.gotoApplianceDetails(controller: self, selectedAppliance: aSelectedAppliance,delegate: self)
                 }
             }
         }
@@ -83,7 +85,7 @@ class SearchApplianceController: BaseController {
         SearchApplianceController.celltappedcounter = 0
         activatdatalistner()
         print("im back")
-        reloadAllData()
+      //  reloadAllData()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -136,29 +138,33 @@ class SearchApplianceController: BaseController {
         // ProgressOverlay.shared.show()
         DataFetchManager.shared.searchAppliance(completion: { (pError, pApplianceArray,pDevicesArray) in
            //  ProgressOverlay.shared.hide()
-            if pError != nil {
-                PopupManager.shared.displayError(message: "Can not search appliances", description: pError!.localizedDescription)
-            } else {
-                if pApplianceArray != nil && pApplianceArray!.count > 0 {
-                    self.appliances = pApplianceArray!
-                }
-                if pDevicesArray != nil && pDevicesArray!.count > 0 {
-                    if let Arrayx =  pDevicesArray{
-                        self.devices = Arrayx
-                    }
-                }
-                if let selectedRoom = self.selectedRoom {
-                DataFetchManager.shared.checkToShowApplianceDimmable(completion: { dimmable in
-                    if dimmable ?? false {
-                        let value = self.setSliderInitialValue()
-                        self.dynamicButtonContainerView.customeSlider.value = Float(value)
-                    }
-                    self.setBottomContainerView(hidden: dimmable ?? false)
-                }, room: selectedRoom)
+            do{
+                if pError != nil {
+                    PopupManager.shared.displayError(message: "Can not search appliances", description: pError!.localizedDescription)
                 } else {
-                    self.setBottomContainerView(hidden: false)
+                    if pApplianceArray != nil && pApplianceArray!.count > 0 {
+                        self.appliances = pApplianceArray!
+                    }
+                    if pDevicesArray != nil && pDevicesArray!.count > 0 {
+                        if let Arrayx = try pDevicesArray{
+                            self.devices = Arrayx
+                        }
+                    }
+                    if let selectedRoom = self.selectedRoom {
+                        DataFetchManager.shared.checkToShowApplianceDimmable(completion: { dimmable in
+                            if dimmable ?? false {
+                                let value = self.setSliderInitialValue()
+                                self.dynamicButtonContainerView.customeSlider.value = Float(value)
+                            }
+                            self.setBottomContainerView(hidden: dimmable ?? false)
+                        }, room: selectedRoom)
+                    } else {
+                        self.setBottomContainerView(hidden: false)
+                    }
+                    self.reloadAllView()
                 }
-                self.reloadAllView()
+            }catch let error{
+                print(error)
             }
         }, room: self.selectedRoom, includeOnOnly: self.selectedRoom == nil)
         
@@ -232,9 +238,9 @@ class SearchApplianceController: BaseController {
     
     func updateControllers() {
         for deviceId in devices {
-         //   ProgressOverlay.shared.show()
+            ProgressOverlay.shared.show()
             DataFetchManager.shared.updateDevice(completion: { (pError) in
-             //   ProgressOverlay.shared.hide()
+                 ProgressOverlay.shared.hide()
                 if pError != nil {
                     PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
                     self.reloadAllView()
@@ -245,7 +251,7 @@ class SearchApplianceController: BaseController {
         }
     }
     
-    func    updateDimableValueControllers(dimValue: Int) {
+    func  updateDimableValueControllers(dimValue: Int) {
         for deviceId in devices {
             ProgressOverlay.shared.show()
             DataFetchManager.shared.updateDeviceDimabble(completion: { (pError) in
@@ -367,19 +373,19 @@ class SearchApplianceController: BaseController {
     func updateAppliancePowerState(appliance pAppliance :Appliance, powerState pPowerState :Bool) {
         let anAppliance = pAppliance.clone()
         
-      //  ProgressOverlay.shared.show()
+         ProgressOverlay.shared.show()
         DataFetchManager.shared.updateAppliancePowerState(completion: { (pError) in
-         //   ProgressOverlay.shared.hide()
+            ProgressOverlay.shared.hide()
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
                 self.reloadAllView()
             } else {
                 if self.selectedRoom != nil {
-                   // pAppliance.isOn = pPowerState
+                    pAppliance.isOn = pPowerState
                 } else {
                 //    self.reloadAllData()
                 }
-              //  self.reloadAllView()
+                 self.reloadAllView()
             }
         }, appliance: anAppliance, powerState: pPowerState)
     }
@@ -408,7 +414,7 @@ class SearchApplianceController: BaseController {
     }
     
     func didSelectGoodbye() {
-        self.updateControllers()
+         self.updateControllers()
     }
 
 }
@@ -531,6 +537,17 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
     func tableView(_ pTableView: UITableView, didSelectRowAt pIndexPath: IndexPath) {
         pTableView.deselectRow(at: pIndexPath, animated: true)
  
+       if self.appliances.count > 0 {
+            let anAppliance = self.appliances[pIndexPath.row]
+           if anAppliance.stripType == Appliance.StripType.rgb{
+               let aGlowPattern = anAppliance.isOn ? Appliance.GlowPatternType.off: Appliance.GlowPatternType.on
+               self.updateAppliance(appliance: anAppliance, property1: anAppliance.ledStripProperty1!, property2: anAppliance.ledStripProperty2!, property3: anAppliance.ledStripProperty3!, glowPattern: aGlowPattern)
+           }else{
+               self.updateAppliancePowerState(appliance: anAppliance, powerState: !anAppliance.isOn)
+
+           }
+           
+        }
 //        if self.isDetailsViewAvailable && pIndexPath.row < self.appliances.count {
 //            let aSelectedAppliance = self.appliances[pIndexPath.row]
 //            RoutingManager.shared.gotoApplianceDetails(controller: self, selectedAppliance: aSelectedAppliance)
@@ -542,16 +559,16 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
         return true
     }
     
-    func tableView(_ pTableView: UITableView, commit pEditingStyle: UITableViewCell.EditingStyle, forRowAt pIndexPath: IndexPath) {
-        if pEditingStyle == .delete {
-            if pIndexPath.row < self.appliances.count {
-                let anAppliance = self.appliances[pIndexPath.row]
-                PopupManager.shared.displayConfirmation(message: "Do you want to delete selected appliance?", description: nil, completion: {
-                    self.deleteAppliance(appliance: anAppliance)
-                })
-            }
-        }
-    }
+//    func tableView(_ pTableView: UITableView, commit pEditingStyle: UITableViewCell.EditingStyle, forRowAt pIndexPath: IndexPath) {
+//        if pEditingStyle == .delete {
+//            if pIndexPath.row < self.appliances.count {
+//                let anAppliance = self.appliances[pIndexPath.row]
+//                PopupManager.shared.displayConfirmation(message: "Do you want to delete selected appliance?", description: nil, completion: {
+//                    self.deleteAppliance(appliance: anAppliance)
+//                })
+//            }
+//        }
+//    }
     
 }
 
@@ -593,11 +610,13 @@ extension SearchApplianceController :SearchApplianceLedTableCellViewDelegate {
 extension SearchApplianceController {
     
     @IBAction func didSelectAddButton(_ pSender: AppFloatingButton?) {
+        self.addAppliance()
+    }
+    func addAppliance() {
         if let aRoom = self.selectedRoom {
             RoutingManager.shared.gotoNewAppliance(controller: self, selectedRoom: aRoom)
         }
     }
-    
 }
 
 extension SearchApplianceController :DynamicButtonContainerViewDelegate {
@@ -626,7 +645,7 @@ extension SearchApplianceController :DynamicButtonContainerViewDelegate {
                         xy += appliance.dimmableValueMin ?? 0
                         xyz += appliance.dimmableValueMax ?? 0
                         cnt += 1
-                       totals += sum
+                        totals += sum
                         trackav = true
                     }
                 }
@@ -652,4 +671,15 @@ extension SearchApplianceController :DynamicButtonContainerViewDelegate {
         }
         self.updateDimableValueControllers(dimValue: aDimmableValues)
     }
+}
+extension SearchApplianceController: SelectedAppliandesDelegate{
+    func didtappedBacktoController(obj: Any) {
+        let y = obj as? Appliance
+         RoutingManager.shared.goToPreviousScreen(self)
+         deleteAppliance(appliance: y!)
+    }
+    
+}
+protocol SelectedAppliandesDelegate:AnyObject{
+    func didtappedBacktoController(obj: Any)
 }

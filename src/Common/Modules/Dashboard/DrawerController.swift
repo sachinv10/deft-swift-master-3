@@ -74,12 +74,21 @@ class DrawerController: UIViewController {
             self.menus.append(Menu(icon: Menu.Device.icon, title: Menu.Device.title, urc: Menu.Device.urc))
             self.menus.append(Menu(icon: Menu.Cameras.icon, title: Menu.Cameras.title, urc: Menu.Cameras.urc))
             self.menus.append(Menu(icon: Menu.HelpAndSuppor.icon, title: Menu.HelpAndSuppor.title, urc: Menu.HelpAndSuppor.urc))
-           
-
+         //   self.menus.append(Menu(icon: Menu.BuyProduct.icon, title: Menu.BuyProduct.title, urc: Menu.BuyProduct.urc))
         } else {
             self.menus.append(Menu(icon: Menu.SearchDevice.icon, title: Menu.SearchDevice.title, urc: Menu.SearchDevice.urc))
         }
         self.menus.append(Menu(icon: Menu.Logout.icon, title: Menu.Logout.title, urc: Menu.Logout.urc))
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(_:)))
+        swipeGesture.direction = .left
+        menuTableView.addGestureRecognizer(swipeGesture)
+        let swipeGestureone = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(_:)))
+        swipeGestureone.direction = .left
+        containerView.addGestureRecognizer(swipeGestureone)
+    }
+    @objc func swipeLeft(_ sender: UISwipeGestureRecognizer) {
+        // Handle the swipe left gesture here
+        self.close()
     }
     
     
@@ -199,8 +208,10 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
                 let aMenu = self.menus[pIndexPath.row]
                 aCellView.iconImageView.image = aMenu.icon
                 aCellView.titleLabel.text = aMenu.title
+                if aMenu.title == "Video Door Phone" || aMenu.title == "Offline Mode"{
+                    aCellView.lblbeta.text = "Beta"
+                }
             }
-            
             aReturnVal = aCellView
         }
         
@@ -319,7 +330,7 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
             static let urc = "Cameras"
         }
         struct VDP {
-            static let icon = UIImage(named: "VDP_icon-01")!
+            static let icon = UIImage(named: "video-doorbell")!
             static let title = "Video Door Phone"
             static let urc = "VDP_Cameras"
         }
@@ -327,6 +338,11 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
             static let icon = UIImage(named: "technical-support")!
             static let title = "Help And Support"
             static let urc = "HelpAndSupport"
+        }
+        struct BuyProduct {
+            static let icon = UIImage(named: "technical-support")!
+            static let title = "Buy Product"
+            static let urc = "BuyProduct"
         }
     }
 }

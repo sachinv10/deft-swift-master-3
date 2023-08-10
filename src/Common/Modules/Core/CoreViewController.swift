@@ -19,13 +19,14 @@ import UIKit
 
 class CoreViewController: BaseController {
     
-    
     @IBOutlet weak var coreTableView: AppTableView!
     @IBOutlet weak var addButton: AppFloatingButton!
     var coreDataArray = [Core]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
+        SelectComponentController.coreSensor = false
+        SelectComponentController.ApplianceType = ""
         // Do any additional setup after loading the view.
     }
     
@@ -33,6 +34,18 @@ class CoreViewController: BaseController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func didtappedAddNewCore(_ sender: Any) {
+        var id = Int(newCoreId!)
+        if id != nil{
+            id = id! + 1
+            let formattedValue = String(format: "%03d", id!)
+            newCoreId = formattedValue
+        }else{
+            newCoreId = "000"
+        }
+        RoutingManager.shared.gotoCreateNewCore(controller: self, shouldAddNavigationController: true, newCoreId: newCoreId, core: nil, pdelegate: self)
+    }
+    var newCoreId:String? = String()
 }
 
 extension CoreViewController {
@@ -50,15 +63,26 @@ extension CoreViewController {
     
     func getCoreListApiCall() {
         ProgressOverlay.shared.show()
-
+        
         DataFetchManager.shared.coreList(completion: { error, coreArray in
             ProgressOverlay.shared.hide()
-
+            
             if error != nil {
                 PopupManager.shared.displayConfirmation(message: "Error", description: error!.localizedDescription, completion: { })
             } else {
                 if let data = coreArray {
                     self.coreDataArray = data
+                    for item in data{
+                        if self.newCoreId != nil{
+                            if item.ruleId ?? "" > self.newCoreId ?? ""{
+                                self.newCoreId = item.ruleId
+                            }else{
+                                
+                            }
+                        }else{
+                            self.newCoreId = item.ruleId
+                        }
+                    }
                     self.reloadAllView()
                 }
             }
@@ -73,14 +97,15 @@ extension CoreViewController {
         coreTableView.delegate = self
         coreTableView.dataSource = self
         //coreTableView.rowHeight = UITableView.automaticDimension
+        addButton.isHidden = false
     }
     
     func updateCore(anAppliance: Core, status: Bool) {
         ProgressOverlay.shared.show()
-
+        
         DataFetchManager.shared.updateCore(completion: { error in
             ProgressOverlay.shared.hide()
-
+            
             if error != nil {
                 PopupManager.shared.displayError(message: "Can not update core.", description: error!.localizedDescription)
                 self.reloadAllView()
@@ -123,18 +148,41 @@ extension CoreViewController: UITableViewDataSource,UITableViewDelegate {
         cell.selectionStyle = .none
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-//        let offerData = offerDataArray[indexPath.row]
-//        RoutingManager.shared.goToOfferDetailViewController(controller: self, selectedOffer: offerData)
-        
-        
+    func tableView(_ pTableView: UITableView, commit pEditingStyle: UITableViewCell.EditingStyle, forRowAt pIndexPath: IndexPath) {
+        if pEditingStyle == .delete {
+            if pIndexPath.row < self.coreDataArray.count {
+                let acore = self.coreDataArray[pIndexPath.row]
+                PopupManager.shared.displayConfirmation(message: "Do you want to delete selected CORE?", description: nil, completion: {
+                    self.deleteMood(pcore: acore)
+                })
+            }
+        }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let acore = self.coreDataArray[indexPath.row]
+        //        newCoreId = acore.ruleId
+        //        RoutingManager.shared.gotoCreateNewCore(controller: self, shouldAddNavigationController: true, newCoreId: newCoreId, core: acore, pdelegate: self)
+    }
 }
 
-extension CoreViewController: CoreTableViewDelegate {
+extension CoreViewController: CoreTableViewDelegate, newCoreControllerDelegate {
+    func deleteMood(pcore: Core){
+        
+        DataFetchManager.shared.deleteCore(completion: { error in
+            if error != nil{ print(error.debugDescription)
+            }else{
+                print("core deleted")
+            }
+        }, pCore: pcore)
+    }
+    
+    func newCoreControllerDidDone() {
+        self.reloadAllData()
+        self.navigationController?.popToViewController(self, animated: true)
+    }
+    
+    
+    
     
     func cellView(_ pSender: CoreTableViewCell, didChangePowerState pState: Bool) {
         if let anIndexPath = self.coreTableView.indexPath(for: pSender), anIndexPath.row < self.coreDataArray.count {
@@ -144,4 +192,7 @@ extension CoreViewController: CoreTableViewDelegate {
         }
     }
     
+}
+protocol newCoreControllerDelegate: NSObject{
+    func newCoreControllerDidDone()
 }

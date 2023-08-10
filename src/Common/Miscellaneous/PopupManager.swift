@@ -74,6 +74,13 @@ class PopupManager: NSObject {
         self.topViewController()!.present(anAlertController, animated: true, completion: nil)
     }
     
+    func displayUpdateAlert(message pMessage :String, description pDescription :String?, completion pCompletion: (() -> Void)? = nil) {
+        let anAlertController = UIAlertController(title: pMessage, message: pDescription, preferredStyle: UIAlertController.Style.alert)
+        anAlertController.addAction(UIAlertAction(title: "VERIFY", style: UIAlertAction.Style.default, handler: { (pUIAlertAction) in
+            pCompletion?()
+        }))
+        self.topViewController()!.present(anAlertController, animated: true, completion: nil)
+    }
     
     /**
      * Method that asks confirmation to user.

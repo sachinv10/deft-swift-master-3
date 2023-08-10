@@ -12,103 +12,64 @@ import FirebaseAuth
 
 class LoginController: BaseController {
     /**
-    * Variable that will hold reference to email address text field.
-    */
+     * Variable that will hold reference to email address text field.
+     */
     @IBOutlet weak var emailAddressTextField: UITextField!
     
     /**
-    * Variable that will hold reference to password text field.
-    */
+     * Variable that will hold reference to password text field.
+     */
     @IBOutlet weak var passwordTextField: UITextField!
     
     /**
-    * Variable that will hold reference to login button.
-    */
+     * Variable that will hold reference to login button.
+     */
     @IBOutlet weak var loginButton: UIButton!
     
     /**
-    * Variable that will hold reference to add user button.
-    */
+     * Variable that will hold reference to add user button.
+     */
     @IBOutlet weak var addUserButton: UIButton?
     
     /**
-    * Variable that will hold reference to demo button.
-    */
+     * Variable that will hold reference to demo button.
+     */
     @IBOutlet weak var demoButton: UIButton?
     
     /**
-    * Variable that will hold reference to remember me checkbox button.
-    */
+     * Variable that will hold reference to remember me checkbox button.
+     */
     @IBOutlet weak var rememberMeCheckboxButton: UIButton?
     
     var whiteOverlay :UIView?
     
     
     /**
-    * UIViewController method, called after the view has been loaded.
-    */
+     * UIViewController method, called after the view has been loaded.
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-          Database.database().isPersistenceEnabled = true
-        let dataRef = Database.database().reference().child("devices")
-            dataRef.keepSynced(true)
-        if ((Auth.auth().currentUser?.uid) != nil){
+        Database.database().isPersistenceEnabled = true
+//        let dataRef = Database.database().reference().child("devices")
+//        dataRef.keepSynced(true)
+        let dataReff = Database.database().reference().child("vdpDevices")
+        dataReff.keepSynced(true)
+      //  let appdata = Database.database().reference().child("applianceDetails")
+        //appdata.keepSynced(true) // applianceDetails
+        let applincesdata = Database.database().reference().child("standaloneUserDetails")
+             applincesdata.keepSynced(true)
+        if UserDefaults.standard.value(forKey: "userId") != nil{
             demologin()
-        }else if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
-            self.emailAddressTextField.text = anEmailAddress
-            self.passwordTextField.text = aPassword
-            self.whiteOverlay = UIView(frame: self.view.bounds)
-            self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
-            self.view.addSubview(self.whiteOverlay!)
-            self.login()
-        }else{
-        
-        self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
-        
-        self.updateTextFieldUi(self.emailAddressTextField)
-        self.updateTextFieldUi(self.passwordTextField)
-        
-        self.updatePushButtonUi(self.loginButton)
-        if let anAddUserButton = self.addUserButton {
-            self.updatePushButtonUi(anAddUserButton)
-        }
-        if let aDemoButton = self.demoButton {
-            self.updatePushButtonUi(aDemoButton)
-        }
-        
-        self.rememberMeCheckboxButton?.layer.borderWidth = 1.0
-        self.rememberMeCheckboxButton?.layer.borderColor = UIColor(named: "SecondaryDarkColor")?.cgColor
-        self.rememberMeCheckboxButton?.layer.cornerRadius = 4.0
-        
-        }
-    }
-  
-    
-    override func viewDidAppear(_ pAnimated: Bool) {
-        super.viewDidAppear(pAnimated)
-        
-        self.whiteOverlay?.frame = self.view.bounds
-        
-        if ConfigurationManager.shared.isDebugMode {
-            if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity {
-                self.emailAddressTextField.text = "wifinity@gmail.com"
-            } else {
-                self.emailAddressTextField.text = "deft.ios@gmail.com"
-            }
-        }
-    }
-    
-    func gotochecken() {
-
-            if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
-                self.emailAddressTextField.text = anEmailAddress
-                self.passwordTextField.text = aPassword
-                self.whiteOverlay = UIView(frame: self.view.bounds)
-                self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
-                self.view.addSubview(self.whiteOverlay!)
-                self.login()
-            }else{
+          }
+         //   else if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
+//            self.emailAddressTextField.text = anEmailAddress
+//            self.passwordTextField.text = aPassword
+//            self.whiteOverlay = UIView(frame: self.view.bounds)
+//            self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
+//            self.view.addSubview(self.whiteOverlay!)
+//            self.login()
+//        }
+            else{
             
             self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
             self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
@@ -128,7 +89,60 @@ class LoginController: BaseController {
             self.rememberMeCheckboxButton?.layer.borderColor = UIColor(named: "SecondaryDarkColor")?.cgColor
             self.rememberMeCheckboxButton?.layer.cornerRadius = 4.0
             
+        }
+        lblpassUnmask.setTitle("", for: .normal)
+        lbldropdown.setTitle("", for: .normal)
+  
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupTableView()
+    }
+    
+    override func viewDidAppear(_ pAnimated: Bool) {
+        super.viewDidAppear(pAnimated)
+        
+        self.whiteOverlay?.frame = self.view.bounds
+        
+        if ConfigurationManager.shared.isDebugMode {
+            if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity {
+                self.emailAddressTextField.text = "wifinity@gmail.com"
+            } else {
+                self.emailAddressTextField.text = "deft.ios@gmail.com"
             }
+        }
+    }
+    
+    func gotochecken() {
+        
+        if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
+            self.emailAddressTextField.text = anEmailAddress
+            self.passwordTextField.text = aPassword
+            self.whiteOverlay = UIView(frame: self.view.bounds)
+            self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
+            self.view.addSubview(self.whiteOverlay!)
+            self.login()
+        }else{
+            
+            self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
+            self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
+            
+            self.updateTextFieldUi(self.emailAddressTextField)
+            self.updateTextFieldUi(self.passwordTextField)
+            
+            self.updatePushButtonUi(self.loginButton)
+            if let anAddUserButton = self.addUserButton {
+                self.updatePushButtonUi(anAddUserButton)
+            }
+            if let aDemoButton = self.demoButton {
+                self.updatePushButtonUi(aDemoButton)
+            }
+            
+            self.rememberMeCheckboxButton?.layer.borderWidth = 1.0
+            self.rememberMeCheckboxButton?.layer.borderColor = UIColor(named: "SecondaryDarkColor")?.cgColor
+            self.rememberMeCheckboxButton?.layer.cornerRadius = 4.0
+            
+        }
         
     }
     func demologin(){
@@ -156,12 +170,12 @@ class LoginController: BaseController {
         
         ProgressOverlay.shared.show()
         DataFetchManager.shared.login(completion: { (pError, pUser) in
-        ProgressOverlay.shared.hide()
+            ProgressOverlay.shared.hide()
             if pUser != nil {
                 if let anEmailAddress = self.emailAddressTextField.text, let aPassword = self.passwordTextField.text {
                     _ = KeychainManager.shared.save(key: "emailAddress", value: anEmailAddress)
                     _ = KeychainManager.shared.save(key: "password", value: aPassword)
-                   }
+                }
                 self.emailAddressTextField.text = nil
                 self.passwordTextField.text = nil
                 DataFetchManager.shared.loggedInUser = pUser
@@ -181,7 +195,7 @@ class LoginController: BaseController {
     
     func saveAppNotificationSettings(completion pCompletion :@escaping(()->())) {
         if let aUserId = DataFetchManager.shared.loggedInUser?.firebaseUserId
-        , let anAppNotificationSettings = CacheManager.shared.appNotificationSettings(userId: aUserId) {
+            , let anAppNotificationSettings = CacheManager.shared.appNotificationSettings(userId: aUserId) {
             DataFetchManager.shared.saveAppNotificationSettings(completion: { (pError, pAppNotificationSettings) in
                 pCompletion()
             }, appNotificationSettings: anAppNotificationSettings)
@@ -199,9 +213,9 @@ class LoginController: BaseController {
     
     
     /**
-    * Method that will update the text field UI.
-    * @param UITextField. Text field of which UI is to be updated.
-    */
+     * Method that will update the text field UI.
+     * @param UITextField. Text field of which UI is to be updated.
+     */
     private func updateTextFieldUi(_ pTextField :UITextField) {
         let aBottomLine = CALayer()
         aBottomLine.frame = CGRect(x: 0.0, y: pTextField.frame.height - 1, width: pTextField.frame.width, height: 1.0)
@@ -212,23 +226,92 @@ class LoginController: BaseController {
     
     
     /**
-    * Method that will update the push button UI.
-    * @param UIButton. Button of which UI is to be updated.
-    */
+     * Method that will update the push button UI.
+     * @param UIButton. Button of which UI is to be updated.
+     */
     private func updatePushButtonUi(_ pButton :UIButton) {
         pButton.layer.borderWidth = 1.0
         pButton.layer.borderColor = UIColor(named: "SecondaryDarkColor")?.cgColor
         pButton.layer.cornerRadius = 4.0
     }
     
+    private func setupTableView() {
+        sortedKeys.removeAll()
+        let defaults = UserDefaults.standard
+        if let data = defaults.data(forKey: "myUserProfile") {
+            let decoder = PropertyListDecoder()
+            if let decoded = try? decoder.decode([[String: String]].self, from: data) {
+                print(decoded) // [["name": "John", "age": 25], ["name": "Jane", "age": 30], ["name": "Bob", "age": 20]]
+            sortedKeys = decoded
+            }
+        }
+        viewtbl.frame = CGRect(x: 50, y: 450, width: Int(UIScreen.main.bounds.width) - 100, height: 50 * sortedKeys.count)
+        viewtbl.backgroundColor = .white
+        tableView.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width) - 100, height: 50 * sortedKeys.count)
+        viewtbl.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        viewtbl.isHidden = true
+        self.view.addSubview(viewtbl)
+   
+    }
+    let tableView = UITableView()
+    @IBOutlet weak var lbldropdown: UIButton!
     
-    /**
-    * Method that will be called when user selects the login button.
-    */
-    @IBAction func didSelectLoginButton(_ pSender: UIButton?) {
-        self.login()
+    @IBAction func didtappeddropdown(_ sender: Any) {
+   
+       userDropdown()
     }
     
+    var viewtbl = UIView()
+    func userDropdown(){
+        if viewtbl.isHidden == true{
+            viewtbl.isHidden = false
+        }else{
+            viewtbl.isHidden = true
+        }
+        tableView.reloadData()
+    }
+    /**
+     * Method that will be called when user selects the login button.
+     */
+    @IBAction func didSelectLoginButton(_ pSender: UIButton?) {
+         if self.rememberMeCheckboxButton?.image(for: UIControl.State.normal) != nil {
+             let userProfile = [passwordTextField.text: emailAddressTextField.text]
+             let aUser = UserAuth()
+            var userp = ["self.emailAddressTextField.text": "self.passwordTextField.text"]
+             userp.removeAll()
+             userp = [emailAddressTextField.text!: passwordTextField.text!]
+             var isprofilePesent = false
+             for item in sortedKeys{
+                 if item.first?.key == emailAddressTextField.text! && item.first?.value == passwordTextField.text!{
+                     isprofilePesent = true
+                 }
+             }
+             if isprofilePesent != true{
+                 sortedKeys.append(userp)
+             }
+             let defaults = UserDefaults.standard
+             let encoder = PropertyListEncoder()
+             if let encoded = try? encoder.encode(sortedKeys) {
+                 defaults.set(encoded, forKey: "myUserProfile")
+             }
+        }
+        self.login()
+    }
+    var sortedKeys = [[String: String]()]
+    @IBOutlet weak var lblpassUnmask: UIButton!
+    @IBAction func didtappedPasswordUnmask(_ sender: Any) {
+        if (sender as AnyObject).tag == 0{
+            lblpassUnmask.tag = 1
+            passwordTextField.isSecureTextEntry = false
+            lblpassUnmask.setImage(UIImage(named: "show"), for: .normal)
+        }else{
+            lblpassUnmask.tag = 0
+            passwordTextField.isSecureTextEntry = true
+            lblpassUnmask.setImage(UIImage(named: "hide"), for: .normal)
+        }
+    }
     
     /**
     * Method that will be called when user selects the remember me button.
@@ -259,4 +342,30 @@ extension LoginController :UITextFieldDelegate {
         }
         return true
     }
+}
+extension LoginController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      //  return 3 // For example
+         return sortedKeys.count // For example
+     }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: CustomTableViewCell.identifier)
+        let name = sortedKeys[indexPath.row]
+        print(name.keys)
+        let credentioal = sortedKeys[indexPath.row]
+        let names = credentioal.first?.key
+        cell.textLabel?.text = names
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("selected auth= \(sortedKeys[indexPath.row].keys)")
+        let credentioal = sortedKeys[indexPath.row]
+        print(credentioal.first?.key)
+        emailAddressTextField.text = credentioal.first?.key
+        passwordTextField.text = credentioal.first?.value
+        viewtbl.isHidden = true
+    }
+}
+class CustomTableViewCell: UITableViewCell {
+    static let identifier = "CustomTableViewCell"
 }

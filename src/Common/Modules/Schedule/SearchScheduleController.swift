@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class SearchScheduleController: BaseController {
     @IBOutlet weak var scheduleTableView: AppTableView!
@@ -24,8 +26,20 @@ class SearchScheduleController: BaseController {
         
         self.scheduleTableView.tableFooterView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.scheduleTableView.frame.size.width, height: 80.0))
         self.scheduleTableView.delaysContentTouches = false
+        listnerActivate()
     }
-    
+    func listnerActivate() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+            for item in self.schedules{
+                Database.database().reference()
+                    .child("schedulerDetails")
+                    .child(Auth.auth().currentUser!.uid).child(item.id ?? "").observe(.childChanged, with: {
+                        DataSnapshot in
+                        self.reloadAllData()
+                    })
+            }
+        }
+    }
     
     override func reloadAllData() {
         self.schedules.removeAll()
@@ -174,7 +188,6 @@ extension SearchScheduleController :UITableViewDataSource, UITableViewDelegate {
         if aReturnVal == nil {
             aReturnVal = UITableViewCell()
         }
-        
         return aReturnVal!
     }
     

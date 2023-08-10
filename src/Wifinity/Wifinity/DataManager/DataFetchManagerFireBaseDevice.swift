@@ -2,13 +2,14 @@
 //  DataFetchManagerFireBaseDevice.swift
 //  Wifinity
 //
-//  Created by Rupendra on 16/12/20.
+//  Created by Sachin on 16/12/22.
 //
 
 import Foundation
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
+import Firebase
 
 
 extension DataFetchManagerFireBase {
@@ -18,16 +19,49 @@ extension DataFetchManagerFireBase {
             self.requestCount += 1
             
             var anError :Error?
-            
-            do {
+            var compflag = false
+        do {
+             if (pDevice.id?.prefix(3) == "V00") {
+                 var updatemsg = [String]()
+                 let uid = Auth.auth().currentUser?.uid
+                 let ref = Database.database().reference().child("routerDetails").child(pDevice.id ?? "")
+                 ref.updateChildValues(["wCommand": false, "xCommand": false, "yCommand": false])
+                 let msg1 = "Y0120F"
+               
+                 updatemsg.append(msg1)
+                 let msg2 = "W" + pDevice.networkSsid! + "0F1"
+                 updatemsg.append(msg2)
+                 let msg3 = "X" + pDevice.networkPassword! + "0F1"
+                 updatemsg.append(msg3)
+                 for item in updatemsg{
+                     let error = self.sendMessage(item, entity: pDevice)
+                     if error != nil{
+                         print(error?.localizedDescription)
+                     }
+                 }
+                 ref.observe(.childChanged, with: { error in
+                     ref.child("temp").setValue(["password":pDevice.networkPassword, "ssid": pDevice.networkSsid])
+                     if compflag == false{
+                         pCompletion(anError, pDevice)
+                     }
+                     compflag = true
+                 })
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                     if compflag == false{
+                         pCompletion(anError, pDevice)
+                     }
+                 }
+                 
+             }else{
                 // Configure device
                 let aQueryItemArray = [
                     URLQueryItem(name: "ssid", value: pDevice.networkSsid)
-                    , URLQueryItem(name: "password", value: pDevice.networkPassword)
+                    , URLQueryItem(name: "pass", value: pDevice.networkPassword)
                 ]
                 guard var aUrlComponents = URLComponents(string: ConfigurationManager.shared.newDeviceConfigureNetworkUrlString) else {
                     throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Invalid device configuraion URL."])
                 }
+                
                 aUrlComponents.queryItems = aQueryItemArray
                 
                 guard let aUrl = aUrlComponents.url else {
@@ -40,6 +74,9 @@ extension DataFetchManagerFireBase {
                 let aDispatchSemaphore = DispatchSemaphore(value: 0)
                 let aDataTask = URLSession.shared.dataTask(with: aUrlRequest) { (pData, pResponse, pError) in
                     anError = pError
+                    DispatchQueue.main.async {
+                        pCompletion(anError, pDevice)
+                    }
                     aDispatchSemaphore.signal()
                 }
                 aDataTask.resume()
@@ -48,13 +85,14 @@ extension DataFetchManagerFireBase {
                 if anError != nil {
                     throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Device configuration request error. " + anError!.localizedDescription])
                 }
+            }
             } catch {
                 anError = error
             }
             
             DispatchQueue.main.async {
                 self.requestCount -= 1
-                pCompletion(anError, pDevice)
+              //  pCompletion(anError, pDevice)
             }
         }
         
@@ -76,12 +114,13 @@ extension DataFetchManagerFireBase {
                 }
                 if pDevice.room?.id == nil
                 && pDevice.hardwareType != Device.HardwareType.lock
-                && pDevice.hardwareType != Device.HardwareType.gateLock {
+                    && pDevice.hardwareType != Device.HardwareType.gateLock && pDevice.hardwareType != Device.HardwareType.VDP{
                     throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Invalid room ID."])
                 }
                 
                 // Save device
                 var aDeviceDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
+                var aDeviceVdp :Dictionary<String,Any?> = Dictionary<String,Any?>()
                 // save sensor setting
                 var aSensorDict :Dictionary<String,Any?> = Dictionary<String,Any?>()
                 if let aHardwareType = pDevice.hardwareType {
@@ -156,8 +195,8 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue(0, forKey: "syncToggle")
                         aDeviceDict.updateValue("1", forKey: "batterySaverMode")
                         aDeviceDict.updateValue("90", forKey: "batteryPercentage")
-                        let timestamp = NSDate().timeIntervalSince1970
-                        aDeviceDict.updateValue(Int(timestamp * 100), forKey: "lastMotionTimeStamp")
+                        let timestamp = NSDate().timeIntervalSince1970 * 100
+                        aDeviceDict.updateValue(Int(timestamp), forKey: "lastMotionTimeStamp")
                         
                         aSensorDict.updateValue("3", forKey: "batterySaverMode")
                         aSensorDict.updateValue("0010", forKey: "motionTimeOutExtreme")
@@ -191,11 +230,11 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue("NA", forKey: "lightIntensity")
                         aDeviceDict.updateValue(false, forKey: "state")
                         aDeviceDict.updateValue(0, forKey: "syncToggle")
-                        aDeviceDict.updateValue("1", forKey: "batterySaverMode")
+                        aDeviceDict.updateValue("3", forKey: "batterySaverMode")
                         aDeviceDict.updateValue("90", forKey: "batteryPercentage")
                         aDeviceDict.updateValue("3", forKey: "sensorSensitivity")
-                        let timestamp = NSDate().timeIntervalSince1970
-                        aDeviceDict.updateValue(Int(timestamp * 100), forKey: "lastMotionTimeStamp")
+                        let timestamp = NSDate().timeIntervalSince1970 * 100
+                        aDeviceDict.updateValue(Int(timestamp), forKey: "lastMotionTimeStamp")
                     case .Occupy:
                         if let aHardwareType = pDevice.hardwareType {
                             aDeviceDict.updateValue(DataContractManagerFireBase.hardwareTypeForAndroidDatabaseValue(aHardwareType), forKey: "controllerSubType")
@@ -283,19 +322,43 @@ extension DataFetchManagerFireBase {
                         aDeviceDict.updateValue( NewDeviceConfigureDeviceController.networkPssword, forKey: "wifiPassword")
                         aDeviceDict.updateValue( NewDeviceConfigureDeviceController.networkSsid, forKey: "wifiSsid")
                                 break
-              
+                    case .VDP:
+                     // setup  vdp
+                        aDeviceDict.removeValue(forKey: "roomId")
+                        aDeviceDict.removeValue(forKey: "roomName")
+                        aDeviceDict.removeValue(forKey: "switchName")
+                        aDeviceDict.removeValue(forKey: "switchType")
+                        aDeviceDict.removeValue(forKey: "switches")
+                        
+                        aDeviceDict.updateValue(false, forKey: "available")
+                        aDeviceDict.updateValue("NA", forKey: "callStatus")
+                        aDeviceDict.updateValue(false, forKey: "camera")
+                        aDeviceDict.updateValue("192.168.1.182", forKey: "ip_address")
+                        aDeviceDict.updateValue(false, forKey: "nightVision")
+                        aDeviceDict.updateValue(pDevice.networkSsid, forKey: "wifiSsid")
+                        aDeviceDict.updateValue(pDevice.networkPassword, forKey: "wifiPassword")
+                        aDeviceDict.updateValue(pDevice.id, forKey: "hardwareId")
+                        aDeviceDict.updateValue(false, forKey: "state")
+                        aDeviceDict.updateValue(false, forKey: "vdpFilter")
+                        aDeviceDict.updateValue(Auth.auth().currentUser!.uid + "_VDP", forKey: "filter")
+
+                        break
                     }
                 }
                 
-                let aSaveDeviceDispatchSemaphore = DispatchSemaphore(value: 0)
-                self.database
-                    .child("devices")
-                    .child(pDevice.id!)
-                    .setValue(aDeviceDict, withCompletionBlock: { (pError, pDatabaseReference) in
-                        anError = pError
-                        aSaveDeviceDispatchSemaphore.signal()
-                    })
-                _ = aSaveDeviceDispatchSemaphore.wait(timeout: .distantFuture)
+               
+                if pDevice.hardwareType != Device.HardwareType.VDP{
+                    let aSaveDeviceDispatchSemaphore = DispatchSemaphore(value: 0)
+                    self.database
+                        .child("devices")
+                        .child(pDevice.id!)
+                        .setValue(aDeviceDict, withCompletionBlock: { (pError, pDatabaseReference) in
+                            anError = pError
+                            aSaveDeviceDispatchSemaphore.signal()
+                        })
+                    _ = aSaveDeviceDispatchSemaphore.wait(timeout: .distantFuture)
+                }
+             
                 
                 // Add device ID to room
                 if let _ = pDevice.room?.id {
@@ -360,6 +423,8 @@ extension DataFetchManagerFireBase {
                                 .CSnineSwitch,
                                 .CStenSwitch:
                                 break
+                        case .VDP:
+                            aNode = ""
                         }
                     }
                     
@@ -426,7 +491,7 @@ extension DataFetchManagerFireBase {
                     aSensorSettingsDict.updateValue("2500", forKey: "wakeUpTimeLow")
                     aSensorSettingsDict.updateValue("3600", forKey: "wakeUpTimeMedium")
                     aSensorSettingsDict.updateValue("1", forKey: "sensorState")
-                    aSensorSettingsDict.updateValue("1", forKey: "batterySaverMode")
+                    aSensorSettingsDict.updateValue("3", forKey: "batterySaverMode")
                     aSensorSettingsDict.updateValue("0010", forKey: "motionTimeOutExtreme")
                     aSensorSettingsDict.updateValue("0030", forKey: "motionTimeOutLow")
                     aSensorSettingsDict.updateValue("0020", forKey: "motionTimeOutMedium")
@@ -445,12 +510,42 @@ extension DataFetchManagerFireBase {
                     aSensorSettingsDict.updateValue("1200", forKey: "wakeUpTimeExtreme")
                     aSensorSettingsDict.updateValue("0600", forKey: "wakeUpTimeLow")
                     aSensorSettingsDict.updateValue("0900", forKey: "wakeUpTimeMedium")
+                    aSensorSettingsDict.updateValue("1500", forKey: "sensorSensitivityLow")
+                    aSensorSettingsDict.updateValue("1900", forKey: "sensorSensitivityHigh")
                     self.database
                         .child("sensorSetting")
                         .child(pDevice.id!)
                         .setValue(aSensorSettingsDict, withCompletionBlock: { (pError, pDatabaseReference) in
                             anError = pError
                         })
+                }else if pDevice.hardwareType == Device.HardwareType.VDP{
+                    self.database
+                        .child("vdpDevices")
+                        .child(pDevice.id!)
+                        .setValue(aDeviceDict, withCompletionBlock: { (pError, pDatabaseReference) in
+                            anError = pError
+                        })
+                    aDeviceVdp.updateValue("", forKey: "msgContent")
+                    aDeviceVdp.updateValue("", forKey: "msgType")
+                    for i in 0..<2{
+                        var refs = self.database
+                            .child("vdpCustomMessages")
+                            .child(pDevice.id!).childByAutoId().key
+                        aDeviceVdp.updateValue(refs, forKey: "msgId")
+                        if i == 0{
+                            aDeviceVdp.updateValue("hello", forKey: "msgContent")
+                            aDeviceVdp.updateValue("welcomeMessage", forKey: "msgType")
+                        }else{
+                            aDeviceVdp.updateValue("You can try after some time", forKey: "msgContent")
+                            aDeviceVdp.updateValue("timeoutMessage", forKey: "msgType")
+                        }
+                        self.database
+                            .child("vdpCustomMessages")
+                            .child(pDevice.id!).child(refs ?? "")
+                            .setValue(aDeviceVdp, withCompletionBlock: { (pError, pDatabaseReference) in
+                                anError = pError
+                            })
+                    }
                 }
             } catch {
                 anError = error
@@ -475,9 +570,12 @@ extension DataFetchManagerFireBase {
                 .child(Auth.auth().currentUser!.uid)
                 .child(aRoomId)
                 .child("devices")
-                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                    aReturnVal = pDataSnapshot.value as? Array<String>
-                    aDispatchSemaphore.signal()
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot, str) in
+                 //   aReturnVal = pDataSnapshot.value as? Array<String>
+                   var arrayOfOptionals = pDataSnapshot.value
+                    let x = self.nullArrayRemove(pdata: arrayOfOptionals as! Array<String?>)
+                     aReturnVal = x
+                     aDispatchSemaphore.signal()
                 }
             _ = aDispatchSemaphore.wait(timeout: .distantFuture)
         } else {
@@ -544,7 +642,10 @@ extension DataFetchManagerFireBase {
         
         return aReturnVal
     }
-    
+    func nullArrayRemove(pdata: Array<String?>) -> Array<String> {
+        let filteredArray = pdata.compactMap { $0 }
+        return filteredArray
+    }
     
     func searchDevice(completion pCompletion: @escaping (Error?, Array<Device>?) -> Void, room pRoom :Room?, hardwareTypes pHardwareTypeArray :Array<Device.HardwareType>?) {
         DispatchQueue.global(qos: .background).async {

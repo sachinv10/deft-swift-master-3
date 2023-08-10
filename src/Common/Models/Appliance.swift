@@ -49,11 +49,11 @@ class Appliance: NSObject {
     private func updateIcon() {
         switch self.type {
         case .light:
-            self._icon = UIImage(named: "ApplianceLight")
+            self._icon = isOn ? UIImage(named: "light-bulbOn") :UIImage(named: "light-bulbOff")
         case .ledStrip:
-            self._icon = UIImage(named: "ApplianceLedStrip")
+            self._icon = isOn ? UIImage(named: "led-stripOn") :UIImage(named: "led-stripOff")
         case .fan:
-            self._icon = UIImage(named: "ApplianceFan")
+            self._icon = isOn ? UIImage(named: "fanOn"): UIImage(named: "fanOff")
         case .tv:
             self._icon = UIImage(named: "ApplianceTv")
         case .ac:
@@ -71,8 +71,28 @@ class Appliance: NSObject {
     var scheduleCommand :String?
     var scheduleState :Bool = false
     var scheduleDimmableValue :Int?
-    
-    
+    var stripLightEvent: String?
+    var StripDiming: String?
+    var selectedAppType: String{
+        var returnVal = ""
+        switch scheduleState{
+        case true:
+            returnVal = "When switch is On"
+        case false:
+            returnVal = "When switch is Off"
+        }
+        return returnVal
+    }
+    var selectedThanType: String{
+       var returnVal = ""
+       switch scheduleState{
+       case true:
+           returnVal = "Turn on \(String(describing: title ?? ""))"
+       case false:
+           returnVal = "Turn Off \(String(describing: title ?? ""))"
+       }
+       return returnVal
+   }
     func clone() -> Appliance {
         let anAppliance = Appliance()
         
@@ -261,6 +281,7 @@ class Appliance: NSObject {
         case mountain = 11
         case flash = 12
         case auto = 14
+        case dimming = 15
     }
     
     

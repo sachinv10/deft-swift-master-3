@@ -20,6 +20,9 @@ class NewDeviceSelectRoomController: BaseController {
         self.subTitle = "Room Details"
         
         self.roomNameTextField.delegate = self
+        if device?.hardwareType == Device.HardwareType.VDP{
+            roomNameTextField.isHidden = true
+        }
     }
     
     
@@ -28,7 +31,7 @@ class NewDeviceSelectRoomController: BaseController {
     }
     
     func gotoSelectRoom() {
-        RoutingManager.shared.gotoSelectRoom(controller: self, roomSelectionType: SelectRoomController.SelectionType.room, delegate: self, shouldAllowAddRoom: true, selectedRooms: nil)
+        RoutingManager.shared.gotoSelectRoom(controller: self, shouldIfConditionAddRoom: false, shouldThenConditionAddRoom: false, roomSelectionType: SelectRoomController.SelectionType.room, delegate: self, shouldAllowAddRoom: true, selectedRooms: nil)
     }
     
     
@@ -64,13 +67,14 @@ class NewDeviceSelectRoomController: BaseController {
             }
             
             let aNetworkPassword = self.device?.networkPassword
-            
-            let aRoom = self.device?.room
-            if (aRoom?.id?.count ?? 0) <= 0 {
-                throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Please provide room details."])
-            }
-            
             let aDevice = self.device?.clone() ?? Device()
+            let aRoom = self.device?.room
+            if aDevice.hardwareType != Device.HardwareType.VDP{
+                if (aRoom?.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Please provide room details."])
+                }
+            }
+         
             aDevice.title = aTitle
             aDevice.networkSsid = aNetworkSsid
             aDevice.networkPassword = aNetworkPassword

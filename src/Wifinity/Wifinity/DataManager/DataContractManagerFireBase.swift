@@ -160,10 +160,23 @@ extension DataContractManagerFireBase {
             if let aTitle = aRoomDict["roomName"] as? String {
                 aRoom.title = aTitle.capitalized
             }
-            
+           
+            if let device = aRoomDict["devices"]{
+                 print(device)
+                aRoom.devices = device as? Array<String>
+            }
+            if let curtains = aRoomDict["curtains"]{
+                print(curtains)
+                aRoom.curtainId = curtains as? Array<String>
+            }
+            if let remotes = aRoomDict["remotes"]{
+                 print(remotes)
+                aRoom.remoteId = remotes as? Array<String>
+            }
             if let aLastActive = aRoomDict["lastActive"] as? Int {
              let xValue = aLastActive / 1000
                aRoom.lastActiveDate = Date(timeIntervalSince1970: TimeInterval(xValue))
+                aRoom.lastActivityRoom = SharedFunction.shared.gotoTimetampTodayConvert(time: Double(xValue))
             }
             
             aReturnVal!.append(aRoom)
@@ -400,7 +413,6 @@ extension DataContractManagerFireBase {
         if aReturnVal!.count <= 0 {
             aReturnVal = nil
         }
-        
         return aReturnVal
     }
     
@@ -553,6 +565,8 @@ extension DataContractManagerFireBase {
             aReturnVal = "10-switch"
         case .Occupy:
             aReturnVal = "Lider Sensor"
+        case .VDP:
+            aReturnVal = "VDP"
         }
         return aReturnVal
     }
@@ -661,6 +675,8 @@ extension DataContractManagerFireBase {
             aReturnVal = "10 Switch Controller"
         case .Occupy:
             aReturnVal = "Lider Sensor"
+        case .VDP:
+            aReturnVal = "VDP"
         }
         return aReturnVal
     }
@@ -682,7 +698,6 @@ extension DataContractManagerFireBase {
         if aReturnVal!.count <= 0 {
             aReturnVal = nil
         }
-        
         return aReturnVal
     }
     
@@ -726,22 +741,20 @@ extension DataContractManagerFireBase {
            , aName.count > 0 {
             let anAppliance = Appliance()
             anAppliance.id = pDict["id"] as? String
-            anAppliance.title = (pDict["applianceName"] as? String)?.capitalized
-            if let anApplianceTypeId = pDict["applianceTypeId"] as? String {
-                anAppliance.type = Appliance.ApplianceType(rawValue: anApplianceTypeId)
-            }
-            
-            anAppliance.roomId = pDict["roomId"] as? String
-            anAppliance.roomTitle = pDict["roomName"] as? String
-            
-            anAppliance.slaveId = pDict["slaveId"] as? String
-            anAppliance.hardwareId = pDict["hardwareId"] as? String
-            
             if let aState = pDict["state"] as? Int, aState == 1 {
                 anAppliance.isOn = true
             } else if let aState = pDict["state"] as? String, aState == "1" {
                 anAppliance.isOn = true
             }
+            anAppliance.title = (pDict["applianceName"] as? String)?.capitalized
+            if let anApplianceTypeId = pDict["applianceTypeId"] as? String {
+                anAppliance.type = Appliance.ApplianceType(rawValue: anApplianceTypeId)
+            }
+            anAppliance.roomId = pDict["roomId"] as? String
+            anAppliance.roomTitle = pDict["roomName"] as? String
+            
+            anAppliance.slaveId = pDict["slaveId"] as? String
+            anAppliance.hardwareId = pDict["hardwareId"] as? String
             
             anAppliance.isOnline = pDict["status"] as? Bool == true
             
@@ -972,7 +985,10 @@ extension DataContractManagerFireBase {
             if let aTitle = aMoodDict["moodName"] as? String {
                 aMood.title = aTitle.capitalized
             }
-            
+            if let aTitle = aMoodDict["applianceDetails"] as? String {
+                aMood.applianceDetails = aTitle
+            }
+        //    applianceDetails
             aMood.isOn = aMoodDict["state"] as? Bool ?? false
             
             if let aValue = aMoodDict["roomId"] as? String {
@@ -980,6 +996,7 @@ extension DataContractManagerFireBase {
                 aRoom.id = aValue
                 aRoom.title = aMoodDict["roomName"] as? String
                 aMood.room = aRoom
+                
             }
             
             aMood.applianceCount = aMoodDict["lightCount"] as? Int
@@ -987,7 +1004,7 @@ extension DataContractManagerFireBase {
             aMood.curtainCount = aMoodDict["curtainCount"] as? Int
             
             aMood.remoteCount = aMoodDict["remoteCount"] as? Int
-            
+         
             aReturnVal!.append(aMood)
         }
         if aReturnVal!.count <= 0 {
@@ -1039,14 +1056,31 @@ extension DataContractManagerFireBase {
         return aReturnVal
     }
     
+    static func remoteforMood(dict pDict :Dictionary<String,Any>) -> remotelist? {
+        let aReturnVal :remotelist = remotelist()
+        if let id = pDict["remoteId"] as? [String]{
+                aReturnVal.id = id
+        }
+        if let name = (pDict["remoteName"] as? [String]) {
+                aReturnVal.name = name
+        }
+        if let aRemoteType = pDict["remoteType"] as? [String] {
+            aReturnVal.remoteType = aRemoteType
+        }
+        if let IrId = pDict["id"] as? String {
+            aReturnVal.remoteId = IrId
+        }
+        
+        return aReturnVal
+    }
     
     static func remoteKeys(dict pDict :Dictionary<String,Dictionary<String,Any>>) -> Array<RemoteKey>? {
         var aReturnVal :Array<RemoteKey>? = Array<RemoteKey>()
         
         for aRemoteKeyDict in pDict.values {
             let aRemoteKey = self.remoteKey(dict: aRemoteKeyDict)
-            if aRemoteKey.tag != RemoteKey.Tag.none
-                || ((aRemoteKey.command?.count ?? 0) > 0
+            if aRemoteKey.tag != RemoteKey.Tag.none && aRemoteKey.tag?.rawValue != nil
+                || ((aRemoteKey.command?.count ?? 0) > 2
                         && aRemoteKey.command != "aa") {
                 aReturnVal!.append(aRemoteKey)
             }
@@ -1086,6 +1120,7 @@ extension DataContractManagerFireBase {
         
         aReturnVal.recordCommand = pDict["keyRecordCommand"] as? String
         
+        aReturnVal.remoteId = pDict["remoteId"] as? String
         return aReturnVal
     }
 
@@ -1139,6 +1174,7 @@ extension DataContractManagerFireBase {
         }
         
         aReturnVal.applianceCount = pDict["applianceCount"] as? Int
+        aReturnVal.repeatOnce = pDict["repeatOnce"] as? Bool
         
         aReturnVal.curtainCount = pDict["curtainCount"] as? Int
         
@@ -1194,7 +1230,6 @@ extension DataContractManagerFireBase {
             
             aSensor.id = pDict["id"] as? String
             if let uidassin = pDict["uidAssign"]{
-                
                 aSensor.uidAssign = uidassin as? Bool
             }
             if let aBatteryMode = pDict["batterySaverMode"]{
@@ -1374,3 +1409,28 @@ extension DataContractManagerFireBase {
     }
     
 }
+
+// MARK: - BuyProduct
+
+extension DataContractManagerFireBase{
+    static func BuyProductList(dict pDict :Dictionary<String,Any>)-> [Ecommerce]? {
+        var productlist:[Ecommerce]? = [Ecommerce]()
+        if let aDict = pDict as? Dictionary<String, Any> {
+            do{
+                for item in aDict.values{
+                let jsonData = try JSONSerialization.data(withJSONObject: item, options: [])
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    let data = jsonString.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    var response = try decoder.decode(Ecommerce.self, from: jsonData)
+                     productlist?.append(response)
+                 }
+                }
+            }catch let err{
+                print("error ocured in decoder\(err.localizedDescription)")
+            }
+        }
+        return productlist
+    }
+}
+

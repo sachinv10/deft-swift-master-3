@@ -25,7 +25,9 @@ extension DataFetchManagerFireBase {
                 if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
                     throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
                 }
-                
+                self.database
+                    .child("schedulerDetails")
+                    .child(Auth.auth().currentUser!.uid).keepSynced(true)
                 // Fetch DEFT schedules
                 let aScheduleDispatchSemaphore = DispatchSemaphore(value: 0)
                 self.database
@@ -38,7 +40,7 @@ extension DataFetchManagerFireBase {
                             aDeftScheduleArray = DataContractManagerFireBase.schedules(dict: aDict)
                         }
                         
-                        // Sort frequently operated appliances
+                        // Sort name vise operated appliances
                         aDeftScheduleArray?.sort { (pLhs, pRhs) -> Bool in
                             return (pLhs.title?.lowercased() ?? "") < (pRhs.title?.lowercased() ?? "")
                         }
@@ -285,6 +287,7 @@ extension DataFetchManagerFireBase {
                     "id": aKey
                     , "name": pSchedule.title
                     , "time": pSchedule.time
+                    , "repeatOnce": pSchedule.repeatOnce
                     , "activated": false
                     , "applianceCount": pSchedule.calculatedApplianceCount
                     , "curtainCount": pSchedule.calculatedCurtainCount

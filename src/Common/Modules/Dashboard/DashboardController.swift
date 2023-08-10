@@ -11,20 +11,25 @@ import Firebase
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
+import SocketIO
 
 class DashboardController: BaseController {
     var drawerController :DrawerController!
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var applianceCollectionView: UICollectionView!
+    @IBOutlet weak var applianceCollectionView: AppCollectionView!
     @IBOutlet weak var applianceCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var roomCollectionView: UICollectionView!
     @IBOutlet weak var roomFilterTextField: UITextField!
+    
+    @IBOutlet weak var frequantlyOperatedView: UIView!
     var appliances :Array<Appliance> = Array<Appliance>()
     var rooms :Array<Room> = Array<Room>()
     var filteredRooms :Array<Room> = Array<Room>()
     var controllerflag: Bool = true
-    
+    var delegate: webrtcDelegate?
+    var delegatevdpvc: webrtcDelegate?
+    var userverifyy = UserVerify()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,15 +59,17 @@ class DashboardController: BaseController {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         print("appversion=\(appVersion!)")
         checkApplicationVersion(appversion: appVersion!)
+        mobileNumberVerify()
+        let collectionViewFlowLayout = UICollectionViewFlowLayout()
+        collectionViewFlowLayout.minimumInteritemSpacing = 10
+        applianceCollectionView.collectionViewLayout = collectionViewFlowLayout
     }
-    
     
     @objc func didTapViewmenu(_ sender: UITapGestureRecognizer) {
         customView.isHidden = true
     }
     override func didTapView(_ pSender :UITapGestureRecognizer) {
         super.didTapView(pSender)
-        
         let location = pSender.location(in: nil)
         if self.drawerController.view.frame.contains(location) == false {
             self.drawerController.close()
@@ -107,9 +114,11 @@ class DashboardController: BaseController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         controllerflag = true
+        SelectComponentController.coreSensor = false
+        loadVdp()
+        applianceCollectionView.delegate = self
         self.reloadAllData()
         activatdatalistner()
-        
     }
     func loadcollectionView() {
         
@@ -123,7 +132,6 @@ class DashboardController: BaseController {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 self.applianceCollectionView.collectionViewLayout = aCollectionViewFlowLayout
             }
-            
             self.applianceCollectionView.delaysContentTouches = false
             self.applianceCollectionViewHeightConstraint.constant = self.applianceCollectionView.frame.size.width * 2 / 3
             let aRoomCollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -245,6 +253,21 @@ class DashboardController: BaseController {
             }
         }
     }
+
+    // https://34.68.55.33:8081
+    static var socket: SocketIOClient? = nil
+    let manager = SocketManager(socketURL: URL(string: "https://vdp1.homeonetechnologies.in/")!, config: [.log(false), .compress])
+    var timer = Timer()
+    func timestamp(){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            let date = Date()
+            let dateString = dateFormatter.string(from: date)
+          //  print("datetime= \(dateString)")
+        }
+    }
     override func reloadAllData() {
         
         self.appliances.removeAll()
@@ -260,14 +283,27 @@ class DashboardController: BaseController {
                 if pApplianceArray != nil {
                     self.appliances = try pApplianceArray!
                 }
+                if  pApplianceArray == nil {
+                    self.applianceCollectionView.backgroundView = FrequentlyOperatedCollectionCellView(frame: self.applianceCollectionView.frame)
+                } else {
+                    self.applianceCollectionView.backgroundView = nil
+                    self.applianceCollectionView.reloadData()
+                }
+                
                 if pRoomArray != nil {
                     self.rooms = pRoomArray!
+                }
+                
+                if  pRoomArray == nil {
+                    self.roomCollectionView.backgroundView = RoomCollectionCellView(frame: self.roomCollectionView.frame)
+                } else {
+                    self.roomCollectionView.backgroundView = nil
+                    self.roomCollectionView.reloadData()
                 }
             }catch let error{
                 print(error.localizedDescription)
             }
             self.reloadAllView()
-            
         })
     }
     
@@ -285,7 +321,25 @@ class DashboardController: BaseController {
             }
         }, appliance: anAppliance, powerState: pPowerState)
     }
-    
+    func updateAppliance(appliance pAppliance :Appliance, property1 pProperty1: Int, property2 pProperty2: Int, property3 pProperty3: Int, glowPattern pGlowPattern: Appliance.GlowPatternType) {
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.updateAppliance(completion: { (pError) in
+            ProgressOverlay.shared.hide()
+            if pError != nil {
+                PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
+            } else {
+                pAppliance.ledStripProperty1 = pProperty1
+                pAppliance.ledStripProperty2 = pProperty2
+                pAppliance.ledStripProperty3 = pProperty3
+                if pGlowPattern == Appliance.GlowPatternType.on {
+                    pAppliance.isOn = true
+                } else if pGlowPattern == Appliance.GlowPatternType.off {
+                    pAppliance.isOn = false
+                }
+                self.reloadAllView()
+            }
+        }, appliance: pAppliance, property1: pProperty1, property2: pProperty2, property3: pProperty3, glowPatternValue: pGlowPattern.rawValue)
+    }
     
     func reloadAllView() {
         self.view.endEditing(true)
@@ -317,6 +371,7 @@ class DashboardController: BaseController {
                     DataFetchManager.shared.loggedInUser = nil
                     KeychainManager.shared.remove(valueForKey: "emailAddress")
                     KeychainManager.shared.remove(valueForKey: "password")
+                     UserDefaults.standard.removeObject(forKey: "userId")
                     do {
                         try Auth.auth().signOut()
                     } catch let signOutError as NSError {   print ("Error signing out: %@", signOutError)}
@@ -437,13 +492,25 @@ extension DashboardController :DrawerControllerDelegate {
         } else if pUrc == DrawerController.Menu.Core.urc {
             RoutingManager.shared.gotoCore(controller: self)
         } else if pUrc == DrawerController.Menu.Offline.urc {
-            RoutingManager.shared.gotoOffline(controller: self) 
+            DataFetchManager.shared.checkInternetConnection { (pError) in
+                if pError != nil{
+                    RoutingManager.shared.gotoOffline(controller: self)
+                }else{
+                    PopupManager.shared.displayError(message: "Offline mode only works when there is no internet connection!", description: "")
+                }
+            }
         }else if pUrc == DrawerController.Menu.Cameras.urc {
             RoutingManager.shared.gotoCameras(controller: self)
         }else if pUrc == DrawerController.Menu.HelpAndSuppor.urc {
             RoutingManager.shared.gotoHelp(controller: self)
         }else if pUrc == DrawerController.Menu.VDP.urc {
-            RoutingManager.shared.gotoVDPCameras(controller: self)
+//            DataFetchManager.shared.checkInternetConnection { (pError) in
+//                if pError == nil{
+             RoutingManager.shared.gotoVDPCameras(controller: self)
+//                }
+//            }
+        }else if pUrc == DrawerController.Menu.BuyProduct.urc{
+            RoutingManager.shared.gotoBuyProduct(controller: self)
         }
     }
 }
@@ -523,7 +590,7 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
         var aReturnVal :CGSize = CGSize(width: 100.0, height: 100.0)
         
         if pCollectionView.isEqual(self.applianceCollectionView) {
-            aReturnVal = CGSize(width: (self.applianceCollectionView.frame.size.width / 3) - self.applianceCollectionView.frame.size.width * 0.01, height: (self.applianceCollectionView.frame.size.height / 2) - self.applianceCollectionView.frame.size.height * 0.02)
+            aReturnVal = CGSize(width: (self.applianceCollectionView.frame.size.width / 3) - self.applianceCollectionView.frame.size.width * 0.02, height: (self.applianceCollectionView.frame.size.height / 2) - self.applianceCollectionView.frame.size.height * 0.03)
         } else if pCollectionView.isEqual(self.roomCollectionView) {
             if UtilityManager.shared.screenSizeType == UtilityManager.ScreenSizeType.small {
                 aReturnVal = CGSize(width: self.roomCollectionView.frame.size.width, height: 210.0)
@@ -538,6 +605,14 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
     //           return 10
     //       }
     
+    
+    func collectionView(_ pcollectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       if pcollectionView == applianceCollectionView{
+            let anAppliance = self.appliances[indexPath.item]
+                print("item selected",anAppliance.title)
+         //   self.updateAppliancePowerState(appliance: anAppliance, powerState: !anAppliance.isOn)
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         // set the minimum spacing between rows of cells here
         return 7
@@ -546,13 +621,17 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
 }
 
 
-
 extension DashboardController :FrequentlyOperatedCollectionCellViewDelegate {
     
     func cellView(_ pSender: FrequentlyOperatedCollectionCellView, didChangePowerState pPowerState: Bool) {
         if let anIndexPath = self.applianceCollectionView.indexPathForItem(at: pSender.convert(CGPoint.zero, to: self.applianceCollectionView)), anIndexPath.item < self.appliances.count {
             let anAppliance = self.appliances[anIndexPath.item]
-            self.updateAppliancePowerState(appliance: anAppliance, powerState: pPowerState)
+                 if anAppliance.stripType == Appliance.StripType.rgb{
+                    let aGlowPattern = anAppliance.isOn ? Appliance.GlowPatternType.off: Appliance.GlowPatternType.on
+                    self.updateAppliance(appliance: anAppliance, property1: anAppliance.ledStripProperty1!, property2: anAppliance.ledStripProperty2!, property3: anAppliance.ledStripProperty3!, glowPattern: aGlowPattern)
+                }else{
+                    self.updateAppliancePowerState(appliance: anAppliance, powerState: pPowerState)
+                }
         }
     }
     
@@ -638,6 +717,157 @@ extension DashboardController {
             self.drawerController.open()
         }
         return aReturnVal
+    }
+}
+extension DashboardController{
+    func loadVdp(){
+//        let connection = SocketConnectionPool.shared.getConnection()
+//        print("socket connection = \(connection.socket?.status.description)")
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+//            for _ in 0...5{
+//                SocketConnectionPool.shared.releaseConnection(connection)
+//            }
+//             var dic2 = Dictionary<String, Any>()
+//            var dic1 = Dictionary<String, Any>()
+//            dic1 = ["whatever-you-want-here" :"stuff"]
+//            dic2 = ["channel": "V001681462936392", "userdata": dic1]
+//           // connection.socket?.emit("join", dic2)
+//        }
+        
+       if DashboardController.socket != nil{
+          if DashboardController.socket?.status.description != "connected"{
+              timestamp()
+              DashboardController.socket = manager.defaultSocket
+              DashboardController.socket?.connect()
+              loadvc()
+           }
+       }else{
+           timestamp()
+           DashboardController.socket = manager.defaultSocket
+           DashboardController.socket?.connect()
+           loadvc()
+       }
+    }
+   func loadvc() {
+
+            // Add event listeners
+       DashboardController.socket?.on(clientEvent: .connect) {data, ack in
+                print("Connected....")
+                if CURRENT_VC == "VDPListViewController"{
+                    self.delegate?.webrtConnect(data: data)
+                }else if CURRENT_VC == "VdpViewController"{
+                    self.delegatevdpvc?.webrtConnect(data: data)
+                }else if CURRENT_VC == "CallingViewController"{
+                    self.delegate?.webrtConnect(data: data)
+                }
+                self.timer.invalidate()
+            }
+       DashboardController.socket?.on("addPeer") { (data, ack) in
+             //   data = Array<Any>
+                // ack = SocketAckEmitter
+           print("addpeer Dashboard")
+                if CURRENT_VC == "VDPListViewController"{
+                    self.delegate?.webrtcAddPeer(data: data)
+                }else if CURRENT_VC == "VdpViewController"{
+                    self.delegatevdpvc?.webrtcAddPeer(data: data)
+                }else if CURRENT_VC == "CallingViewController"{
+                    self.delegate?.webrtcAddPeer(data: data)
+                }
+            }
+       DashboardController.socket?.on(clientEvent: .disconnect) {data, ack in
+                print("DisConnected")
+            //    DispatchQueue.main.async {
+                    DashboardController.socket = self.manager.defaultSocket
+                    DashboardController.socket?.connect()
+            //    }
+         //  print("socket status=\(DashboardController.socket?.status)")
+            }
+            
+       DashboardController.socket?.on("error"){(data ,arg)  in
+                print(data)
+                print(arg)
+                if CURRENT_VC == "VDPListViewController"{
+                    self.delegate?.webrtcError()
+                }else if CURRENT_VC == "VdpViewController"{
+                    self.delegatevdpvc?.webrtcError()
+                }else if CURRENT_VC == "CallingViewController"{
+                    self.delegate?.webrtcError()
+                }
+            }
+            // working
+       DashboardController.socket?.on("sessionDescription"){(data ,arg)  in
+                print("session discription")
+                if CURRENT_VC == "VDPListViewController"{
+                    self.delegate?.webrtcSessionDescription(data: data)
+                }else if CURRENT_VC == "VdpViewController"{
+                    self.delegatevdpvc?.webrtcSessionDescription(data: data)
+                }else if CURRENT_VC == "CallingViewController"{
+                    self.delegate?.webrtcSessionDescription(data: data)
+                }
+            }
+            // working
+       DashboardController.socket?.on("removePeer") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                print("remove Peer")
+                print("Now this chat has \(dataInfo) users.")
+                if CURRENT_VC == "VDPListViewController"{
+                    self.delegate?.webrtcRemovePeer(data: data)
+                }else if CURRENT_VC == "VdpViewController"{
+                    self.delegatevdpvc?.webrtcRemovePeer(data: data)
+                }else if CURRENT_VC == "CallingViewController"{
+                    self.delegate?.webrtcRemovePeer(data: data)
+                }
+            }
+            
+       DashboardController.socket?.on("join") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                 print("joined from =\(dataInfo)")
+             }
+            // working
+       DashboardController.socket?.on("iceCandidate") { (data, ack) in
+                print(data)
+                if CURRENT_VC == "VDPListViewController"{
+                    self.delegate?.webrtciceCandidate(data: data)
+                }else if CURRENT_VC == "VdpViewController"{
+                    self.delegatevdpvc?.webrtciceCandidate(data: data)
+                }else if CURRENT_VC == "CallingViewController"{
+                    self.delegate?.webrtciceCandidate(data: data)
+                }
+            }
+       DashboardController.socket?.on("full") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                 print("full \(dataInfo) stopped typing...")
+             }
+       DashboardController.socket?.on("joined") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                 print("joined \(dataInfo)typing...")
+             }
+            DashboardController.socket?.on("log") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                 print("log \(dataInfo) typing...")
+             }
+       DashboardController.socket?.on("bye") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                 print("bye \(dataInfo) stopped typing...")
+             }
+       DashboardController.socket?.on("message") { (data, ack) in
+                guard let dataInfo = data.first else { return }
+                 print("message= \(dataInfo)   typing...")
+             }
+    }
+           
+    func mobileNumberVerify(){
+        DataFetchManager.shared.verifyMobilenumber(complition: { [self](erro , puser) in
+            print(puser?.phoneNumber)
+                userverifyy = puser!
+            if  userverifyy.numberVerified == "false"{
+                PopupManager.shared.displayUpdateAlert(message: "Alert...!", description: "Verify Your Mobile Number Is Not Verified Please Verify It To Continue Useing The App", completion: {
+                    // call to profile
+                    print("call to profile")
+                    RoutingManager.shared.gotoEditProfile(controller: self, user: puser!)
+                })
+            }
+        })
     }
     
 }

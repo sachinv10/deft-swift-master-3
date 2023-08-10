@@ -154,6 +154,9 @@ extension DataFetchManagerFireBase {
                     aFetchRoomError = pError
                     anApplianceArray = pRoomArray
                     print("reEnter....")
+                    anApplianceArray?.sort { (pLhs, pRhs) -> Bool in
+                        return (pLhs.name?.lowercased() ?? "") < (pRhs.name?.lowercased() ?? "")
+                    }
                     if pError == nil{
                       pCompletion(aReturnValError, anApplianceArray)
                     }
@@ -262,7 +265,7 @@ extension DataFetchManagerFireBase {
                 
                 // Fetch frequently operated appliances
                 if let aDeviceIdArray = self.deviceIdsForLoggedInUser(roomId: nil) {
-                    SearchApplianceController.applinceId = aDeviceIdArray
+                    SearchApplianceController.applinceId = try aDeviceIdArray
                     var aFetchedApplianceArray = Array<Appliance>()
                     for aDeviceId in aDeviceIdArray {
                         let anApplianceDispatchSemaphore = DispatchSemaphore(value: 0)

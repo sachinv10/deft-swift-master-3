@@ -1,8 +1,7 @@
 //
 //  ViewController.swift
-//  WebSocket-Tutorial
-//
-//  Created by omair khan on 05/01/2022.
+
+//  Created by Sachin on 05/01/2022.
 //
 
 import UIKit
@@ -26,7 +25,11 @@ import FirebaseDatabase
 //    func webRTCClient( didChangeConnectionState state: RTCIceConnectionState)
 //    func webRTCClient( didReceiveData data: Data)
 //}
-class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConnectionDelegate, RTCDataChannelDelegate, RTCVideoViewDelegate,WebRTCClientDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConnectionDelegate, RTCDataChannelDelegate, RTCVideoViewDelegate,WebRTCClientDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, webrtcDelegate{
+
+   static let shared: VdpViewController = {
+        return VdpViewController()
+    }()
     var vdpmodule: VDPModul!
     var mediaStream: RTCMediaStream!
     var remoteAudioTrack: RTCAudioTrack!
@@ -63,6 +66,7 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     var wsServerUrl: String! = nil
     var peerStarted: Bool = false
     
+    @IBOutlet weak var menubtnlbl: UIButton!
     @IBOutlet weak var custommsgView: UIView!
     @IBOutlet weak var missedcallView: UIView!
     @IBOutlet weak var viewShowvdp: UIView!
@@ -120,9 +124,9 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     }
     
     func myconnectfunc()  {
-        setupSocket()
+        // setupSocket()
         setupSocketEvents()
-        socket?.connect()
+      //  socket?.connect()
     }
     
     //  let audioSessionn = AVAudioSession.sharedInstance()
@@ -164,12 +168,103 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         buttonSpekerOff.frame = CGRect(x: self.view.frame.width/1.02 - 100, y: self.view.frame.height/1.4, width: 100, height: 50)
         self.view.addSubview(buttonSpekerOff)
         buttonSpekerOff.addTarget(self, action: #selector(btnSpekerOff), for: .touchUpInside)
-        
+        activatdatalistner()
+        txtfeldSeckerOut.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+     //   txtfeldSeckerOut.becomeFirstResponder()
+
     }
+    @objc func keyboardWillShow(notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.3
+            self.keyboardHeight = keyboardHeight
+            UIView.animate(withDuration: duration) {
+              let yy = self.viewSpekerOut.frame.origin.y
+                self.viewSpekerOut.frame.origin.y = yy + 60 - keyboardHeight
+            }
+        }
+    }
+    var keyboardHeight = CGFloat()
+    @objc func keyboardWillHide(notification: Notification) {
+        let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.3
+
+        UIView.animate(withDuration: duration) {
+            let yy = self.viewSpekerOut.frame.origin.y
+            self.viewSpekerOut.frame.origin.y =  yy + self.keyboardHeight - 60
+        }
+    }
+
+    func activatdatalistner()  {
+         DispatchQueue.main.asyncAfter(deadline: .now() ){
+             let aFilter = self.vdpmodule.id
+           Database.database().reference().child("vdpDevices") .queryOrdered(byChild: "id")
+                 .queryEqual(toValue: aFilter).observe(.childChanged) { (snapshot, key) in
+             print(key as Any)
+             print("vdp listner")
+                  //   self.searchVDP()
+               }
+           }
+        }
+    func preSocketConnection(){
+        let managerr = SocketManager(socketURL: URL(string: "https://vdp1.homeonetechnologies.in/")!, config: [.log(false), .compress])
+
+        let sockett = managerr.defaultSocket
+        sockett.connect()
+
+                // Add event listeners
+                sockett.on("connect") {data, ack in
+                    print("Socket.IO connected")
+                }
+
+                sockett.on("disconnect") {data, ack in
+                    print("Socket.IO disconnected")
+                }
+     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        CURRENT_VC = "VdpViewController"
+
+        updateFanState()
+       //   socket?.connect()
+       // preSocketConnection()
+          vdpdelegate()
+          connectToPlay()
+       NotificationCenter.default.addObserver(self, selector: #selector(handleAudioInterruption), name:
+                                                        UIApplication.didEnterBackgroundNotification, object: nil)
+       NotificationCenter.default.addObserver(self, selector: #selector(handleforgroundInterruption), name:
+                                                        UIApplication.didBecomeActiveNotification, object: nil)
+        //handleforgroundInterruption
+      
     }
+    func vdpdelegate(){
+        print("socket status=\(DashboardController.socket?.status.description == "connected")")
+        let myClasss = DashboardController()
+         
+    DispatchQueue.main.async {
+         myClasss.delegatevdpvc = self
+         myClasss.loadvc()
+        var dic2 = Dictionary<String, Any>()
+        var dic1 = Dictionary<String, Any>()
+        dic1 = ["whatever-you-want-here" :"stuff"]
+        dic2 = ["channel": "V001641534575660", "userdata": dic1]
+      //  DashboardController.socket.emit("join", dic2)
+    }
+    }
+    func updateFanState()  {
+     
+        DataFetchManager.shared.updateVdpFanState(completion: {error in
+            do{
+                if error != nil{
+                    print("error updateing fan mode")
+             //   throw ""
+            }
+            }catch{
+                
+            }
+        }, vdpmodule: vdpmodule)
+     }
     func vdpUisetup(){
         lblDoorLock.setTitle("", for: .normal)
         lblplay.setTitle("", for: .normal)
@@ -185,6 +280,7 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         lblexpandbtn.setTitle("", for: .normal)
         lblexpandPlaybtn.setTitle("", for: .normal)
         lblexpSpeaker.setTitle("", for: .normal)
+        menubtnlbl.setTitle("", for: .normal)
         expandFooter.isHidden = true
         demoview.isHidden = false
         expandFooter.layer.zPosition = 1
@@ -213,33 +309,88 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         lblblacknWihite.layer.masksToBounds = true
         lblblacknWihite.layer.borderColor = UIColor.gray.cgColor
         lblblacknWihite.layer.borderWidth = 1
+        
+        viewSpekerOut.layer.cornerRadius = 15
+        viewSpekerOut.layer.masksToBounds = true
+        viewSpekerOut.layer.borderWidth = 0.5
     }
     
+    @IBOutlet weak var viewSpekerOut: UIView!
     @IBOutlet weak var lblexpSpeaker: UIButton!
     @IBOutlet weak var expandFooter: UIView!
     @IBAction func didtappedMute(_ sender: Any) {
         muttedTapped()
         print("didtapped Mute")
     }
+    var customView = UIView()
+    var myFirstButton = UIButton()
+    @IBAction func btnMenu(_ sender: Any) {
+        customView.isHidden = false
+        customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 50)
+           customView.backgroundColor = UIColor.white     //give color to the view
+    customView.layer.borderColor = UIColor.gray.cgColor
+    customView.layer.cornerRadius = 10
+    customView.layer.borderWidth = 1
+      //  customView.rightAnchor = self.view.center
+        myFirstButton.setTitle("Photo", for: .normal)
+        myFirstButton.setTitleColor(UIColor.black, for: .normal)
+        myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
+        myFirstButton.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
+        customView.addSubview(myFirstButton)
+   
+//        DeleteButton.setTitle("Delete Controller", for: .normal)
+//        DeleteButton.setTitleColor(UIColor.black, for: .normal)
+//        DeleteButton.frame = CGRect(x: 10, y: 50, width: 180, height: 50)
+//        DeleteButton.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
+//        customView.addSubview(DeleteButton)
+    self.view.addSubview(customView)
+}
+    @objc func pressedmenu(sender: UIButton!) {
+        customView.isHidden = true
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
     var icecandidate = Bool()
     @IBAction func didtappedPlay(_ sender: Any) {
         print("didtapped play")
-        print(socket == nil)
+        connectToPlay()
+    }
+    func connectToPlay()  {
+        print(DashboardController.socket == nil)
         
-        if (socket == nil) {
-            icecandidate = false
-            lblplay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            lblexpandPlaybtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-            print("peerConnection NOT exist!")
-            myconnectfunc()
-            timestamp()
+        if (DashboardController.socket != nil) {
+            if DashboardController.socket?.status.description == "connected"{
+            if UIImage(systemName: "play.fill") == lblplay.currentImage{
+                icecandidate = false
+                lblplay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+                lblexpandPlaybtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+                print("peerConnection NOT exist!")
+                timestamp()
+                myconnectfunc()
+                lblplay.tag = 1
+                //            remoteVideoTrack.add(remoteRenderer)
+                //            remoteVideoTrack.add(localRenderView!)
+            }else{
+                vdpdelegate()
+                icecandidate = true
+                lblplay.setImage(UIImage(systemName: "play.fill"), for: .normal)
+                lblexpandPlaybtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
+                  DashboardController.socket?.disconnect()
+                //  DashboardController.socket = nil
+                timer.invalidate()
+                lblplay.tag = 0
+            }}
+            ProgressOverlay.shared.activityIndicatorStart(view: remoteRenderer)
+            DataFetchManager.shared.checkInternetConnection { (pError) in
+                if pError != nil{
+                    PopupManager.shared.displayError(message: "Opps!", description: "No internet connection")
+                }
+            }
         }else{
-            icecandidate = true
-            lblplay.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            lblexpandPlaybtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
-            socket?.disconnect()
-            socket = nil
-            timer.invalidate()
+            
         }
     }
     
@@ -247,9 +398,16 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     @IBOutlet weak var expandBottomview: UIView!
     @IBOutlet weak var lblexpandPlaybtn: UIButton!
     @IBOutlet weak var lblexpandbtn: UIButton!
+    @IBOutlet weak var txtfeldSeckerOut: UITextField!
     
+    @IBOutlet weak var lblsendbtn: UIButton!
     @IBAction func lblexpand(_ sender: Any) {
         print("didtapped Expand second")
+    }
+    
+    @IBAction func didtappedSendbtn(_ sender: Any) {
+        self.view.endEditing(true)
+        self.updatemsg()
     }
     @IBAction func didtappedExpand(_ sender: Any) {
         print("didtapped Expand")
@@ -259,28 +417,29 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         let h =  self.view.frame.height * 0.80
         if remoteRenderer.transform == CGAffineTransform(rotationAngle: .pi / 2){
             remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi * 2) //right portrate
-            frame.origin.x = 0
-            frame.origin.y = 1
+            frame.origin.x = 1
+            frame.origin.y = 0
             frame.size.height = 270
             remoteRenderer.frame = frame
+            remoteRenderer.videoContentMode = .scaleToFill
         }else if remoteRenderer.transform == CGAffineTransform(rotationAngle: .pi * 2){
             remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi / 2)//landscap
-            frame.origin.x = 0
-            frame.origin.y = 1
+            frame.origin.x = 1
+            frame.origin.y = 0
             frame.size.height = h
             remoteRenderer.frame = frame
         }else{//right
             remoteRenderer.transform = CGAffineTransform(rotationAngle: .pi / 2)//landscap
             frame.size.height = h
-            frame.origin.x = 0
-            frame.origin.y = 1
+            frame.origin.x = 1
+            frame.origin.y = 0
             remoteRenderer.frame = frame
         }
         
         if viewMute.isHidden {
             expandFooter.isHidden = true
             //   expandBottomview.isHidden = true
-            viewpause.backgroundColor = .black
+        //    viewpause.backgroundColor = .black
             viewMute.isHidden = false
             custommsgView.isHidden = false
             lblspeaker.isHidden = false
@@ -324,7 +483,6 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
             remoteRenderer.addSubview(lblTime)
             //            remoteRenderer.addSubview(lblexpandPlaybtn)
             //  remoteRenderer.addSubview(lblexpandbtn)
-            
             
         }
         
@@ -402,10 +560,8 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     @IBOutlet weak var demoimageview: UIImageView!
     
     @IBAction func didtappedRecordVideo(_ sender: Any) {
-//        let imagePicker = UIImagePickerController()
-//              imagePicker.delegate = self
-//        imagePicker.sourceType = .photoLibrary
-//              present(imagePicker, animated: true, completion: nil)
+    //  Video record
+      
     }
     @IBAction func didtappedScreenShot(_ sender: Any) {
         let renderer = UIGraphicsImageRenderer(size: remoteRenderer.bounds.size)
@@ -420,13 +576,13 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         PopupManager.shared.displayConfirmation(message: "Would you like to unlock door", description: "", completion: {
             self.UpdateLock(cmd: "$L2#")
         })
-        
     }
+    var iiceServer = [IceServer]()
     @IBAction func didtappedBnW(_ sender: Any) {
         vdpEfectBlacknwhite()
     }
     @IBAction func didtappedDefault(_ sender: Any) {
-        vdpEfectDefault()
+        vdpEfectDefault(sender: sender)
     }
     @IBAction func didtappedNightVision(_ sender: Any) {
         vdpEfectNightVision()
@@ -450,11 +606,10 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // exit
-        socket?.disconnect()
-        if peerConnection != nil{
-            peerConnection.close()
-        }
-    }
+        print("viewDidDisappear")
+       
+        NotificationCenter.default.removeObserver(self)
+     }
     func myUlsetUp(){
         var y = viewShowvdp.frame
         y.origin.y = 0
@@ -555,7 +710,34 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        socket?.disconnect()
+        //socket?.disconnect()
+        if remoteStream != nil{
+            DashboardController.socket?.leaveNamespace()
+        }
+      //  DashboardController.socket?.disconnect()
+        if peerConnection != nil{
+            peerConnection.close()
+        }
+        CURRENT_VC = ""
+        print("viewWillDisappear")
+    }
+    override func viewDidAppear(_ animated: Bool) {
+           super.viewDidAppear(animated)
+    
+       }
+    
+    @objc func handleAudioInterruption(){
+        print("screen in background")
+        connectToPlay()
+        DashboardController.socket?.disconnect()
+        if peerConnection != nil{
+            peerConnection.close()
+        }
+
+    }
+    @objc func handleforgroundInterruption(){
+        print("screen in forground")
+        connectToPlay()
     }
     var responceDetail: ResponceResult!
     func setupSocketEvents() {
@@ -569,130 +751,131 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
         let decoded = String(data: jsonData, encoding: .utf8)!
         let postData =  decoded.data(using: .utf8)
         // working
-        socket?.on(clientEvent: .connect) {data, ack in
-            print("Connected")
-            self.socket?.emit("join", dic2)
-        }
+      //  socket?.on(clientEvent: .connect) {data, ack in
+         //   print("Connected")
+        DashboardController.socket?.emit("join", dic2)
+      //  }
         // working
-        socket?.on("addPeer") { (data, ack) in
-            print("addpeer")
-            guard let dataInfo = data.first else { return }
-            guard let resultNew = dataInfo as? [String:Any]else{
-                return
-            }
-            let peer_id = resultNew["peer_id"]  as! String
-            let should_create_offer = resultNew["should_create_offer"]  as! Bool
-            let vdp_id = resultNew["vdp_id"]  as! String
-            
-            print("Now this chat has \(dataInfo) users.")
-            if resultNew["should_create_offer"]  as! Bool{
-                if self.icecandidate == false{
-                    self.icecandidate = true
-                    self.responceDetail = ResponceResult(peer_id: peer_id, should_create_offer: should_create_offer, vdp_id: vdp_id )
-                    self.sendOffer()
-                }
-            }else{
-                self.sendAnswer()
-            }
-        }
-        // working
-        socket?.on("error"){(data ,arg)  in
-            print(data)
-            print(arg)
-        }
-        // working
-        socket?.on("sessionDescription"){(data ,arg)  in
-            print("session discription")
-            print(data)
-            guard let dataInfo = data.first else { return }
-            guard let resultNew = dataInfo as? [String:Any]else{
-                return
-            }
-            let peer_id = resultNew["peer_id"]  as! String
-            //  let should_create_offer = resultNew["should_create_offer"]  as! Bool
-            let session_description = resultNew["session_description"]  as? [String:Any]
-            if session_description?["type"] as! String == "answer"{
-                print("answer")
-                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 1 )!, sdp: session_description!["sdp"] as! String)
-                self.onAnswer(sdp: sdp)
-                
-            }else if session_description?["type"] as! String == "offer"{
-                print("offer")
-                //                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 0 )!, sdp: session_description!["sdp"] as! String)
-                //                self.onOffer(sdp: sdp)
-            }
-            print("error session dis=\(arg.debugDescription)")
-        }
-        // working
-        socket?.on("removePeer") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            print("remove Peer")
-            print("Now this chat has \(dataInfo) users.")
-        }
-        
-        socket?.on("join") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            //               if let response: SocketMessage = try? SocketParser.convert(data: dataInfo) {
-            print("join from =\(dataInfo)")
-            //               }
-        }
-        // working
-        socket?.on("iceCandidate") { (data, ack) in
-            print(data)
-            guard let dataInfo = data.first else { return }
-            print("Received ICE candidate= \(dataInfo) is typing...")
-            guard let resultNew = dataInfo as? [String:Any]else{
-                return
-            }
-            let peer_id = resultNew["peer_id"]  as! String
-            
-            print("icecandidate = \(peer_id)")
-            if peer_id == self.responceDetail.peer_id {
-                //   let should_create_offer = resultNew["should_create_offer"]  as! Bool
-                let json = resultNew["ice_candidate"]  as? [String:Any]
-                let candidate = RTCIceCandidate(
-                    sdp: json!["candidate"] as! String,
-                    sdpMLineIndex: Int32(json?["sdpMLineIndex"] as! Int),
-                    sdpMid: json?["id"] as? String)
-                print("call to ice candidate in \(peer_id)")
-                self.onCandidate(candidate: candidate);
-            }
-        }
-        
-        socket?.on("full") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
-            print("full \(dataInfo) stopped typing...")
-            //               }
-        }
-        socket?.on("joined") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
-            print("joined \(dataInfo)typing...")
-            //               }
-        }
-        socket?.on("log") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
-            print("log \(dataInfo) typing...")
-            //               }
-        }
-        socket?.on("bye") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
-            print("bye \(dataInfo) stopped typing...")
-            //               }
-        }
-        socket?.on("message") { (data, ack) in
-            guard let dataInfo = data.first else { return }
-            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
-            print("message= \(dataInfo)   typing...")
-            //               }
-        }
-        socket?.on(clientEvent: .disconnect, callback: { data, ack in
-            print("SocketManager: disconnected\(data)")
-            //   self.sendNotification(event: "DISCONNECTED")
-        })
+//        socket?.on("addPeer") { (data, ack) in
+//            print("addpeer")
+//            guard let dataInfo = data.first else { return }
+//            guard let resultNew = dataInfo as? [String:Any]else{
+//                return
+//            }
+//            let peer_id = resultNew["peer_id"]  as! String
+//            let should_create_offer = resultNew["should_create_offer"]  as! Bool
+//            let vdp_id = resultNew["vdp_id"]  as! String
+//
+//            print("Now this chat has \(dataInfo) users.")
+//            if resultNew["should_create_offer"]  as! Bool{
+//                if self.icecandidate == false{
+//                    self.icecandidate = true
+//                    self.responceDetail = ResponceResult(peer_id: peer_id, should_create_offer: should_create_offer, vdp_id: vdp_id )
+//                    self.sendOffer()
+//                }
+//            }else{
+//                self.sendAnswer()
+//            }
+//        }
+//        // working
+//        socket?.on("error"){(data ,arg)  in
+//            print(data)
+//            print(arg)
+//        }
+//        // working
+//        socket?.on("sessionDescription"){(data ,arg)  in
+//            print("session discription")
+//            print(data)
+//            guard let dataInfo = data.first else { return }
+//            guard let resultNew = dataInfo as? [String:Any]else{
+//                return
+//            }
+//            let peer_id = resultNew["peer_id"]  as! String
+//            //  let should_create_offer = resultNew["should_create_offer"]  as! Bool
+//            let session_description = resultNew["session_description"]  as? [String:Any]
+//            if session_description?["type"] as! String == "answer"{
+//                print("answer")
+//                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 1 )!, sdp: session_description!["sdp"] as! String)
+//                self.onAnswer(sdp: sdp)
+//
+//            }else if session_description?["type"] as! String == "offer"{
+//                print("offer")
+//                //                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 0 )!, sdp: session_description!["sdp"] as! String)
+//                //                self.onOffer(sdp: sdp)
+//            }
+//            print("error session dis=\(arg.debugDescription)")
+//        }
+//        // working
+//        socket?.on("removePeer") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            print("remove Peer")
+//            print("Now this chat has \(dataInfo) users.")
+//        }
+//
+//        socket?.on("join") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            //               if let response: SocketMessage = try? SocketParser.convert(data: dataInfo) {
+//            print("joined from =\(dataInfo)")
+//            //               }
+//        }
+//        // working
+//        socket?.on("iceCandidate") { (data, ack) in
+//            print(data)
+//            guard let dataInfo = data.first else { return }
+//            print("Received ICE candidate= \(dataInfo) is typing...")
+//            guard let resultNew = dataInfo as? [String:Any]else{
+//                return
+//            }
+//            let peer_id = resultNew["peer_id"]  as! String
+//
+//            print("icecandidate = \(peer_id)")
+//            if self.icecandidate == true{
+//                    //   let should_create_offer = resultNew["should_create_offer"]  as! Bool
+//                    let json = resultNew["ice_candidate"]  as? [String:Any]
+//                    let candidate = RTCIceCandidate(
+//                        sdp: json!["candidate"] as! String,
+//                        sdpMLineIndex: Int32(json?["sdpMLineIndex"] as! Int),
+//                        sdpMid: json?["id"] as? String)
+//                    print("call to ice candidate in \(peer_id)")
+//                    self.onCandidate(candidate: candidate);
+//
+//            }
+//        }
+//
+//        socket?.on("full") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
+//            print("full \(dataInfo) stopped typing...")
+//            //               }
+//        }
+//        socket?.on("joined") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
+//            print("joined \(dataInfo)typing...")
+//            //               }
+//        }
+//        socket?.on("log") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
+//            print("log \(dataInfo) typing...")
+//            //               }
+//        }
+//        socket?.on("bye") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
+//            print("bye \(dataInfo) stopped typing...")
+//            //               }
+//        }
+//        socket?.on("message") { (data, ack) in
+//            guard let dataInfo = data.first else { return }
+//            //               if let response: SocketUserTyping = try? SocketParser.convert(data: dataInfo) {
+//            print("message= \(dataInfo)   typing...")
+//            //               }
+//        }
+//        socket?.on(clientEvent: .disconnect, callback: { data, ack in
+//            print("SocketManager: disconnected\(data)")
+//            //   self.sendNotification(event: "DISCONNECTED")
+//        })
     }
     
     //MARK: Receive
@@ -759,8 +942,8 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
     //MARK: Close Session
     @objc func closeSession(){
         webSocket?.cancel(with: .goingAway, reason: "You've Closed The Connection".data(using: .utf8))
-        socket?.emit("disconnect")
-        socket?.disconnect()
+       // DashboardController.socket?.emit("disconnect")
+        DashboardController.socket?.disconnect()
     }
     @objc func connectt(){
         myconnectfunc()
@@ -775,7 +958,6 @@ class VdpViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerConne
             print(" Audio session is muted")
             buttonMute.setTitle("Mute", for: .normal)
             lblMute.setImage(UIImage(systemName: "mic.fill"), for: .normal)
-            
             unmuteAudio()
             MicMute = true
         }else{
@@ -841,7 +1023,7 @@ extension VdpViewController{
             "sdp"  : sdp.sdp.description as String
         ]
         let json1:[String: Any] = [
-            "peer_id" : responceDetail.peer_id as String,
+            "peer_id" : (responceDetail.peer_id ?? "") as String,
             "session_description"  : json]
         sigSend(msg: json1 as NSDictionary);
     }
@@ -859,22 +1041,22 @@ extension VdpViewController{
     }
     
     func sigRecoonect() {
-        socket?.disconnect();
-        socket?.connect();
+        DashboardController.socket?.disconnect();
+        DashboardController.socket?.connect();
     }
     
     func sigSend(msg:NSDictionary) {
         print("json= \(msg)")
-        socket?.emit("relaySessionDescription", msg)
+        DashboardController.socket?.emit("relaySessionDescription", msg)
     }
     
     func sigSendIce(msg:NSDictionary) {
-        socket?.emit("relayICECandidate", msg)
+        DashboardController.socket?.emit("relayICECandidate", msg)
     }
     func sigEnter() {
         let roomName = getRoomName();
         print("Entering room: " + roomName);
-        socket?.emit("enter", roomName);
+        DashboardController.socket?.emit("enter", roomName);
     }
     
     func sendAnswer() {
@@ -932,9 +1114,20 @@ extension VdpViewController{
     
     func prepareNewConnection() -> RTCPeerConnection {
         var icsServers: [RTCIceServer] = []
-        icsServers.append(RTCIceServer(urlStrings: ["stun:relay.metered.ca:80"]))
-        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:80"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
-        
+//        icsServers.append(RTCIceServer(urlStrings: ["stun:stun1.l.google.com:19302"]))
+//        icsServers.append(RTCIceServer(urlStrings: ["turn:43.204.19.95:3478"], username:"home",credential: "home1234"))
+        for item in iiceServer{
+          //  icsServers.append(RTCIceServer(urlStrings: ["stun:stun1.l.google.com:19302"]))
+            icsServers.append(RTCIceServer(urlStrings: ["\(item.url ?? "")"]
+                                           , username: item.username ,credential: item.credential ))
+        }
+//         icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:443"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
+//
+//        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:80"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
+//
+//         icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:443?transport=tcp"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
+//
+//        icsServers.append(RTCIceServer(urlStrings: ["stun:relay.metered.ca:80"]))
         let rtcConfig: RTCConfiguration = RTCConfiguration()
         rtcConfig.tcpCandidatePolicy = RTCTcpCandidatePolicy.disabled
         rtcConfig.bundlePolicy = RTCBundlePolicy.maxBundle
@@ -1001,6 +1194,34 @@ extension VdpViewController{
         remoteRenderView?.frame = remoteView.frame
     }
 }
+extension VdpViewController:  UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            self.view.endEditing(true)
+            return false
+        }
+    func updatemsg(){
+        if let chatmsg = txtfeldSeckerOut.text{
+            let myDictionary = ["type":"voiceMessage", "chatMsg": chatmsg] as [String : Any]
+            
+            if let jsonData = try? JSONSerialization.data(withJSONObject: myDictionary, options: .prettyPrinted),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                print(jsonString)
+                let ref = Database.database().reference().child("vdpMessages").child(vdpmodule.id!).child("vdpData")
+                ref.setValue(["message": jsonString as Any], withCompletionBlock: {(error, DataSnapshot) in
+                    if (error == nil){
+                        print("update succesfully")
+                    }
+                })
+                ref.setValue(["message": "aa" as Any], withCompletionBlock: {(error, DataSnapshot) in
+                    if (error == nil){
+                        print("Message update successfully")
+                        PopupManager.shared.displaySuccess(message: "Message update successfully", description: "")
+                    }
+                })
+            }
+        }
+    }
+}
 extension VdpViewController{
     func videoView(_ videoView: RTCVideoRenderer, didChangeVideoSize size: CGSize) {
         let isLandScape = size.width < size.height
@@ -1038,7 +1259,7 @@ extension VdpViewController{
     //media stream
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd rtpReceiver: RTCRtpReceiver, streams mediaStreams: [RTCMediaStream]) {
         DispatchQueue.main.async{
-            //  ProgressOverlay.shared.hide()
+               ProgressOverlay.shared.stopAnimation()
         }
         if let valueid = mediaStreams.first?.streamId{
             if valueid == "101"{
@@ -1299,6 +1520,16 @@ extension VdpViewController{
         //            self.startLikeAnimation()
         //        }
     }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                // Do something with the selected image
+            }
+          //  dismiss(animated: true, completion: nil)
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            dismiss(animated: true, completion: nil)
+        }
 }
 extension VdpViewController{
     func vdpEfectNightVision(){
@@ -1310,12 +1541,25 @@ extension VdpViewController{
             nightVisioncmd = "$V20000000000#"
             vdpmodule.nightVision = true
         }
-        
         UpdateVisionMode(cmd: nightVisioncmd)
     }
-    func vdpEfectDefault(){
-        let defaultcmd = "$V01000000000#"
-        UpdateVisionMode(cmd: defaultcmd)
+    func vdpEfectDefault(sender: Any){
+        if lbldefault.currentImage == UIImage(systemName: "checkmark.square.fill"){
+            let defaultcmd = "$V01000000000#"
+            UpdateVisionMode(cmd: defaultcmd)
+            lbldefault.setImage(UIImage(systemName: "square"), for: .normal)
+        }else{
+            let blacknWhitecmd = "$V02000000000#"
+            UpdateVisionMode(cmd: blacknWhitecmd)
+            lbldefault.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        }
+    }
+    func vdpResponceEfectDefault(sender: Any){
+        if lbldefault.currentImage == UIImage(systemName: "checkmark.square.fill"){
+            lbldefault.setImage(UIImage(systemName: "square"), for: .normal)
+        }else{
+            lbldefault.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        }
     }
     func vdpEfectBlacknwhite(){
         let blacknWhitecmd = "$V02000000000#"
@@ -1340,19 +1584,99 @@ extension VdpViewController{
         })
     }
     
-    
 }
 extension VdpViewController{
-    // UIImagePickerControllerDelegate methods
-       
-//       func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-////           if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-////               // do something with the image
-////           }
-//           dismiss(animated: true, completion: nil)
-//       }
-       
-//       func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//           dismiss(animated: true, completion: nil)
-//       }
+    func webrtConnect(data: Array<Any>) {
+        print("vdp connect")
+        if UIImage(systemName: "play.fill") == lblplay.currentImage{
+            if lblplay.tag == 1{
+                connectToPlay()
+            }
+        }
+    }
+
+    func webrtcAddPeer(data: Array<Any>) {
+        print("vdp Addpeer")
+         guard let dataInfo = data.first else { return }
+        guard let resultNew = dataInfo as? [String:Any]else{
+            return
+        }
+        
+        let peer_id = resultNew["peer_id"]  as! String
+        let should_create_offer = resultNew["should_create_offer"]  as! Bool
+        let vdp_id = resultNew["vdp_id"]  as! String
+        
+        print("Now this chat has \(dataInfo) users.")
+        if resultNew["should_create_offer"]  as! Bool{
+            if self.icecandidate == false{
+                self.icecandidate = true
+                self.responceDetail = ResponceResult(peer_id: peer_id , should_create_offer: should_create_offer, vdp_id: vdp_id )
+                self.sendOffer()
+            }
+        }else{
+            self.sendAnswer()
+        }
+    }
+    
+    func webrtcSessionDescription(data: Array<Any>) {
+        print("vdp session discription")
+        print(data)
+        guard let dataInfo = data.first else { return }
+        guard let resultNew = dataInfo as? [String:Any]else{
+            return
+        }
+        let peer_id = resultNew["peer_id"]  as! String
+        //  let should_create_offer = resultNew["should_create_offer"]  as! Bool
+        let session_description = resultNew["session_description"]  as? [String:Any]
+        if session_description?["type"] as! String == "answer"{
+            print("answer")
+            let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 1 )!, sdp: session_description!["sdp"] as! String)
+            self.onAnswer(sdp: sdp)
+            
+        }else if session_description?["type"] as! String == "offer"{
+            print("offer")
+            //                let sdp = RTCSessionDescription(type: RTCSdpType(rawValue: 0 )!, sdp: session_description!["sdp"] as! String)
+            //                self.onOffer(sdp: sdp)
+        }
+    //    print("error session dis=\(arg.debugDescription)")
+    }
+    
+    func webrtcRemovePeer(data: Array<Any>) {
+        print("vdp removepeer")
+        guard let dataInfo = data.first else { return }
+        print("Now this chat has \(dataInfo) users.")
+    }
+    
+    func webrtciceCandidate(data: Array<Any>) {
+        print("vdp iceCandidate")
+        print(data)
+        guard let dataInfo = data.first else { return }
+        print("Received ICE candidate= \(dataInfo) is typing...")
+        guard let resultNew = dataInfo as? [String:Any]else{
+            return
+        }
+        let peer_id = resultNew["peer_id"]  as! String
+        
+        print("icecandidate = \(peer_id)")
+        if self.icecandidate == true{
+                //   let should_create_offer = resultNew["should_create_offer"]  as! Bool
+                let json = resultNew["ice_candidate"]  as? [String:Any]
+                let candidate = RTCIceCandidate(
+                    sdp: json!["candidate"] as! String,
+                    sdpMLineIndex: Int32(json?["sdpMLineIndex"] as! Int),
+                    sdpMid: json?["id"] as? String)
+                print("call to ice candidate in \(peer_id)")
+                self.onCandidate(candidate: candidate);
+      
+        }
+    }
+    
+    func webrtcError() {
+        print("vdp error")
+    }
+    
+    func webrtcDisConnected() {
+        print("vdp Disconnect")
+    }
+
 }

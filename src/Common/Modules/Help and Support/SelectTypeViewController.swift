@@ -13,7 +13,7 @@ class tableCell: UITableViewCell{
         // Initialization code
         self.backgroundColor = UIColor(named: "PrimaryLightestColor")
     }
-
+    
     @IBOutlet weak var lblName: UILabel!
     func load(obj: String){
         lblName.text = obj
@@ -46,7 +46,7 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
             makeACall()
         }
     }
-     
+    
     @IBOutlet weak var typetableview: UITableView!
     
     override func viewDidLoad() {
@@ -56,20 +56,22 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
         typetableview.delegate = self
         typetableview.dataSource = self
         managetableview()
+        view.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        
     }
     var dataArray: Array = Array<String>()
     func  managetableview()
     {
-         self.view.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        self.view.backgroundColor = UIColor(named: "PrimaryLightestColor")
         dataArray = ["Support","Product Manual","Contact"]
     }
-        func makeACall() {
-            guard let url = URL(string: "tel://7767984645"),
-                UIApplication.shared.canOpenURL(url) else { return }
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
+    func makeACall() {
+        guard let url = URL(string: "tel://9007900709"),
+              UIApplication.shared.canOpenURL(url) else { return }
+        if #available(iOS 10, *) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.openURL(url)
         }
+    }
 }

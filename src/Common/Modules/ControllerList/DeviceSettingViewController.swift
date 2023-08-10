@@ -36,8 +36,19 @@ class DeviceSettingViewController: UIViewController {
          Refrashbtn.setTitle("", for: .normal)
         self.stackviewfunc()
         self.activatelisner()
+        getTimestamp()
     }
-    
+    func getTimestamp() {
+            Database.database().reference().child("keepAliveTimeStamp").child(lblHardwareId.text ?? "")
+                .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+                    if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+                        if let x = aDict["time"] as? Double{
+                            let time =  SharedFunction.shared.gotoTimetampTodayConvert(time: Double(x/1000))
+                            self.lblLastActivity.text = time
+                        }
+                }
+          }
+    }
     @IBOutlet weak var lblbtnback: UIButton!
     
     @IBAction func didtappedBackbtn(_ sender: Any) {
@@ -196,6 +207,7 @@ class DeviceSettingViewController: UIViewController {
  
         myTextField.frame = CGRect(x: 15, y: 50, width: deleteView.frame.width - 30, height: 50)
         myTextField.placeholder = "Enter User Id"
+        myTextField.text = UserDefaults.standard.value(forKey: "emailAddress") as? String
         myTextField.layer.cornerRadius = 15.0
         myTextField.layer.borderWidth = 1.0
         myTextField.layer.borderColor = UIColor.gray.cgColor
@@ -349,7 +361,6 @@ extension DeviceSettingViewController{
                 })
             }
         }, appliance: anAppliance)
-        
     }
     func devidedetail(pcontrollerApplince: ControllerAppliance) ->  String{
         var aaaDeviceIdArray = [String: String]()

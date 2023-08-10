@@ -2,10 +2,20 @@
 //  ListTableViewCell.swift
 //  Wifinity
 //
-//  Created by Apple on 30/12/22.
+//  Created by Sachin on 30/12/22.
 //
 
 import UIKit
+protocol webrtcDelegate: AnyObject{
+    func webrtConnect(data: Array<Any>)
+    func webrtcAddPeer(data: Array<Any>)
+    func webrtcSessionDescription(data: Array<Any>)
+    func webrtcRemovePeer(data: Array<Any>)
+    func webrtciceCandidate(data: Array<Any>)
+    func webrtcError()
+    func webrtcDisConnected()
+
+}
 protocol listViewDelegate: AnyObject{
     func vdplist( listViewCellplay cell: ListTableViewCell)
     func vdplist( listViewCellplaySpeker cell: ListTableViewCell)
@@ -64,7 +74,7 @@ class ListTableViewCell: UITableViewCell {
     }
     @IBAction func didTappedPause(_ sender: Any) {
         print("didtapped pause")
-        if btnpause.currentImage == UIImage(systemName: "play.fill"){
+         if btnpause.currentImage == UIImage(systemName: "play.fill"){
             btnpause.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         }else{
             btnpause.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -74,7 +84,6 @@ class ListTableViewCell: UITableViewCell {
             //            btnplay.isHidden = false
         }
         delegate?.vdplist(listViewCellplayPause: self)
-        
     }
     @IBAction func btnNextPage(_ sender: Any) {
         print("next page")

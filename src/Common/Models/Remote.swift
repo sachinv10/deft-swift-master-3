@@ -368,7 +368,7 @@ class Remote: NSObject {
 class RemoteKey: NSObject {
     var id :String?
     var title :String?
-    
+    var remoteId :String?
     var irId :String?
     
     var isStatic :Bool = false
@@ -377,7 +377,8 @@ class RemoteKey: NSObject {
     var tag :RemoteKey.Tag?
     
     var timestamp :Int = 0
-    
+    var checked :Bool = false
+
     
     func clone() -> RemoteKey {
         let aReturnVal = RemoteKey()

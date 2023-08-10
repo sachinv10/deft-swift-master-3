@@ -22,7 +22,43 @@ class Sensor: NSObject {
     var Batterysevermode :String?
     var BatteryPercentage :String?
     var sensorSensitivity :String?
+    var routineType :String?
+    var optators :String?
+    var sensorTypeId: Int?
     var hardwareGeneration :Device.HardwareGeneration?
+    var subLine: String?
+    var operatosSelection: String{
+       var returnVal = ""
+       switch optators{
+       case ">":
+           returnVal = "above"
+       case "<":
+           returnVal = "bellow"
+       case "=":
+           returnVal = "equal to"
+       case .none:
+           break
+       case .some(_):
+           break
+       }
+       return returnVal
+   }
+    var selectedAppType: String{
+       var returnVal = ""
+       switch sensorTypeId{
+       case 1:
+           returnVal = "When temprature \(operatosSelection) \(String(describing: temperature ?? 50))"
+       case 2:
+           returnVal = "When light \(operatosSelection) \(String(describing: temperature ?? 100))"
+       case 3:
+           returnVal = "When motion is detect"
+       case .none:
+           break
+       case .some(_):
+           break
+       }
+       return returnVal
+   }
     
     var hardwareType :Device.HardwareType? {
         var aReturnVal :Device.HardwareType? = nil
@@ -74,7 +110,6 @@ class Sensor: NSObject {
     var scheduleSensorActivatedState :Sensor.OnlineState?
     var scheduleMotionLightActivatedState :Sensor.LightState?
     var scheduleSirenActivatedState :Sensor.SirenState?
-    
     
     func clone() -> Sensor {
         let aSensor = Sensor()

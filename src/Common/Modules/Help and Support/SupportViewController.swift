@@ -39,8 +39,12 @@ class SupportViewController: BaseController, UITableViewDataSource, UITableViewD
         return CGFloat(60)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let name = arraydata[indexPath.row]
-        gotofinalvc(name: name)
+        if customView.isHidden{
+            let name = arraydata[indexPath.row]
+            gotofinalvc(name: name)
+        }else{
+            customView.isHidden = true
+        }
     }
     func gotofinalvc(name: String){
         RoutingManager.shared.gotoSubmitSupport(controller: self, name: name)
@@ -56,8 +60,10 @@ class SupportViewController: BaseController, UITableViewDataSource, UITableViewD
         apptableview.delegate = self
         lblRightMenu.setTitle("", for: .normal)
         arrangeArraydata()
+        view.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        customView.isHidden = true
     }
-    
+ 
     @IBOutlet weak var lblRightMenu: UIButton!
     @IBAction func didtappedRightMenu(_ sender: Any) {
         RightbtnView()

@@ -88,7 +88,7 @@ class Device: NSObject {
         case ctEightSwitch
         case ctNineSwitch
         case ctTenSwitch
-        
+        case VDP
         case smartSensor // S10 is smart sensor
         case smokeDetector // S01 is smoke detector
         case thermalSensor // S02 is thermal sensor
@@ -231,6 +231,8 @@ class Device: NSObject {
                 aReturnVal = "CS10"
             case .Occupy:
                 aReturnVal = "P00"
+            case .VDP:
+                aReturnVal = "V00"
             }
             return aReturnVal
         }
@@ -270,9 +272,9 @@ extension Device {
             aReturnVal = HardwareType.nineSwitch
         } else if pId.hasPrefix(HardwareType.tenSwitch.prefix) == true {
             aReturnVal = HardwareType.tenSwitch
-        }
-        
-        else if pId.hasPrefix(HardwareType.clOneSwitch.prefix) == true {
+        }else if pId.hasPrefix(HardwareType.VDP.prefix) == true {
+            aReturnVal = HardwareType.VDP
+        }else if pId.hasPrefix(HardwareType.clOneSwitch.prefix) == true {
             aReturnVal = HardwareType.clOneSwitch
         }
         
@@ -451,6 +453,8 @@ extension Device {
         case .CStenSwitch:
             aReturnVal = 10
         case .Occupy:
+            aReturnVal = 1
+        case .VDP:
             aReturnVal = 1
         }
         

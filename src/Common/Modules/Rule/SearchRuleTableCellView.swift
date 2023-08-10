@@ -16,11 +16,9 @@ class SearchRuleTableCellView: UITableViewCell {
     
     weak var delegate :SearchRuleTableCellViewDelegate?
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
     
     func load(rule pRule :Rule) {
         self.rule = pRule

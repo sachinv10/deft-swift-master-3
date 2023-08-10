@@ -17,14 +17,14 @@ class camtableCell: UITableViewCell{
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     func load(obj: Dictionary<String,Any>){
         lblName.text = obj["Name"] as! String
-       imageview.image = UIImage(named: obj["ImageString"] as! String)
+        imageview.image = UIImage(named: obj["ImageString"] as! String)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
 }
@@ -35,7 +35,7 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(90.0)
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell =  tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! camtableCell
         var data = dataArray[indexPath.row]
@@ -48,8 +48,8 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
             UIApplication.shared.open(url)
         }
     }
-   
- 
+    
+    
     @IBOutlet weak var camtableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +61,7 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-     //   self.demokeyMap()
+        self.demokeyMap()
     }
     
     var dataArray: Array = Array<Dictionary<String,Any>>()
@@ -84,7 +84,7 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
         print(dataArray)
         camtableview.reloadData()
     }
-
+    
 }
 // MARK : - DEMO
 extension CamerasViewController{
@@ -93,37 +93,37 @@ extension CamerasViewController{
         let uid = Auth.auth().currentUser?.uid
         let ref = Database.database().reference().child("devices").queryOrdered(byChild: "uid").queryEqual(toValue: uid).observe(.value, with: {(DataSnapshot) in
             print(DataSnapshot.value as Any)
-            let json = DataSnapshot.value as! Dictionary<String, Any>
+            let json = DataSnapshot.value as? Dictionary<String, Any>
             if let aDict = DataSnapshot.value as? Dictionary<String, Any> {
                 do{
                     for item in aDict.values{
-                    let jsonData = try JSONSerialization.data(withJSONObject: item, options: [])
-                    if let jsonString = String(data: jsonData, encoding: .utf8) {
-                        print(jsonString)
-                        let data = jsonString.data(using: .utf8)
-                        let decoder = JSONDecoder()
-                        let response = try decoder.decode(ResponseDevice.self, from: data!)
-                        print(response.name)
-                     }
+                        let jsonData = try JSONSerialization.data(withJSONObject: item, options: [])
+                        if let jsonString = String(data: jsonData, encoding: .utf8) {
+                            //   print(jsonString)
+                            let data = jsonString.data(using: .utf8)
+                            let decoder = JSONDecoder()
+                            let response = try decoder.decode(ResponseDevice.self, from: jsonData)
+                            print(response.name,"\n id=", response.id)
+                        }
                     }
                 }catch{
                     
                 }
             }
             
-//            do{
-//                let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
-//                if let jsonString = String(data: jsonData, encoding: .utf8) {
-//                    print(jsonString)
-//                    let data = jsonString.data(using: .utf8)
-//                    let response = try decoder.decode(ResponseDemo.self, from: data!)
-//             print(response.sensorSensitivity)
-//                }
-//
-//            }catch{
-//
-//            }
-         })
+            //            do{
+            //                let jsonData = try JSONSerialization.data(withJSONObject: json, options: [])
+            //                if let jsonString = String(data: jsonData, encoding: .utf8) {
+            //                    print(jsonString)
+            //                    let data = jsonString.data(using: .utf8)
+            //                    let response = try decoder.decode(ResponseDemo.self, from: data!)
+            //             print(response.sensorSensitivity)
+            //                }
+            //
+            //            }catch{
+            //
+            //            }
+        })
     }
 }
 struct ResponseDemo: Codable {

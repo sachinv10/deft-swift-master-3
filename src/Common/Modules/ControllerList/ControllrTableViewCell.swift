@@ -21,12 +21,7 @@ class ControllrTableViewCell: UITableViewCell {
     @IBOutlet weak var lblRoomName: UILabel!
     @IBOutlet weak var lblControllerId: UILabel!
     func load(cellobj: ControllerAppliance) {
-        
-       if cellobj.online == true{
-           lableonline.backgroundColor = UIColor.green
-       }else{
-           lableonline.backgroundColor = UIColor.red
-       }
+           lableonline.backgroundColor = cellobj.online == true ? UIColor.green: UIColor.red
         
         lblswitchname.text = cellobj.name
         lblControllerId.text = cellobj.id

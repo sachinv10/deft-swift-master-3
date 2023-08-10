@@ -2,12 +2,13 @@
 //  CustomMsgViewController.swift
 //  Wifinity
 //
-//  Created by Apple on 24/01/23.
+//  Created by Sachin on 24/01/23.
 //
 
 import UIKit
 import Firebase
 import FirebaseAuth
+import SocketIO
 
 
 class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewDataSource {
@@ -28,7 +29,7 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
     
     
     //appHeaderBarView
-    
+    var socket: SocketIOClient!
     @IBOutlet weak var tableview: UITableView!
     var vdpmodule: VDPModul!
     override func viewDidLoad() {
@@ -39,12 +40,27 @@ class CustomMsgViewController: BaseController, UITableViewDelegate, UITableViewD
         super.viewWillAppear(animated)
         title = "Custom Messages"
         subTitle = ""
+        socketConnection()
         
         tableview.register(UINib(nibName: "CustommsgtblCell", bundle: nil), forCellReuseIdentifier: "CustommsgtblCell")
         tableview.delegate = self
         tableview.dataSource = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tableview.addGestureRecognizer(tapGesture)
+    }
+    let manager = SocketManager(socketURL: URL(string: "https://webrtc-mqk7.onrender.com/")!, config: [.log(false), .compress])
+    func socketConnection(){
+    
+        socket = manager.defaultSocket
+            socket.connect()
+        // Add event listeners
+        socket.on(clientEvent: .connect) {data, ack in
+            print("Connected")
+           // self.socket?.emit("join", dic2)
+        }
+        socket.on(clientEvent: .disconnect) {data, ack in
+            print("DisConnected")
+        }
     }
     @objc func handleTap() {
         editview.isHidden = true

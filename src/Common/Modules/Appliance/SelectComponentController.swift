@@ -12,7 +12,6 @@ class SelectComponentController: BaseController {
     @IBOutlet weak var componentTableView: AppTableView!
     
     var componentTypes :Array<ComponentType>?
-    
     var selectedRoom :Room?
     var appliances :Array<Appliance> = Array<Appliance>()
     var curtains :Array<Curtain> = Array<Curtain>()
@@ -26,6 +25,8 @@ class SelectComponentController: BaseController {
     var selectedMoodOffRemotes :Array<Remote> = Array<Remote>()
     var selectedSensors :Array<Sensor> = Array<Sensor>()
     
+    static var coreSensor: Bool = false
+    static var ApplianceType: String?
     func selectedRemoteArray(componentType pComponentType :ComponentType) -> Array<Remote> {
         var aReturnVal = Array<Remote>()
         if pComponentType == .remoteKey {
@@ -47,6 +48,7 @@ class SelectComponentController: BaseController {
         case remoteKeyMoodOn
         case remoteKeyMoodOff
         case sensor
+        
     }
     
     
@@ -93,9 +95,14 @@ class SelectComponentController: BaseController {
     
     
     func searchAppliance() {
-        DataFetchManager.shared.searchAppliance(completion: { (pError, pApplianceArray,pDevicesArray) in
+        DataFetchManager.shared.searchAppliance(completion: { [self] (pError, pApplianceArray,pDevicesArray) in
             if pApplianceArray != nil && pApplianceArray!.count > 0 {
                 self.appliances = pApplianceArray!
+                if SelectComponentController.ApplianceType == "If"{
+                    appliances = self.appliances.filter({(pappliance) -> Bool in
+                        return  pappliance.stripType != Appliance.StripType.rgb && pappliance.type != Appliance.ApplianceType.ledStrip
+                    })
+                }
             }
             self.componentTableView.reloadData()
         }, room: self.selectedRoom, includeOnOnly: false)
@@ -125,7 +132,19 @@ class SelectComponentController: BaseController {
     func searchSensor() {
         DataFetchManager.shared.searchSensor(completion: { (pError, pSensorArray) in
             if pSensorArray != nil && pSensorArray!.count > 0 {
-                self.sensors = pSensorArray!
+               if SelectComponentController.coreSensor{
+                   var psensors :Array<Sensor> = Array<Sensor>()
+                   for item in pSensorArray!{
+                       if item.id!.hasPrefix("S01"){
+                        print("smoke remove")
+                       }else{
+                           psensors.append(item)
+                       }
+                   }
+                   self.sensors = psensors
+               }else{
+                   self.sensors = pSensorArray!
+               }
             }
             self.componentTableView.reloadData()
         }, room: self.selectedRoom)
@@ -149,7 +168,6 @@ extension SelectComponentController {
             )
         }
     }
-    
 }
 
 
@@ -263,7 +281,7 @@ extension SelectComponentController :UITableViewDataSource, UITableViewDelegate 
                         
                         let aCellView :SelectComponentTableCellView = pTableView.dequeueReusableCell(withIdentifier: "SelectComponentTableCellViewId") as! SelectComponentTableCellView
                         aCellView.delegate = self
-                        aCellView.load(appliance: anAppliance, isChecked: aSelectedAppliance != nil, powerState: aSelectedAppliance?.scheduleState, dimmableValue: aSelectedAppliance?.scheduleDimmableValue)
+                        aCellView.load(appliance: anAppliance, isChecked: aSelectedAppliance != nil, powerState: aSelectedAppliance?.scheduleState, dimmableValue: aSelectedAppliance?.scheduleDimmableValue, sripLight: (aSelectedAppliance?.stripType == Appliance.StripType.rgb && aSelectedAppliance?.type == Appliance.ApplianceType.ledStrip))
                         aReturnVal = aCellView
                     }
                 case .curtain:
@@ -293,14 +311,21 @@ extension SelectComponentController :UITableViewDataSource, UITableViewDelegate 
                     }
                 case .sensor:
                     if pIndexPath.row < self.sensors.count {
-                        let aSensor = self.sensors[pIndexPath.row]
+                        var aSensor = self.sensors[pIndexPath.row]
                         let aSelectedSensor = self.selectedSensors.first(where: { (pObject) -> Bool in
                             return aSensor.id == pObject.id
                         })
                         
                         let aCellView :SelectComponentTableCellView = pTableView.dequeueReusableCell(withIdentifier: "SelectComponentTableCellViewId") as! SelectComponentTableCellView
                         aCellView.delegate = self
-                        aCellView.load(sensor: aSensor, isChecked: aSelectedSensor != nil, activatedState: aSelectedSensor?.scheduleSensorActivatedState, motionLightState: aSelectedSensor?.scheduleMotionLightActivatedState, sirenState: aSelectedSensor?.scheduleSirenActivatedState)
+                        if SelectComponentController.coreSensor{
+                      if  aSelectedSensor != nil{
+                          aSensor = aSelectedSensor!
+                      }
+                            aCellView.loadx(sensor: aSensor, isChecked: aSelectedSensor != nil, activatedState: aSelectedSensor?.scheduleSensorActivatedState, motionLightState: aSelectedSensor?.scheduleMotionLightActivatedState, sirenState: aSelectedSensor?.scheduleSirenActivatedState)
+                        }else{
+                            aCellView.load(sensor: aSensor, isChecked: aSelectedSensor != nil, activatedState: aSelectedSensor?.scheduleSensorActivatedState, motionLightState: aSelectedSensor?.scheduleMotionLightActivatedState, sirenState: aSelectedSensor?.scheduleSirenActivatedState)
+                        }
                         aReturnVal = aCellView
                     }
                 }
@@ -385,11 +410,15 @@ extension SelectComponentController :SelectRemoteKeyControllerDelegate {
     
     func selectRemoteKeyController(_ pSender: SelectRemoteKeyController, didSelectRemoteKeys pRemoteKeyArray: Array<RemoteKey>?, componentType pComponentType: ComponentType?) {
         if let aComponentType = pComponentType {
-            let aSelectedRemoteArray = self.selectedRemoteArray(componentType: aComponentType)
+            var aSelectedRemoteArray = self.selectedRemoteArray(componentType: aComponentType)
             if let aRemote = aSelectedRemoteArray.first(where: { (pRemote) -> Bool in
                 return (pRemote.id == pSender.remote?.id && pRemote.hardwareId == pSender.remote?.hardwareId)
             }) {
-                aRemote.selectedRemoteKeys = pRemoteKeyArray
+                 if (pRemoteKeyArray?.count ?? 0 > 0){
+                    aRemote.selectedRemoteKeys = pRemoteKeyArray
+                }else{
+                    selectedRemotes.removeAll { $0 == aRemote }
+                 }
             } else if let aRemote = self.remotes.first(where: { (pRemote) -> Bool in
                 return pRemote.id == pSender.remote?.id && pRemote.hardwareId == pSender.remote?.hardwareId
             }) {
@@ -421,6 +450,23 @@ extension SelectComponentController :SelectRemoteKeyControllerDelegate {
 
 
 extension SelectComponentController :SelectComponentTableCellViewDelegate {
+    func cellView(_ pSender: SelectComponentTableCellView, didChangeProperty1 pProperty1: Int, property2 pProperty2: Int, property3 pProperty3: Int, glowPattern pGlowPatternValue: String? ) {
+         if let anIndexPath = self.componentTableView.indexPath(for: pSender), anIndexPath.row < self.appliances.count {
+            let anAppliance = self.appliances[anIndexPath.row]
+             anAppliance.ledStripProperty1 = pProperty1
+             anAppliance.ledStripProperty2 = pProperty2
+             anAppliance.ledStripProperty3 = pProperty3
+             anAppliance.stripLightEvent = pGlowPatternValue
+             self.appliances[anIndexPath.row] = anAppliance
+             self.componentTableView.reloadRows(at: [anIndexPath], with: UITableView.RowAnimation.automatic)
+         }
+    }
+    
+    func selectComponentSensorTableCellView(_ pSender: SelectComponentTableCellView) {
+        if let anIndexPath = self.componentTableView.indexPath(for: pSender){
+            self.componentTableView.reloadRows(at: [anIndexPath], with: UITableView.RowAnimation.automatic)
+        }
+    }
     
     func selectComponentTableCellViewDidUpdate(_ pSender: SelectComponentTableCellView) {
         if let anAppliance = pSender.appliance {
@@ -452,6 +498,10 @@ extension SelectComponentController :SelectComponentTableCellViewDelegate {
                 aSelectedSensor.scheduleSensorActivatedState = aSensor.scheduleSensorActivatedState
                 aSelectedSensor.scheduleMotionLightActivatedState = aSensor.scheduleMotionLightActivatedState
                 aSelectedSensor.scheduleSirenActivatedState = aSensor.scheduleSirenActivatedState
+                aSelectedSensor.temperature = aSensor.temperature
+                aSelectedSensor.routineType = aSensor.routineType
+                aSelectedSensor.optators = aSensor.optators
+                aSelectedSensor.sensorTypeId = aSensor.sensorTypeId
             }
         }
     }

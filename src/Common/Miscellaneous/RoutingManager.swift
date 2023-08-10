@@ -2,10 +2,11 @@
 //  RoutingManager.swift
 //  Wifinity
 //
-//  Created by Rupendra on 17/01/21.
+//  Created by Sachin on 01/016/22.
 //
 
 import UIKit
+import SocketIO
 
 
 class RoutingManager: NSObject {
@@ -132,7 +133,7 @@ extension RoutingManager {
     }
     
     func gotoSelectRoom(
-        controller pController :UIViewController
+        controller pController :UIViewController,shouldIfConditionAddRoom pshouldIfConditionAddRoom: Bool,shouldThenConditionAddRoom pshouldthenConditionAddRoom: Bool
         , roomSelectionType pRoomSelectionType :SelectRoomController.SelectionType
         , delegate pDelegate :SelectRoomControllerDelegate
         , shouldAllowAddRoom pShouldAllowAddRoom :Bool
@@ -141,6 +142,8 @@ extension RoutingManager {
         let aDestinationController = self.selectRoomControllerUsingStoryboard()
         aDestinationController.selectionType = pRoomSelectionType
         aDestinationController.delegate = pDelegate
+        aDestinationController.shouldIfConditionAddRoom = pshouldIfConditionAddRoom
+        aDestinationController.shouldThenConditionAddRoom = pshouldthenConditionAddRoom
         aDestinationController.shouldAllowAddRoom = pShouldAllowAddRoom
         if let aSelectedRoomArray = pSelectedRoomArray {
             aDestinationController.selectedRooms = aSelectedRoomArray
@@ -165,7 +168,6 @@ extension RoutingManager {
         aDestinationController.delegate = pDelegate
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
-    
 }
 
 
@@ -393,7 +395,16 @@ extension RoutingManager {
         let aDestinationController = self.selectCoreControllerUsingStoryboard()
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
-
+    func gotoCreateNewCore(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, newCoreId: String?,core pCore: Core?, pdelegate: newCoreControllerDelegate) {
+        let aDestinationController = self.selectNewCoreUsingStoryboard()
+            aDestinationController.newCoreId = newCoreId
+            aDestinationController.delegates = pdelegate
+         //   aDestinationController.NewCore = pCore
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    
     func gotoOffline(
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
@@ -423,6 +434,26 @@ extension RoutingManager {
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
         let aDestinationController = self.selectHelpControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoBuyProduct(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectBuyProductControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoProductDetail(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, product: Ecommerce) {
+        let aDestinationController = self.selectProductDetailControllerUsingStoryboard()
+            aDestinationController.Product = product
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoProductOrderList(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, product: Ecommerce) {
+        let aDestinationController = self.selectProductOrderListControllerUsingStoryboard()
+           // aDestinationController.Product = product
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     func gotoSupport(
@@ -486,8 +517,20 @@ extension RoutingManager {
     func selectVDPCustommsgControllerUsingStoryboard() -> CustomMsgViewController {
         return UIStoryboard(name: "VDP", bundle: Bundle.main).instantiateViewController(withIdentifier: "CustomMsgViewController") as! CustomMsgViewController
     }
+    func selectNewCoreUsingStoryboard() -> CreateNewCoreViewController {
+        return UIStoryboard(name: "Core", bundle: Bundle.main).instantiateViewController(withIdentifier: "CreateNewCoreViewController") as! CreateNewCoreViewController
+    }
     func selectHelpControllerUsingStoryboard() -> SelectTypeViewController {
         return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SelectTypeViewController") as! SelectTypeViewController
+    }
+    func selectBuyProductControllerUsingStoryboard() -> BuyProducListViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "BuyProducListViewController") as! BuyProducListViewController
+    }
+    func selectProductDetailControllerUsingStoryboard() -> productDemoDetailViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "productDemoDetailViewController") as! productDemoDetailViewController
+    }
+    func selectProductOrderListControllerUsingStoryboard() -> YourOrderListViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "YourOrderListViewController") as! YourOrderListViewController
     }
     func selectSupportControllerUsingStoryboard() -> SupportViewController {
         return UIStoryboard(name: "HelpAndSupport", bundle: Bundle.main).instantiateViewController(withIdentifier: "SupportViewController") as! SupportViewController
@@ -521,9 +564,10 @@ extension RoutingManager {
     func gotoApplianceDetails(
         controller pController :UIViewController
         , selectedAppliance pSelectedAppliance :Appliance
-        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, delegate: SelectedAppliandesDelegate) {
         let aDestinationController = self.newApplianceControllerUsingStoryboard()
         aDestinationController.appliance = pSelectedAppliance
+            aDestinationController.delegate = delegate
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     
@@ -537,19 +581,20 @@ extension RoutingManager {
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
         let aDestinationController = self.selectOfferDetailControllerUsingStoryboard()
         aDestinationController.offerData = offerData
-        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 }
-
+// MARK: - VDP
 extension RoutingManager{
     func selectvdpdetailControllerUsingStoryboard() -> VdpViewController {
         return UIStoryboard(name: "VDP", bundle: Bundle.main).instantiateViewController(withIdentifier: "VdpViewController") as! VdpViewController
     }
     func gotoVDPPlay(
         controller pController :UIViewController
-        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, Obj: VDPModul) {
+    , shouldAddNavigationController pShouldAddNavigationController :Bool = false, Obj: VDPModul,  ice: [IceServer]) {
         let aDestinationController = self.selectvdpdetailControllerUsingStoryboard()
             aDestinationController.vdpmodule = Obj
+            aDestinationController.iiceServer = ice
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 }
@@ -901,6 +946,38 @@ extension RoutingManager {
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     
+    func AddnewMoodUsingStoryboard() -> AddNewMoodViewController{
+        return UIStoryboard(name: "Mood", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddNewMoodViewController") as! AddNewMoodViewController
+    }
+    func newMoodAdd(controller pController :UIViewController, selectMood pmood: Array<Mood>, room proom: Room?,pnewmood: String?)  {
+        let aDestinationController = self.AddnewMoodUsingStoryboard()
+        aDestinationController.selectMood = pmood
+        aDestinationController.selectedRoom = proom
+        aDestinationController.newMoodId = pnewmood
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    
+    func AddAppliancStoryboard() -> SelectAppliancViewController{
+        return UIStoryboard(name: "Mood", bundle: Bundle.main).instantiateViewController(withIdentifier: "SelectAppliancViewController") as! SelectAppliancViewController
+    }
+    func SelectApliancesAdd(controller pController :UIViewController, selectMood pmood: Array<Mood>, room proom: Room?)  {
+        let aDestinationController = self.AddAppliancStoryboard()
+        aDestinationController.selectMood = pmood
+        aDestinationController.selectedRoom = proom
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    
+    func SelsectkeysStoryboard() -> RemoteKeysViewController{
+        return UIStoryboard(name: "Mood", bundle: Bundle.main).instantiateViewController(withIdentifier: "RemoteKeysViewController") as! RemoteKeysViewController
+    }
+    func SelectRemoteKeys(controller pController :UIViewController, room proom: Room?, applist: applianeslist, pindex: IndexPath)  {
+        let aDestinationController = self.SelsectkeysStoryboard()
+      //  aDestinationController.selectMood = pmood
+        aDestinationController.selectedRoom = proom
+        aDestinationController.selectApplianc = applist
+        aDestinationController.indexpath = pindex
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
 }
 // MARK: - Controller Setthing
 extension RoutingManager{
@@ -1008,6 +1085,26 @@ extension RoutingManager{
     func gotoResetAllControllerSetting(controller pController :UIViewController, controller pApplinces: [ControllerAppliance]) {
         let aDestinationController = self.ResetAllControllerlistvcUsingStoryboard()
          aDestinationController.controllerApplince = pApplinces
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+}
+
+// MARK: - PROFILE
+extension RoutingManager{
+    func controllerProfilevcUsingStoryboard() -> ProfileViewController {
+        return UIStoryboard(name: "Profile", bundle: Bundle.main).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+    }
+    func gotoEditProfile(controller pController :UIViewController, user puser: UserVerify) {
+        let aDestinationController = self.controllerProfilevcUsingStoryboard()
+        aDestinationController.userProfile = puser
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func controllerChangePasswordUsingStoryboard() -> ChangePasswordViewController {
+        return UIStoryboard(name: "Profile", bundle: Bundle.main).instantiateViewController(withIdentifier: "ChangePasswordViewController") as! ChangePasswordViewController
+    }
+    func gotoChangePassword(controller pController :UIViewController, user puser: UserVerify) {
+        let aDestinationController = self.controllerChangePasswordUsingStoryboard()
+        aDestinationController.userProfile = puser
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 }

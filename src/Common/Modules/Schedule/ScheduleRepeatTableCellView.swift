@@ -16,11 +16,11 @@ class ScheduleRepeatTableCellView: UITableViewCell {
     @IBOutlet weak var thursdayButton: UIButton!
     @IBOutlet weak var fridayButton: UIButton!
     @IBOutlet weak var saturdayButton: UIButton!
+    @IBOutlet weak var repeatOncebtn: AppSwitch!
     
     var days :Array<Schedule.Day>?
     
     weak var delegate :ScheduleRepeatTableCellViewDelegate?
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -80,11 +80,15 @@ class ScheduleRepeatTableCellView: UITableViewCell {
     }
     
     
-    func load(scheduleDays pDayArray :Array<Schedule.Day>) {
+    func load(scheduleDays pDayArray :Array<Schedule.Day>, scheduler: Bool) {
         self.days = pDayArray
         self.reloadAllView()
+        self.repeatOncebtn.isOn = scheduler
+
     }
-    
+    @IBAction func onOffSwitchDidChangeValue(_ pSender: AppSwitch) {
+        self.delegate?.scheduleRepeatTableCellView(self, didChangeValue: self.days)
+    }
 }
 
 
@@ -92,7 +96,7 @@ extension ScheduleRepeatTableCellView {
     
     @IBAction func didSelectDayButton(_ pSender: UIButton?) {
         var aDay = Schedule.Day.sunday
-        if self.sundayButton.isEqual(pSender) {
+         if self.sundayButton.isEqual(pSender) {
             aDay = Schedule.Day.sunday
         } else if self.mondayButton.isEqual(pSender) {
             aDay = Schedule.Day.monday

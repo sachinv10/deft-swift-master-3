@@ -41,10 +41,13 @@ class Core: NSObject {
         if pid.hasPrefix("C") == true {
             htype = "switch"
         }
-        if list.dimmable ?? false && list.applianceType == Appliance.ApplianceType.light.title{
+        if list.dimmable ?? false && list.applianceType == Appliance.ApplianceType.light.title && list.dimValue! != 1{
             htype = "dimming"
         }else if list.dimmable ?? false && list.applianceType == Appliance.ApplianceType.fan.title{
             htype = "switch"
+        }
+        if list.routineType == "goodbye"{
+            htype = "goodbye"
         }
         return htype
     }
@@ -63,6 +66,10 @@ class coreEditdata: NSObject{
 }
 class actionSelectionList: NSObject{
     var appId: String?
+    var id :String?
+    var remoteKeys: Array<String>?
+    var remoteKeysName: Array<String>?
+    var remoteKeysId: Array<String>?
     var appName: String?
     var checked: Bool?
     var currentLevel: Int?
@@ -87,7 +94,7 @@ class actionSelectionList: NSObject{
     var ledStripProperty1 :Int?
     var ledStripProperty2 :Int?
     var ledStripProperty3 :Int?
-    var stripLightEvent: String?
+    var stripLightEvent: String = "00"
     var stripType : Appliance.StripType?
     //
     enum actionSelectionList: String {

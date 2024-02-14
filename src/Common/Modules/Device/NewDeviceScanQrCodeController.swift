@@ -38,7 +38,10 @@ class NewDeviceScanQrCodeController: BaseController {
         self.setup()
         
         if (self.captureSession?.isRunning == false) {
-            self.captureSession?.startRunning()
+            DispatchQueue.global(qos: .background).async {
+                    self.captureSession?.startRunning()
+            }
+               
         }
         
         self.reloadAllViews()
@@ -119,8 +122,8 @@ class NewDeviceScanQrCodeController: BaseController {
                 "CS01", "CS02","CS03","CS04","CS05","CS06","CS07","CS08","CS09",
                 "P00",
                 "F01","F02",
-                "V00"
-                
+                "V00",
+               // "S20", // air qulity
             ]
             for aSupportedIdPrefix in aSupportedIdPrefixArray {
                 if anId?.starts(with: aSupportedIdPrefix) == true {
@@ -166,7 +169,9 @@ extension NewDeviceScanQrCodeController {
     @IBAction func didSelectRescanButton(_ pSender: UIButton) {
         self.deviceIdTextField.text = nil
         if (self.captureSession?.isRunning == false) {
-            self.captureSession?.startRunning()
+            DispatchQueue.main.async {
+                self.captureSession?.startRunning()
+            }
         }
         self.reloadAllViews()
     }

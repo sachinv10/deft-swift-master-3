@@ -12,7 +12,12 @@ import FirebaseDatabase
 import FirebaseCore
 import FirebaseStorage
 import FirebaseAuth
+import WebKit
 
+enum ManualType{
+    case ProductManual
+    case TechnicalSheet
+}
 protocol DeveloperEntryDelegate: AnyObject {
     func textDeveloperPlatform(cell: cellproduct)
     
@@ -44,7 +49,9 @@ class cellproduct: UITableViewCell{
     
 }
 class ProductManualViewController: BaseController {
-
+    var webView: WKWebView!
+    var manualType: ManualType?
+    var technicalSheet: Array<technicalSheet> =  Array<technicalSheet>()
     @IBOutlet weak var tableviewProduct: UITableView!
     var Urlpath: URL?
     let storage = Storage.storage()
@@ -57,25 +64,20 @@ class ProductManualViewController: BaseController {
         tableviewProduct.dataSource = self
         view.backgroundColor = UIColor(named: "PrimaryLightestColor")
 
-      //  let ref = storage.reference(withPath:"gs://wificontrol-a94cc.appspot.com/Pdf Product Manual")
-//        guard let url = URL(string: "Wifinity/Wifinity_Smart_Sensor.pdf")else{return}
-//        let downloadTask = ref.write(toFile: url) { url, error in
-//            if let error = error {
-//                // Uh-oh, an error occurred!
-//            } else {
-//                // Local file URL for "images/island.jpg" is returned
-//            }
-//        }
-//        downloadTask.resume()
-       mydatabase()
+       switch manualType{
+       case .TechnicalSheet:
+           getTechnicalSheet()
+       case .ProductManual:
+           mydatabase()
+       case .none:
+           break
+       }
      }
     var urlArray = [String]()
     func mydatabase(){
         
         Database.database().reference().child("manualStorage").observe(.childAdded, with: {DataSnapshot in
-            print(DataSnapshot.value)
             let data = DataSnapshot.value as! Dictionary<String, Any>
-            print(data["title"])
             let titlename = data["title"]
             let urlname = data["url"]
             self.nameArray.append(titlename as! String)
@@ -83,7 +85,16 @@ class ProductManualViewController: BaseController {
             DispatchQueue.main.async {
                 self.tableviewProduct.reloadData()
             }
-
+        })
+    }
+    func getTechnicalSheet(){
+        DataFetchManager.shared.getTechnicalSheet(completion:{ data in
+            switch data{
+            case .success(let data):
+                self.technicalSheet = data
+                self.tableviewProduct.reloadData()
+            case .failure(let error):  print(error.localizedDescription)
+            }
         })
     }
     func calltoPdfview(){
@@ -93,13 +104,7 @@ class ProductManualViewController: BaseController {
             present(objdemo, animated: true, completion: nil)
         }
     }
-    func downloadFile(){
-            let url = "https://www.tutorialspoint.com/swift/swift_tutorial.pdf"
-            let fileName = "MyFile"
-            savePdf(urlString: url, fileName: fileName)
-          // Pdf Product Manual/Wifinity/Wifinity_Smart_Sensor.pdf
-
-        }
+     
     func savePdf(urlString:String, fileName:String) {
                 DispatchQueue.main.async {
                     let url = URL(string: urlString)
@@ -121,31 +126,50 @@ class ProductManualViewController: BaseController {
 // MARK: - TABLE VIEW
 extension ProductManualViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameArray.count
+        switch manualType{
+        case .ProductManual:
+            return nameArray.count
+        case .TechnicalSheet:
+            return technicalSheet.count
+        case .none:
+            return 0
+      
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! cellproduct
         cell.delegate = self
         cell.tag = indexPath.row
-        let obj = nameArray[indexPath.row]
-        let url = urlArray[indexPath.row]
-        cell.load(obj: obj, urll: url)
+        switch manualType{
+        case .ProductManual:
+            let obj = nameArray[indexPath.row]
+            let url = urlArray[indexPath.row]
+            cell.load(obj: obj, urll: url)
+        case .TechnicalSheet:
+            cell.load(obj: technicalSheet[indexPath.row].productName, urll: technicalSheet[indexPath.row].downloadUrl)
+        case .none:
+            break
+        }
+       
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = indexPath.row
-       // demodownload(index: data)
     }
 }
 //MARK: - DELEGATE AND PROTOCALL
 extension ProductManualViewController: DeveloperEntryDelegate{
     func textDeveloperPlatform(cell: cellproduct) {
         print("yes inter in download btn")
-       // dowonloadFile()
-      //  download_1()
-       
-        demodownload(index: cell.tag, url: cell.url)
+        switch manualType{
+        case .ProductManual:
+            demodownload(index: cell.tag, url: cell.url)
+        case .TechnicalSheet:
+            webViewSetUp(url: cell.url)
+        case .none:
+            break
+        }
     }
 
     func demodownload(index: Int, url: String)  {
@@ -155,9 +179,6 @@ extension ProductManualViewController: DeveloperEntryDelegate{
         let downloadtask = session.downloadTask(with: url!)
         downloadtask.resume()
     }
-    
-    
-
 }
 extension ProductManualViewController: URLSessionDownloadDelegate{
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
@@ -167,7 +188,6 @@ extension ProductManualViewController: URLSessionDownloadDelegate{
         let destinationpath = docpath.appendingPathComponent(url.lastPathComponent)
        
         print("lastpath=\(destinationpath)")
-      //  try? FileManager.default.removeItem(at: location)
         do{
             let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as String
                 let url = URL(fileURLWithPath: path)
@@ -184,10 +204,7 @@ extension ProductManualViewController: URLSessionDownloadDelegate{
                     Urlpath = destinationpath
                     self.calltoPdfview()
                 }
-           
-            
-//            let data = try Data(contentsOf: url) // not NSData !!
-//                try data.write(to: destinationpath, options: .atomic)
+
         }catch let error{
             print("error=\(error)")
          
@@ -195,4 +212,44 @@ extension ProductManualViewController: URLSessionDownloadDelegate{
     }
     
     
+}
+extension ProductManualViewController:  WKNavigationDelegate{
+    func webViewSetUp(url: String?){
+     
+        guard let Urlpath = url else{return}
+        webView = WKWebView(frame: view.bounds)
+        view.addSubview(webView)
+        webView.navigationDelegate = self
+              // Load a URL
+        loadURL(url: Urlpath)
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft(_:)))
+        swipeLeftGesture.direction = .right
+        webView.addGestureRecognizer(swipeLeftGesture)
+
+    }
+      func loadURL(url: String) {
+           if let url = URL(string: url) {
+               let request = URLRequest(url: url)
+               webView.load(request)
+           }
+       }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+          // Called when the web view begins to load content
+          print("WebView did start loading")
+        ProgressOverlay.shared.show()
+      }
+      
+      func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+          // Called when the web view finishes loading content
+          print("WebView did finish loading")
+          ProgressOverlay.shared.hide()
+      }
+    
+    @objc func handleSwipeLeft(_ gestureRecognizer: UISwipeGestureRecognizer) {
+        if gestureRecognizer.state == .ended {
+            webView.removeFromSuperview()
+        }
+    }
+
 }

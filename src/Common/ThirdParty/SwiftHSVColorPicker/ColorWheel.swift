@@ -10,7 +10,6 @@ import UIKit
 protocol ColorWheelDelegate: AnyObject {
     func hueAndSaturationSelected(_ hue: CGFloat, saturation: CGFloat)
 }
-
 class ColorWheel: UIView {
     var color: UIColor!
 

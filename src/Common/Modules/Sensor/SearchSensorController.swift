@@ -84,7 +84,7 @@ class SearchSensorController: BaseController {
                 .queryOrdered(byChild: "filter")
                 .queryEqual(toValue: aFilter).observe(.childChanged) { (snapshot, key) in
                     print(key as Any)
-                    print("mood lisner appear........")
+                    print("Sensor lisner appear........")
                     if self.controllerflag == true {
                         self.reloadAllData()
                     }
@@ -321,12 +321,13 @@ extension SearchSensorController :UITableViewDataSource, UITableViewDelegate {
         pTableView.deselectRow(at: pIndexPath, animated: true)
         if pIndexPath.row < self.sensors.count {
             let aSelectedSensor = self.sensors[pIndexPath.row]
-            if aSelectedSensor.hardwareGeneration != Device.HardwareGeneration.deft {
-                RoutingManager.shared.gotoSensorDetails(controller: self, selectedSensor: aSelectedSensor)
-            }
+            if aSelectedSensor.controllerType != "Lidar Sensor"{
+                if aSelectedSensor.hardwareGeneration != Device.HardwareGeneration.deft {
+                    RoutingManager.shared.gotoSensorDetails(controller: self, selectedSensor: aSelectedSensor)
+                }
+              }
         }
     }
-    
 }
 
 

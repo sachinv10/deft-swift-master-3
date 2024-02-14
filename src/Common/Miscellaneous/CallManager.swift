@@ -52,7 +52,7 @@ class CallManager: NSObject,CXProviderDelegate, CXCallObserverDelegate {
     
     func displayIncomingCallAlert(userInfo: [AnyHashable: Any]) {
         let center = UNUserNotificationCenter.current()
-        var vdx = DashboardController()
+        let vdx = DashboardController()
             vdx.loadVdp()
             let answerAction = UNNotificationAction(identifier: "answer", title: "Answer", options: [.foreground])
             let rejectAction = UNNotificationAction(identifier: "reject", title: "Reject", options: [.destructive])

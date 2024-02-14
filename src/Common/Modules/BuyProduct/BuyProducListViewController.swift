@@ -40,16 +40,18 @@ class BuyProducListViewController: BaseController, UITableViewDelegate, UITableV
                 PopupManager.shared.displayError(message: "Can not search moods", description: pError!.localizedDescription)
             } else {
                 if pMoodArray != nil && pMoodArray!.count > 0 {
-                    print(pMoodArray)
+                     print(pMoodArray)
                      self.ProductList = pMoodArray
-                    self.productlistTableview.reloadData()
+                     self.productlistTableview.reloadData()
                 }
             }
         })
     }
 
     @IBAction func didtappedCart(_ sender: Any) {
-   
+        if ProductList?.count ?? 0 > 0 {
+            RoutingManager.shared.gotoProductCartList(controller: self, product: ProductList![0])
+        }
     }
     var myButton = UIButton()
     var myView = UIView()
@@ -66,13 +68,15 @@ class BuyProducListViewController: BaseController, UITableViewDelegate, UITableV
         myButton.layer.cornerRadius = 5
             myButton.setTitle("Your Orders", for: .normal)
             myButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        self.view.addSubview(myView)
+         self.view.addSubview(myView)
          myView.addSubview(myButton)
     }
     @objc func buttonTapped() {
         myView.isHidden = true
            print("Button tapped!")
-        RoutingManager.shared.gotoProductOrderList(controller: self, product: (ProductList?[0])!)
+        if ProductList?.count ?? 0 > 0{
+            RoutingManager.shared.gotoProductOrderList(controller: self)
+        }
        }
 }
 extension BuyProducListViewController{

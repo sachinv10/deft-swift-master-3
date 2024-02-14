@@ -73,7 +73,7 @@ class onGoingCell: UITableViewCell{
 class OnGoingIssieViewController: BaseController {
     
     
-    @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var tableview: AppTableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Ongoing issue"
@@ -82,7 +82,6 @@ class OnGoingIssieViewController: BaseController {
         tableview.delegate = self
         getdata()
         view.backgroundColor = UIColor(named: "PrimaryLightestColor")
-        
     }
     var dictionary: Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
     var dictionaryfinal = [String: AnyObject]()
@@ -128,8 +127,13 @@ class OnGoingIssieViewController: BaseController {
                             pcomplent.controllerName = strarray.joined(separator: "\n")
                         }
                         self.complentArray.append(pcomplent)
+                        self.complentArray.sort{(LHS, RHS)-> Bool in
+                            return LHS.ticketId ?? "" > RHS.ticketId ?? ""
+                        }
                     }
                     self.tableview.reloadData()
+                }else{
+                    self.tableview.display(message: "Data not found")
                 }
             })
     }

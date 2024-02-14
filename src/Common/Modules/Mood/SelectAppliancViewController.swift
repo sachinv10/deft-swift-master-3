@@ -200,9 +200,17 @@ extension SelectAppliancViewController{
         let cell = appliancestableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text =  selectApplianc?[indexPath.section].list[indexPath.row].name
         if let x = selectApplianc?[indexPath.section].list[indexPath.row]{
-           if x.checked == true{
+            if x.checked == true{
+                if x.id?.contains("M0") == true{
+                    if selectApplianc?[indexPath.section].list[indexPath.row].isOn ?? true{
+                        cell.textLabel?.text! += " \t \t                                           Open"
+                    }else{
+                        cell.textLabel?.text! += "  \t \t                                          Close"
+                    }
+                }
                cell.accessoryType = .checkmark
            }else{
+               cell.detailTextLabel?.text = ""
                cell.accessoryType = .none
            }
         }
@@ -214,8 +222,9 @@ extension SelectAppliancViewController{
             if cell.accessoryType == .checkmark{
                 cell.accessoryType = .none
                 if let x = selectApplianc?[indexPath.section].list[indexPath.row]{
-                    x.checked = false
+                      x.checked = false
                 }
+                
                 let sentence = AddNewMoodViewController.selectedMood?.applianceDetails
                 var indexToRemove = Int()
                 var words = sentence?.components(separatedBy: ",") as? [String]
@@ -249,7 +258,6 @@ extension SelectAppliancViewController{
  
         if "Curtain" == selectApplianc?[indexPath.section].hederType{
    
-            
                 if cell.accessoryType == .checkmark{
                     cell.accessoryType = .none
                     if let x = selectApplianc?[indexPath.section].list[indexPath.row]{
@@ -276,19 +284,32 @@ extension SelectAppliancViewController{
                     let updatedSentence = words?.joined(separator: ",")
                     print(updatedSentence)
                     AddNewMoodViewController.selectedMood?.applianceDetails = updatedSentence
+                    self.appliancestableview.reloadRows(at: [indexPath], with: .automatic)
                     // AddNewMoodViewController.selectedMood?.applianceDetails += ""
                 }else{
                     cell.accessoryType = .checkmark
-                    if curtainState(mood: (selectApplianc?[indexPath.section].list[indexPath.row])!, cell: cell) != nil{
+                    PopupManager.shared.displayBooleanOptionPopup(message: "\((selectApplianc?[indexPath.section].list[indexPath.row])?.name ?? "")", description: "", pOptionOneTitle: "Open", optionOneCompletion: {
+                        self.selectApplianc?[indexPath.section].list[indexPath.row].isOn = true
+                        AddNewMoodViewController.selectedMood?.CurtanStatus = .On
+                        AddNewMoodViewController.selectedMood?.applianceDetails! += " to level 2,"
+                        self.appliancestableview.reloadRows(at: [indexPath], with: .automatic)
+                    }, pOptionTwoTitle: "Close", optionTwoCompletion: {
+                        self.selectApplianc?[indexPath.section].list[indexPath.row].isOn = false
+                        AddNewMoodViewController.selectedMood?.CurtanStatus = .Off
+                        AddNewMoodViewController.selectedMood?.applianceDetails! += " to level 1,"
+                        self.appliancestableview.reloadRows(at: [indexPath], with: .automatic)
+                    })
+//                    if curtainState(mood: (selectApplianc?[indexPath.section].list[indexPath.row])!, cell: cell) != nil{
                     if let x = selectApplianc?[indexPath.section].list[indexPath.row]{
                         selectApplianc?[indexPath.section].list[indexPath.row].checked = true
                     }
+                        
                         if (AddNewMoodViewController.selectedMood?.applianceDetails != nil){
                         AddNewMoodViewController.selectedMood?.applianceDetails! += "\((selectApplianc?[indexPath.section].list[indexPath.row].name)!)"
                     }else{
                         AddNewMoodViewController.selectedMood?.applianceDetails = "\((selectApplianc?[indexPath.section].list[indexPath.row].name)!)"
                     }
-                }
+          //      }
             }
         }
         if "Remote" == selectApplianc?[indexPath.section].hederType{

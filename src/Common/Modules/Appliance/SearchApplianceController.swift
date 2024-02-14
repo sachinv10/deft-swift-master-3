@@ -11,24 +11,31 @@ import Firebase
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
-class SearchApplianceController: BaseController {
+class SearchApplianceController: BaseController, UITextFieldDelegate {
     @IBOutlet weak var applianceTableView: AppTableView!
     @IBOutlet weak var addButton: AppFloatingButton!
     @IBOutlet weak var dynamicButtonContainerView :DynamicButtonContainerView!
     var controllerflag: Bool = true
     var myDict = [String: Any]()
     var selectedRoom :Room?
+    var AppOperated: Int = 0
     var appliances :Array<Appliance> = Array<Appliance>()
   //  var devices: Array<String> = Array<String>()
     var devices = [String]()
     var menuItemsForAccepted: [UIAction] {
         return [
-            UIAction(title: "Goodbye", image: nil, handler: { (_) in
-                self.didSelectGoodbye()
-            }),
             UIAction(title: "Add Appliance", image: nil, handler: { (_) in
                 self.addAppliance()
-             })
+             }),
+            UIAction(title: "Goodbye", image: nil, handler: { (_) in
+                 self.didSelectGoodbye()
+             }),
+            UIAction(title: "Delete Room", image: nil, handler: { (_) in
+                self.didSelectDeleteRooms()
+            }),
+            UIAction(title: "Edit Room Name", image: nil, handler: { (_) in
+                self.didSelectEditRooms()
+            })
         ]
     }
     static var applinceId = [String]() {
@@ -58,6 +65,9 @@ class SearchApplianceController: BaseController {
             // Fallback on earlier versions
         }
 
+       if self.selectedRoom?.title == nil{
+           appHeaderBarView?.optionButton.isHidden = true
+        }
         if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity {
             if self.selectedRoom != nil {
                 self.addButton.isHidden = true
@@ -65,6 +75,10 @@ class SearchApplianceController: BaseController {
         }
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         applianceTableView.addGestureRecognizer(longPress)
+        applianceTableView.rowHeight = UITableView.automaticDimension
+        applianceTableView.estimatedRowHeight = 100
+        applianceTableView.contentInsetAdjustmentBehavior = .automatic
+       
     }
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
@@ -91,6 +105,20 @@ class SearchApplianceController: BaseController {
         super.viewDidDisappear(animated)
         print("did dis appear........")
         self.controllerflag = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("view will disappear")
+        if AppOperated != 0{
+            print("operated appliances",AppOperated)
+            let currentTimeStam = Date().timeIntervalSince1970
+            selectedRoom?.lastActivityRoom = String(Int(currentTimeStam * 1000))
+           DataFetchManager.shared.updateTimestamp(selectedRoom: selectedRoom, complition: { error in
+               if error != nil{
+                   print(error?.localizedDescription)
+               }
+            })
+        }
     }
     static var celltappedcounter = 0
     func activatdatalistner()  {
@@ -147,7 +175,7 @@ class SearchApplianceController: BaseController {
                     }
                     if pDevicesArray != nil && pDevicesArray!.count > 0 {
                         if let Arrayx = try pDevicesArray{
-                            self.devices = Arrayx
+                             self.devices = Arrayx
                         }
                     }
                     if let selectedRoom = self.selectedRoom {
@@ -165,6 +193,7 @@ class SearchApplianceController: BaseController {
                 }
             }catch let error{
                 print(error)
+                PopupManager.shared.displayError(message: error.localizedDescription, description: nil)
             }
         }, room: self.selectedRoom, includeOnOnly: self.selectedRoom == nil)
         
@@ -183,10 +212,17 @@ class SearchApplianceController: BaseController {
             self.dynamicButtonContainerView.customeSlider.value = Float(value)
         }
         self.applianceTableView.reloadData()
+        if self.appliances.count > 0 {
+            print("index=", String(index))
+            let indexPathToScroll = IndexPath(row: index, section: 0)
+            let scrollPosition: UITableView.ScrollPosition = .top
+            applianceTableView.scrollToRow(at: indexPathToScroll, at: scrollPosition, animated: false)
+        }
     }
+    var index = 0
     func reloadAllViewforupdate() {
         if self.appliances.count <= 0 {
-            self.applianceTableView.display(message: "No Appliance Available")
+           self.applianceTableView.display(message: "No Appliance Available")
         } else {
             self.applianceTableView.hideMessage()
         }
@@ -197,7 +233,6 @@ class SearchApplianceController: BaseController {
         }
         let value = setSliderInitialValue()
         self.dynamicButtonContainerView.customeSlider.value = Float(value)
-       
     }
     
     private func deleteAppliance(appliance pAppliance :Appliance) {
@@ -269,16 +304,7 @@ class SearchApplianceController: BaseController {
     }
     
     func averageValuesForDimmer(dimValue:Int) -> Int {
-//        var averageValue = 0
-//        var appLevel = [Int]()
-//        for appliance in appliances {
-//            let sum = appliance.dimmableValueTriac ?? 0
-//            appLevel.append(sum)
-//        }
-//        let totalSum = appLevel.reduce(0, +)
-//        averageValue = totalSum/appLevel.count
-        
-        
+
         let aDimmableValueMin :Double = Double(30)
         var aDimmableValue = ((Double(dimValue) * ((99.0 - aDimmableValueMin) / 100.0)) + aDimmableValueMin)
         if aDimmableValue < 10 {
@@ -315,7 +341,7 @@ class SearchApplianceController: BaseController {
             averageValue = totals/cnt
                 let minavrg = xy/cnt
                 let maxavrg = xyz/cnt
-             let aDimmableValueTriac = Double(averageValue)
+            let aDimmableValueTriac = Double(averageValue)
             let aDimmableValueMin = Double(xy/cnt)
                 let aSliderValue = (aDimmableValueTriac - aDimmableValueMin) * (100.0 / (Double(maxavrg) - aDimmableValueMin))
 //
@@ -371,8 +397,9 @@ class SearchApplianceController: BaseController {
     }
     
     func updateAppliancePowerState(appliance pAppliance :Appliance, powerState pPowerState :Bool) {
+        AppOperated += 1
         let anAppliance = pAppliance.clone()
-        
+       
          ProgressOverlay.shared.show()
         DataFetchManager.shared.updateAppliancePowerState(completion: { (pError) in
             ProgressOverlay.shared.hide()
@@ -392,8 +419,8 @@ class SearchApplianceController: BaseController {
     
     
     func updateApplianceDimmableValue(appliance pAppliance :Appliance, dimmableValue pDimmableValue :Int) {
+        AppOperated += 1
         let anAppliance = pAppliance.clone()
-        
      //   ProgressOverlay.shared.show()
         DataFetchManager.shared.updateApplianceDimmableValue(completion: { (pError) in
        //     ProgressOverlay.shared.hide()
@@ -414,11 +441,119 @@ class SearchApplianceController: BaseController {
     }
     
     func didSelectGoodbye() {
+        AppOperated += 1
          self.updateControllers()
     }
-
+    func didSelectDeleteRooms() {
+        PopupManager.shared.displayConfirmation(message: "Delete room?", description: "Delete all devices before deleting room", completion: {
+            var controllerCount = 0
+            if let aRoom = self.selectedRoom {
+                if aRoom.devices?.count ?? 0 > 0{ controllerCount += 1}
+                if aRoom.curtainId?.count ?? 0 > 0{controllerCount += 1}
+                if aRoom.sensors?.count ?? 0 > 0{controllerCount += 1}
+                if aRoom.remoteId?.count ?? 0 > 0{controllerCount += 1}
+                if controllerCount <= 0{
+                    //delete room
+                    DataFetchManager.shared.deleteRoom(complition: {error in
+                        if error != nil{
+                            PopupManager.shared.displayError(message: "EROOR!", description: error?.localizedDescription)
+                        }else{
+                            PopupManager.shared.displayInformation(message: "Room deleted successfully", description: "", completion: {
+                                RoutingManager.shared.goToPreviousScreen(self)
+                            })
+                        }
+                    }, room: self.selectedRoom)
+                }
+            }
+        })
+    }
+    func didSelectEditRooms() {
+        print("Edit room name")
+        PopupManager.shared.displayConfirmation(message: "Do you want Edit room Name?", description: "", completion: {
+            self.EditeViewCall()
+        })
+    }
+    var myTextField = UITextField()
+    var deleteView = UIView()
+    var lablehead = UILabel()
+    var btnAthontication = UIButton()
+    var btnCancel = UIButton()
+    
 }
+extension SearchApplianceController{
+    func EditeViewCall(){
+        
+        self.myTextField.delegate = self
+ 
+        deleteView.isHidden = false
+        deleteView.frame = CGRect.init(x: view.frame.width / 20, y: view.frame.height / 3, width: view.frame.width / 1.11, height: view.frame.height / 4)
+        deleteView.backgroundColor = UIColor.white
+       
+        lablehead.frame = CGRect(x: 20, y: 0, width: deleteView.frame.width - 20, height: 50)
+        lablehead.text = "Edit Room Name?"
+        lablehead.textColor = UIColor.black
+        deleteView.addSubview(lablehead)
+ 
+        myTextField.frame = CGRect(x: 15, y: 50, width: deleteView.frame.width - 30, height: 50)
+        myTextField.placeholder = "Enter Room Name"
+        myTextField.text = self.selectedRoom?.title
+        myTextField.layer.cornerRadius = 15.0
+        myTextField.layer.borderWidth = 1.0
+        myTextField.layer.borderColor = UIColor.gray.cgColor
+        myTextField.clipsToBounds = true
+        myTextField.textColor = UIColor.blue
+        myTextField.textAlignment = .center
+        self.deleteView.addSubview(myTextField)
+        
+        btnAthontication.setTitle("Done", for: .normal)
+        btnAthontication.setTitleColor(UIColor.black, for: .normal)
+        btnAthontication.frame = CGRect(x: 30, y: 120, width: 130, height: 50)
+        btnAthontication.addTarget(self, action: #selector(pressedmenu), for: .touchUpInside)
+        btnAthontication.backgroundColor = UIColor.gray
+        btnAthontication.layer.cornerRadius = 14
+        btnAthontication.layer.borderWidth = 1
+        deleteView.addSubview(btnAthontication)
 
+        btnCancel.setTitle("Cancel", for: .normal)
+        btnCancel.setTitleColor(UIColor.black, for: .normal)
+        btnCancel.frame = CGRect(x: 220, y: 120, width: 130, height: 50)
+        btnCancel.addTarget(self, action: #selector(pressedCancel), for: .touchUpInside)
+        btnCancel.backgroundColor = UIColor.gray
+        btnCancel.layer.cornerRadius = 15
+        btnCancel.layer.borderWidth = 1
+        deleteView.addSubview(btnCancel)
+
+        self.applianceTableView.addSubview(deleteView)
+
+        if deleteView.isHidden{
+            deleteView.isHidden = true
+        }else{
+            deleteView.isHidden = false
+        }
+    }
+    @objc func pressedmenu(){
+        self.selectedRoom?.title = myTextField.text
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.editRoomName(complition: {error in
+            ProgressOverlay.shared.hide()
+            self.deleteView.isHidden = true
+            if let error = error{
+                PopupManager.shared.displayError(message: "", description: error.localizedDescription)
+            }else{
+                self.subTitle = self.selectedRoom?.title ?? "Currently On"
+                self.showToast(message: "Room edited successfully")
+            }
+        }, room: self.selectedRoom)
+    }
+    @objc func pressedCancel(){
+        deleteView.isHidden = true
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+           // Dismiss the keyboard
+           textField.resignFirstResponder()
+           return true
+       }
+}
 
 
 extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate {
@@ -463,7 +598,10 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
         if pIndexPath.row < self.appliances.count {
             let anAppliance = self.appliances[pIndexPath.row]
             if anAppliance.type == Appliance.ApplianceType.ledStrip {
-                aReturnVal = SearchApplianceLedTableCellView.cellHeight(appliance: anAppliance)
+                if aReturnVal > 40{
+                   // aReturnVal -= 40
+                }
+             //   aReturnVal = SearchApplianceLedTableCellView.cellHeight(appliance: anAppliance)
             } else {
                 aReturnVal = SearchApplianceTableCellView.cellHeight(appliance: anAppliance)
             }
@@ -483,7 +621,10 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
         if pIndexPath.row < self.appliances.count {
             let anAppliance = self.appliances[pIndexPath.row]
             if anAppliance.type == Appliance.ApplianceType.ledStrip {
-                aReturnVal = SearchApplianceLedTableCellView.cellHeight(appliance: anAppliance)
+                if aReturnVal > 40{
+                   // aReturnVal -= 40
+                }
+             //   aReturnVal = SearchApplianceLedTableCellView.cellHeight(appliance: anAppliance)
             } else {
                 aReturnVal = SearchApplianceTableCellView.cellHeight(appliance: anAppliance)
             }
@@ -526,10 +667,18 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
         if aReturnVal == nil {
             aReturnVal = UITableViewCell()
         }
-        
+       
         return aReturnVal!
     }
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let visibleIndexPaths = applianceTableView.indexPathsForVisibleRows {
+            for indexPath in visibleIndexPaths {
+                print("Visible Cell Index Path: \(indexPath.section), \(indexPath.row)")
+                self.index = indexPath.row
+                break
+            }
+        }
+    }
     
     /**
      * Method that will be called when user selects a table cell.
@@ -539,12 +688,11 @@ extension SearchApplianceController :UITableViewDataSource, UITableViewDelegate 
  
        if self.appliances.count > 0 {
             let anAppliance = self.appliances[pIndexPath.row]
-           if anAppliance.stripType == Appliance.StripType.rgb{
+           if anAppliance.type == Appliance.ApplianceType.ledStrip{
                let aGlowPattern = anAppliance.isOn ? Appliance.GlowPatternType.off: Appliance.GlowPatternType.on
-               self.updateAppliance(appliance: anAppliance, property1: anAppliance.ledStripProperty1!, property2: anAppliance.ledStripProperty2!, property3: anAppliance.ledStripProperty3!, glowPattern: aGlowPattern)
+               self.updateAppliance(appliance: anAppliance, property1: anAppliance.ledStripProperty1 ?? 255, property2: anAppliance.ledStripProperty2 ?? 255, property3: anAppliance.ledStripProperty3 ?? 255, glowPattern: aGlowPattern)
            }else{
                self.updateAppliancePowerState(appliance: anAppliance, powerState: !anAppliance.isOn)
-
            }
            
         }
@@ -595,8 +743,15 @@ extension SearchApplianceController :SearchApplianceTableCellViewDelegate {
 
 
 extension SearchApplianceController :SearchApplianceLedTableCellViewDelegate {
+    func cellViewRefrash(_ pSender: SearchApplianceLedTableCellView) {
+        if let aIndexPath = self.applianceTableView.indexPath(for: pSender){
+            self.applianceTableView.reloadRows(at: [aIndexPath], with: .automatic)
+        }
+    }
+    
     
     func cellView(_ pSender: SearchApplianceLedTableCellView, didChangeProperty1 pProperty1: Int, property2 pProperty2: Int, property3 pProperty3: Int, glowPattern pGlowPatternValue: Appliance.GlowPatternType) {
+        AppOperated += 1
         if let anIndexPath = self.applianceTableView.indexPath(for: pSender), anIndexPath.row < self.appliances.count {
             let anAppliance = self.appliances[anIndexPath.row]
             self.updateAppliance(appliance: anAppliance, property1: pProperty1, property2: pProperty2, property3: pProperty3, glowPattern: pGlowPatternValue)
@@ -614,7 +769,7 @@ extension SearchApplianceController {
     }
     func addAppliance() {
         if let aRoom = self.selectedRoom {
-            RoutingManager.shared.gotoNewAppliance(controller: self, selectedRoom: aRoom)
+            RoutingManager.shared.gotoNewAppliance(controller: self, selectedRoom: aRoom,pDelegate: self)
         }
     }
 }
@@ -634,7 +789,7 @@ extension SearchApplianceController :DynamicButtonContainerViewDelegate {
         var aDimmableValues = pDimmableValue
         if appliances.count > 0 {
             var averageValue = 0
-             var xy = 0
+            var xy = 0
             var xyz = 0
             var cnt = 0
             var totals = 0
@@ -678,8 +833,12 @@ extension SearchApplianceController: SelectedAppliandesDelegate{
          RoutingManager.shared.goToPreviousScreen(self)
          deleteAppliance(appliance: y!)
     }
-    
+    func didtappedDonebtn() {
+        RoutingManager.shared.goToPreviousScreen(self)
+        self.reloadAllData()
+    }
 }
 protocol SelectedAppliandesDelegate:AnyObject{
     func didtappedBacktoController(obj: Any)
+    func didtappedDonebtn()
 }

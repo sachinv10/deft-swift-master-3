@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gh9-ZG-MGy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gh9-ZG-MGy">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -137,6 +137,15 @@
                                     <action selector="didtappeddropdown:" destination="CmE-9y-FwD" eventType="touchUpInside" id="VXa-SK-Cpn"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jq2-eO-xVt">
+                                <rect key="frame" x="267" y="57" width="123" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Bmb-sS-0cK"/>
+                                    <constraint firstAttribute="width" constant="123" id="eyA-1c-mou"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Select Mode"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4dH-rA-0lj"/>
                         <color key="backgroundColor" name="SecondaryLightestColor"/>
@@ -154,6 +163,7 @@
                             <constraint firstItem="HQO-H6-2tJ" firstAttribute="centerX" secondItem="RSf-kq-M9H" secondAttribute="centerX" id="HIf-Cs-jVv"/>
                             <constraint firstItem="PXU-wm-dL6" firstAttribute="leading" secondItem="HQO-H6-2tJ" secondAttribute="trailing" constant="-37" id="KYw-Gi-mqA"/>
                             <constraint firstItem="4Mi-hQ-wyz" firstAttribute="top" secondItem="HQO-H6-2tJ" secondAttribute="bottom" constant="110" id="Mc8-bU-zEv"/>
+                            <constraint firstItem="Jq2-eO-xVt" firstAttribute="top" secondItem="4dH-rA-0lj" secondAttribute="top" constant="9" id="N0P-YJ-nBw"/>
                             <constraint firstItem="e0W-Wd-FOa" firstAttribute="top" secondItem="4Mi-hQ-wyz" secondAttribute="bottom" constant="8" symbolic="YES" id="Sls-OX-dqo"/>
                             <constraint firstItem="6Cq-OC-2Kt" firstAttribute="width" secondItem="Wwt-yr-Aey" secondAttribute="width" id="Tkr-Dy-NHu"/>
                             <constraint firstItem="Wwt-yr-Aey" firstAttribute="top" secondItem="uaC-1j-uMt" secondAttribute="bottom" constant="100" id="ZGV-eU-rrL"/>
@@ -161,6 +171,7 @@
                             <constraint firstItem="rK6-df-WJf" firstAttribute="top" secondItem="HQO-H6-2tJ" secondAttribute="bottom" constant="8" id="fk8-1B-5Df"/>
                             <constraint firstItem="duz-nB-uIe" firstAttribute="leading" secondItem="6Cq-OC-2Kt" secondAttribute="trailing" constant="-35" id="g5A-gy-5eW"/>
                             <constraint firstItem="Wwt-yr-Aey" firstAttribute="top" secondItem="6Cq-OC-2Kt" secondAttribute="bottom" constant="13" id="hx6-6k-8z7"/>
+                            <constraint firstItem="4dH-rA-0lj" firstAttribute="trailing" secondItem="Jq2-eO-xVt" secondAttribute="trailing" constant="24" id="m9f-kM-7LM"/>
                             <constraint firstItem="4Mi-hQ-wyz" firstAttribute="top" secondItem="bEQ-Sh-uwe" secondAttribute="bottom" constant="20" id="pf8-3a-vXJ"/>
                             <constraint firstItem="HQO-H6-2tJ" firstAttribute="top" secondItem="Wwt-yr-Aey" secondAttribute="bottom" constant="20" id="pnY-SU-U0h"/>
                             <constraint firstItem="PXU-wm-dL6" firstAttribute="width" secondItem="HQO-H6-2tJ" secondAttribute="width" multiplier="0.127586" id="uNW-Gu-ryg"/>
@@ -176,6 +187,7 @@
                     <navigationItem key="navigationItem" id="1Bt-2e-Nnh"/>
                     <connections>
                         <outlet property="emailAddressTextField" destination="Wwt-yr-Aey" id="KnN-OC-WBp"/>
+                        <outlet property="lblAppMode" destination="Jq2-eO-xVt" id="eUc-BZ-anV"/>
                         <outlet property="lbldropdown" destination="duz-nB-uIe" id="eGR-y0-5X0"/>
                         <outlet property="lblpassUnmask" destination="PXU-wm-dL6" id="gXa-x8-Avb"/>
                         <outlet property="loginButton" destination="4Mi-hQ-wyz" id="guA-sW-uDh"/>

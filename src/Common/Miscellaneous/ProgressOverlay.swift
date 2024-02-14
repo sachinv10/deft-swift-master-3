@@ -92,7 +92,7 @@ public class ProgressOverlay: NSObject {
     public var messageColor :UIColor? = nil
     
     private var showCount :Int = 0
-    private var progressOverlayView :UIView?
+      var progressOverlayView :UIView?
     private var backgroundView :UIView?
     private var activityIndicatorView :UIActivityIndicatorView?
     private let defaultBackgroundColor :UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
@@ -169,7 +169,6 @@ public class ProgressOverlay: NSObject {
         self.backgroundView!.translatesAutoresizingMaskIntoConstraints = false
         self.progressOverlayView!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[backgroundView]|", options: [], metrics: nil, views: ["backgroundView":self.backgroundView!]))
         self.progressOverlayView!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[backgroundView]|", options: [], metrics: nil, views: ["backgroundView":self.backgroundView!]))
-        
         
         // Set activity indicator spinner
         if self.activityIndicatorView != nil {

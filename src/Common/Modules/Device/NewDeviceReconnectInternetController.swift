@@ -67,7 +67,6 @@ class NewDeviceReconnectInternetController: BaseController {
             }
         }
     }
-    
 }
 
 

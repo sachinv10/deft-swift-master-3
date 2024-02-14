@@ -1371,7 +1371,25 @@ extension VdpViewController{
     /** Called any time the IceConnectionState changes. */
     public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState){
         print("newState=\(newState)")
-        
+        switch newState {
+               case .connected:
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Connected", duration: 2)
+            })
+                   print("ICE connection state: Connected")
+               case .disconnected:
+                   print("ICE connection Disconnected")
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Disconnected", duration: 2)
+            })
+                case .failed:
+                   print("ICE connection Failed")
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Failed", duration: 2)
+            })
+                default:
+                   break
+               }
     }
     
     
@@ -1542,6 +1560,7 @@ extension VdpViewController{
             vdpmodule.nightVision = true
         }
         UpdateVisionMode(cmd: nightVisioncmd)
+    
     }
     func vdpEfectDefault(sender: Any){
         if lbldefault.currentImage == UIImage(systemName: "checkmark.square.fill"){
@@ -1652,6 +1671,7 @@ extension VdpViewController{
         print(data)
         guard let dataInfo = data.first else { return }
         print("Received ICE candidate= \(dataInfo) is typing...")
+      //  self.showToast(message: "Received ICE candidate", duration: 2)
         guard let resultNew = dataInfo as? [String:Any]else{
             return
         }

@@ -65,6 +65,47 @@ extension DataFetchManagerFireBase {
         
     }
     
+    func remoteObserve(completion pCompletion: @escaping (Error?, Remote?) -> Void, remote pRemote :Remote) {
+        DispatchQueue.global(qos: .background).async {
+            self.requestCount += 1
+            
+            var aRemote :Remote?
+            var anError :Error?
+            
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                if (pRemote.id?.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Remote ID can not be empty."])
+                }
+                
+                // Fetch frequently operated remotes
+                let aRemoteDispatchSemaphore = DispatchSemaphore(value: 0)
+                self.database
+                    .child("remoteKey1")
+                    .child(pRemote.hardwareId!)
+                    .child(pRemote.id!).observe(.childChanged, with: {(DataSnapshot) in
+                        
+                          aRemoteDispatchSemaphore.signal()
+                          pCompletion(anError, aRemote)
+
+                    })
+                    
+           
+
+                _ = aRemoteDispatchSemaphore.wait(timeout: .distantFuture)
+            } catch {
+                anError = error
+            }
+            
+            DispatchQueue.main.async {
+                self.requestCount -= 1
+                pCompletion(anError, aRemote)
+            }
+        }
+        
+    }
     
     func remoteDetails(completion pCompletion: @escaping (Error?, Remote?) -> Void, remote pRemote :Remote) {
         DispatchQueue.global(qos: .background).async {
@@ -226,7 +267,12 @@ extension DataFetchManagerFireBase {
                     .child("routerDetails")
                     .child((pcontroller?.id) ?? "")
                     print((pcontroller?.id) ?? "")
-                 databaseref?.updateChildValues(datadictionary)
+             //    databaseref?.updateChildValues(datadictionary)
+                databaseref?.updateChildValues(datadictionary, withCompletionBlock: { [self](error, DatabaseReference) in
+                    if error == nil{
+                        dataListner(complition: pCompletion, appliance: pcontroller, databaseRef: databaseref)
+                    }
+                })
                 //
                 var databaserefnc : DatabaseReference?
                 databaserefnc =  self.database.child("messages").child((pcontroller?.id) ?? "").child("applianceData").child("message")
@@ -246,8 +292,6 @@ extension DataFetchManagerFireBase {
                     .child((pcontroller?.id) ?? "")
                     .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                         print(pDataSnapshot.value)
-                        print("router get ditail")
-                   //      self.log(dataSnapshot: pDataSnapshot)
                      
                         if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
                              if (aDict["wCommand"] as! Bool != false), (aDict["xCommand"] as! Bool != false){
@@ -255,7 +299,6 @@ extension DataFetchManagerFireBase {
                              //    update database id and  passwd
                                  self.database.child("temp").updateChildValues(dataidpass)
                                  self.database.child("devices").child((pcontroller?.id) ?? "").updateChildValues(dataidpass)
-                                 PopupManager.shared.displaySuccess(message: "Reset successfully", description: "")
 
                             }
                          }
@@ -273,6 +316,45 @@ extension DataFetchManagerFireBase {
             }
         }
         
+    }
+    func reNameControllerName(complition pcomplition: @escaping(Error?, Bool)->Void, Appliance pAppliances: ControllerAppliance?){
+        DispatchQueue.global(qos: .background).async {
+            var anError: Error?
+            var success: Bool = false
+            
+            do{
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                
+                self.database.child("devices").child(pAppliances?.id ?? "").updateChildValues(["name":pAppliances?.name ?? ""], withCompletionBlock: {(error, DatabaseReference) in
+                    if error != nil{
+                     anError = error
+                    }else{
+                        success = true
+                    }
+                    pcomplition(anError, success)
+                })
+                
+            }catch{
+                anError = error
+                pcomplition(anError, success)
+            }
+        }
+    }
+    func dataListner(complition pComplition: @escaping(Error?, Array<Appliance>?)->Void,appliance: ControllerAppliance?, databaseRef: DatabaseReference?){
+        var anApplianceArray :Array<Appliance>?
+        var anError: Error? = nil
+        var anErrors = NSError(domain: "com", code: 1,userInfo: [NSLocalizedDescriptionKey:"Success"])
+
+        do{
+        databaseRef?.observe(.value, with: {DataSnapshot in
+                let data = DataSnapshot.value //as? Dictionary<String,Any>
+                pComplition(anErrors, anApplianceArray)
+            })
+        }catch{
+            
+        }
     }
     
     func sendmsg(pMessage: String, pApplinces: ControllerAppliance)  {

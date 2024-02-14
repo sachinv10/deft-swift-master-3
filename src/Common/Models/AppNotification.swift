@@ -13,6 +13,7 @@ class AppNotification: NSObject {
     var id :String?
     var message :String?
     var date :Date?
+    var timeStamp: String?
     
     
     enum AppNotificationType :String {
@@ -37,7 +38,11 @@ class AppNotificationSettings: NSObject {
     var isGlobalOffNotificationSubscribed :Bool = false
     var isLockNotificationSubscribed :Bool = false
     var isSchedularNotificationSubscribed :Bool = false
-    
+    var isTemperatureNotificationSubscribed: Bool = false
+    var isVDPNotificationSubscribed: Bool = false
+    var isCriticalNotificationDeviceToken: Bool = true
+    var isSmartSensorNotificationSubscribed: Bool = false
+    var isSmokeSensorNotificationSubscribed: Bool = false
     func clone() -> AppNotificationSettings {
         let aReturnVal = AppNotificationSettings()
         
@@ -48,7 +53,11 @@ class AppNotificationSettings: NSObject {
         aReturnVal.isGlobalOffNotificationSubscribed = self.isGlobalOffNotificationSubscribed
         aReturnVal.isLockNotificationSubscribed = self.isLockNotificationSubscribed
         aReturnVal.isSchedularNotificationSubscribed = self.isSchedularNotificationSubscribed
-        
+        aReturnVal.isTemperatureNotificationSubscribed = self.isTemperatureNotificationSubscribed
+        aReturnVal.isVDPNotificationSubscribed = self.isVDPNotificationSubscribed
+        aReturnVal.isCriticalNotificationDeviceToken = self.isCriticalNotificationDeviceToken
+        aReturnVal.isSmartSensorNotificationSubscribed = self.isSmartSensorNotificationSubscribed
+        aReturnVal.isSmokeSensorNotificationSubscribed = self.isSmokeSensorNotificationSubscribed
         return aReturnVal
     }
 }

@@ -43,24 +43,41 @@ class LoginController: BaseController {
     
     var whiteOverlay :UIView?
     
-    
+    @IBOutlet weak var lblAppMode: UIButton!
+    var menuItemsForAccepted: [UIAction] {
+        return [
+            UIAction(title: "Online", image: nil, handler: { (_) in
+               // self.addAppliance()
+                Database.database().isPersistenceEnabled = false
+                UserDefaults.standard.set("Online", forKey: "Mode")
+             }),
+            UIAction(title: "Online and offLine", image: nil, handler: { (_) in
+                self.offlineModeConfig()
+                UserDefaults.standard.set("Online and offLine", forKey: "Mode")
+             })
+        ]
+    }
+   
     /**
      * UIViewController method, called after the view has been loaded.
      */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        Database.database().isPersistenceEnabled = true
-//        let dataRef = Database.database().reference().child("devices")
-//        dataRef.keepSynced(true)
-        let dataReff = Database.database().reference().child("vdpDevices")
-        dataReff.keepSynced(true)
-      //  let appdata = Database.database().reference().child("applianceDetails")
-        //appdata.keepSynced(true) // applianceDetails
-        let applincesdata = Database.database().reference().child("standaloneUserDetails")
-             applincesdata.keepSynced(true)
+        print("viewDidLoad")
+      //  Database.database().isPersistenceEnabled = true
+ 
+        if #available(iOS 14.0, *) {
+            lblAppMode.menu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItemsForAccepted)
+            lblAppMode.showsMenuAsPrimaryAction = true
+        } else {
+            // Fallback on earlier versions
+        }
         if UserDefaults.standard.value(forKey: "userId") != nil{
+            modeConfig()
             demologin()
           }
+        
          //   else if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
 //            self.emailAddressTextField.text = anEmailAddress
 //            self.passwordTextField.text = aPassword
@@ -97,22 +114,40 @@ class LoginController: BaseController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupTableView()
+        print("viewWillAppear")
+        let mode = UserDefaults.standard.string(forKey: "Mode")
     }
-    
+   
     override func viewDidAppear(_ pAnimated: Bool) {
         super.viewDidAppear(pAnimated)
-        
         self.whiteOverlay?.frame = self.view.bounds
         
         if ConfigurationManager.shared.isDebugMode {
-            if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity {
+            if ConfigurationManager.shared.appType == ConfigurationManager.AppType.wifinity
+            {
                 self.emailAddressTextField.text = "wifinity@gmail.com"
             } else {
                 self.emailAddressTextField.text = "deft.ios@gmail.com"
             }
         }
     }
-    
+    func modeConfig(){
+        let mode = UserDefaults.standard.string(forKey: "Mode")
+        if mode != "Online and offLine"{
+            Database.database().isPersistenceEnabled = false
+        }else{
+            offlineModeConfig()
+        }
+    }
+    func offlineModeConfig()
+    {
+        Database.database().isPersistenceEnabled = true
+        let dataReff = Database.database().reference().child("vdpDevices")
+        dataReff.keepSynced(true)
+         let applincesdata = Database.database().reference().child("standaloneUserDetails")
+             applincesdata.keepSynced(true)
+        
+    }
     func gotochecken() {
         
         if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password") {
@@ -123,7 +158,6 @@ class LoginController: BaseController {
             self.view.addSubview(self.whiteOverlay!)
             self.login()
         }else{
-            
             self.emailAddressTextField.attributedPlaceholder = NSAttributedString(string: "Email Address", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
             self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "SecondaryDarkColor")!])
             
@@ -141,9 +175,7 @@ class LoginController: BaseController {
             self.rememberMeCheckboxButton?.layer.borderWidth = 1.0
             self.rememberMeCheckboxButton?.layer.borderColor = UIColor(named: "SecondaryDarkColor")?.cgColor
             self.rememberMeCheckboxButton?.layer.cornerRadius = 4.0
-            
         }
-        
     }
     func demologin(){
         if let anEmailAddress = KeychainManager.shared.getValue(forKey: "emailAddress"), let aPassword = KeychainManager.shared.getValue(forKey: "password"){
@@ -154,7 +186,9 @@ class LoginController: BaseController {
             aUser.password = aPassword
             aUser.firebaseUserId = Auth.auth().currentUser?.uid
             DataFetchManager.shared.loggedInUser = aUser
-            RoutingManager.shared.gotoDashboard(controller: self)
+          //  self.saveAppNotificationSettings(completion: {
+                RoutingManager.shared.gotoDashboard(controller: self)
+          //  })
             self.whiteOverlay = UIView(frame: self.view.bounds)
             self.whiteOverlay?.backgroundColor = UIColor(named: "SecondaryLightestColor")
             self.view.addSubview(self.whiteOverlay!)
@@ -179,7 +213,7 @@ class LoginController: BaseController {
                 self.emailAddressTextField.text = nil
                 self.passwordTextField.text = nil
                 DataFetchManager.shared.loggedInUser = pUser
-                
+                DataFetchManager.shared.updateUserDetail(completion: {(error, user) in }, user: pUser!)
                 self.saveAppNotificationSettings(completion: {
                     RoutingManager.shared.gotoDashboard(controller: self)
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
@@ -284,8 +318,11 @@ class LoginController: BaseController {
              userp = [emailAddressTextField.text!: passwordTextField.text!]
              var isprofilePesent = false
              for item in sortedKeys{
-                 if item.first?.key == emailAddressTextField.text! && item.first?.value == passwordTextField.text!{
-                     isprofilePesent = true
+                 if item.first?.key == emailAddressTextField.text!{
+                     isprofilePesent = false
+                     sortedKeys = sortedKeys.filter({(pObject)-> Bool in
+                         return item.first?.key != pObject.first?.key
+                    })
                  }
              }
              if isprofilePesent != true{
@@ -364,6 +401,18 @@ extension LoginController: UITableViewDataSource, UITableViewDelegate {
         emailAddressTextField.text = credentioal.first?.key
         passwordTextField.text = credentioal.first?.value
         viewtbl.isHidden = true
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            PopupManager.shared.displayConfirmation(message: "Do you want to delete selected Credential?", description: nil, completion: { [self] in
+            let credentioal = sortedKeys[indexPath.row]
+            sortedKeys = sortedKeys.filter({(pObject)-> Bool in
+                return pObject.first?.key != credentioal.first?.key
+            })
+                tableView.reloadData()
+            })
+
+       }
     }
 }
 class CustomTableViewCell: UITableViewCell {

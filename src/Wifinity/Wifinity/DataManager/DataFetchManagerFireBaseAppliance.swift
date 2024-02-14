@@ -111,9 +111,26 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError, pAppliance)
             }
         }
-        
     }
-    
+    func updateTimestamp(selectedRoom pRoom: Room?, complition pComplition: @escaping(Error?)-> Void){
+        DispatchQueue.global(qos: .background).async {
+            var anError: Error?
+            do {
+                if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                    throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                }
+                if let aRoom = pRoom{
+                    self.database.child("rooms").child(Auth.auth().currentUser!.uid).child(aRoom.id ?? "00").updateChildValues(["lastActive":(Int(aRoom.lastActivityRoom!))!], withCompletionBlock: {(error, DatabaseReference) in
+                        anError = error
+                        pComplition(anError)
+                    })
+                }
+            }catch{
+                anError = error
+                pComplition(anError)
+            }
+        }
+    }
     
     func searchAppliance(completion pCompletion: @escaping (Error?, Array<Appliance>?,Array<String>?) -> Void, room pRoom :Room?, includeOnOnly pIncludeOnOnly :Bool) {
         DispatchQueue.global(qos: .background).async {
@@ -170,7 +187,6 @@ extension DataFetchManagerFireBase {
         }
     }
     
-    
     func deleteOneController(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :ControllerAppliance) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1
@@ -187,17 +203,17 @@ extension DataFetchManagerFireBase {
                 }
                 
                 // NO NEED TO update state in database
-               
                 
                 
                 let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
                 var aMessageField :DatabaseReference? = nil
                 aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId ?? "00")
-                var idcont = pAppliance.id
+               var idcont = pAppliance.id
                var conditions = idcont!.contains("C")
                 if conditions{
                 aMessageField?.child("devices").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                    if let anArray = pDataSnapshot.value as? Array<String> {
+                    let anArray = self.nullArrayRemove(pdata: pDataSnapshot.value as! Array<String?>)
+                   // if let anArray = anArrays {
                         for i in 0..<anArray.count{
                         if controllerId == anArray[i] as String{
                             pAppliance.hardwareId = String(i)
@@ -205,7 +221,7 @@ extension DataFetchManagerFireBase {
                                 pCompletion(error)
                             },appliance: pAppliance)
                           }
-                        }
+                       // }
                     print(anArray)
                     }
                     aSwitchTypeDispatchSemaphore.signal()
@@ -271,13 +287,14 @@ extension DataFetchManagerFireBase {
                 if conditions{
                 aMessageField?.child("sensors").observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
                     if let anArray = pDataSnapshot.value as? Array<String> {
-                       // for i in 0..<anArray.count{
-              //  if controllerId == anArray[i] as String{
-                        //    pAppliance.hardwareId = String(i)
-                            self.deleteOnePControllerWithId(appliance: pAppliance)
-                            
-                        //  }
-                     //   }
+                         for i in 0..<anArray.count{
+                 if controllerId == anArray[i] as String{
+                             pAppliance.hardwareId = String(i)
+                     self.deleteOnePControllerWithId(complition: {error in
+                         pCompletion(error)
+                     },appliance: pAppliance)
+                           }
+                         }
                     print(anArray)
                     }
                     aSwitchTypeDispatchSemaphore.signal()
@@ -285,25 +302,16 @@ extension DataFetchManagerFireBase {
                 }
                 conditions = idcont!.contains("V")
                 if conditions{
-                 
-                       // for i in 0..<anArray.count{
-              //  if controllerId == anArray[i] as String{
-                        //    pAppliance.hardwareId = String(i)
-                     
                     self.deleteOnevdpControllerWithId(complition: { error in
                         pCompletion(error)
                     }, appliance: pAppliance)
-                           
-                        //  }
-                     //   }
-               
-               
                 }
                 //remaining L and G
             _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
              
              } catch {
                 anError = error
+                 pCompletion(error)
             }
             
             DispatchQueue.main.async {
@@ -311,7 +319,6 @@ extension DataFetchManagerFireBase {
              //   pCompletion(anError)
             }
         }
-        
     }
     func deleteOnevdpControllerWithId(complition pcomplition: @escaping (Error?) -> Void ,appliance pAppliance :ControllerAppliance) {
         DispatchQueue.global(qos: .background).async {
@@ -353,7 +360,7 @@ extension DataFetchManagerFireBase {
  
              
              } catch {
-                anError = error
+                 anError = error
                  pcomplition(anError)
             }
             
@@ -363,7 +370,7 @@ extension DataFetchManagerFireBase {
             }
         }
     }
-    func deleteOnePControllerWithId(appliance pAppliance :ControllerAppliance) {
+    func deleteOnePControllerWithId(complition pComplition: @escaping (Error?) -> Void,appliance pAppliance :ControllerAppliance) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1
             let controllerId = pAppliance.id
@@ -384,9 +391,14 @@ extension DataFetchManagerFireBase {
                 var aMessageField :DatabaseReference? = nil
                 aMessageField =  Database.database().reference().child("devices").child(pAppliance.id!)
  
+                Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId ?? "00").child("sensors").child(pAppliance.hardwareId ?? "") .removeValue(completionBlock: {(error , DatabaseReference) in
+                    anError = error
+                })
+                
                 aMessageField?.removeValue(completionBlock: { (pError, pDatabaseReference) in
                     anError = pError
                     aSwitchTypeDispatchSemaphore.signal()
+                    pComplition(anError)
                 })
             _ = aSwitchTypeDispatchSemaphore.wait(timeout: .distantFuture)
  
@@ -415,12 +427,26 @@ extension DataFetchManagerFireBase {
                 if (pAppliance.id?.count ?? 0) <= 0 {
                     throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "Appliance ID is not available."])
                 }
-                
+                var nodeId = "devices"
+                if let idcont = pAppliance.id{
+                    if idcont.contains("C"){
+                        nodeId = "devices"
+                    }else if idcont.contains("I")
+                      {
+                        nodeId = "remotes"
+                    }else if idcont.contains("S")
+                    {
+                      nodeId = "sensors"
+                  }else if idcont.contains("M")
+                    {
+                      nodeId = "curtains"
+                  }
+                }
                 // NO NEED TO update state in database
            
                 let aSwitchTypeDispatchSemaphore = DispatchSemaphore(value: 0)
                 var aMessageField :DatabaseReference? = nil
-                aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId!).child("devices").child(pAppliance.hardwareId!)
+                aMessageField =  Database.database().reference().child("rooms").child(Auth.auth().currentUser!.uid).child(pAppliance.roomId!).child(nodeId).child(pAppliance.hardwareId!)
  
                 Database.database().reference().child("devices").child(pAppliance.id ?? "").removeValue(completionBlock: { (pError, pDatabaseReference) in
                     anError = pError
@@ -563,6 +589,8 @@ extension DataFetchManagerFireBase {
                 }
                 let aMessageValue = Appliance.command(appliance: pAppliance, powerState: pPowerState, dimValue: aDimValue)
                 anError = self.sendMessage(aMessageValue, entity: pAppliance)
+                let requestParam = RequestParameters(uid: Auth.auth().currentUser!.uid, date: SharedFunction.shared.getCurrentDateandTime(), deviceName: UtilityManager.deviceName, command: aMessageValue, description: "Applaince Operated")
+                Services.Shared.serviceUrlDiviceOperated(reqPara: requestParam)
                 if anError != nil {
                     throw anError!
                 }

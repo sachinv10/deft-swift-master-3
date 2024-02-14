@@ -49,6 +49,7 @@ class SearchMoodController: BaseController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         AddNewMoodViewController.selectApplianc = nil
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated) // No need for semicolon
@@ -57,12 +58,20 @@ class SearchMoodController: BaseController {
         AddNewMoodViewController.selectedMood = ResetselectedMood
         AddNewMoodViewController.remoteKey = resetRemoteKey
         reloadAllData()
+         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
+         moodTableView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    @objc func didTapViewmenu(_ sender: UITapGestureRecognizer) {
+        viewcell.isHidden = true
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.controllerflag = false
     }
-    
+    deinit {
+        Database.database().reference().child("mood")
+            .child(Auth.auth().currentUser!.uid).removeAllObservers()
+    }
     func activatdatalistner()  {
         print("applince id\(SearchApplianceController.applinceId)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
@@ -80,7 +89,7 @@ class SearchMoodController: BaseController {
         }
        }
     }
-    var newMoodId = String()
+    var newMoodId: String = "00"
     override func reloadAllData() {
         self.moods.removeAll()
         print("get moods")
@@ -90,7 +99,7 @@ class SearchMoodController: BaseController {
             if pError != nil {
                 PopupManager.shared.displayError(message: "Can not search moods", description: pError!.localizedDescription)
             } else {
-                self.newMoodId = newMoodid ?? ""
+                self.newMoodId = newMoodid ?? "00"
                 if pMoodArray != nil && pMoodArray!.count > 0 {
                     self.moods = pMoodArray!
                 }

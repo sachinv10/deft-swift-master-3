@@ -52,7 +52,7 @@ class SelectComponentTableCellView: UITableViewCell {
     var curtain :Curtain?
     var remote :Remote?
     var sensor :Sensor?
-    
+   
     weak var delegate :SelectComponentTableCellViewDelegate?
     
     
@@ -88,7 +88,7 @@ class SelectComponentTableCellView: UITableViewCell {
         
     }
 
-    
+    // MARK: - SELECT COMPONANT sheduler
     func load(appliance pAppliance :Appliance, isChecked pIsChecked :Bool, powerState pPowerState :Bool?, dimmableValue pDimmableValue :Int?, sripLight psripLight: Bool) {
         self.appliance = pAppliance
         self.curtain = nil
@@ -102,10 +102,17 @@ class SelectComponentTableCellView: UITableViewCell {
         self.sensorOptionsStackView.isHidden = true
         self.appliancePowerStateSwitch.isOn = pPowerState ?? false
         self.applianceDimStateOptionsContainerView.isHidden = pAppliance.isDimmable == false
-
+       
         if SelectComponentController.ApplianceType == "Then"{
-            self.glowPatternButtonContainerView.isHidden = psripLight ? false : true
+           // self.glowPatternButtonContainerView.isHidden = psripLight ? false : true
             self.viewColorCode.isHidden = !(pAppliance.isDimmable == false &&  (pAppliance.stripType == Appliance.StripType.rgb && pIsChecked))
+            if pAppliance.typeSelected == "goodbye"{
+                self.applianceOptionsStackView.isHidden = true
+                self.appliancePowerStateSwitch.isHidden = true
+                self.applianceDimStateOptionsContainerView.isHidden = true
+                self.viewColorCode.isHidden = true
+                self.glowPatternButtonContainerView.isHidden = true
+            }
         }
         if pAppliance.dimType == Appliance.DimType.rc {
             if pAppliance.dimmableValueMin != nil {
@@ -133,6 +140,12 @@ class SelectComponentTableCellView: UITableViewCell {
         
         if pDimmableValue != nil {
             self.applianceDimmableValueSlider.value = Float(UtilityManager.sliderValueFromDimmableValue(appliance: pAppliance, dimmableValue: pDimmableValue!))
+        }
+        if pAppliance.type == Appliance.ApplianceType.ledStrip && pAppliance.isOn{
+            self.applianceDimStateOptionsContainerView.isHidden = false
+            self.applianceDimmableValueSlider.maximumValue = 99
+            self.applianceDimmableValueSlider.value = Float(pDimmableValue ?? 1)
+            pAppliance.dimmableValueMax = 99
         }
         
         self.updateApplianceCommand()
@@ -253,6 +266,10 @@ class SelectComponentTableCellView: UITableViewCell {
         }else if pSensor.routineType == "temperature"{
             self.sensorRoutingTypeSegmentedControl.selectedSegmentIndex = 2
         }
+        if pSensor.id?.prefix(4) == "P001"{
+            self.sensorOptionContainerView.isHidden = true
+             pSensor.routineType = "occupancy"
+        }
         updateRoutingType()
         
         self.updateSensorCommand()
@@ -300,9 +317,9 @@ class SelectComponentTableCellView: UITableViewCell {
         case 10:
             aGlowPattern = Appliance.GlowPatternType.auto
             appliance?.isDimmable = false
-        case 11 :
-            aGlowPattern = Appliance.GlowPatternType.dimming
-            stripDim(aGlowPattern: aGlowPattern)
+        case 11 : break
+//            aGlowPattern = Appliance.GlowPatternType.dimming
+//            stripDim(aGlowPattern: aGlowPattern)
         default:
             aGlowPattern = Appliance.GlowPatternType.auto
             appliance?.isDimmable = false
@@ -353,7 +370,7 @@ class SelectComponentTableCellView: UITableViewCell {
         self.colorPickerTimer = nil
         self.colorPickerTimer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false, block: { (pTimer) in
             let appliances = self.appliance?.clone()
-             let aProperty1 = UtilityManager.property1(color: self.colorPickerControl.color)
+            let aProperty1 = UtilityManager.property1(color: self.colorPickerControl.color)
             let aProperty2 = UtilityManager.property2(color: self.colorPickerControl.color)
             let aProperty3 = UtilityManager.property3(color: self.colorPickerControl.color)
             self.delegate?.cellView(self, didChangeProperty1: aProperty1, property2: aProperty2, property3: aProperty3, glowPattern: self.appliance?.stripLightEvent ?? "0")
@@ -367,15 +384,22 @@ class SelectComponentTableCellView: UITableViewCell {
         return UITableView.automaticDimension
     }
     
-    
     private func updateApplianceCommand() {
         if let anAppliance = self.appliance {
             let aSliderValue = Int(self.applianceDimmableValueSlider?.value ?? 0)
             let aDimmableValue :Int = UtilityManager.dimmableValueFromSliderValue(appliance: anAppliance, sliderValue: aSliderValue)
             anAppliance.scheduleState = self.appliancePowerStateSwitch.isOn
+            anAppliance.isOn = self.appliancePowerStateSwitch.isOn
             anAppliance.scheduleDimmableValue = aDimmableValue
             anAppliance.scheduleCommand = Appliance.command(appliance: anAppliance, powerState: self.appliancePowerStateSwitch.isOn, dimValue: aDimmableValue)
-            self.delegate?.selectComponentTableCellViewDidUpdate(self)
+            if anAppliance.isDimmable {
+                self.delegate?.selectComponentTableCellViewDidUpdate(self)
+            }else if anAppliance.type == Appliance.ApplianceType.ledStrip{
+            let aProperty = 255 / 100 * aSliderValue
+                anAppliance.scheduleCommand = "#l0230:00:\(String(format: "%03d", aProperty)):\(String(format: "%03d", aProperty)):\(String(format: "%03d", aProperty)):0F"
+            self.delegate?.cellView(self, didChangeProperty1: aProperty, property2: aProperty, property3: aProperty, glowPattern: "00")
+            // strip call 255/100* slider value
+         }
         }
     }
     
@@ -396,7 +420,15 @@ class SelectComponentTableCellView: UITableViewCell {
     }
     private func updateRoutingType(){
         if let aSensor = self.sensor {
-           if sensorRoutingTypeSegmentedControl.selectedSegmentIndex == 0{
+            if aSensor.routineType == "occupancy"{
+             //  aSensor.routineType = "occupancy"
+               aSensor.sensorTypeId = 0
+               sensorActionTypeView.isHidden = false
+               sensorActionTypeAppSlider.isEnabled = true
+               sensorActionTypeAppSlider.minimumValue = 0
+               sensorActionTypeAppSlider.maximumValue = 100
+               sensorActionTypeAppSlider.value = Float(aSensor.temperature ?? 00)
+            }else if sensorRoutingTypeSegmentedControl.selectedSegmentIndex == 0{
                aSensor.routineType = "motion"
                aSensor.sensorTypeId = 3
                sensorActionTypeView.isHidden = true
@@ -429,6 +461,7 @@ class SelectComponentTableCellView: UITableViewCell {
                sensorActionTypeAppSlider.maximumValue = 50
                sensorActionTypeAppSlider.value = Float(aSensor.temperature!)
            }
+            
             if aSensor.optators == ">"{
                  sensorActionTypeSegmentedControl.selectedSegmentIndex = 0
              }else if aSensor.optators == "<"{
@@ -491,6 +524,11 @@ class SelectComponentTableCellView: UITableViewCell {
             } else {
                 aSensor.routineType = "temperature"
                 aSensor.sensorTypeId = 1
+            }
+            if aSensor.id?.prefix(4) == "P001"{
+                self.sensorOptionContainerView.isHidden = true
+                aSensor.routineType = "occupancy"
+                aSensor.sensorTypeId = 0
             }
             
             if self.sensorActionTypeSegmentedControl.selectedSegmentIndex == 0 {

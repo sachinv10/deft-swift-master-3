@@ -40,8 +40,42 @@ extension SharedFunction{
         }
     }
     
+    func timeStampToDate(time: Int)-> String{
+        let timestamp: TimeInterval = TimeInterval(time / 1000)
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: date)
+        return formattedDate
+    }
+    func getCurrentDateandTime()-> String{
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let formattedDate = dateFormatter.string(from: currentDate)
+        return formattedDate
+    }
+    func timeStampToOnlyDate(time: Int)-> String{
+        let timestamp: TimeInterval = TimeInterval(time / 1000)
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let formattedDate = dateFormatter.string(from: date)
+        return formattedDate
+    }
 }
-
+extension SharedFunction{
+    //MARK: - remove string paranthesis
+    func removeStringInParentheses(input: String) -> String {
+        let regex = try! NSRegularExpression(pattern: "\\([^)]*\\)")
+        let range = NSRange(location: 0, length: input.utf16.count)
+        
+        var result = regex.stringByReplacingMatches(in: input, options: [], range: range, withTemplate: "")
+        result = result.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return result
+    }
+}
 
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
@@ -66,5 +100,25 @@ extension UIColor {
             alpha: alpha
         )
     }
+  
+
 }
 
+
+class AutoSizeFlowLayout: UICollectionViewFlowLayout {
+   override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+       return true
+   }
+var numberOfColumns = 100
+   override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+       let attributes = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes
+       if let collectionView = collectionView {
+           let contentWidth = collectionView.frame.width - sectionInset.left - sectionInset.right
+           let estimatedWidth = self.estimatedItemSize.width
+           let availableWidth = contentWidth - (minimumInteritemSpacing * CGFloat(numberOfColumns - 1))
+           let itemWidth = min(availableWidth, estimatedWidth)
+           attributes?.frame.size.width = itemWidth
+       }
+       return attributes
+   }
+}

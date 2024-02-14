@@ -14,6 +14,7 @@ import SystemConfiguration
 import Foundation
 import Network
 import ImageIO
+import SwiftyGif
 
 class PingViewController: UIViewController, WebSocketDelegate{
     var timer = Timer()
@@ -34,20 +35,22 @@ class PingViewController: UIViewController, WebSocketDelegate{
             formatJson(stringJson: string)
         case .binary(let data):
             print("Received data: \(data.count)")
-        case .ping(_):
-            break
-        case .pong(_):
-            break
-        case .viabilityChanged(_):
-            print("viabilityChanged")
+        case .ping(let text):
+            print("ping text: \(text)")
+            
+        case .pong(let text):
+            print("ping text: \(text)")
+          
+        case .viabilityChanged(let x):
+            print("viabilityChanged= \(x.description)")
             break
         case .reconnectSuggested(_):
             print("reconnectSuggested")
             break
         case .cancelled:
-            print("error")
+            print("error cancelled")
         case .error(let error):
-            print("error unknown\(String(describing: error?.localizedDescription))")
+            print("error unknown= \(String(describing: error?.localizedDescription))")
             break
         }
     }
@@ -56,6 +59,19 @@ class PingViewController: UIViewController, WebSocketDelegate{
     @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.checkInternetConnection { (pError) in
+            ProgressOverlay.shared.hide()
+            if pError != nil {
+            
+            }else{
+                ProgressOverlay.shared.hide()
+                PopupManager.shared.displayError(message: "Offline mode only works when there is no internet connection!", description: "", completion: {
+                    RoutingManager.shared.goToPreviousScreen(self)
+                })
+            }
+        }
         //declare this property where it won't go out of scope relative to your listener
      //   let reachability = try! Reachability()
 
@@ -76,35 +92,68 @@ class PingViewController: UIViewController, WebSocketDelegate{
 //            print("Unable to start notifier")
 //        }
     }
-    
+    deinit {
+        socket = nil
+    }
+    unowned var imageview = UIImageView()
     @IBOutlet weak var lblstart: UIButton!
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        gifload()
+        do{
+             let gif = try UIImage(gifName: "Offline_Animation_final")
+             imageview = UIImageView(gifImage: gif, loopCount: 3)
+        }catch{
+            print("Error")
+        }
+         gifload()
+       // update()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+      //  UIApplication.shared.endBackgroundTask(.invalid)
+      //  ping?.stopPinging()
+      //  UIBackgroundTaskIdentifier.invalid
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UIApplication.shared.endBackgroundTask(.invalid)
+        ping?.stopPinging()
+        imageview.updateCurrentImage()
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("memory issue")
+        UIApplication.shared.endBackgroundTask(.invalid)
+        
+        // Dispose of any resources that can be recreated.
     }
     func gifload() {
+        ProgressOverlay.shared.show()
         conter = 0
         textView.text = ""
         alldata.removeAll()
         controller_id.removeAll()
         controller_KComand.removeAll()
-      
-      
-        //https://www.deskdecode.com/wp-content/uploads/2022/08/d2.gif
-          let jeremyGif = UIImage.gifImageWithName("d2")
-          let imageView = UIImageView(image: jeremyGif)
-          imageView.frame = CGRect(x: 0, y: 105.0, width: self.view.frame.size.width, height: self.view.frame.size.height - 320)
-          view.addSubview(imageView)
+    
+        do {
+            
+            imageview.frame = CGRect(x: 0, y: 105.0, width: self.view.frame.size.width, height: self.view.frame.size.height - 103.0)
+            view.addSubview(imageview)
+        } catch {
+            print(error)
+        }
+        self.imageview.startAnimatingGif()
         getIpaddress()
         lblstart.isHidden = true
-        ProgressOverlay.shared.show()
+       
     }
     var c_id = [String]()
     var conter = 0
     @objc func update() {
         print("timer Active")
-        
-        if c_id.count > conter{
+         if c_id.count > conter{
             self.pingToController(ipaddress: c_id[conter])
             self.textView.text.append(contentsOf: "\n Ip address = \(c_id[conter])")
             self.textView.scrollRangeToVisible(NSRange(location: self.textView.text.count - 1, length: 1))
@@ -139,8 +188,8 @@ class PingViewController: UIViewController, WebSocketDelegate{
                 
     }
     @IBAction func start(_ sender: Any) {
+        socket = nil
         gifload()
-       // getIpaddress()
     }
     func getIpaddress()  {
         if  let x = getIPAddress(){
@@ -157,20 +206,22 @@ class PingViewController: UIViewController, WebSocketDelegate{
                 self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
                 for item in c_id {
                     DispatchQueue.main.asyncAfter(deadline: .now()){
-                        print("c_id =\(item)")
-                        print(item)
+                        print("Ip address =\(item)")
                     }
                 }
             } )
         }
     }
+    
     var controller_id = [String]()
     var controller_KComand = [String]()
     @IBAction func stop(_ sender: Any) {
             ping?.stopPinging()
+            ping = nil
+            imageview.stopAnimatingGif()
             RoutingManager.shared.goToPreviousScreen(self)
     }
-    func GotoApplinceController()  {
+    func GotoApplinceController() {
         RoutingManager.shared.gotoOfflineApplinces(controller: self, controllerId: controller_id, controller_kId: controller_KComand, alldatajson: alldata)
     }
     @IBAction func halt(_ sender: Any) {
@@ -182,20 +233,17 @@ class PingViewController: UIViewController, WebSocketDelegate{
         controllerArray.removeAll()
         for i in 0..<256 {
             do {
-                
                 let host = "\(ips)\(i)"
-                //   print(host)
                 ping = try SwiftyPing(host: host, configuration: PingConfiguration(interval: 5.0, with: 1), queue: DispatchQueue.global())
                 ping?.observer = { (response) in
                     DispatchQueue.main.async {
                         if ((response.ipHeader) != nil){
                             let idss = response.ipAddress
-                            print("ips = \(idss)")
+                            print("ips observer = \(idss)")
                             self.controllerArray.append(idss ?? "")
-                            
                         }
                         if (response.ipAddress != nil) {
-                            //  print("ips = \(response.ipAddress)")
+                                print("ips = \(response.ipAddress)")
                         }
                         var message = "\(response.duration * 1000) ms"
                         if let error = response.error {
@@ -210,9 +258,8 @@ class PingViewController: UIViewController, WebSocketDelegate{
                                 message = error.localizedDescription
                             }
                         }
-                        
-                        self.textView.text.append(contentsOf: "\nPing #\(response.trueSequenceNumber): \(message)")
-                        self.textView.scrollRangeToVisible(NSRange(location: self.textView.text.count - 1, length: 1))
+                        print("\nPing #\(response.trueSequenceNumber): \(message)")
+
                     }
                 }
                 ping?.finished = { (result) in
@@ -227,8 +274,7 @@ class PingViewController: UIViewController, WebSocketDelegate{
                         if let roundtrip = result.roundtrip {
                             message += String(format: "round-trip min/avg/max/stddev = %.3f/%.3f/%.3f/%.3f ms", roundtrip.minimum * 1000, roundtrip.average * 1000, roundtrip.maximum * 1000, roundtrip.standardDeviation * 1000)
                         }
-                        self.textView.text.append(contentsOf: message)
-                        self.textView.scrollRangeToVisible(NSRange(location: self.textView.text.count - 1, length: 1))
+
                     }
                 }
                 
@@ -238,7 +284,7 @@ class PingViewController: UIViewController, WebSocketDelegate{
                 textView.text = error.localizedDescription
             }
             if i == 255 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10){
                     onCompletion(self.controllerArray)
                 }
             }
@@ -264,6 +310,9 @@ class PingViewController: UIViewController, WebSocketDelegate{
                         getnameinfo(interface?.ifa_addr, socklen_t((interface?.ifa_addr.pointee.sa_len)!), &hostname, socklen_t(hostname.count), nil, socklen_t(0), NI_NUMERICHOST)
                         address = String(cString: hostname)
                         print(address)
+                        if let add = address?.hasPrefix("192"), add == true{
+                            break
+                        }
                     }
                 }
             }
@@ -288,8 +337,7 @@ class PingViewController: UIViewController, WebSocketDelegate{
             if stringJson.starts(with: "K"){
                 let d = stringJson
                 controller_KComand.append(d)
-                self.textView.text.append(contentsOf: "\n K_Comand= \(d)")
-                self.textView.scrollRangeToVisible(NSRange(location: self.textView.text.count - 1, length: 1))
+
             }
             if let json = stringJson.data(using: String.Encoding.utf8){
                 if let jsonData = try JSONSerialization.jsonObject(with: json, options: .allowFragments) as? [String:AnyObject]{
@@ -297,9 +345,7 @@ class PingViewController: UIViewController, WebSocketDelegate{
                         print(id)
                         alldata.append(stringJson)
                         controller_id.append(id)
-                        //  getofflineMode(controller_id: id)
-                        self.textView.text.append(contentsOf: "\n \(id)")
-                        self.textView.scrollRangeToVisible(NSRange(location: self.textView.text.count - 1, length: 1))
+
                     }
                 }
             }
@@ -307,7 +353,6 @@ class PingViewController: UIViewController, WebSocketDelegate{
         }catch {
             print(error.localizedDescription)
         }
-        
     }
     func getofflineMode(controller_id: String){
         let scoresRef = Database.database().reference(withPath: "applianceDetails/\(controller_id)") //CS091651819470701
@@ -316,26 +361,6 @@ class PingViewController: UIViewController, WebSocketDelegate{
             print("The \(snapshot.key) dinosaur's score is \(snapshot.value ?? "null")")
         }
     }
-    
-//    func checkInternetConnection()  {
-//        do {
-//                    try Network.reachability = Reachability(hostname: "www.google.com")
-//                }
-//                catch {
-//                    switch error as? Network.Error {
-//                    case let .failedToCreateWith(hostname)?:
-//                        print("Network error:\nFailed to create reachability object With host named:", hostname)
-//                    case let .failedToInitializeWith(address)?:
-//                        print("Network error:\nFailed to initialize reachability object With address:", address)
-//                    case .failedToSetCallout?:
-//                        print("Network error:\nFailed to set callout")
-//                    case .failedToSetDispatchQueue?:
-//                        print("Network error:\nFailed to set DispatchQueue")
-//                    case .none:
-//                        print(error)
-//                    }
-//                }
-//    }
 }
 
 

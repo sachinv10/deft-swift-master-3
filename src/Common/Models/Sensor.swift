@@ -52,6 +52,8 @@ class Sensor: NSObject {
            returnVal = "When light \(operatosSelection) \(String(describing: temperature ?? 100))"
        case 3:
            returnVal = "When motion is detect"
+       case 0:
+           returnVal = "When people count is \(operatosSelection) \(String(describing: temperature ?? 0))"
        case .none:
            break
        case .some(_):

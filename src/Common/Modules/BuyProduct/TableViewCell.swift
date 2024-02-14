@@ -33,15 +33,16 @@ class TableViewCell: UITableViewCell {
         lblName.text =  obj.name!
          let offer = "You Save ₹ \(String(describing: obj.price! - obj.Dprice!)) On This Product"
         lblDiscount.text = offer
-        lblDiscountAmount.text = String(describing: obj.Dprice!)
-        let attributedString = NSAttributedString(string: String(describing: obj.price!),
+        lblDiscountAmount.text = "₹ \(String(describing: obj.Dprice!))"
+        let attributedString = NSAttributedString(string: "₹ \( String(describing: obj.price!))",
                                                          attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
-         lblamount.attributedText = attributedString
+        lblamount.attributedText = attributedString
+        lblOffPercentage.text = ""
         let dis = obj.price! - obj.Dprice!
         if dis > 0{
             var x = (110 / 100) * 100
             let off = (Float(dis) / Float(obj.price!)) * 100
-            lblOffPercentage.text = "\(String(describing: off)) %"
+            lblOffPercentage.text = "\(String(describing: Int(off))) % off"
         }
     }
 }

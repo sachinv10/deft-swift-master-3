@@ -43,6 +43,9 @@ class UtilityManager: NSObject {
         
         return aReturnVal
     }
+    // type of device gatting ( ios 15 and earlier user assign device name )
+    //geniric device name ( ios 13 and later)
+    static var deviceName: String {return UIDevice.current.model}
     
     static var isSimulator :Bool {
         return ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] != nil
@@ -65,7 +68,6 @@ class UtilityManager: NSObject {
                 break
             }
         }
-        
         return aReturnVal
     }
     
@@ -137,7 +139,6 @@ class UtilityManager: NSObject {
             }
             aReturnVal = Int(aSliderValue)
         }
-        
         return aReturnVal
     }
     
@@ -170,7 +171,12 @@ class UtilityManager: NSObject {
         
         return aReturnVal
     }
-    
+     
+    static func singleStripBritValue(property1 pProperty1 :Int)-> Int{
+        var aReturnVal: Int = 0
+        aReturnVal = pProperty1
+        return aReturnVal
+    }
     
     static func color(property1 pProperty1 :Int, property2 pProperty2 :Int, property3 pProperty3 :Int) -> UIColor {
         var aReturnVal :UIColor = UIColor.white

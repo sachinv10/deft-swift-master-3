@@ -31,8 +31,11 @@ class SelectRoomController: BaseController {
         super.viewDidLoad()
         
         self.title = "SELECT ROOM"
-        self.subTitle = nil
-        
+        if let tg = SelectComponentController.ApplianceType{
+            self.subTitle = "Trigger \(tg)"
+        }else{
+            self.subTitle = nil
+        }
         if self.shouldAllowAddRoom {
             self.roomTableViewTopLayoutConstraint.constant = self.newRoomView.frame.height
         } else {

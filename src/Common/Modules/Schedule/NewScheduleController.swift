@@ -110,6 +110,12 @@ class NewScheduleController: BaseController {
             if aRooms?.count ?? 0 <= 0{
                 throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Please select appliances"])
             }
+            
+            let days = self.editedScheduleRepetitions ?? self.schedule?.repetitions
+            if days?.count ?? 0 <= 0{
+                throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey : "Please select day"])
+            }
+            
             var aTime = self.editedScheduleTime ?? self.schedule?.time
             if (aTime?.count ?? 0) <= 0 {
                 let aDateFormatter = DateFormatter()

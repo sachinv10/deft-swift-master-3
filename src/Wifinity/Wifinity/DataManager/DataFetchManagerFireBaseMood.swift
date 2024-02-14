@@ -182,19 +182,21 @@ extension DataFetchManagerFireBase {
                             .child(aDeviceId)
                         databs.keepSynced(true)
                         databs.observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                            if let anArray = DataContractManagerFireBase.curtain(dict: pDataSnapshot.value as! Dictionary<String, Any>   ) {
+                            
+                            if pDataSnapshot.value as? Dictionary<String, Any> != nil, let anArray = DataContractManagerFireBase.curtain(dict: pDataSnapshot.value as! Dictionary<String, Any>   ) {
                                 print(anArray.title)
-                                 
-                                    var moodappliances = MoodAppliances()
-                                    var applianceslist = applianeslist()
-                                    moodappliances.hederType = "Curtain"
+                                
+                                var moodappliances = MoodAppliances()
+                                var applianceslist = applianeslist()
+                                moodappliances.hederType = "Curtain"
                                 applianceslist.name = anArray.title
                                 applianceslist.id = anArray.id
-                              //  applianceslist.hardwareId =
-                                    moodappliances.list.append(applianceslist)
-                                    aMoodArray?.append(moodappliances)
+                                //  applianceslist.hardwareId =
+                                moodappliances.list.append(applianceslist)
+                                aMoodArray?.append(moodappliances)
                                 
-                             }
+                            }
+                       
                             aDispatchSemaphore.signal()
                         }
                         _ = aDispatchSemaphore.wait(timeout: .distantFuture)

@@ -293,10 +293,8 @@ class DataFetchManagerFireBase: NSObject {
         if let aNextIdString = aNumberFormatter.string(from: NSNumber(value: aNextId)) {
             aReturnVal = aNextIdString
         }
-        
         return aReturnVal
     }
-    
     
     func checkInternetConnection(completion pCompletion: @escaping (Error?) -> Void) {
         DispatchQueue.global(qos: .background).async {
@@ -316,7 +314,7 @@ class DataFetchManagerFireBase: NSObject {
                 
                 var aUrlRequest = URLRequest(url: aUrl)
                 aUrlRequest.httpMethod = "GET"
-                aUrlRequest.timeoutInterval = 5
+                aUrlRequest.timeoutInterval = 2
                 var aDataTaskError :Error? = nil
                 let aDispatchSemaphore = DispatchSemaphore(value: 0)
                 let aDataTask = URLSession.shared.dataTask(with: aUrlRequest) { (pData, pResponse, pError) in
@@ -340,10 +338,7 @@ class DataFetchManagerFireBase: NSObject {
         }
         
     }
-    
 }
-
-
 
 // MARK:- Commands
 
@@ -378,6 +373,8 @@ extension DataFetchManagerFireBase {
             }else if let vdp = pEntity as? VDPModul {
                 aNodeId = vdp.id
             }else if let aLock = pEntity as? TankRegulator {
+                aNodeId = aLock.id
+            }else if let aLock = pEntity as? ControllerAppliance {
                 aNodeId = aLock.id
             } else if let deviceID = pEntity as? String {
                 aNodeId = deviceID

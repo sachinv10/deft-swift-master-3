@@ -143,9 +143,15 @@ class OfflineApplinceViewController: UIViewController {
     var devices = [String]()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.view.backgroundColor = .white
         lblbackbtn.setTitle("", for: .normal)
         // GetSocketConnection(applinces: <#Appliance#>)
       dataload()
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("memory issue")
+        // Dispose of any resources that can be recreated.
     }
     func dataload()  {
         socketInstances.removeAll()
@@ -403,7 +409,7 @@ class OfflineApplinceViewController: UIViewController {
     private var socket: WebSocket?
     @IBAction func didselectBackbtn(_ sender: Any) {
         
-        RoutingManager.shared.goToPreviousScreen(self)
+        RoutingManager.shared.goBackToDashboard()
     }
     func pingToController(ipaddress: WebSocket?, applainces: Appliance){
         print("ws://\(ipaddress):81")
@@ -454,7 +460,7 @@ class OfflineApplinceViewController: UIViewController {
             if pickerTextField.text != ""{
                 
                 if Applinces[0].roomTitle == selectedRooms?.title{
-                    Applinces[0].hardwareId
+                  
                     for ips in 0..<alldataJson.count{
                         
                         if let json = alldataJson[ips].data(using: String.Encoding.utf8){
@@ -744,17 +750,18 @@ extension OfflineApplinceViewController: UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let Cell = ApplincesTableview.dequeueReusableCell(withIdentifier: "Cell")! as! applincessCell
-       
-        let obj = Applinces[indexPath.row]
-        print(obj.roomTitle)
-//        if ((selectedRooms?.title) != nil){
-//            if selectedRooms?.title == obj.roomTitle{
-//                Cell.loaddata(pApplince: obj)
-//            }
-//        }else{
+        if Applinces.count > indexPath.row{
+            let obj = Applinces[indexPath.row]
+            print(obj.roomTitle)
+            //        if ((selectedRooms?.title) != nil){
+            //            if selectedRooms?.title == obj.roomTitle{
+            //                Cell.loaddata(pApplince: obj)
+            //            }
+            //        }else{
             Cell.loaddata(pApplince: obj)
-       // }
-       
+            // }
+            
+        }
         Cell.delegate = self
         return Cell
     }

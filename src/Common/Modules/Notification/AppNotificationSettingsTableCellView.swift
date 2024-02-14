@@ -20,18 +20,14 @@ class AppNotificationSettingsTableCellView: UITableViewCell {
         self.valueSwitch.isOn = pValue
     }
     
-    
     static func cellHeight() -> CGFloat {
         return 52.0
     }
     
-    
     @IBAction func onOffSwitchDidChangeValue(_ pSender: AppSwitch) {
         self.delegate?.appNotificationSettingsTableCellView(self, didChangeValue: self.valueSwitch.isOn)
     }
-    
 }
-
 
 protocol AppNotificationSettingsTableCellViewDelegate :AnyObject {
     func appNotificationSettingsTableCellView(_ pSender :AppNotificationSettingsTableCellView, didChangeValue pValue :Bool)

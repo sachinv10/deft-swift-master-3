@@ -197,9 +197,16 @@ extension SearchScheduleController :UITableViewDataSource, UITableViewDelegate {
      */
     func tableView(_ pTableView: UITableView, didSelectRowAt pIndexPath: IndexPath) {
         pTableView.deselectRow(at: pIndexPath, animated: true)
-        if pIndexPath.row < self.schedules.count {
+            if pIndexPath.row < self.schedules.count {
             let aSelecedSchedule = self.schedules[pIndexPath.row]
-            RoutingManager.shared.gotoScheduleDetails(controller: self, selectedSchedule: aSelecedSchedule, delegate: self)
+            if aSelecedSchedule.isOn {
+                PopupManager.shared.displayError(message: "please turn off schedule", description: "")
+            }else{
+                PopupManager.shared.displayConfirmation(message: "Do you want to edit selected Schedule?", description: nil, completion: { [self] in
+                    RoutingManager.shared.gotoScheduleDetails(controller: self, selectedSchedule: aSelecedSchedule, delegate: self)
+
+                })
+            }
         }
     }
     

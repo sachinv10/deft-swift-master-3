@@ -277,7 +277,6 @@ extension Device {
         }else if pId.hasPrefix(HardwareType.clOneSwitch.prefix) == true {
             aReturnVal = HardwareType.clOneSwitch
         }
-        
         else if pId.hasPrefix(HardwareType.ctOneSwitch.prefix) == true {
             aReturnVal = HardwareType.ctOneSwitch
         } else if pId.hasPrefix(HardwareType.ctTwoSwitch.prefix) == true {
@@ -337,13 +336,21 @@ extension Device {
         }else if pId.hasPrefix(HardwareType.CSoneSwitch.prefix) == true {
             aReturnVal = HardwareType.CSoneSwitch
         }else if pId.hasPrefix(HardwareType.CStwoSwitch.prefix) == true {
-            aReturnVal = HardwareType.CSoneSwitch
+            aReturnVal = HardwareType.CStwoSwitch
         }else if pId.hasPrefix(HardwareType.CSthreeSwitch.prefix) == true {
-            aReturnVal = HardwareType.CSoneSwitch
+            aReturnVal = HardwareType.CSthreeSwitch
         }else if pId.hasPrefix(HardwareType.CSfourSwitch.prefix) == true {
-            aReturnVal = HardwareType.CSoneSwitch
+            aReturnVal = HardwareType.CSfourSwitch
         }else if pId.hasPrefix(HardwareType.CSfiveSwitch.prefix) == true {
-            aReturnVal = HardwareType.CSoneSwitch
+            aReturnVal = HardwareType.CSfiveSwitch
+        }else if pId.hasPrefix(HardwareType.CSsixSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSsixSwitch
+        }else if pId.hasPrefix(HardwareType.CSsevenSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSsevenSwitch
+        }else if pId.hasPrefix(HardwareType.CSeightSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSeightSwitch
+        }else if pId.hasPrefix(HardwareType.CSnineSwitch.prefix) == true {
+            aReturnVal = HardwareType.CSnineSwitch
         }else if pId.hasPrefix(HardwareType.Occupy.prefix) == true {
             aReturnVal = HardwareType.Occupy
         }

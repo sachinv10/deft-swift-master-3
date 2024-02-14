@@ -9,14 +9,19 @@ import UIKit
 import UserNotifications
 import FirebaseCore
 import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 import FirebaseMessaging
 import Messages
 import CallKit
 import PushKit
 import BackgroundTasks
 import SocketIO
+import CoreData
+import CoreLocation
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, CXProviderDelegate {
+    static var locationManager: CLLocationManager!
     func providerDidReset(_ provider: CXProvider) {
         print("provider delegate")
     }
@@ -32,13 +37,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CXProviderDelegate {
     let manager = SocketManager(socketURL: URL(string: "https://vdp1.homeonetechnologies.in/")!, config: [.log(false), .compress])
     static var socket: SocketIOClient!
     var delegate: webrtcDelegate?
+    var notificationCenter: UNUserNotificationCenter?
+
     
+    lazy var persistentContainer: NSPersistentContainer = {
+           let container = NSPersistentContainer(name: "CartDataModel")
+           container.loadPersistentStores { (storeDescription, error) in
+               if let error = error as NSError? {
+                   fatalError("Unresolved error \(error), \(error.userInfo)")
+               }
+           }
+           return container
+       }()
+    
+    func saveContext(){
+        let context = persistentContainer.viewContext
+        if context.hasChanges{
+            do{
+               try context.save()
+            }catch{
+               let error = error as? NSError
+                fatalError("Unresolve error=\(String(describing: error))")
+            }
+        }
+    }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not found!!")
+
         FirebaseConfiguration.shared.setLoggerLevel(.error)
         aUser = User()
         aUser!.firebaseUserId = UserDefaults.standard.value(forKey: "userId") as? String
-        
+    
         if let aUserId =  aUser!.firebaseUserId{
             if let aRootController = UIApplication.shared.keyWindow?.rootViewController {
                 if let aNavController = aRootController as? UINavigationController {
@@ -49,9 +79,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CXProviderDelegate {
                 }
             }
         }
-        
+     //   configLocation()
         registerpushkit()
         self.registerForPushNotification()
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
+
         if UIApplication.shared.applicationState == .background {
             // App was launched due to Background Fetch event. No need for UI.
             return true
@@ -61,6 +93,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CXProviderDelegate {
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print("Msg Background")
     }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        // Start location updates
+      //  AppDelegate.locationManager.startUpdatingLocation()
+        print("Msg Did Enter Background")
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        // Stop location updates when the app is in the foreground
+     //   locationManager.stopUpdatingLocation()
+        print("Msg Will Enter Foreground")
+    }
+
     func registerpushkit(){
         if #available(iOS 12.0, *) {
             //   UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
@@ -97,6 +141,7 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
                     DispatchQueue.main.async {
                         UIApplication.shared.registerForRemoteNotifications()
                     }
+                    UNUserNotificationCenter.current().delegate = self
                     print("Notification access granted")
                     let content = UNMutableNotificationContent()
                     content.sound = UNNotificationSound.default
@@ -115,25 +160,99 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
 
             let category = UNNotificationCategory(identifier: "incomingCall", actions: [answerAction, rejectAction], intentIdentifiers: [], options: [])
                 center.setNotificationCategories([category])
+         let categorys = UNNotificationCategory(identifier: "newNotificationRequest", actions: [answerAction, rejectAction], intentIdentifiers: [], options: [])
+            center.setNotificationCategories([categorys])
         }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken pDeviceToken: Data) {
         Messaging.messaging().apnsToken = pDeviceToken
         let token = pDeviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         print("Device Token: \(token)")
+        
     }
-    
+     
+
     func application(_ pApplication: UIApplication, didFailToRegisterForRemoteNotificationsWithError pError: Error) {
         let aMessage = "Failed to register for user notification. " + pError.localizedDescription
         Swift.print(aMessage)
     }
-    
+    func handleNotification(_ userInfo: [String: Any]) {
+           if let aps = userInfo["aps"] as? [String: Any],
+              let alert = aps["alert"] as? [String: Any] {
+               let title = alert["title"] as? String
+               let body = alert["body"] as? String
+               let imageUrl = alert["imageUrl"] as? String
+               let category = alert["category"] as? String
+               if category == "Wifinity Notification"{
+                   let content = UNMutableNotificationContent()
+                   content.title = title ?? ""
+                   content.body = body ?? ""
+                   content.categoryIdentifier = "myNotificationCategory"
+                   //      let fileURL: URL = URL(string: imageUrl ?? "")!
+                   
+                       if let url = URL(string: "https://picsum.photos/200/300") {
+                           do {
+                               let attachement = try? UNNotificationAttachment(identifier: "attachment", url: url, options: nil)
+                               content.attachments = [attachement!]
+
+                               let request = UNNotificationRequest.init(identifier: "newNotificationRequest", content: content, trigger: nil)
+
+                               let center = UNUserNotificationCenter.current()
+                               center.add(request)
+                               
+                           } catch {
+                               // Handle any errors that occur when creating the attachment
+                               print("Error creating notification attachment: \(error)")
+                           }
+                       } else {
+                           // Handle the case where the URL string is not valid
+                       }
+                       
+                       let request = UNNotificationRequest.init(identifier: "myNotificationCategory", content: content, trigger: nil)
+                       
+                       let center = UNUserNotificationCenter.current()
+                       center.add(request)
+                       
+                   }
+             
+           }
+       }
+    func handleNotifications(_ userInfo: [AnyHashable: Any]) {
+        if let aps = userInfo["aps"] as? [String: Any],
+           let alert = aps["alert"] as? [String: Any],
+           let title = alert["title"] as? String,
+           let body = alert["body"] as? String,
+           let imageUrl = userInfo["imageUrl"] as? String,
+           let imageUrlURL = URL(string: imageUrl) {
+
+            // Create the notification content with attachment
+            let content = UNMutableNotificationContent()
+            content.title = title
+            content.body = body
+            content.sound = UNNotificationSound.default
+            content.categoryIdentifier = "Wifinity Notification"
+            
+            if let attachment = try? UNNotificationAttachment(identifier: "imageAttachment", url: imageUrlURL, options: nil) {
+                content.attachments = [attachment]
+            }
+            // Create a notification request and add it to the notification center
+            let request = UNNotificationRequest(identifier: "Wifinity Notification", content: content, trigger: nil)
+//                UNUserNotificationCenter.current().add(request) { error in
+//                if let error = error {
+//                    print("Error scheduling notification: \(error.localizedDescription)")
+//                }
+//            }
+        }
+    }
+
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler pCompletionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        var alertMsg = "Incoming Call"
-       
+        
+        if let userInfo = notification.request.content.userInfo as? [AnyHashable: Any] {
+            handleNotifications(userInfo)
+            }
         if #available(iOS 14.0, *) {
              if notification.request.content.categoryIdentifier == "incomingCall" {
-            }
+                }
         } else {
             // Fallback on earlier versions
         }
@@ -156,8 +275,8 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
                         let navigationController = self.window?.rootViewController as? UINavigationController
                         navigationController?.pushViewController(vc, animated: true)
                      }
-                } else if response.actionIdentifier == "reject" {
-                    print("reject")
+                }else if response.actionIdentifier == "reject" {
+                        print("reject")
                 }else if response.actionIdentifier == "com.apple.UNNotificationDefaultActionIdentifier"{
                     DispatchQueue.main.async {
                     let storyboard = UIStoryboard(name: "VDP", bundle: nil)
@@ -168,6 +287,15 @@ extension AppDelegate :UNUserNotificationCenterDelegate, CXCallObserverDelegate 
                   }
                }
             }
+        }
+        if response.notification.request.content.categoryIdentifier == "Wifinity Notification" {
+            DispatchQueue.main.async {
+                let storyboard = UIStoryboard(name: "OfferZone", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "OfferZoneViewController") as! OfferZoneViewController
+                
+                let navigationController = self.window?.rootViewController as? UINavigationController
+                navigationController?.pushViewController(vc, animated: true)
+             }
         }
         completionHandler()
     }
@@ -274,5 +402,131 @@ extension AppDelegate: MessagingDelegate {
     }
 }
 
+// MARK: - Location manager
 
+extension AppDelegate: CLLocationManagerDelegate {
+
+   func configLocation() {
+       self.notificationCenter = UNUserNotificationCenter.current()
+           notificationCenter?.delegate = self
+       
+       AppDelegate.locationManager = CLLocationManager()
+       AppDelegate.locationManager.delegate = self
+       AppDelegate.locationManager.requestAlwaysAuthorization()
+       AppDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+       AppDelegate.locationManager.allowsBackgroundLocationUpdates = true
+       AppDelegate.locationManager.startUpdatingLocation()
+       
+        let region = CLCircularRegion(
+            center: CLLocationCoordinate2D(latitude: 18.55683898925781, longitude: 73.91633605957028),
+            radius: 1000.0,
+            identifier: "pune"
+        )
+        region.notifyOnExit = true
+        region.notifyOnEntry = true
+       // 18.562232,73.912947
+      //  AppDelegate.locationManager.startMonitoring(for: region)
+       AppDelegate.locationManager.startMonitoring(for: region)
+
+       let options: UNAuthorizationOptions = [.alert, .sound]
+       notificationCenter?.requestAuthorization(options: options) { (granted, error) in
+                  if !granted {
+                      print("Permission not granted")
+                  }
+            }
+    }
+    func updateLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees){
+         updateLocationManually(latitude: latitude, longitude: longitude)
+    }
+
+    func updateLocationManually(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+           let location = CLLocation(latitude: latitude, longitude: longitude)
+        AppDelegate.locationManager.delegate?.locationManager?(AppDelegate.locationManager, didUpdateLocations: [location])
+       }
+    
+    // MARK: - CLLocationManagerDelegate
+
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Entered region: \(region.identifier)")
+        if region is CLCircularRegion {
+            fetchDataFromAPI(forRegion: region)
+            self.localNotification(forRegion: region, mode: "Entered region")
+        //    YourLocationManager.Shared.updateVale(id: region, action: "Entered region")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        let currentLatitude = location.coordinate.latitude
+        let currentLongitude = location.coordinate.longitude
+        print("Current Location: \(currentLatitude), \(currentLongitude)")
+    }
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exited region: \(region.identifier)")
+        if region is CLCircularRegion {
+            // Do what you want if this information
+            if let uid = Auth.auth().currentUser?.uid{
+                Database.database().reference().child("geoFencingDeviceDetails").child(uid).child("008").child("Exited region").setValue(["id":region.identifier], withCompletionBlock: {(error, DataSnapshot) in
+                    
+                })
+            }
+            self.localNotification(forRegion: region, mode: "Exited region")
+        //    YourLocationManager.Shared.updateVale(id: region, action: "Exited region")
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Location manager error: \(error.localizedDescription)")
+        AppDelegate.locationManager.startUpdatingLocation()
+    }
+    
+    func fetchDataFromAPI(forRegion region: CLRegion!) {
+        // Replace "https://jsonplaceholder.typicode.com/posts/1" with the actual API URL
+        if let url = URL(string: "https://jsonplaceholder.typicode.com/posts/1") {
+            URLSession.shared.dataTask(with: url) { [self] data, response, error in
+                if let error = error {
+                    print("Error: \(error)")
+                    return
+                }
+
+                guard let data = data else {
+                    print("No data received")
+                    return
+                }
+
+                // Parse JSON data
+             do {
+                    let post = try JSONDecoder().decode(Post.self, from: data)
+                    print("Post Title: \(post.title)")
+                    localNotification(forRegion: region, mode: post.title)
+                    // Handle other properties as needed
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }.resume()
+        }
+    }
+    func localNotification(forRegion region: CLRegion!, mode: String){
+        
+        let content = UNMutableNotificationContent()
+        content.title = mode
+        content.body = region.identifier
+        content.sound = UNNotificationSound.default
+        let timeInSeconds: TimeInterval = (2) // 60s * 15 = 15min
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInSeconds,
+                                                        repeats: false)
+        let identifier = region.identifier
+        // the notification request object
+        let request = UNNotificationRequest(identifier: identifier,
+                                            content: content,
+                                            trigger: trigger)
+        notificationCenter?.add(request, withCompletionHandler: { (error) in
+            if error != nil {
+                print("Error adding notification with identifier: \(identifier)")
+            }
+        })
+
+    }
+    
+}
 

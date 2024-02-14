@@ -41,9 +41,11 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
         if name == "Support"{
             RoutingManager.shared.gotoSupport(controller: self)
         }else if name == "Product Manual"{
-            RoutingManager.shared.gotoProductManual(controller: self)
+            RoutingManager.shared.gotoProductManual(controller: self, productType: .ProductManual)
         }else if name == "Contact"{
             makeACall()
+        }else if name == "Technical sheet"{
+            RoutingManager.shared.gotoProductManual(controller: self,productType: .TechnicalSheet)
         }
     }
     
@@ -63,7 +65,7 @@ class SelectTypeViewController: BaseController, UITableViewDelegate,UITableViewD
     func  managetableview()
     {
         self.view.backgroundColor = UIColor(named: "PrimaryLightestColor")
-        dataArray = ["Support","Product Manual","Contact"]
+        dataArray = ["Support","Product Manual","Technical sheet","Contact"]
     }
     func makeACall() {
         guard let url = URL(string: "tel://9007900709"),

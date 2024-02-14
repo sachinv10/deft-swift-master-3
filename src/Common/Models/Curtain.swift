@@ -38,9 +38,9 @@ class Curtain: NSObject {
        var returnVal = ""
        switch scheduleLevel{
        case 2:
-           returnVal = "Open \(String(describing: title ?? ""))"
+           returnVal = "Open" // \(String(describing: title ?? ""))"
        case 1:
-           returnVal = "close \(String(describing: title ?? ""))"
+           returnVal = "close"// \(String(describing: title ?? ""))"
        case 3:
            returnVal = "pouse"
        case .none:
@@ -86,7 +86,10 @@ class Curtain: NSObject {
         aCurtain.title = self.title
         aCurtain.type = self.type
         aCurtain.level = self.level
-        
+        aCurtain.scheduleLevel = self.scheduleLevel
+        aCurtain.roomId = self.roomId
+        aCurtain.roomTitle = self.roomTitle
+       
         return aCurtain
     }
     

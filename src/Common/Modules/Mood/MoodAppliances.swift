@@ -26,6 +26,7 @@ class applianeslist: NSObject{
     var remoteId : String?
     var hardwareId : String?
     var checked :Bool = false
+    var isOn: Bool = false
     var SelectedremoteKey: Array<RemoteKey>? = Array<RemoteKey>()
 }
 class remotelist: NSObject{

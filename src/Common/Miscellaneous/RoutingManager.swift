@@ -35,6 +35,7 @@ extension RoutingManager {
         if let aRootController = UIApplication.shared.keyWindow?.rootViewController {
             if let aNavController = aRootController as? UINavigationController {
                 if let aLoginController = aNavController.viewControllers.first as? LoginController {
+                    aLoginController.lblAppMode.isHidden = true
                     aNavController.popToViewController(aLoginController, animated: true)
                 }
             }
@@ -115,7 +116,15 @@ extension RoutingManager {
             }
         }
     }
-    
+    func gobacktoControllerList(){
+        if let aRootController = UIApplication.shared.keyWindow?.rootViewController{
+            if let navigationController = aRootController as?UINavigationController{
+                if navigationController.viewControllers.count > 3, let listcontroller = navigationController.viewControllers[2] as? ControllerListViewController{
+                    navigationController.popToViewController(listcontroller, animated: true)
+                }
+            }
+        }
+    }
     
     func drawerControllerUsingStoryboard() -> DrawerController {
         return UIStoryboard(name: "Dashboard", bundle: Bundle.main).instantiateViewController(withIdentifier: "DrawerControllerId") as! DrawerController
@@ -361,10 +370,12 @@ extension RoutingManager {
     
     func gotoNewAppliance(
         controller pController :UIViewController
-        , selectedRoom pSelectedRoom :Room
+        , selectedRoom pSelectedRoom :Room,
+        pDelegate: SelectedAppliandesDelegate
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
         let aDestinationController = self.newApplianceControllerUsingStoryboard()
         aDestinationController.room = pSelectedRoom
+            aDestinationController.delegate = pDelegate
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     
@@ -395,13 +406,21 @@ extension RoutingManager {
         let aDestinationController = self.selectCoreControllerUsingStoryboard()
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    func gotoGeofencing(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectGeofencingControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
     func gotoCreateNewCore(
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false, newCoreId: String?,core pCore: Core?, pdelegate: newCoreControllerDelegate) {
         let aDestinationController = self.selectNewCoreUsingStoryboard()
             aDestinationController.newCoreId = newCoreId
             aDestinationController.delegates = pdelegate
-         //   aDestinationController.NewCore = pCore
+            if pCore != nil{
+                aDestinationController.NewCore = pCore!
+            }
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     
@@ -442,6 +461,7 @@ extension RoutingManager {
         let aDestinationController = self.selectBuyProductControllerUsingStoryboard()
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    
     func gotoProductDetail(
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false, product: Ecommerce) {
@@ -449,11 +469,40 @@ extension RoutingManager {
             aDestinationController.Product = product
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
+    func gotoProductAddress(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, orderList: [cartData]?) {
+        let aDestinationController = self.selectProductAddressListControllerUsingStoryboard()
+            aDestinationController.orderList = orderList
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoProductCreateAddress(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, address: address?, orderList: [cartData]?) {
+        let aDestinationController = self.selectProductCreateAddressControllerUsingStoryboard()
+           aDestinationController.orderAddress = address
+            aDestinationController.orderList = orderList
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
     func gotoProductOrderList(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
+        let aDestinationController = self.selectProductOrdersListControllerUsingStoryboard()
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    
+    func gotoProductOrderDetail(
+        controller pController :UIViewController
+        , shouldAddNavigationController pShouldAddNavigationController :Bool = false, orderDetail: OrderList) {
+        let aDestinationController = self.selectOrderDetailControllerUsingStoryboard()
+            aDestinationController.orderDetail = orderDetail
+        pController.navigationController?.pushViewController(aDestinationController, animated: true)
+    }
+    func gotoProductCartList(
         controller pController :UIViewController
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false, product: Ecommerce) {
         let aDestinationController = self.selectProductOrderListControllerUsingStoryboard()
-           // aDestinationController.Product = product
+            aDestinationController.Product = product
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     func gotoSupport(
@@ -463,9 +512,10 @@ extension RoutingManager {
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     func gotoProductManual(
-        controller pController :UIViewController
+        controller pController :UIViewController, productType: ManualType
         , shouldAddNavigationController pShouldAddNavigationController :Bool = false) {
         let aDestinationController = self.selectProductManualControllerUsingStoryboard()
+            aDestinationController.manualType = productType
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
     func gotoSubmitSupport(
@@ -529,7 +579,19 @@ extension RoutingManager {
     func selectProductDetailControllerUsingStoryboard() -> productDemoDetailViewController {
         return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "productDemoDetailViewController") as! productDemoDetailViewController
     }
-    func selectProductOrderListControllerUsingStoryboard() -> YourOrderListViewController {
+    func selectProductAddressListControllerUsingStoryboard() -> AddressListViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "AddressListViewController") as! AddressListViewController
+    }
+    func selectProductCreateAddressControllerUsingStoryboard() -> CreateNewAddressViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "CreateNewAddressViewController") as! CreateNewAddressViewController
+    }
+    func selectOrderDetailControllerUsingStoryboard() -> OrderDetailViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "OrderDetailViewController") as! OrderDetailViewController
+    }
+    func selectProductOrderListControllerUsingStoryboard() -> CartAndBuyViewController {
+        return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "CartAndBuyViewController") as! CartAndBuyViewController
+    }
+    func selectProductOrdersListControllerUsingStoryboard() -> YourOrderListViewController {
         return UIStoryboard(name: "BuyProduct", bundle: Bundle.main).instantiateViewController(withIdentifier: "YourOrderListViewController") as! YourOrderListViewController
     }
     func selectSupportControllerUsingStoryboard() -> SupportViewController {
@@ -559,6 +621,9 @@ extension RoutingManager {
     }
     func selectCoreControllerUsingStoryboard() -> CoreViewController {
         return UIStoryboard(name: "Core", bundle: Bundle.main).instantiateViewController(withIdentifier: "CoreViewController") as! CoreViewController
+    }
+    func selectGeofencingControllerUsingStoryboard() -> GeofencingListViewController {
+        return UIStoryboard(name: "Geofencing", bundle: Bundle.main).instantiateViewController(withIdentifier: "GeofencingListViewController") as! GeofencingListViewController
     }
     //
     func gotoApplianceDetails(
@@ -1003,9 +1068,10 @@ extension RoutingManager{
     func AllResetControllerlistvcUsingStoryboard() -> ResetAllViewController {
         return UIStoryboard(name: "ContollerList", bundle: Bundle.main).instantiateViewController(withIdentifier: "ResetAllViewController") as! ResetAllViewController
     }
-    func gotoAllResetControllerSetting(controller pController :UIViewController, controller pcontroller: [ControllerAppliance]) {
+    func gotoAllResetControllerSetting(controller pController :UIViewController, controller pcontroller: [ControllerAppliance], userChoise: ControllerAppliance.ControllerChoice) {
         let aDestinationController = self.AllResetControllerlistvcUsingStoryboard()
          aDestinationController.controllerApplince = pcontroller
+        aDestinationController.controllerAction = userChoise
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
    
@@ -1082,9 +1148,10 @@ extension RoutingManager{
             aDestinationController.controllerApplince = pSelectedController
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
-    func gotoResetAllControllerSetting(controller pController :UIViewController, controller pApplinces: [ControllerAppliance]) {
+    func gotoResetAllControllerSetting(controller pController :UIViewController, controller pApplinces: [ControllerAppliance],userChoise: ControllerAppliance.ControllerChoice) {
         let aDestinationController = self.ResetAllControllerlistvcUsingStoryboard()
          aDestinationController.controllerApplince = pApplinces
+        aDestinationController.controllerAction = userChoise
         pController.navigationController?.pushViewController(aDestinationController, animated: true)
     }
 }

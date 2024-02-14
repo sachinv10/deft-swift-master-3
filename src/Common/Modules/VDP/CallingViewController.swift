@@ -102,7 +102,34 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         btn.setTitle("SpekerOff", for: .normal)
         return btn
     }()
-    
+    var iiceServer = [IceServer]()
+    func geticeServer()  {
+        let uid = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("restfulApi").child("vdpIceServers").observeSingleEvent(of: .value, with: {(DataSnapshot) in
+            
+            print(DataSnapshot.value as Any)
+            let jsons = DataSnapshot.value as Any
+            let json = jsons as? Array<Dictionary<String, Any>>
+            if let aDict = jsons as? Array<Dictionary<String, String>>{
+                do{
+                    for items in aDict{
+          
+                        let jsonData = try JSONSerialization.data(withJSONObject: items, options: [])
+                        if let jsonString = String(data: jsonData, encoding: .utf8) {
+                                print(jsonString)
+                             let data = jsonString.data(using: .utf8)
+                             let decoder = JSONDecoder()
+                             let response = try decoder.decode(IceServer.self, from: jsonData)
+                             print(response.credential,"\n url=", response.url)
+                            self.iiceServer.append(response)
+                         }
+                    }
+                }catch{
+                    
+                }
+            }
+         })
+    }
     let viewExpand : UIView = {
         var views = UIView()
         views.backgroundColor = .gray
@@ -114,8 +141,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     func setupSocket() {
         self.socket = manager.defaultSocket
     }
-    
-    func myconnectfunc()  {
+     func myconnectfunc()  {
         setupSocket()
         setupSocketEvents()
         socket?.connect()
@@ -183,6 +209,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         CURRENT_VC = "CallingViewController"
+        geticeServer()
         updateFanState()
         UpdateCallStatus()
         //  ProgressOverlay.shared.show()
@@ -480,7 +507,6 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     let audioSession = RTCAudioSession.sharedInstance()
     var timer = Timer()
     func timestamp(){
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -625,6 +651,7 @@ class CallingViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
             print(data)
             guard let dataInfo = data.first else { return }
             print("Received ICE candidate= \(dataInfo) is typing...")
+         //   self.showToast(message: "Received ICE candidate", duration: 2)
             guard let resultNew = dataInfo as? [String:Any]else{
                 return
             }
@@ -893,6 +920,9 @@ extension CallingViewController{
         }
         
         peerConnection.setRemoteDescription(sdp) { (Error) in
+            if Error != nil{
+                print("remote error=",Error?.localizedDescription)
+            }
             print("remote description")
         }
     }
@@ -920,12 +950,12 @@ extension CallingViewController{
     
     func prepareNewConnection() -> RTCPeerConnection {
         var icsServers: [RTCIceServer] = []
-        icsServers.append(RTCIceServer(urlStrings: ["stun:stun1.l.google.com:19302"]))
-        icsServers.append(RTCIceServer(urlStrings: ["turn:43.204.19.95:3478"], username:"home",credential: "home1234"))
-        icsServers.append(RTCIceServer(urlStrings: ["stun:relay.metered.ca:80"]))
-        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:80"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
-        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:443"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
-        icsServers.append(RTCIceServer(urlStrings: ["turn:relay.metered.ca:443?transport=tcp"], username:"28a2fa03b765f96252ee363b",credential: "wTEvsXPyGPb+61h9"))
+        
+            for item in iiceServer{
+              //  icsServers.append(RTCIceServer(urlStrings: ["stun:stun1.l.google.com:19302"]))
+                icsServers.append(RTCIceServer(urlStrings: ["\(item.url ?? "")"]
+                                               , username: item.username ,credential: item.credential ))
+            }
         
         let rtcConfig: RTCConfiguration = RTCConfiguration()
         rtcConfig.tcpCandidatePolicy = RTCTcpCandidatePolicy.disabled
@@ -1114,7 +1144,25 @@ extension CallingViewController{
     /** Called any time the IceConnectionState changes. */
     public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState){
         print("newState=\(newState)")
-        
+        switch newState {
+               case .connected:
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Connected", duration: 2)
+            })
+                   print("ICE connection state: Connected")
+               case .disconnected:
+                   print("ICE connection state: Disconnected")
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Disconnected", duration: 2)
+            })
+                case .failed:
+                   print("ICE connection state: Failed")
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Failed", duration: 2)
+            })
+                default:
+                   break
+               }
     }
     
     
@@ -1168,10 +1216,12 @@ extension CallingViewController{
         if (peerConnection != nil) {
             print("peer connection already exists")
         }
-        peerConnection = prepareNewConnection();
         peerConnection.setRemoteDescription(sdp) { (Error) in
-            
+            if Error != nil{
+                print("remote error=",Error?.localizedDescription)
+            }
         }
+        peerConnection = prepareNewConnection();
     }
 }
 // MARK:- Audio control

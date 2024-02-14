@@ -31,7 +31,7 @@ class AddNewMoodViewController: BaseController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appmodel = AddNewMoodViewController.selectedMood
-        appmodel?.remove()
+         appmodel?.remove()
         let Selectedremotekey = AddNewMoodViewController.SelectedremoteKey
         let selectapplianc = AddNewMoodViewController.selectApplianc
         self.modifyModel()
@@ -82,8 +82,12 @@ class AddNewMoodViewController: BaseController, UITextFieldDelegate {
         let moodss = selectMood?.first
         let id = moodss?.room?.id
         print("room id=\(id)")
-        var idmood = Int(newMoodId ?? "")
-        idmood! += 1
+        var idmood = Int(newMoodId ?? "00")
+        if idmood == nil{
+            idmood = 00
+        }else{
+            idmood! += 1
+        }
         x!.id = String(format: "%02d", idmood!)
         let mood = x?.clone()
         createNewMood()
@@ -186,7 +190,6 @@ extension AddNewMoodViewController{
 }
 extension AddNewMoodViewController{
     func modifyModel(){
-        
       
         if let data = AddNewMoodViewController.selectApplianc{
                 for appdata in data{

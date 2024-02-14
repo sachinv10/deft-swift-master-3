@@ -11,7 +11,7 @@ class CacheManager {
     static let shared = CacheManager()
     
     var fcmToken :String?
-    
+    var deviceToken :String?
     
     
     func appNotificationSettings(userId pUserId :String) -> AppNotificationSettings? {
@@ -26,10 +26,13 @@ class CacheManager {
             anAppNotificationSettings.isGlobalOffNotificationSubscribed = aNotificationSettingsDict["isGlobalOffNotificationSubscribed"] as? Bool ?? false
             anAppNotificationSettings.isLockNotificationSubscribed = aNotificationSettingsDict["isLockNotificationSubscribed"] as? Bool ?? false
             anAppNotificationSettings.isSchedularNotificationSubscribed = aNotificationSettingsDict["isSchedularNotificationSubscribed"] as? Bool ?? false
-            
+            anAppNotificationSettings.isCriticalNotificationDeviceToken = aNotificationSettingsDict["isCriticalNotificationDeviceToken"] as? Bool ?? false
+            anAppNotificationSettings.isTemperatureNotificationSubscribed = aNotificationSettingsDict["isTemperatureNotificationSubscribed"] as? Bool ?? false
+            anAppNotificationSettings.isVDPNotificationSubscribed = aNotificationSettingsDict["isVDPNotificationSubscribed"] as? Bool ?? false
+            anAppNotificationSettings.isSmartSensorNotificationSubscribed = aNotificationSettingsDict["isSmartSensorNotificationSubscribed"] as? Bool ?? false
+            anAppNotificationSettings.isSmokeSensorNotificationSubscribed = aNotificationSettingsDict["isSmokeSensorNotificationSubscribed"] as? Bool ?? false
             aReturnVal = anAppNotificationSettings
         }
-        
         return aReturnVal
     }
     
@@ -46,7 +49,11 @@ class CacheManager {
                     aNotificationSettingsDict["isGlobalOffNotificationSubscribed"] = anAppNotificationSettings.isGlobalOffNotificationSubscribed
                     aNotificationSettingsDict["isLockNotificationSubscribed"] = anAppNotificationSettings.isLockNotificationSubscribed
                     aNotificationSettingsDict["isSchedularNotificationSubscribed"] = anAppNotificationSettings.isSchedularNotificationSubscribed
-                    
+                    aNotificationSettingsDict["isCriticalNotificationDeviceToken"] = anAppNotificationSettings.isCriticalNotificationDeviceToken
+                    aNotificationSettingsDict["isTemperatureNotificationSubscribed"] = anAppNotificationSettings.isTemperatureNotificationSubscribed
+                    aNotificationSettingsDict["isVDPNotificationSubscribed"] = anAppNotificationSettings.isVDPNotificationSubscribed
+                    aNotificationSettingsDict["isSmartSensorNotificationSubscribed"] = anAppNotificationSettings.isSmartSensorNotificationSubscribed
+                    aNotificationSettingsDict["isSmokeSensorNotificationSubscribed"] = anAppNotificationSettings.isSmokeSensorNotificationSubscribed
                     aUserDict["notificationSettings"] = aNotificationSettingsDict
                     UserDefaults.standard.setValue(aUserDict, forKey: pUserId)
                 }

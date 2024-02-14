@@ -88,6 +88,7 @@ extension DataFetchManagerFireBase {
             }
             } catch {
                 anError = error
+                pCompletion(anError, pDevice)
             }
             
             DispatchQueue.main.async {
@@ -358,7 +359,6 @@ extension DataFetchManagerFireBase {
                         })
                     _ = aSaveDeviceDispatchSemaphore.wait(timeout: .distantFuture)
                 }
-             
                 
                 // Add device ID to room
                 if let _ = pDevice.room?.id {
@@ -377,7 +377,8 @@ extension DataFetchManagerFireBase {
                              , Device.HardwareType.uvSensor
                              , Device.HardwareType.smartSecuritySensor,
                               .smartSensorBattery,
-                              .smokeDetectorBattery:
+                              .smokeDetectorBattery
+                            , Device.HardwareType.Occupy:
                             aNode = "sensors"
                         case Device.HardwareType.ir:
                             aNode = "remotes"
@@ -405,8 +406,7 @@ extension DataFetchManagerFireBase {
                              , Device.HardwareType.ctNineSwitch
                              , Device.HardwareType.ctTenSwitch,
                                Device.HardwareType.waterTank
-                              ,Device.HardwareType.waterTank2
-                              ,Device.HardwareType.Occupy:
+                              ,Device.HardwareType.waterTank2:
                             aNode = "devices"
                         case Device.HardwareType.lock
                              , Device.HardwareType.gateLock:
@@ -424,7 +424,7 @@ extension DataFetchManagerFireBase {
                                 .CStenSwitch:
                                 break
                         case .VDP:
-                            aNode = ""
+                              break
                         }
                     }
                     
@@ -571,10 +571,11 @@ extension DataFetchManagerFireBase {
                 .child(aRoomId)
                 .child("devices")
                 .observeSingleEvent(of: DataEventType.value) { (pDataSnapshot, str) in
-                 //   aReturnVal = pDataSnapshot.value as? Array<String>
-                   var arrayOfOptionals = pDataSnapshot.value
-                    let x = self.nullArrayRemove(pdata: arrayOfOptionals as! Array<String?>)
-                     aReturnVal = x
+                 //    aReturnVal = pDataSnapshot.value as? Array<String>
+                    if let arrayOfOptionals = pDataSnapshot.value as? Array<String>{
+                           let x = self.nullArrayRemove(pdata: arrayOfOptionals as! Array<String?>)
+                          aReturnVal = x
+                    }
                      aDispatchSemaphore.signal()
                 }
             _ = aDispatchSemaphore.wait(timeout: .distantFuture)

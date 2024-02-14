@@ -16,7 +16,6 @@ class AppHeaderBarView: UIView {
     
     weak var delegate :AppHeaderBarViewDelegate?
     
-    
     var title :String? {
         didSet {
             self.titleLabel?.text = self.title
@@ -71,7 +70,6 @@ class AppHeaderBarView: UIView {
     @IBAction func didSelectBackButton(_ pSender: UIButton?) {
         self.delegate?.appHeaderBarDidSelectBackButton(self)
     }
- 
 }
 
 

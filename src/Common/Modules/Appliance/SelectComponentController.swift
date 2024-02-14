@@ -25,6 +25,13 @@ class SelectComponentController: BaseController {
     var selectedMoodOffRemotes :Array<Remote> = Array<Remote>()
     var selectedSensors :Array<Sensor> = Array<Sensor>()
     
+    var menuItemsForAccepted: [UIAction] {
+        return [
+            UIAction(title: selectedGoodbye, image: nil, handler: { (_) in
+                self.didSelectGoodbye()
+            })
+        ]
+    }
     static var coreSensor: Bool = false
     static var ApplianceType: String?
     func selectedRemoteArray(componentType pComponentType :ComponentType) -> Array<Remote> {
@@ -54,10 +61,29 @@ class SelectComponentController: BaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        self.reloadAlldata()
+        if SelectComponentController.ApplianceType == "Then"{
+             self.appHeaderBarView?.optionButton.isHidden = false
+          }
+        let selectedgoodbyee = self.selectedAppliances.filter({(pobject)->Bool in
+            return pobject.typeSelected == "goodbye"
+        })
+        selectedGoodbye = selectedgoodbyee.count > 0 ? "deselect good bye": "good bye"
+        if selectedgoodbyee.count > 0{
+            componentTypes = [.appliance]
+            self.appHeaderBarView?.optionButton.isHidden = true
+            self.componentTableView.reloadData()}
+
+    }
+   private func reloadAlldata() {
         
         self.title = "Select Component"
-        self.subTitle = self.selectedRoom?.title
-        
+       if let tg = SelectComponentController.ApplianceType{
+           self.subTitle = "\(self.selectedRoom?.title ?? "") (Trigger \(tg))"
+       }else{
+           self.subTitle = self.selectedRoom?.title
+       }
         if let aComponentArray = self.selectedRoom?.appliances {
             self.selectedAppliances.append(contentsOf: aComponentArray)
         }
@@ -91,16 +117,35 @@ class SelectComponentController: BaseController {
         if self.componentTypes?.contains(.sensor) == true {
             self.searchSensor()
         }
+        if #available(iOS 14.0, *) {
+            appHeaderBarView?.optionButton.menu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItemsForAccepted)
+            appHeaderBarView?.optionButton.showsMenuAsPrimaryAction = true
+        } else {
+            // Fallback on earlier versions
+        }
     }
-    
-    
+    func optionsSackView(){
+        if #available(iOS 14.0, *) {
+            appHeaderBarView?.optionButton.menu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItemsForAccepted)
+            appHeaderBarView?.optionButton.showsMenuAsPrimaryAction = true
+            if selectedGoodbye == "deselect good bye"{
+                self.appHeaderBarView?.optionButton.isHidden = true
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
     func searchAppliance() {
         DataFetchManager.shared.searchAppliance(completion: { [self] (pError, pApplianceArray,pDevicesArray) in
             if pApplianceArray != nil && pApplianceArray!.count > 0 {
                 self.appliances = pApplianceArray!
                 if SelectComponentController.ApplianceType == "If"{
+//                     appliances = self.appliances.filter({(pappliance) -> Bool in
+//                        return  pappliance.stripType != Appliance.StripType.rgb && pappliance.type != Appliance.ApplianceType.ledStrip
+//                    })
+                }else if SelectComponentController.ApplianceType == "Then" && selectedGoodbye == "deselect good bye"{
                     appliances = self.appliances.filter({(pappliance) -> Bool in
-                        return  pappliance.stripType != Appliance.StripType.rgb && pappliance.type != Appliance.ApplianceType.ledStrip
+                        return  pappliance.id == "0"
                     })
                 }
             }
@@ -118,7 +163,6 @@ class SelectComponentController: BaseController {
         }, room: self.selectedRoom)
     }
     
-    
     func searchRemote() {
         DataFetchManager.shared.searchRemote(completion: { (pError, pRemoteArray) in
             if pRemoteArray != nil && pRemoteArray!.count > 0 {
@@ -127,7 +171,6 @@ class SelectComponentController: BaseController {
             self.componentTableView.reloadData()
         }, room: self.selectedRoom)
     }
-    
     
     func searchSensor() {
         DataFetchManager.shared.searchSensor(completion: { (pError, pSensorArray) in
@@ -149,12 +192,27 @@ class SelectComponentController: BaseController {
             self.componentTableView.reloadData()
         }, room: self.selectedRoom)
     }
-    
+    var selectedGoodbye = "good bye"
 }
 
 
 extension SelectComponentController {
-    
+    func didSelectGoodbye()  {
+        if selectedGoodbye == "good bye"{
+            componentTypes = componentTypes?.filter({(pobj) in
+                return pobj == .appliance
+            })
+            selectedGoodbye = "deselect good bye"
+            if self.componentTypes?.contains(.appliance) == true {
+                self.searchAppliance()
+                self.optionsSackView()
+            }
+        }else{
+            componentTypes = [.appliance, .curtain, .remoteKey]
+            selectedGoodbye = "good bye"
+            self.reloadAlldata()
+        }
+    }
     @IBAction func didSelectDoneButton(_ pSender: UIButton?) {
         if let aRoom = self.selectedRoom {
             self.delegate?.selectComponentControllerDidSelect(
@@ -274,6 +332,9 @@ extension SelectComponentController :UITableViewDataSource, UITableViewDelegate 
                             case .deft:
                                 aReturnVal = anAppliance.hardwareId == pObject.hardwareId && anAppliance.roomId == pObject.roomId && anAppliance.id == pObject.id && anAppliance.slaveId == pObject.slaveId
                             case .wifinity:
+                                if pObject.typeSelected == "goodbye"{
+                                    anAppliance.typeSelected = "goodbye"
+                                }
                                 aReturnVal = anAppliance.hardwareId == pObject.hardwareId && anAppliance.id == pObject.id
                             }
                             return aReturnVal
@@ -359,7 +420,12 @@ extension SelectComponentController :UITableViewDataSource, UITableViewDelegate 
                     }) {
                         self.selectedAppliances.remove(at: anIndex)
                     } else {
-                        self.selectedAppliances.append(anAppliance)
+                        if selectedGoodbye == "deselect good bye"{
+                            anAppliance.typeSelected = "goodbye"
+                            self.selectedAppliances.append(anAppliance)
+                        }else{
+                            self.selectedAppliances.append(anAppliance)
+                        }
                     }
                     self.componentTableView.reloadRows(at: [pIndexPath], with: UITableView.RowAnimation.automatic)
                 }
@@ -458,7 +524,16 @@ extension SelectComponentController :SelectComponentTableCellViewDelegate {
              anAppliance.ledStripProperty3 = pProperty3
              anAppliance.stripLightEvent = pGlowPatternValue
              self.appliances[anIndexPath.row] = anAppliance
-             self.componentTableView.reloadRows(at: [anIndexPath], with: UITableView.RowAnimation.automatic)
+            if let index = selectedAppliances.firstIndex(where: {(pobject) -> Bool in
+                 return pobject.id == anAppliance.id && pobject.roomId == anAppliance.roomId && pobject.hardwareId == anAppliance.hardwareId
+            }){
+                selectedAppliances[index] = anAppliance
+            }
+             if (pProperty1 == pProperty2) == (2 == pProperty3){
+                 DispatchQueue.main.async {
+                     self.componentTableView.reloadRows(at: [anIndexPath], with: UITableView.RowAnimation.automatic)
+                 }
+             }
          }
     }
     

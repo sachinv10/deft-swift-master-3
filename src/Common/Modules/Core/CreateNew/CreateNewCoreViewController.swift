@@ -61,7 +61,7 @@ class CreateNewCoreViewController: BaseController {
         super.viewDidLoad()
         title = "Create Core"
         subTitle = ""
-        
+ 
         self.title = self.NewCore != nil ? "CORE DETAILS" : "CREATE CORE"
         self.subTitle = self.schedule?.title
         
@@ -72,33 +72,33 @@ class CreateNewCoreViewController: BaseController {
     }
     
     override func reloadAllData() {
-        self.scheduleDetails()
-        //   self.editCoreSetUp()
+      //  self.scheduleDetails()
+        self.editCoreSetUp()
     }
     var newCoreId: String?
     @IBAction func didtappedDonebtn(_ sender: Any) {
         do{
             throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey: "try to thow exeption"])
         }catch{print("error")}
-        saveSchedule()
+        saveCore()
     }
     
-    func scheduleDetails() {
-        if let aSchedule = self.schedule {
-            // ProgressOverlay.shared.show()
-            DataFetchManager.shared.scheduleDetails(completion: { (pError, pSchedule) in
-                // ProgressOverlay.shared.hide()
-                if pError != nil {
-                    PopupManager.shared.displayError(message: "Can not fetch schedule details.", description: pError!.localizedDescription)
-                } else {
-                    self.schedule = pSchedule
-                    self.reloadAllView()
-                }
-            }, schedule: aSchedule)
-        } else {
-            self.reloadAllView()
-        }
-    }
+//    func scheduleDetails() {
+//        if let aSchedule = self.schedule {
+//            // ProgressOverlay.shared.show()
+//            DataFetchManager.shared.scheduleDetails(completion: { (pError, pSchedule) in
+//                // ProgressOverlay.shared.hide()
+//                if pError != nil {
+//                    PopupManager.shared.displayError(message: "Can not fetch schedule details.", description: pError!.localizedDescription)
+//                } else {
+//                    self.schedule = pSchedule
+//                    self.reloadAllView()
+//                }
+//            }, schedule: aSchedule)
+//        } else {
+//            self.reloadAllView()
+//        }
+//    }
     
     
     func reloadAllView() {
@@ -120,7 +120,7 @@ class CreateNewCoreViewController: BaseController {
     }
     
     
-    func saveSchedule(Core pCore :Core) {
+    func saveCore(Core pCore :Core) {
         
         ProgressOverlay.shared.show()
         DataFetchManager.shared.saveCore(completion: { (pError, pSchedule) in
@@ -139,7 +139,7 @@ class CreateNewCoreViewController: BaseController {
     }
     
     
-    func saveSchedule() {
+    func saveCore() {
         do {
             let aTitle = self.editedScheduleTitle ?? self.schedule?.title
             if (aTitle?.count ?? 0) <= 0 {
@@ -168,7 +168,7 @@ class CreateNewCoreViewController: BaseController {
             }
             let cr = NewCore
             
-            self.saveSchedule(Core: NewCore)
+            self.saveCore(Core: NewCore)
         } catch {
             PopupManager.shared.displayError(message: error.localizedDescription, description: nil)
         }
@@ -181,7 +181,6 @@ class CreateNewCoreViewController: BaseController {
         var devicesArray: Array<String> =  Array<String>()
         let coreE: coreEditdata? = coreEditdata()
         coreE?.ruleName = NewCore.ruleName
-        // coreE?.ruleId = NewCore?.ruleId
         coreE?.operation = NewCore.Operator
         NewCore.coreEditData?.ruleName = NewCore.ruleName
         NewCore.ruleId = newCoreId
@@ -242,6 +241,7 @@ class CreateNewCoreViewController: BaseController {
                     pactionSelectionList.roomId = items.roomId
                     pactionSelectionList.currentState = items.scheduleLevel != 1 ? true : false
                     pactionSelectionList.currentLevel = items.scheduleLevel
+                    pactionSelectionList.currentType = items.type?.rawValue
                     devicesArray.append(pactionSelectionList.uniqueKey!)
                     
                     pactionSelectionListt.append(pactionSelectionList)
@@ -270,10 +270,12 @@ class CreateNewCoreViewController: BaseController {
                     pactionSelectionList.operators = items.optators
                     pactionSelectionList.routineType = items.routineType
                     pactionSelectionList.sensorTypeId = items.sensorTypeId
-                    
                     pactionSelectionList.state = 2
                     pactionSelectionList.roomName = items.roomTitle
                     pactionSelectionList.roomId = items.roomId
+                    if items.controllerType == "Lidar Sensor"{
+                        pactionSelectionList.routineType = "occupancy"
+                    }
                     devicesArray.append(pactionSelectionList.uniqueKey!)
                     pactionSelectionListt.append(pactionSelectionList)
                 }
@@ -321,11 +323,10 @@ class CreateNewCoreViewController: BaseController {
                     pactionSelectionList.hardwareId = items.hardwareId
                     pactionSelectionList.uniqueKey = "\(String(describing: items.hardwareId!)):\(String(describing: items.id!))"
                     pactionSelectionList.state = items.scheduleState != false ? 2 : 1
-                    
                     pactionSelectionList.roomName = items.roomTitle
                     pactionSelectionList.roomId = items.roomId
                     pactionSelectionList.currentLevel = 0
-                    pactionSelectionList.routineType = "appliance"
+                    pactionSelectionList.routineType = items.typeSelected == "goodbye" ? "goodbye" :"appliance"
                     pactionSelectionList.currentState = items.isOn
                     pactionSelectionList.dimmable = items.isDimmable //false
                     pactionSelectionList.minDimming = items.dimmableValueMin ?? 0
@@ -337,8 +338,7 @@ class CreateNewCoreViewController: BaseController {
                         pactionSelectionList.ledStripProperty3 = items.ledStripProperty3
                         pactionSelectionList.ledStripProperty1 = items.ledStripProperty1
                         pactionSelectionList.ledStripProperty2 = items.ledStripProperty2
-                      let x = "@02%"
-                        pactionSelectionList.stripLightEvent = items.stripLightEvent
+                      pactionSelectionList.stripLightEvent = items.stripLightEvent ?? "00"
                     }
                     //       devicesArray?.append(pactionSelectionList.uniqueKey!)
                     pactionSelectionListt.append(pactionSelectionList)
@@ -411,27 +411,32 @@ class CreateNewCoreViewController: BaseController {
                     }
                 }
                 for items in dataAppliances{
-                    print(items.title!)
-                    NewCore.thenStatement! += "\(items.title ?? "") "
-                    let pactionSelectionList = actionSelectionList()
-                    pactionSelectionList.appId = items.id
-                    pactionSelectionList.appName = items.title
-                    pactionSelectionList.hardwareId = items.hardwareId
-                    pactionSelectionList.uniqueKey = "\(String(describing: items.hardwareId!)):\(String(describing: items.selectedRemoteKeys!.first!.tag!.rawValue))"
-                    pactionSelectionList.state = 0
-                    pactionSelectionList.roomName = items.roomTitle
-                    pactionSelectionList.roomId = items.roomId
-                    pactionSelectionList.currentLevel = 0
-                    pactionSelectionList.routineType = "remote"
-                    pactionSelectionList.currentState = false
-                    pactionSelectionList.dimmable = false
-                    pactionSelectionList.minDimming = 0
-                    pactionSelectionList.maxDimming = 5
-                    pactionSelectionList.dimValue = 0
-                    pactionSelectionList.checked = true
-                    pactionSelectionList.appId = items.selectedRemoteKeys!.first!.command
-                    //       devicesArray?.append(pactionSelectionList.uniqueKey!)
-                    pactionSelectionListt.append(pactionSelectionList)
+                    if (items.selectedRemoteKeys != nil){
+                        NewCore.thenStatement! += "\(items.title ?? "") "
+                        let pactionSelectionList = actionSelectionList()
+                        pactionSelectionList.appId = items.id
+                        pactionSelectionList.id = items.id
+                        pactionSelectionList.appName = items.title
+                        pactionSelectionList.hardwareId = items.hardwareId
+                        pactionSelectionList.uniqueKey = "\(String(describing: items.hardwareId!)):\(String(describing: items.selectedRemoteKeys!.first!.tag!.rawValue))"
+                        pactionSelectionList.state = 0
+                        pactionSelectionList.roomName = items.roomTitle
+                        pactionSelectionList.roomId = items.roomId
+                        pactionSelectionList.currentLevel = 0
+                        pactionSelectionList.routineType = "remote"
+                        pactionSelectionList.currentState = false
+                        pactionSelectionList.dimmable = false
+                        pactionSelectionList.minDimming = 0
+                        pactionSelectionList.maxDimming = 5
+                        pactionSelectionList.dimValue = 0
+                        pactionSelectionList.checked = true
+                        pactionSelectionList.appId = items.selectedRemoteKeys!.first!.command
+                        pactionSelectionList.remoteKeys = items.selectedRemoteKeys?.compactMap({$0.command})
+                        pactionSelectionList.remoteKeysName = items.selectedRemoteKeys?.compactMap({$0.tag?.rawValue})
+                        pactionSelectionList.remoteKeysId = items.selectedRemoteKeys?.compactMap({$0.id})
+                        //       devicesArray?.append(pactionSelectionList.uniqueKey!)
+                        pactionSelectionListt.append(pactionSelectionList)
+                    }
                 }
             }
         }
@@ -528,7 +533,7 @@ extension CreateNewCoreViewController :UITableViewDataSource, UITableViewDelegat
                 case .repeatDays:
                     let aCellView :ScheduleTimeerTableCellView = pTableView.dequeueReusableCell(withIdentifier: "ScheduleTimeerTableCellView") as! ScheduleTimeerTableCellView
                     if editedScheduleRoomsThen?.count ?? 0 > 0{
-                        aCellView.load(obj: self.editedScheduleRoomsThen ?? self.schedule?.rooms)
+                        aCellView.load(obj: self.editedScheduleRoomsThen ?? self.schedule?.rooms, pCore: NewCore)
                       }
                     aCellView.delegate = self
                     aCellView.selectionStyle = UITableViewCell.SelectionStyle.default
@@ -559,16 +564,20 @@ extension CreateNewCoreViewController :UITableViewDataSource, UITableViewDelegat
                 RoutingManager.shared.gotoSelectRoom(controller: self, shouldIfConditionAddRoom: true, shouldThenConditionAddRoom: false, roomSelectionType: SelectRoomController.SelectionType.components, delegate: self, shouldAllowAddRoom: false, selectedRooms: self.editedScheduleRooms ?? self.schedule?.rooms)
             }else if aCellType == CellType.time{
                 callType = aCellType
-                SelectComponentController.ApplianceType = "Then"
-                RoutingManager.shared.gotoSelectRoom(controller: self, shouldIfConditionAddRoom: false, shouldThenConditionAddRoom: true, roomSelectionType: SelectRoomController.SelectionType.components, delegate: self, shouldAllowAddRoom: false, selectedRooms: self.editedScheduleRoomsThen ?? self.schedule?.rooms)
+                if self.editedScheduleRooms?.count ?? 0 > 0{
+                    SelectComponentController.ApplianceType = "Then"
+                    RoutingManager.shared.gotoSelectRoom(controller: self, shouldIfConditionAddRoom: false, shouldThenConditionAddRoom: true, roomSelectionType: SelectRoomController.SelectionType.components, delegate: self, shouldAllowAddRoom: false, selectedRooms: self.editedScheduleRoomsThen ?? self.schedule?.rooms)
+                }else{
+                    self.showToast(message: "Please add a trigger first")
+                }
             }else if aCellType == CellType.repeatDays{
                 print("Optional setting")
                 newScheduleTableView.reloadRows(at: [pIndexPath], with: UITableView.RowAnimation.automatic)
-                
             }
         }
     }
 }
+
 extension CreateNewCoreViewController : ScheduleTitleTableCellViewDelegate {
     func scheduleTitleTableCellView(_ pSender: ScheduleTitleTableCellView, didChangeValue pValue: String?) {
         self.editedScheduleTitle = pValue
@@ -586,7 +595,6 @@ extension CreateNewCoreViewController :SelectRoomControllerDelegate {
         
         RoutingManager.shared.goBackToController(self)
     }
-    
 }
 extension CreateNewCoreViewController: conditioncheckedComponant, createCoreProtocols{
     func cellView(timer: String, tag: Int) {
@@ -598,7 +606,11 @@ extension CreateNewCoreViewController: conditioncheckedComponant, createCoreProt
     }
     
     func cellView(timerDuration: String) {
-        NewCore.duration = timerDuration
+        if timerDuration == ""{
+            NewCore.duration = nil
+        }else{
+            NewCore.duration = timerDuration
+        }
     }
     
     func conditioncheckedComponant(pValue: String) {
@@ -607,38 +619,282 @@ extension CreateNewCoreViewController: conditioncheckedComponant, createCoreProt
 }
 // MARK: - EDIT CORE SETUP
 extension CreateNewCoreViewController{
-    //    func editCoreSetUp(){
-    //        if NewCore != nil{
-    //            var editedRooms :Room?
-    //            self.editedScheduleTitle = NewCore?.ruleName
-    //            editedRooms?.title = NewCore?.coreEditData?.whenSelectionList?.first?.roomName
-    //            editedRooms?.id = NewCore?.coreEditData?.whenSelectionList?.first?.roomId
-    //            var aAppliances :Array<applianeslist>? = Array<applianeslist>()
-    //             if let ifdata = NewCore?.coreEditData?.whenSelectionList{
-    //                var pAppliances :Array<applianeslist> = Array<applianeslist>()
-    //                for item in ifdata{
-    //                    var pAppliance :Appliance?
-    //                    if item.routineType == "switch"{
-    //                        pAppliance?.id = item.appId
-    //                //        pAppliance?.name = item.appName
-    //                //        pAppliance?.checked = item.checked!
-    //
-    //
-    //
-    //                    }
-    //                  //  pAppliances.append(pAppliance!)
-    //                //    editedRooms?.appliances = pAppliances
-    //
-    //          }
-    //
-    //             //    editedScheduleRooms = pAppliance
-    //            }
-    //            if let thendata = NewCore?.coreEditData?.actionSelectionList{
-    //              //  editedScheduleRooms = ifdata
-    //            }
-    //        }
-    //        self.reloadAllView()
-    //    }
+        func editCoreSetUp(){
+            if NewCore != nil{
+                var editedRooms :Room?
+                self.editedScheduleTitle = NewCore.ruleName
+                editedRooms?.title = NewCore.coreEditData?.whenSelectionList?.first?.roomName
+                editedRooms?.id = NewCore.coreEditData?.whenSelectionList?.first?.roomId
+ 
+                if let thendata = NewCore.coreEditData?.actionSelectionList{
+                    editedScheduleRoomsThen = editActionCore(pdata: thendata)
+                 }
+                if let whendata = NewCore.coreEditData?.whenSelectionList{
+                    editedScheduleRooms = editActionCoreWhen(pdata: whendata)
+                }
+            }
+            self.reloadAllView()
+        }
+    
+//MARK: - THEN CONDITION
+    func editActionCore(pdata: [actionSelectionList]) -> Array<Room>? {
+        var pRooms :Array<Room> = Array<Room>()
+       
+        var appliance: Array<Appliance>? = Array<Appliance>()
+        var curtains: Array<Curtain>? = Array<Curtain>()
+        var remotes: Array<Remote>? = Array<Remote>()
+
+            for items in pdata{
+                if items.routineType == "switch" || items.routineType == "rgb" || items.routineType == "goodbye"{
+                    var appliances: Appliance = Appliance()
+
+                    appliances.id = items.appId
+                    appliances.title = items.appName
+                    appliances.hardwareId = items.hardwareId
+                    appliances.scheduleState = items.state == 2 ? true: false
+                    appliances.roomTitle = items.roomName
+                    appliances.roomId = items.roomId
+                    appliances.isDimmable = items.dimmable ?? false
+                    appliances.dimmableValueMin = items.minDimming
+                    appliances.dimmableValueMax = items.maxDimming
+                    appliances.scheduleDimmableValue = items.dimValue
+                    appliances.isOn = (items.state == 2) ? true:false
+                    appliances.stripType  = items.stripType
+                    if items.routineType == "goodbye"{
+                        appliances.typeSelected = "goodbye"
+                    }
+                    if appliances.stripType == Appliance.StripType.rgb{
+                        appliances.ledStripProperty3 = items.ledStripProperty3
+                        appliances.ledStripProperty1 = items.ledStripProperty1
+                        appliances.ledStripProperty2 = items.ledStripProperty2
+                        appliances.stripLightEvent = items.stripLightEvent
+                        appliances.type = Appliance.ApplianceType.ledStrip
+                      }
+                    let x = appliances.clone()
+                    appliance?.append(x)
+                }
+                if items.routineType == "curtain"
+                {
+                     // Curtain
+                    var curtain = Curtain()
+                    curtain.title = items.appName
+                    curtain.id = items.hardwareId
+                    curtain.roomTitle = items.roomName
+                    curtain.roomId = items.roomId
+                    curtain.scheduleLevel = items.currentLevel
+                    curtain.type = Curtain.CurtainType(rawValue: items.currentType ?? "")
+                     let x = curtain.clone()
+                     curtains?.append(curtain)
+                }
+                if items.routineType == "remote"{
+                   
+                         let aRemote = Remote()
+                        aRemote.id = items.appId
+                        aRemote.title = items.appName
+                        aRemote.hardwareId = items.hardwareId
+                        aRemote.roomTitle = items.roomName
+                        aRemote.roomId = items.roomId
+                    var selectedRemoteKeys :Array<RemoteKey> = Array<RemoteKey>()
+                    for item in 0..<(items.remoteKeysName?.count ?? 0){
+                        var aRemoteKeys = RemoteKey()
+                        aRemoteKeys.command = items.remoteKeys?[item]
+                        aRemoteKeys.tag = RemoteKey.Tag(rawValue: items.remoteKeysName?[item] ?? "")
+                        aRemoteKeys.id = items.remoteKeysId?[item]
+                        selectedRemoteKeys.append(aRemoteKeys)
+                    }
+                    aRemote.selectedRemoteKeys = selectedRemoteKeys
+                    remotes?.append(aRemote)
+                }
+            }
+        for item in appliance!{
+            if let indexpath = pRooms.firstIndex(where: {(pObject)-> Bool in
+                return pObject.id == item.roomId && pObject.title == item.roomTitle
+            }){
+                pRooms[indexpath].appliances?.append(item)
+            }else{
+                let pRoom = Room()
+                let x = item.clone()
+                var applianc: Array<Appliance>? = Array<Appliance>()
+                pRoom.id = x.roomId
+                pRoom.title = x.roomTitle
+                applianc?.append(x)
+                pRoom.appliances = applianc
+                pRooms.append(pRoom)
+            }
+        }
+        for item in curtains!{
+            if let indexpath = pRooms.firstIndex(where: {(pObject)-> Bool in
+                return pObject.id == item.roomId && pObject.title == item.roomTitle
+            }){
+                 if let crtn = pRooms[indexpath].curtains{
+                    pRooms[indexpath].curtains?.append(item)
+                }else{
+                    var curtains: Array<Curtain>? = Array<Curtain>()
+                    let x = item.clone()
+                    curtains?.append(x)
+                    pRooms[indexpath].curtains = curtains
+                }
+            }else{
+                let pRoom = Room()
+                let x = item.clone()
+                var curtains: Array<Curtain>? = Array<Curtain>()
+                pRoom.id = x.roomId
+                pRoom.title = x.roomTitle
+                curtains?.append(x)
+                pRoom.curtains = curtains
+                pRooms.append(pRoom)
+            }
+        }
+        for item in remotes!{
+            if let indexpath = pRooms.firstIndex(where: {(pObject)-> Bool in
+                return pObject.id == item.roomId
+            }){
+                 if let crtn = pRooms[indexpath].remotes{
+                    pRooms[indexpath].remotes?.append(item)
+                }else{
+                    var aremote: Array<Remote>? = Array<Remote>()
+                    let x = item
+                    aremote?.append(x)
+                    pRooms[indexpath].remotes = aremote
+                }
+            }else{
+                let pRoom = Room()
+                let x = item.clone()
+                var aremote: Array<Remote>? = Array<Remote>()
+                pRoom.id = x.roomId
+                pRoom.title = x.roomTitle
+                aremote?.append(item)
+                pRoom.remotes = aremote
+                pRooms.append(pRoom)
+            }
+        }
+        return pRooms
+    }
+    //MARK: - WHEN CONDITION
+    func editActionCoreWhen(pdata: [actionSelectionList]) -> Array<Room>? {
+        var pRooms :Array<Room> = Array<Room>()
+        var pRoom = Room()
+        var appliance: Array<Appliance>? = Array<Appliance>()
+        var curtains: Array<Curtain>? = Array<Curtain>()
+        var sensors: Array<Sensor>? = Array<Sensor>()
+            for items in pdata{
+                if items.routineType == "switch" || items.routineType == "dimming"{
+                    var appliances: Appliance = Appliance()
+                    appliances.id = items.appId
+                    appliances.title = items.appName
+                    appliances.hardwareId = items.hardwareId
+                    appliances.scheduleState = items.state == 2 ? true: false
+                    appliances.roomTitle = items.roomName
+                    appliances.roomId = items.roomId
+                 //   appliances.type = items.applianceType ?? ""
+                 //   pactionSelectionList.applianceType = items.type?.title
+                    appliances.isDimmable = items.dimmable ?? false
+                    appliances.dimmableValueMin = items.minDimming
+                    appliances.dimmableValueMax = items.maxDimming
+                    appliances.scheduleDimmableValue = items.dimValue
+                    appliances.isOn = items.currentState
+                    let x = appliances.clone()
+                    appliance?.append(x)
+                 }
+                if items.routineType == "curtain" || items.routineType == "Curtain"{
+                         // Curtain
+                        var curtain = Curtain()
+                         //   pactionSelectionList.appId = items.id
+                        curtain.title = items.appName
+                        curtain.id = items.hardwareId
+                        curtain.roomTitle = items.roomName
+                        curtain.roomId = items.roomId
+                       // appliances.routineType = "curtain"
+                        curtain.scheduleLevel = items.currentLevel
+                        curtain.type = Curtain.CurtainType(rawValue: items.currentType ?? "")
+                         let x =
+                         curtain.clone()
+                         curtains?.append(curtain)
+                 }
+                if items.routineType == "light" || items.routineType == "temperature" || items.routineType == "motion" || items.routineType == "occupancy"{
+                    var sensor = Sensor()
+                    sensor.id = items.appId
+                    sensor.title = items.appName
+                    sensor.sensorTypeId = items.sensorTypeId
+                    sensor.id = items.hardwareId
+                    sensor.temperature = items.intensity
+                    sensor.optators = items.operators
+                    sensor.routineType = items.routineType
+                    sensor.roomTitle = items.roomName
+                    sensor.roomId = items.roomId
+                    sensors?.append(sensor)
+                  }
+              }
+        if let appliance = appliance{
+            for item in appliance{
+                if let indexpath = pRooms.firstIndex(where: {(pObject)-> Bool in
+                    return pObject.id == item.roomId && pObject.title == item.roomTitle
+                }){
+                    pRooms[indexpath].appliances?.append(item)
+                }else{
+                    let pRoom = Room()
+                    let x = item.clone()
+                    var applianc: Array<Appliance>? = Array<Appliance>()
+                    pRoom.id = x.roomId
+                    pRoom.title = x.roomTitle
+                    applianc?.append(x)
+                    pRoom.appliances = applianc
+                    pRooms.append(pRoom)
+                }
+            }
+        }
+        if let curtains = curtains{
+            for item in curtains{
+                if let indexpath = pRooms.firstIndex(where: {(pObject)-> Bool in
+                    return pObject.id == item.roomId && pObject.title == item.roomTitle
+                }){
+                    if let crtn = pRooms[indexpath].curtains{
+                        pRooms[indexpath].curtains?.append(item)
+                    }else{
+                        var curtains: Array<Curtain>? = Array<Curtain>()
+                        let x = item.clone()
+                        curtains?.append(x)
+                        pRooms[indexpath].curtains = curtains
+                    }
+                }else{
+                    let pRoom = Room()
+                    let x = item.clone()
+                    var curtains: Array<Curtain>? = Array<Curtain>()
+                    pRoom.id = x.roomId
+                    pRoom.title = x.roomTitle
+                    curtains?.append(x)
+                    pRoom.curtains = curtains
+                    pRooms.append(pRoom)
+                }
+            }
+        }
+        if let sensors = sensors{
+            for item in sensors{
+                if let indexpath = pRooms.firstIndex(where: {(pObject)-> Bool in
+                    return pObject.id == item.roomId && pObject.title == item.roomTitle
+                }){
+                if let crtn = pRooms[indexpath].sensors{
+                        pRooms[indexpath].sensors?.append(item)
+                    }else{
+                        var sensors: Array<Sensor>? = Array<Sensor>()
+                        let x = item
+                        sensors?.append(x)
+                        pRooms[indexpath].sensors = sensors
+                    }
+                }else{
+                    let pRoom = Room()
+                    let x = item
+                    var sensors: Array<Sensor>? = Array<Sensor>()
+                    pRoom.id = x.roomId
+                    pRoom.title = x.roomTitle
+                    sensors?.append(x)
+                    pRoom.sensors = sensors
+                    pRooms.append(pRoom)
+                }
+            }
+        }
+        return pRooms
+    }
 }
 //clock
 

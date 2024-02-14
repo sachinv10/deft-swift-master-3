@@ -21,6 +21,24 @@ class Complents: NSObject {
     var uid :String?
     var controllerName :String?
     var checked :Bool?
+    var issueIcon : String {
+        var icon = ""
+        switch issueType {
+        case "Hardware":
+            icon = "Device"
+        case "Application":
+            icon = "app-development"
+        case "Installation":
+            icon = "HPinstallation"
+        case "other":
+            icon = "HPOthres"
+        case .none:
+            break
+        case .some(_):
+            break
+        }
+        return icon
+    }
     func clone() -> Complents{
         var pComplent = Complents()
         pComplent.descriptionn = self.descriptionn
@@ -38,4 +56,8 @@ class Complents: NSObject {
         pComplent.controllerName = self.controllerName
         return pComplent
     }
+}
+struct technicalSheet: Codable{
+    let downloadUrl: String
+    let productName: String
 }

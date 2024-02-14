@@ -21,10 +21,14 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
     
     @IBOutlet weak var lblwifiId_pass: UILabel!
     @IBOutlet weak var lblcontrollerName: UILabel!
+    
+    @IBOutlet weak var nametextView: UITextView!
+    
+    @IBOutlet weak var lblNameEdit: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // webvewi.isHidden = true
+        // webvewi.isHidden = true
         self.title = "Reset Switch"
         self.subTitle = controllerApplince?.title
         uiSetup()
@@ -48,12 +52,14 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
         lblc_name.layer.borderColor = UIColor.gray.cgColor
         lblc_name.backgroundColor = UIColor(named: "PrimaryLightestColor")
         lblcontrollerName.text = controllerApplince?.name
+        lblcontrollerName.textColor = UIColor.white
+        nametextView.text = controllerApplince?.name
         if let idd = controllerApplince.id{
             lblwifiId_pass.text = "2> Once restarted connect to \(idd) Wifi, Password: 12345678"
         }
-        if let idd = controllerApplince.id, let pass = controllerApplince.wifiPassword {
-            lblwifiId_pass.text = "2> Once restarted connect to \(idd) Wifi, Password: \(pass)"
-        }
+//        if let idd = controllerApplince.id, let pass = controllerApplince.wifiPassword {
+//            lblwifiId_pass.text = "2> Once restarted connect to \(idd) Wifi, Password: \(pass)"
+//        }
         viewInstruction.layer.borderWidth = 1
         viewInstruction.layer.borderColor = UIColor.gray.cgColor
         viewInstruction.backgroundColor = UIColor(named: "PrimaryLightestColor")
@@ -61,30 +67,34 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
         viewIdPassowrd.layer.borderWidth = 1
         viewIdPassowrd.layer.borderColor = UIColor.gray.cgColor
         viewIdPassowrd.backgroundColor = UIColor(named: "PrimaryLightestColor")
+        self.nametextView.isEditable = false
+        self.nametextView.backgroundColor = UIColor.clear
         
         self.txtfldSSID.delegate = self
         self.txtfldPassword.delegate = self
     }
     
     func donefinc()  {
+        var databaseref: DatabaseReference?
+        databaseref = Database.database().reference().child("routerDetails")
+            .child((self.controllerApplince?.id) ?? "")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-            var dataidpass: [String: AnyHashable] = [String: AnyHashable]()
-            dataidpass.updateValue(self.txtfldPassword.text, forKey: "wifiPassword")
-            dataidpass.updateValue(self.txtfldSSID.text, forKey: "wifiSsid")
-            var databaseref: DatabaseReference?
-            databaseref =  Database.database().reference().child("routerDetails")
-                .child((self.controllerApplince?.id) ?? "")
-            
-            databaseref?.observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
-                print(pDataSnapshot.value)
-                if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
-                    if (aDict["wCommand"] as! Bool != false), (aDict["xCommand"] as! Bool != false){
-                        //    update database id and  passwd
-                        databaseref?.child("temp").updateChildValues(dataidpass)
-                        Database.database().reference().child("devices").child(self.controllerApplince.id ?? "").updateChildValues(dataidpass)
-
+        databaseref?.observeSingleEvent(of: DataEventType.value) { (pDataSnapshot) in
+            print(pDataSnapshot.value)
+            if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
+                if (aDict["wCommand"] as! Bool != false), (aDict["xCommand"] as! Bool != false){
+                    //   update database id and  passwd
+                    var dataidpass: [String: AnyHashable] = [String: AnyHashable]()
+                    dataidpass.updateValue(self.txtfldPassword.text, forKey:    "wifiPassword")
+                    dataidpass.updateValue(self.txtfldSSID.text, forKey: "wifiSsid")
+                    databaseref?.child("temp").updateChildValues(dataidpass)
+                 
+                    if ProgressOverlay.shared.progressOverlayView != nil{
+                      Database.database().reference().child("devices").child(self.controllerApplince.id ?? "").updateChildValues(dataidpass)
+                        ProgressOverlay.shared.hide()
                         PopupManager.shared.displaySuccess(message: "Reset successfully", description: "")
+                        self.txtfldSSID.text = ""
+                        self.txtfldPassword.text = ""
                     }
                 }
             }
@@ -96,19 +106,44 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
     @IBOutlet weak var txtfldPassword: UITextField!
     @IBOutlet weak var txtfldSSID: UITextField!
     @IBAction func didtappedSendbtn(_ sender: Any) {
-        if (txtfldPassword != nil), (txtfldSSID != nil) {
-            calltoResetFunc()
+        do{
+            if (txtfldPassword.text?.count ?? 0 > 0), (txtfldSSID.text?.count ?? 0 > 0) {
+                txtfldSSID.text = whiteSpaceRemove(obj: txtfldSSID.text!)
+                txtfldPassword.text = whiteSpaceRemove(obj: txtfldPassword.text!)
+                calltoResetFunc()
+            }else{
+                throw NSError(domain: "com", code: 1, userInfo: [NSLocalizedDescriptionKey:"Please enter ssid and password"])
+             }
+        }catch let error{
+            PopupManager.shared.displayError(message: error.localizedDescription, description: "")
         }
     }
+    func whiteSpaceRemove(obj: String)-> String{
+        let stringWithSpaces = obj
+        let trimmedString = stringWithSpaces.trimmingCharacters(in: .whitespaces)
+        print("Original String: '\(stringWithSpaces)'")
+        print("Trimmed String: '\(trimmedString)'")
+        return trimmedString
+    }
     func calltoResetFunc() {
+        ProgressOverlay.shared.show()
         DataFetchManager.shared.resetController(completion: { (pError, pApplianceArray) in
-            ProgressOverlay.shared.hide()
-            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 20){
+                if ProgressOverlay.shared.progressOverlayView != nil{
+                    PopupManager.shared.displayError(message: "Unable to update credentials", description: "")
+                    ProgressOverlay.shared.hide()
+                }
+            }
             if pError != nil {
+                
                 //  displaySuccess
-                PopupManager.shared.displayError(message: "Can not search appliances", description: pError!.localizedDescription)
+                if pError?.localizedDescription == "Success"{
+                    self.donefinc()
+                }else{
+                    PopupManager.shared.displayError(message: "Can not search appliances", description: pError!.localizedDescription)
+                }
             } else {
-                self.donefinc()
+                // self.donefinc()
                 if pApplianceArray != nil && pApplianceArray!.count > 0 {
                     //    self.appliances = pApplianceArray!
                 }
@@ -124,9 +159,44 @@ class ResetWifiViewController: BaseController, WKUIDelegate {
         addview()
     }
 }
+
+extension ResetWifiViewController{
+    func editName(){
+       print(nametextView.text)
+        controllerApplince.name = nametextView.text
+        ProgressOverlay.shared.show()
+        DataFetchManager.shared.reNameControllername(Controller: {(error, success) in
+        ProgressOverlay.shared.hide()
+            if success{
+               // PopupManager.shared.displaySuccess(message: "Name changed successfully", description: "")
+                self.showToast(message: "Name changed successfully!", duration: 3.0)
+            }else{
+                PopupManager.shared.displaySuccess(message: "Error", description: error?.localizedDescription)
+            }
+        }, Appliance: controllerApplince)
+    }
+}
 extension ResetWifiViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            self.view.endEditing(true)
-            return false
+    @IBAction func didtappedEditName(_ sender: Any) {
+        self.EditName()
+    }
+    func EditName(){
+        lblNameEdit.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        if self.nametextView.isEditable != true{
+            self.nametextView.isEditable = true
+        self.lblNameEdit.setTitle("Save", for: .normal)
+            nametextView.layer.borderWidth = 0.5
+            nametextView.layer.cornerRadius = 5
+        }else{
+            self.nametextView.isEditable = false
+            self.lblNameEdit.setTitle("Edit", for: .normal)
+            self.nametextView.backgroundColor = UIColor.clear
+        //   edit name
+            editName()
         }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }

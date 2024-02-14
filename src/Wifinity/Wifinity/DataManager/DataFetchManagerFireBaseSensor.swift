@@ -33,7 +33,7 @@ extension DataFetchManagerFireBase {
                 
                 // Fetch sensor IDs
                 let aFilter = Auth.auth().currentUser!.uid + "_" + (pRoom?.id ?? "") + "_smartsensor"
-                SearchSensorController.sensorId = aFilter
+                SearchSensorController.sensorId = try! aFilter
                 let aSensorDispatchSemaphore = DispatchSemaphore(value: 0)
                 self.database
                     .child("devices")
@@ -227,7 +227,50 @@ extension DataFetchManagerFireBase {
             }
 
     }
-    
+    func deleteSensorOccupancyUnAssign(completion pCompletion: @escaping (Error?, Sensor?) -> Void, sensor pSensor :ControllerAppliance) {
+        DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .background).async {
+                self.requestCount += 1
+                
+                var anError :Error?
+                let sensor: Sensor? = nil
+                do {
+                    if (Auth.auth().currentUser?.uid.count ?? 0) <= 0 {
+                        throw NSError(domain: "error", code: 1, userInfo: [NSLocalizedDescriptionKey : "No user logged in."])
+                    }
+                    let jsonData: [String: Any] = [
+                        "uidAssign": false
+                    ]
+                     // Send message and reset it
+                    let jsonSirilizationdata = try JSONSerialization.data(withJSONObject: jsonData, options: [])
+                    let stringdata = String(data: jsonSirilizationdata, encoding: .utf8)
+                    var aMessageValue = ""
+                        aMessageValue = stringdata ?? ""
+                         anError = self.sendMessage(aMessageValue, entity: pSensor)
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [self] in
+                        let sensorDetail = Sensor()
+                        sensorDetail.id = pSensor.id
+                        sensorDetails(completion: {error, sensor in
+                            pCompletion(anError, sensor)
+                        }, sensor: sensorDetail)
+                    }
+                    if anError != nil {
+                        throw anError!
+                    }
+                } catch {
+                    anError = error
+                }
+                
+                DispatchQueue.main.async {
+                    self.requestCount -= 1
+                 //   pCompletion(anError, sensor)
+                }
+            }
+            
+        }
+        
+    }
     func updateSensorOccupancyState(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, occupancyState pOccupancyState :Sensor.OccupancyState) {
         DispatchQueue.global(qos: .background).async {
             DispatchQueue.global(qos: .background).async {
@@ -310,18 +353,34 @@ extension DataFetchManagerFireBase {
                     var aMessageField :DatabaseReference? = nil
                     aMessageField = self.database
                         .child("rooms").child((Auth.auth().currentUser?.uid)!)
-                        .child(aNodeId!).child("peopleCount")
+                        .child(aNodeId!)
 //                        .child("applianceData")
 //                        .child("message")
                     
                     
                     var aSetMessageError :Error? = nil
                     let aMessageDispatchSemaphore = DispatchSemaphore(value: 0)
-                    aMessageField?.setValue(0, withCompletionBlock: { (pError, pDatabaseReference) in
+                    aMessageField?.child("peopleCount").setValue(0, withCompletionBlock: { (pError, pDatabaseReference) in
                         aSetMessageError = pError
                         aMessageDispatchSemaphore.signal()
                     })
                     _ = aMessageDispatchSemaphore.wait(timeout: .distantFuture)
+                    
+                    if let sensId = pSensor.id{
+                        if sensId.prefix(3) == "P00"{
+                            aMessageField?.child("sensors").observeSingleEvent(of: .value, with: {DataSnapshot in
+                                var ids = DataSnapshot.value as? Array<String>
+                              ids = ids?.filter({(pobject)->Bool in
+                                  return pobject.prefix(3) == "P00"
+                                })
+                                for i in ids!{
+                                     self.resetPeopleCount(pid: i, complition: pCompletion)
+                                }
+                            })
+                        }
+                    }
+                    
+                    
                     if let anError = aSetMessageError {
                         throw anError
                     }
@@ -344,6 +403,14 @@ extension DataFetchManagerFireBase {
             
         }
         
+    }
+    func resetPeopleCount(pid: String,complition pCompletion: @escaping(Error?)-> Void){
+        var anError: Error? = nil
+        database.child("devices").child(pid).child("peopleCount").setValue(0, withCompletionBlock: {(error, DatabaseReference) in
+            anError = error
+            pCompletion(anError)
+        })
+       
     }
     func updateSensorCalibrate(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         DispatchQueue.global(qos: .background).async {
@@ -562,10 +629,7 @@ extension DataFetchManagerFireBase {
                         print("error =\(String(describing: error))")
                     }
                 })
-               
-                    
-               
-              
+       
             } catch {
                 anError = error
             }
@@ -575,7 +639,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError)
             }
         }
-        
     }
     func updateSensorMotionLightState(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor, lightState pLightState :Sensor.LightState, isSettings pIsSettings :Bool) {
         DispatchQueue.global(qos: .background).async {
@@ -683,7 +746,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError)
             }
         }
-        
     }
     
     
@@ -885,15 +947,12 @@ extension DataFetchManagerFireBase {
             } catch {
                 anError = error
             }
-            
             DispatchQueue.main.async {
                 self.requestCount -= 1
                 pCompletion(anError)
             }
         }
-        
     }
-    
     
     func sensorIdsForLoggedInUser(roomId pRoomId :String?) -> Array<String>? {
         var aReturnVal :Array<String>?

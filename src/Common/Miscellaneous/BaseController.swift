@@ -69,10 +69,19 @@ class BaseController: UIViewController {
         self.reloadAllData()
     }
     
-    
     var isLoadedOnce :Bool = false
     
     func reloadAllData() {
+//        ProgressOverlay.shared.show()
+//        DataFetchManager.shared.checkInternetConnection { (pError) in
+//            ProgressOverlay.shared.hide()
+//            if pError != nil {
+//                PopupManager.shared.displayError(message: "There is no internet connection!", description: "")
+//            }else{
+//              //  ProgressOverlay.shared.hide()
+//
+//            }
+//        }
         
     }
     

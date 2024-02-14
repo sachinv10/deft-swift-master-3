@@ -9,6 +9,8 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import Foundation
+import CoreLocation
 class camtableCell: UITableViewCell{
     
     @IBOutlet weak var lblName: UILabel!
@@ -37,8 +39,8 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell =  tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! camtableCell
-        var data = dataArray[indexPath.row]
+        let cell =  tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! camtableCell
+        let data = dataArray[indexPath.row]
         cell.load(obj: data)
         return cell
     }
@@ -47,8 +49,10 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
         if let url = URL(string: obj["Url"] as! String) {
             UIApplication.shared.open(url)
         }
+//        let demo = demoModel()
+//        demo.y = indexPath.row
+//        viewModel.updateData(newData: demo)
     }
-    
     
     @IBOutlet weak var camtableview: UITableView!
     override func viewDidLoad() {
@@ -61,9 +65,43 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.demokeyMap()
+       // self.demokeyMap()
+       // self.demo()
+     //  self.demojump()
+        let email = "exampgmail.com"
+        if isValidEmail(email) {
+            print("Valid email address")
+        } else {
+            print("Invalid email address")
+        }
+       // 55.755786, 37.617633 (rus)
+//        let region = CLCircularRegion(
+//            center: CLLocationCoordinate2D(latitude: 55.755786, longitude: 37.617633),
+//            radius: 100.0,
+//            identifier: "russia"
+//        )
+//        region.notifyOnExit = true
+//        region.notifyOnEntry = true
+//       // 18.562232,73.912947
+//       AppDelegate.locationManager.startMonitoring(for: region)
+    //    AppDelegate.locationManager.stopMonitoring(for: region)
+      //  openNewApp()
     }
-    
+    func demojump(){
+        var num = 99
+        print(num)
+        for i in 0..<num{
+            if i < 10{
+                print(i,"\n")
+                continue
+            }
+            let x = i % 10
+            let y = i / 10
+            if x - y == 1 || y - x == 1{
+                print(i,"\n")
+            }
+        }
+    }
     var dataArray: Array = Array<Dictionary<String,Any>>()
     func datamanage()  {
         var dictinary: Dictionary = Dictionary<String, Any>()
@@ -84,7 +122,10 @@ class CamerasViewController: BaseController, UITableViewDelegate, UITableViewDat
         print(dataArray)
         camtableview.reloadData()
     }
-    
+    var viewModel = MyViewModel()
+    deinit {
+       //   viewModel.removeObserver(self, forKeyPath: #keyPath(MyViewModel.data))
+      }
 }
 // MARK : - DEMO
 extension CamerasViewController{
@@ -125,7 +166,50 @@ extension CamerasViewController{
             //            }
         })
     }
-}
+   
+    func demo(){
+        viewModel.addObserver(self, forKeyPath: #keyPath(MyViewModel.data), options: [.new], context: nil)
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(MyViewModel.data), let newData = change?[.newKey] as? String {
+            print("updated data:",newData)
+           }
+        if let newData = change?[.newKey] as? demoModel {
+            print("updated data:",newData)
+            self.xydemo()
+           }
+       }
+
+     func xydemo(){
+         self.camtableview.reloadData()
+    }
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+        
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
+    func openNewApp()
+    {   // https://apps.apple.com/in/app/smart-life-smart-living/id1115101477
+        let appURL = URL(string: "https://apps.apple.com/in/app/smart-life-smart-living/id1115101477") // Replace "xyapp" with the actual custom URL scheme of the app you want to open
+        if let appURL = appURL, UIApplication.shared.canOpenURL(appURL) {
+            UIApplication.shared.open(appURL, options: [:], completionHandler: { success in
+                if success {
+                    print("Successfully opened the installed app.")
+                } else {
+                    print("Failed to open the installed app.")
+                }
+            })
+        } else{
+            if UIApplication.shared.canOpenURL(appURL!) {
+                UIApplication.shared.open(appURL!, options: [:], completionHandler: nil)
+            } else {
+                print("The XY app is not installed.")
+            }
+        }
+    }
+    }
 struct ResponseDemo: Codable {
     let wakeUpTimeMedium: String
     let sensorSensitivity: String
@@ -143,4 +227,16 @@ struct ResponseDevice: Codable {
     let name: String
     let roomName: String
     let uid: String
+}
+
+class demoModel: NSObject {
+    var x : String?
+    var y: Int?
+}
+class MyViewModel: NSObject {
+    @objc dynamic var data: demoModel?
+    
+    func updateData(newData: demoModel) {
+        data = newData
+    }
 }

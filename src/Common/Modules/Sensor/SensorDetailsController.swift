@@ -228,14 +228,14 @@ class SensorDetailsController: BaseController {
         self.notificationSoundSwitch.isOn = self.selectedSensor?.notificationSoundState ?? false
     }
     func sensitivityModeUpdate(pSensor: Sensor)  {
-        if pSensor.sensorSensitivity == "Low"{
+        if pSensor.sensorSensitivity == "Normal"{
             if lbllowbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
                 lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
             }else{
                 lbllowbtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
                 lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
              }
-        }else if pSensor.sensorSensitivity == "Extreme"{
+        }else if pSensor.sensorSensitivity == "High"{
             if lblhighbtn.currentImage == UIImage(systemName: "checkmark.square.fill"){
                 lblhighbtn.setImage(UIImage(systemName: "square"), for: .normal)
             }else{

@@ -15,6 +15,7 @@ class Room: NSObject {
     var devices :Array<String>?
     var curtainId :Array<String>?
     var remoteId :Array<String>?
+    var sensorId :Array<String>?
     var appliances :Array<Appliance>?
     var curtains :Array<Curtain>?
     var remotes :Array<Remote>?
@@ -22,6 +23,7 @@ class Room: NSObject {
     var moodOffRemotes :Array<Remote>?
     var sensors :Array<Sensor>?
     var lastActivityRoom: String?
+    var position: String?
     
     override init() {
         

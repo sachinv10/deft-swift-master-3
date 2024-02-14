@@ -17,6 +17,9 @@ var userProfile = UserVerify()
        subTitle = ""
         uiSetup()
         // Do any additional setup after loading the view.
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        profileImage.isUserInteractionEnabled = true
+        profileImage.addGestureRecognizer(tapGesture)
     }
     func uiSetup() {
         txtfldName.text = userProfile.userName
@@ -57,13 +60,22 @@ var userProfile = UserVerify()
         txtfldBirthDate.addSubview(datePicker)
       //  txtfldBirthDate.inputView = datePicker
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+        self.loadImage()
     }
+    @objc func imageTapped() {
+           openPhotoLibrary()
+       }
+    func openPhotoLibrary() {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true, completion: nil)
+        }
     @objc func dateChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.dateFormat = "dd/MM/yyyy"
         txtfldBirthDate.text = dateFormatter.string(from: sender.date)
-        
         
      }
  
@@ -143,7 +155,7 @@ var userProfile = UserVerify()
             lblVerify.setTitle("Edit", for: .normal)
         }
     }
-  var detail = ""
+    var detail = ""
     @IBAction func didTappedAddressbtn(_ sender: Any) {
         if txtfldAddress.isEnabled == false{
             txtfldAddress.isEnabled = true
@@ -301,4 +313,32 @@ var userProfile = UserVerify()
         dateofBirth()
         return true
     }
+}
+extension ProfileViewController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    // Delegate method to handle the selected image
+     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+             // For example, display it in an UIImageView:
+             profileImage.image = selectedImage
+             guard let data = selectedImage.jpegData(compressionQuality: 0.5) else { return }
+                 let encoded = try! PropertyListEncoder().encode(data)
+             UserDefaults.standard.set(encoded, forKey: String(describing: Auth.auth().currentUser?.uid))
+             // Dismiss the image picker
+             picker.dismiss(animated: true, completion: nil)
+         }
+     }
+    
+    func loadImage() {
+        DataFetchManager.shared.getProfileIcon(complition: { iconImage in
+            DispatchQueue.main.async {
+                self.profileImage.image = iconImage
+            }
+        })
+    }
+     // Delegate method to handle the user canceling image selection
+     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+         // Dismiss the image picker
+         picker.dismiss(animated: true, completion: nil)
+     }
+     
 }

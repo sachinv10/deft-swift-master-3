@@ -154,30 +154,37 @@ extension DataContractManagerFireBase {
         
         for aRoomDict in pDict.values {
             let aRoom = Room()
-            
             aRoom.id = aRoomDict["roomId"] as? String
             
             if let aTitle = aRoomDict["roomName"] as? String {
                 aRoom.title = aTitle.capitalized
             }
-           
             if let device = aRoomDict["devices"]{
-                 print(device)
                 aRoom.devices = device as? Array<String>
             }
             if let curtains = aRoomDict["curtains"]{
-                print(curtains)
                 aRoom.curtainId = curtains as? Array<String>
             }
             if let remotes = aRoomDict["remotes"]{
-                 print(remotes)
                 aRoom.remoteId = remotes as? Array<String>
+            }
+            if let sensors = aRoomDict["sensors"]{
+                aRoom.sensorId = sensors as? Array<String>
             }
             if let aLastActive = aRoomDict["lastActive"] as? Int {
              let xValue = aLastActive / 1000
                aRoom.lastActiveDate = Date(timeIntervalSince1970: TimeInterval(xValue))
                 aRoom.lastActivityRoom = SharedFunction.shared.gotoTimetampTodayConvert(time: Double(xValue))
             }
+            if let deviceToken = aRoomDict["deviceToken"] as? Dictionary<String,Any>{
+                for item in deviceToken{
+                    if item.key ==  CacheManager.shared.fcmToken{
+                        let value = item.value as? Dictionary<String,Any>
+                        aRoom.position = value?["position"] as? String
+                    }
+                }
+            }
+            
             
             aReturnVal!.append(aRoom)
         }
@@ -296,6 +303,7 @@ extension DataContractManagerFireBase {
                 } else {
                     let anAppliance = Appliance()
                     anAppliance.id = (aRoomDict["appId"] as? String) ?? (aRoomDict["applianceId"] as? String)
+                  
                     anAppliance.hardwareId = aHardwareId
                     if let aValue = aRoomDict["dimValue"] as? String {
                         anAppliance.scheduleDimmableValue = Int(aValue)
@@ -304,6 +312,9 @@ extension DataContractManagerFireBase {
                     }
                     if let aValue = aRoomDict["command"] as? String {
                         anAppliance.scheduleCommand = aValue
+                    }
+                    if let aValue = aRoomDict["roomId"] as? String {
+                        anAppliance.roomId = aValue
                     }
                     if let aValue = aRoomDict["state"] as? Bool {
                         anAppliance.scheduleState = aValue
@@ -389,7 +400,25 @@ extension DataContractManagerFireBase {
             if let controllertype = pDict["controllerType"] as? String{
                 aDevice.controllerType = controllertype
             }
-            aDevice.clone()
+            if let macId = pDict["macId"] as? String{
+                aDevice.macId = macId
+            }
+            if let ledon = pDict["touchLedMode"] as? String{
+                aDevice.touchLedMode = ledon
+            }
+            if let stateRetention = pDict["stateRetention"] as? Bool{
+                aDevice.stateRetention = stateRetention
+            }
+            if let childLock = pDict["childLock"] as? Bool{
+                aDevice.childLock = childLock
+            }
+            if let clenmode = pDict["cleaningMode"] as? Bool{
+                aDevice.cleaningMode = clenmode
+            }
+            if let version = pDict["version"] as? String{
+                aDevice.version = version
+            }
+          //  aDevice.clone()
             aReturnVal = aDevice
         }
         
@@ -837,9 +866,10 @@ extension DataContractManagerFireBase {
         
         for anAppNotificationDict in pArray {
             let anAppNotification = AppNotification()
-            
             anAppNotification.id = anAppNotificationDict["id"] as? String
-            
+            if let idd = anAppNotificationDict["id"] {
+                anAppNotification.id = String(describing: idd)
+            }
             if let aMessage = anAppNotificationDict["message"] as? String {
                 anAppNotification.message = aMessage
             }
@@ -848,8 +878,15 @@ extension DataContractManagerFireBase {
                 let aDateFormatter = DateFormatter()
                 aDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 anAppNotification.date = aDateFormatter.date(from: aDateString)
+             }
+            if let aDateString = anAppNotificationDict["dateTime"] as? String {
+                let aDateFormatter = DateFormatter()
+                aDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                anAppNotification.date = aDateFormatter.date(from: aDateString)
+             }
+           if let operation = anAppNotificationDict["operation"] as? String{
+               anAppNotification.message = createInOutOperation(operaton: operation)
             }
-            
             aReturnVal!.append(anAppNotification)
         }
         if aReturnVal!.count <= 0 {
@@ -860,7 +897,16 @@ extension DataContractManagerFireBase {
     }
     
 }
-
+func createInOutOperation(operaton: String)-> String{
+    var msg: String = String()
+    if operaton == "IN"{
+        msg = "IN"
+    }
+    if operaton == "OUT"{
+        msg = "OUT"
+    }
+    return msg
+}
 
 
 // MARK:- Curtain
@@ -878,7 +924,9 @@ extension DataContractManagerFireBase {
         if aReturnVal!.count <= 0 {
             aReturnVal = nil
         }
-        
+        aReturnVal?.sort(by: {(Rhs, Lhs) in
+            return Rhs.title! < Lhs.title!
+        })
         return aReturnVal
     }
     
@@ -1258,10 +1306,10 @@ extension DataContractManagerFireBase {
             }
             if let sensitivity = pDict["sensorSensitivity"]{
                 if "1" == sensitivity as! String{
-                    aSensor.sensorSensitivity = "Low"
+                    aSensor.sensorSensitivity = "Normal"
                 }else if "3" == sensitivity as! String
                 {
-                    aSensor.sensorSensitivity = "Extreme"
+                    aSensor.sensorSensitivity = "High"
                 }
             }
             
@@ -1431,6 +1479,53 @@ extension DataContractManagerFireBase{
             }
         }
         return productlist
+    }
+    static func BuyProductAddressList(dict pDict :Dictionary<String,Any>)-> [address]? {
+        var productlist:[address]? = [address]()
+        if let aDict = pDict as? Dictionary<String, Any> {
+            do{
+                for item in aDict.values{
+                let jsonData = try JSONSerialization.data(withJSONObject: item, options: [])
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    let data = jsonString.data(using: .utf8)
+                    let decoder = JSONDecoder()
+                    var response = try decoder.decode(address.self, from: jsonData)
+                     productlist?.append(response)
+                 }
+             }
+            }catch let err{
+                print("error ocured in decoder\(err.localizedDescription)")
+            }
+        }
+        return productlist
+    }
+    static func orderListDataParsse(dict pDict: Dictionary<String,Dictionary<String,Any>>)-> [OrderList]?{
+        var anmodel:[OrderList]? = [OrderList]()
+        var dataOrder = [OrderList]()
+      //  DispatchQueue.global(qos: .userInteractive).async {
+            
+            if let aDict = pDict as? Dictionary<String,Dictionary<String,Any>> {
+                do{
+                    for item in aDict.values{
+                        print("order id=",item["orderId"])
+                    let jsonData = try JSONSerialization.data(withJSONObject: item, options: [])
+                        let decoder = JSONDecoder()
+                        let response = try decoder.decode(OrderList.self, from: jsonData)
+                       // anmodel?.append(response)
+                        dataOrder.append(response)
+                    }
+                    dataOrder.sort { (pLhs, pRhs) -> Bool in
+                        return (pLhs.orderId ?? "") > (pRhs.orderId ?? "")
+                    }
+                    print(dataOrder)
+                    anmodel?.append(contentsOf: dataOrder)
+                }catch let err{
+                    print("error ocured in decoder\(err.localizedDescription)")
+                }
+            }
+       
+        
+        return anmodel
     }
 }
 

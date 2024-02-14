@@ -27,7 +27,9 @@ class ScheduleComponentTableCellView: UITableViewCell {
         let aValue = NSMutableAttributedString()
         
         if let aRoomArray = pRoomArray {
+           
             for (anIndex, aRoom) in aRoomArray.enumerated() {
+                if aRoom.appliances?.count ?? 0 > 0 || aRoom.curtains?.count ?? 0 > 0 || aRoom.sensors?.count ?? 0 > 0 || aRoom.remotes?.count ?? 0 > 0 {
                 if anIndex > 0 {
                     aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)]))
                 }
@@ -42,101 +44,119 @@ class ScheduleComponentTableCellView: UITableViewCell {
                     lblAnyCondBtn.isHidden = true
                 }
                 // Appliances Csv
-                aValue.append(NSAttributedString(string: "    - Appliances: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
-                
+                //                aValue.append(NSAttributedString(string: "    - Appliances: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
+                //
                 if let anApplianceArray = aRoom.appliances, anApplianceArray.count > 0 {
+                    aValue.append(NSAttributedString(string: "    - Appliances: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    
                     var anApplianceTitleArray = anApplianceArray.compactMap({ $0.title })
-               var anApplicanCsv: String = ""
-                   if SelectComponentController.coreSensor == true{
-                       aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
-                      var str:Array<String> = Array<String>()
-                       if valueTitlelbl.text == "Then:"{
-                           str = anApplianceArray.compactMap({$0.selectedThanType})
-                       }else{
-                           str = anApplianceArray.compactMap({$0.selectedAppType})}
-                            for item in 0..<anApplianceTitleArray.count{
-                                let x = "\(String(describing: anApplianceTitleArray[item] ))(\(str[item]))"
-                                anApplianceTitleArray[item] = x
-                                }
-                       anApplicanCsv = anApplianceTitleArray.joined(separator: "\n ")
-                   }else{anApplicanCsv = anApplianceTitleArray.joined(separator: ", ")}
+                    var anApplicanCsv: String = ""
+                    if SelectComponentController.coreSensor == true{
+                        aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                        var str:Array<String> = Array<String>()
+                        if valueTitlelbl.text == "Then:"{
+                            str = anApplianceArray.compactMap({$0.selectedThanType})
+                        }else{
+                            str = anApplianceArray.compactMap({$0.selectedAppType})}
+                        for item in 0..<anApplianceTitleArray.count{
+                            let x = "      \(String(describing: anApplianceTitleArray[item] ))(\(str[item]))"
+                            anApplianceTitleArray[item] = x
+                        }
+                        anApplicanCsv = anApplianceTitleArray.joined(separator: "\n ")
+                    }else{
+                        aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                        var str:Array<String> = Array<String>()
+                            str = anApplianceArray.compactMap({$0.selectedScedularType})
+                    for item in 0..<anApplianceTitleArray.count{
+                        let x = "      \(String(describing: anApplianceTitleArray[item] ))(\(str[item]))"
+                        anApplianceTitleArray[item] = x
+                    }
+                        anApplicanCsv = anApplianceTitleArray.joined(separator: "\n")}
                     aValue.append(NSAttributedString(string: anApplicanCsv, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
                 } else {
-                    aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    //   aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
                 }
                 
-                aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                //  aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
                 
                 // Curtain Csv
-                aValue.append(NSAttributedString(string: "    - Curtains: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
+                //                aValue.append(NSAttributedString(string: "    - Curtains: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
                 if let aCurtaineArray = aRoom.curtains, aCurtaineArray.count > 0 {
+                    aValue.append(NSAttributedString(string: "    - Curtains: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
                     var aCurtaineTitleArray = aCurtaineArray.compactMap({ $0.title })
                     var aCurtaineTitleCsv: String = ""
-                        if SelectComponentController.coreSensor == true{
-                            aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
-                            var str:Array<String> = Array<String>()
-                             if valueTitlelbl.text == "Then:"{
-                                 str = aCurtaineArray.compactMap({$0.selectedcurtainThan})
-                             }else{
-                                 str = aCurtaineArray.compactMap({$0.selectedAppType})
-                             }
-                                  for item in 0..<aCurtaineTitleArray.count{
-                                    let x = "\(String(describing: aCurtaineTitleArray[item] ))(\(str[item]))"
-                                     aCurtaineTitleArray[item] = x
-                                     }
-                            aCurtaineTitleCsv = aCurtaineTitleArray.joined(separator: "\n ")
-                        }else{aCurtaineTitleCsv = aCurtaineTitleArray.joined(separator: ", ")}
+                    if SelectComponentController.coreSensor == true{
+                        aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                        var str:Array<String> = Array<String>()
+                        if valueTitlelbl.text == "Then:"{
+                            str = aCurtaineArray.compactMap({$0.selectedcurtainThan})
+                        }else{
+                            str = aCurtaineArray.compactMap({$0.selectedAppType})
+                        }
+                        for item in 0..<aCurtaineTitleArray.count{
+                            let x = "      \(String(describing: aCurtaineTitleArray[item] ))(\(str[item]))"
+                            aCurtaineTitleArray[item] = x
+                        }
+                        aCurtaineTitleCsv = aCurtaineTitleArray.joined(separator: "\n ")
+                    }else{aCurtaineTitleCsv = aCurtaineTitleArray.joined(separator: ", ")}
                     aValue.append(NSAttributedString(string: aCurtaineTitleCsv, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
                 } else {
-                    aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    //  aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
                 }
                 
-                aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                //     aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
                 
                 // Remote Csv
-                aValue.append(NSAttributedString(string: "    - Remotes: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
+                
                 if let aRemoteArray = aRoom.remotes, aRemoteArray.count > 0 {
+                    aValue.append(NSAttributedString(string: "    - Remotes: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
                     var aRemoteTitleArray = aRemoteArray.compactMap({ $0.title })
                     var aRemoteTitleCsv: String = ""
                     if SelectComponentController.coreSensor == true{
                         aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
-                              for item in 0..<aRemoteTitleArray.count{
-                                  let x = "\(String(describing: aRemoteTitleArray[item] ))( Set to \(String(describing: aRemoteArray[item].selectedRemoteKeys?.first?.tag?.rawValue ?? "")))"
-                                  aRemoteTitleArray[item] = x
-                                 }
+                        for item in 0..<aRemoteTitleArray.count{
+                            let xy = aRemoteArray[item].selectedRemoteKeys?.compactMap({$0.tag?.rawValue})
+                            let y = xy?.joined(separator: ",")
+                            let x = "      \(String(describing: aRemoteTitleArray[item] ))( Set to \(String(describing: y ?? "")))"
+                            aRemoteTitleArray[item] = x
+                        }
                         aRemoteTitleCsv = aRemoteTitleArray.joined(separator: "\n ")
                     }else{aRemoteTitleCsv = aRemoteTitleArray.joined(separator: ", ")}
                     
-                     aValue.append(NSAttributedString(string: aRemoteTitleCsv, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    aValue.append(NSAttributedString(string: aRemoteTitleCsv, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
                 } else {
-                    aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    //  aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
                 }
                 
-                aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                //         aValue.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
                 
                 // Sensor Csv
-                aValue.append(NSAttributedString(string: "    - Sensor: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
+                
                 if let aSensorArray = aRoom.sensors, aSensorArray.count > 0 {
+                    aValue.append(NSAttributedString(string: "    - Sensor: ", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: self.valueLabel.font.pointSize)]))
                     var aSensorTitleArray = aSensorArray.compactMap({ $0.title })
                     var aSensorTitleCsv: String = ""
-                        if SelectComponentController.coreSensor == true{
-                            aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
-                            let str = aSensorArray.compactMap({$0.selectedAppType})
-                                 for item in 0..<aSensorTitleArray.count{
-                                     let x = "\(String(describing: aSensorTitleArray[item] ))(\(str[item]))"
-                                     aSensorTitleArray[item] = x
-                                     }
-                            aSensorTitleCsv = aSensorTitleArray.joined(separator: "\n ")
-                        }else{aSensorTitleCsv = aSensorTitleArray.joined(separator: ", ")}
+                    if SelectComponentController.coreSensor == true{
+                        aValue.append(NSAttributedString(string: "\n\n  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 6)]))
+                        let str = aSensorArray.compactMap({$0.selectedAppType})
+                        for item in 0..<aSensorTitleArray.count{
+                            let x = "     \(String(describing: aSensorTitleArray[item] ))(\(str[item]))"
+                            aSensorTitleArray[item] = x
+                        }
+                        aSensorTitleCsv = aSensorTitleArray.joined(separator: "\n ")
+                    }else{aSensorTitleCsv = aSensorTitleArray.joined(separator: ", ")}
                     
-                 //   let aSensorTitleCsv = aSensorTitleArray.joined(separator: ", ")
+                    //   let aSensorTitleCsv = aSensorTitleArray.joined(separator: ", ")
                     aValue.append(NSAttributedString(string: aSensorTitleCsv, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
                 } else {
-                    aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
+                    //   aValue.append(NSAttributedString(string: "None", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: self.valueLabel.font.pointSize)]))
                 }
-                print(aValue)
-                self.valueLabel.attributedText = aValue
+                 self.valueLabel.attributedText = aValue
             }
+          }
         }
     }
     var delegate: conditioncheckedComponant? = nil
@@ -195,14 +215,21 @@ class ScheduleTimeerTableCellView: UITableViewCell, UITextFieldDelegate {
         txtfldFrom.inputView = datePicker
         
     }
-    func load(obj: Array<Room>?){
+    func load(obj: Array<Room>?, pCore: Core?){
         for item in obj!{
             if item.remotes?.count ?? 0 > 0{
-                optionalView.isHidden = true
+              //  optionalView.isHidden = true
+            //    txtfldTimeduraton.isEnabled = false
                 break
             }else{
-                optionalView.isHidden = false
+               // optionalView.isHidden = false
+             //   txtfldTimeduraton.isEnabled = true
             }
+        }
+        if let data = pCore?.coreEditData{
+            txtfldTimeduraton.text = data.duration
+            txtfldFrom.text = data.from
+            txtfldTodate.text = data.to
         }
     }
     var delegate: createCoreProtocols?

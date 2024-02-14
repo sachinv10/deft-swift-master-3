@@ -55,7 +55,9 @@ class DashboardController: BaseController {
         applianceCollectionView.addGestureRecognizer(tapGestureRecognizer)
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(didTapViewmenu(_:)))
         roomCollectionView.addGestureRecognizer(tapGestureRecognizer1)
-        //  UpdateVdpNotification()
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+           roomCollectionView.addGestureRecognizer(longPressGesture)
+         //  UpdateVdpNotification()
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         print("appversion=\(appVersion!)")
         checkApplicationVersion(appversion: appVersion!)
@@ -64,6 +66,24 @@ class DashboardController: BaseController {
         collectionViewFlowLayout.minimumInteritemSpacing = 10
         applianceCollectionView.collectionViewLayout = collectionViewFlowLayout
     }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .began:
+            guard let selectedIndexPath = roomCollectionView.indexPathForItem(at: gestureRecognizer.location(in: roomCollectionView)) else {
+                return
+            }
+            roomCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            roomCollectionView.updateInteractiveMovementTargetPosition(gestureRecognizer.location(in: gestureRecognizer.view))
+        case .ended:
+            roomCollectionView.endInteractiveMovement()
+        default:
+            roomCollectionView.cancelInteractiveMovement()
+        }
+      //  roomCollectionView.reloadData()
+    }
+
     
     @objc func didTapViewmenu(_ sender: UITapGestureRecognizer) {
         customView.isHidden = true
@@ -109,6 +129,22 @@ class DashboardController: BaseController {
         //            print(error.localizedDescription)
         //        }
         //      }
+        
+        if #available(iOS 14.0, *) {
+            self.leftmenubtn.menu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: lfltChildBtn)
+            leftmenubtn.showsMenuAsPrimaryAction = true
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    var lfltChildBtn:[UIAction] {
+        return [ UIAction(title: "Controller Setting", handler: { [self]_ in
+                   pressed()
+               }),
+                 UIAction(title: "Good Bye", handler: { [self]_ in
+                   pressedGoodbye()
+             }) ]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,6 +155,7 @@ class DashboardController: BaseController {
         applianceCollectionView.delegate = self
         self.reloadAllData()
         activatdatalistner()
+        let connection = SocketConnectionPool.shared.getConnection()
     }
     func loadcollectionView() {
         
@@ -150,13 +187,13 @@ class DashboardController: BaseController {
     }
     func UpdateVdpNotification(){
         if let uid = Auth.auth().currentUser?.uid{
-            let ref =    Database.database().reference()
+            let ref = Database.database().reference()
                 .child("vdpDeviceToken")
                 .child(uid)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 
-                ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
+            ref.observeSingleEvent(of: DataEventType.value) { [self](pDataSnapshot, error)  in
                     let token = CacheManager.shared.fcmToken
                     var randomNumber = Int(arc4random_uniform(100)) + 1
                     let data: Optional<Any> = pDataSnapshot.value
@@ -239,6 +276,7 @@ class DashboardController: BaseController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         controllerflag = false
+        SelectComponentController.ApplianceType = nil
     }
     func activatdatalistner()  {
         DispatchQueue.main.asyncAfter(deadline: .now() + 7){
@@ -268,6 +306,7 @@ class DashboardController: BaseController {
           //  print("datetime= \(dateString)")
         }
     }
+    
     override func reloadAllData() {
         
         self.appliances.removeAll()
@@ -372,6 +411,7 @@ class DashboardController: BaseController {
                     KeychainManager.shared.remove(valueForKey: "emailAddress")
                     KeychainManager.shared.remove(valueForKey: "password")
                      UserDefaults.standard.removeObject(forKey: "userId")
+                     UserDefaults.standard.setValue("Online and offLine", forKey: "Mode")
                     do {
                         try Auth.auth().signOut()
                     } catch let signOutError as NSError {   print ("Error signing out: %@", signOutError)}
@@ -388,6 +428,7 @@ class DashboardController: BaseController {
             CacheManager.shared.cacheAppNotificationSettings(completion: {
                 let anAppNotificationSettings = AppNotificationSettings()
                 anAppNotificationSettings.fcmToken = CacheManager.shared.fcmToken
+                anAppNotificationSettings.isCriticalNotificationDeviceToken = false
                 DataFetchManager.shared.saveAppNotificationSettings(completion: { (pError, pAppNotificationSettings) in
                     pCompletion()
                 }, appNotificationSettings: anAppNotificationSettings)
@@ -401,31 +442,31 @@ class DashboardController: BaseController {
     let goodbyButton = UIButton()
     
     @IBAction func btnRightMenuBtn(_ sender: Any) {
-        customView.isHidden = false
-        customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
-        customView.backgroundColor = UIColor.white     //give color to the view
-        customView.layer.borderColor = UIColor.gray.cgColor
-        customView.layer.cornerRadius = 10
-        //  customView.rightAnchor = self.view.center
-        myFirstButton.setTitle("Controller Setting", for: .normal)
-        myFirstButton.setTitleColor(UIColor.black, for: .normal)
-        myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
-        myFirstButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
-        customView.addSubview(myFirstButton)
-        
-        goodbyButton.setTitle("Good Bye", for: .normal)
-        goodbyButton.setTitleColor(UIColor.black, for: .normal)
-        goodbyButton.frame = CGRect(x: 10, y: 50, width: 180, height: 50)
-        goodbyButton.addTarget(self, action: #selector(pressedGoodbye), for: .touchUpInside)
-        customView.addSubview(goodbyButton)
-        self.view.addSubview(customView)
+//        customView.isHidden = false
+//        customView.frame = CGRect.init(x: 200, y: 50, width: 200, height: 100)
+//        customView.backgroundColor = UIColor.white     //give color to the view
+//        customView.layer.borderColor = UIColor.gray.cgColor
+//        customView.layer.cornerRadius = 10
+//        //  customView.rightAnchor = self.view.center
+//        myFirstButton.setTitle("Controller Setting", for: .normal)
+//        myFirstButton.setTitleColor(UIColor.black, for: .normal)
+//        myFirstButton.frame = CGRect(x: 10, y: 0, width: 180, height: 50)
+//        myFirstButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
+//        customView.addSubview(myFirstButton)
+//
+//        goodbyButton.setTitle("Good Bye", for: .normal)
+//        goodbyButton.setTitleColor(UIColor.black, for: .normal)
+//        goodbyButton.frame = CGRect(x: 10, y: 50, width: 180, height: 50)
+//        goodbyButton.addTarget(self, action: #selector(pressedGoodbye), for: .touchUpInside)
+//        customView.addSubview(goodbyButton)
+//        self.view.addSubview(customView)
     }
     
-    @objc func pressed(sender: UIButton!) {
+    @objc func pressed() {
         customView.isHidden = true
         self.didSelectControllerSetthingButton()
     }
-    @objc func pressedGoodbye(sender: UIButton!) {
+    @objc func pressedGoodbye() {
         customView.isHidden = true
         self.updateControllers()
     }
@@ -438,18 +479,21 @@ class DashboardController: BaseController {
 }
 extension DashboardController{
     func updateControllers() {
-        for i in (0 ..< ControllerListViewController.contollerDeviceId.count) {
-            ProgressOverlay.shared.show()
-            print("get good bey controller=\(ControllerListViewController.contollerDeviceId.count)")
-            DataFetchManager.shared.updateDevice(completion: { (pError) in
-                ProgressOverlay.shared.hide()
-                if pError != nil {
-                    PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
-                    self.reloadAllView()
-                } else {
-                    self.reloadAllView()
+        for room in rooms{
+            if let device = room.devices{
+                for item in device{
+                   print("get good bey controller= \(item)")
+                    DataFetchManager.shared.updateDevice(completion: { (pError) in
+                        ProgressOverlay.shared.hide()
+                        if pError != nil {
+                            PopupManager.shared.displayError(message: "Can not update appliance.", description: pError!.localizedDescription)
+                            self.reloadAllView()
+                        } else {
+                            self.reloadAllView()
+                        }
+                    }, deviceId: item)
                 }
-            }, deviceId: ControllerListViewController.contollerDeviceId[i])
+            }
         }
     }
 }
@@ -491,15 +535,13 @@ extension DashboardController :DrawerControllerDelegate {
             RoutingManager.shared.gotoOfferZone(controller: self)
         } else if pUrc == DrawerController.Menu.Core.urc {
             RoutingManager.shared.gotoCore(controller: self)
-        } else if pUrc == DrawerController.Menu.Offline.urc {
-            DataFetchManager.shared.checkInternetConnection { (pError) in
-                if pError != nil{
-                    RoutingManager.shared.gotoOffline(controller: self)
-                }else{
-                    PopupManager.shared.displayError(message: "Offline mode only works when there is no internet connection!", description: "")
-                }
-            }
-        }else if pUrc == DrawerController.Menu.Cameras.urc {
+         }
+         //   else if pUrc == DrawerController.Menu.Geofencing.urc {
+//            RoutingManager.shared.gotoGeofencing(controller: self)
+//        }
+            else if pUrc == DrawerController.Menu.Offline.urc {
+            RoutingManager.shared.gotoOffline(controller: self)
+         }else if pUrc == DrawerController.Menu.Cameras.urc {
             RoutingManager.shared.gotoCameras(controller: self)
         }else if pUrc == DrawerController.Menu.HelpAndSuppor.urc {
             RoutingManager.shared.gotoHelp(controller: self)
@@ -617,7 +659,25 @@ extension DashboardController :UICollectionViewDataSource, UICollectionViewDeleg
         // set the minimum spacing between rows of cells here
         return 7
     }
-    
+    func collectionView(_ pcollectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        var boolval: Bool = false
+        if pcollectionView == self.roomCollectionView{
+            boolval = true
+        }
+            return boolval
+    }
+    func collectionView(_ pcollectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if pcollectionView.isEqual(self.roomCollectionView) {
+            let movedItem = filteredRooms.remove(at: sourceIndexPath.item)
+            filteredRooms.insert(movedItem, at: destinationIndexPath.item)
+            let rooms = self.filteredRooms
+            DataFetchManager.shared.updateRoomSequence(room: rooms, complition: {error in
+                if error != nil{
+                    PopupManager.shared.displayError(message: "room sequence error", description: error?.localizedDescription)
+                }
+            })
+        }
+    }
 }
 
 
@@ -626,7 +686,7 @@ extension DashboardController :FrequentlyOperatedCollectionCellViewDelegate {
     func cellView(_ pSender: FrequentlyOperatedCollectionCellView, didChangePowerState pPowerState: Bool) {
         if let anIndexPath = self.applianceCollectionView.indexPathForItem(at: pSender.convert(CGPoint.zero, to: self.applianceCollectionView)), anIndexPath.item < self.appliances.count {
             let anAppliance = self.appliances[anIndexPath.item]
-                 if anAppliance.stripType == Appliance.StripType.rgb{
+            if anAppliance.type == Appliance.ApplianceType.ledStrip{
                     let aGlowPattern = anAppliance.isOn ? Appliance.GlowPatternType.off: Appliance.GlowPatternType.on
                     self.updateAppliance(appliance: anAppliance, property1: anAppliance.ledStripProperty1!, property2: anAppliance.ledStripProperty2!, property3: anAppliance.ledStripProperty3!, glowPattern: aGlowPattern)
                 }else{
@@ -636,7 +696,6 @@ extension DashboardController :FrequentlyOperatedCollectionCellViewDelegate {
     }
     
 }
-
 
 extension DashboardController :RoomCollectionCellViewDelegate {
     func didSelectApplianceButton(_ pSender: RoomCollectionCellView) {
@@ -717,7 +776,7 @@ extension DashboardController {
             self.drawerController.open()
         }
         return aReturnVal
-    }
+      }
 }
 extension DashboardController{
     func loadVdp(){

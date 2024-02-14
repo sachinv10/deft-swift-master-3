@@ -45,19 +45,21 @@ class NewDeviceConfigureDeviceController: BaseController {
         
         ProgressOverlay.shared.show()
         DataFetchManager.shared.configureDevice(completion: { (pError, pDevice) in
-            ProgressOverlay.shared.hide()
-            if pError != nil {
-                PopupManager.shared.displayConfirmation(message: "Can not configure device. " + pError!.localizedDescription, description: "If you continue, it will result in unexpected system behaviour. Do you still want to continue?", completion: {
+            DispatchQueue.main.async {
+                ProgressOverlay.shared.hide()
+                if pError != nil {
+                    PopupManager.shared.displayConfirmation(message: "Can not configure device. " + pError!.localizedDescription, description: "If you continue, it will result in unexpected system behaviour. Do you still want to continue?", completion: {
+                        self.device?.networkSsid = aDevice.networkSsid
+                        self.device?.networkPassword = aDevice.networkPassword
+                        self.gotoReconnectInternet()
+                    })
+                } else {
                     self.device?.networkSsid = aDevice.networkSsid
                     self.device?.networkPassword = aDevice.networkPassword
-                    self.gotoReconnectInternet()
-                })
-            } else {
-                self.device?.networkSsid = aDevice.networkSsid
-                self.device?.networkPassword = aDevice.networkPassword
-                PopupManager.shared.displaySuccess(message: "Device configured successfully.", description: nil, completion: {
-                    self.gotoReconnectInternet()
-                })
+                    PopupManager.shared.displaySuccess(message: "Device configured successfully.", description: nil, completion: {
+                        self.gotoReconnectInternet()
+                    })
+                }
             }
         }, device: aDevice)
     }

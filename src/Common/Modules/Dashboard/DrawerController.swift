@@ -20,7 +20,6 @@ class DrawerController: UIViewController {
     
     fileprivate var menus = Array<Menu>()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,7 +29,7 @@ class DrawerController: UIViewController {
         self.view.layer.shadowRadius = 10
         self.view.layer.shadowOpacity = 0.3
         
-        self.iconImageView.layer.masksToBounds = false
+        self.iconImageView.layer.masksToBounds = true
 //        self.iconImageView.layer.cornerRadius = self.iconImageView.frame.size.height / 2.0
 //        self.iconImageView.layer.borderWidth = 1.0
 //        self.iconImageView.layer.borderColor = UIColor.darkGray.cgColor
@@ -59,6 +58,7 @@ class DrawerController: UIViewController {
         self.menus.append(Menu(icon: Menu.VDP.icon, title: Menu.VDP.title, urc: Menu.VDP.urc))
         self.menus.append(Menu(icon: Menu.Offline.icon, title: Menu.Offline.title, urc: Menu.Offline.urc))
         self.menus.append(Menu(icon: Menu.Core.icon, title: Menu.Core.title, urc: Menu.Core.urc))
+      //  self.menus.append(Menu(icon: Menu.Geofencing.icon, title: Menu.Geofencing.title, urc: Menu.Geofencing.urc))
         self.menus.append(Menu(icon: Menu.OfferZone.icon, title: Menu.OfferZone.title, urc: Menu.OfferZone.urc))
         self.menus.append(Menu(icon: Menu.Notifications.icon, title: Menu.Notifications.title, urc: Menu.Notifications.urc))
         switch ConfigurationManager.shared.appType {
@@ -74,7 +74,7 @@ class DrawerController: UIViewController {
             self.menus.append(Menu(icon: Menu.Device.icon, title: Menu.Device.title, urc: Menu.Device.urc))
             self.menus.append(Menu(icon: Menu.Cameras.icon, title: Menu.Cameras.title, urc: Menu.Cameras.urc))
             self.menus.append(Menu(icon: Menu.HelpAndSuppor.icon, title: Menu.HelpAndSuppor.title, urc: Menu.HelpAndSuppor.urc))
-         //   self.menus.append(Menu(icon: Menu.BuyProduct.icon, title: Menu.BuyProduct.title, urc: Menu.BuyProduct.urc))
+            self.menus.append(Menu(icon: Menu.BuyProduct.icon, title: Menu.BuyProduct.title, urc: Menu.BuyProduct.urc))
         } else {
             self.menus.append(Menu(icon: Menu.SearchDevice.icon, title: Menu.SearchDevice.title, urc: Menu.SearchDevice.urc))
         }
@@ -85,12 +85,40 @@ class DrawerController: UIViewController {
         let swipeGestureone = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft(_:)))
         swipeGestureone.direction = .left
         containerView.addGestureRecognizer(swipeGestureone)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        iconImageView.isUserInteractionEnabled = true
+        iconImageView.addGestureRecognizer(tapGesture)
+       
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        DataFetchManager.shared.getProfileIcon(complition: {iconImage in
+            DispatchQueue.main.async {
+                self.iconImageView.contentMode = .scaleToFill
+                self.iconImageView.image = iconImage
+                self.iconImageView.layer.cornerRadius = self.iconImageView.frame.size.height / 2.0
+                self.iconImageView.layer.borderWidth = 1.0
+                self.iconImageView.layer.borderColor = UIColor.darkGray.cgColor
+            }
+        })
     }
     @objc func swipeLeft(_ sender: UISwipeGestureRecognizer) {
         // Handle the swipe left gesture here
         self.close()
     }
-    
+    @objc func imageTapped(){
+        self.goToProfile()
+    }
+    func goToProfile(){
+        DataFetchManager.shared.verifyMobilenumber(complition: { [self](erro , puser) in
+            print(puser?.phoneNumber)
+                    // call to profile
+                    print("call to profile")
+                    close()
+                    RoutingManager.shared.gotoEditProfile(controller: self, user: puser!)
+        })
+    }
     
     func toggle() {
         self.isExpanded = !self.isExpanded
@@ -344,6 +372,11 @@ extension DrawerController :UITableViewDataSource, UITableViewDelegate {
             static let title = "Buy Product"
             static let urc = "BuyProduct"
         }
+//        struct Geofencing{
+//            static let icon = UIImage(named: "Geofencing")!
+//            static let title = "GeoFencing"
+//            static let urc = "GeoFencing"
+//        }
     }
 }
 

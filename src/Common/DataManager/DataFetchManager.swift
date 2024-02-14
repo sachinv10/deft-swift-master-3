@@ -8,6 +8,7 @@
 
 import UIKit
 import SocketIO
+import FirebaseDatabase
 
 /**
 * Class that implements Codable and serializes response of HTTP API objects.
@@ -20,25 +21,23 @@ class DataFetchManager: NSObject {
     static var shared :DataFetchManager = {
         return DataFetchManager()
     }()
-    
-    
+
     static let databaseValueChangedNotificationName = "databaseValueChangedNotificationName"
-    
     
     private let dataFetchManagerFireBase = DataFetchManagerFireBase()
     
     var loggedInUser :User?
     
-    
     func checkInternetConnection(completion pCompletion: @escaping (Error?) -> Void) {
         self.dataFetchManagerFireBase.checkInternetConnection(completion: pCompletion)
     }
     
-    
     func login(completion pCompletion: @escaping (Error?, User?) -> Void, user pUser :User) {
         self.dataFetchManagerFireBase.login(completion: pCompletion, user: pUser)
     }
-    
+    func updateUserDetail(completion pCompletion: @escaping (Error?, User?) -> Void, user pUser :User){
+        self.dataFetchManagerFireBase.updateUserDetail(completion: pCompletion, user: pUser)
+    }
     func logout(completion pCompletion: @escaping (Error?) -> Void) {
         self.dataFetchManagerFireBase.logout(completion: pCompletion)
     }
@@ -61,6 +60,10 @@ class DataFetchManager: NSObject {
     
     func searchAppliance(completion pCompletion: @escaping (Error?, Array<Appliance>?,Array<String>?) -> Void, room pRoom :Room?, includeOnOnly pIncludeOnOnly :Bool) {
         self.dataFetchManagerFireBase.searchAppliance(completion: pCompletion, room: pRoom, includeOnOnly: pIncludeOnOnly)
+    }
+    
+    func updateTimestamp(selectedRoom pRoom: Room?, complition pComplition: @escaping(Error?)-> Void){
+        self.dataFetchManagerFireBase.updateTimestamp(selectedRoom: pRoom, complition: pComplition)
     }
     
     func updateAppliancePowerStateOffline(completion pCompletion: @escaping (Error?) -> Void, appliance pAppliance :Appliance, powerState pPowerState :Bool) {
@@ -97,7 +100,6 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateDevice(completion: pCompletion, deviceId: deviceId)
     }
     
-    
     func updateDeviceDimabble(completion pCompletion: @escaping (Error?) -> Void, deviceId: String, dimValue:Int) {
         self.dataFetchManagerFireBase.updateDeviceDimabble(completion: pCompletion, deviceId: deviceId, dimValue: dimValue)
     }
@@ -114,31 +116,28 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateCurtainMotionState(completion: pCompletion, curtain: pCurtain, motionState: pMotionState)
     }
     
-    
     func updateCurtainDimmableValue(completion pCompletion: @escaping (Error?) -> Void, curtain pCurtain :Curtain, dimValue pDimValue :Int) {
         self.dataFetchManagerFireBase.updateCurtainDimmableValue(completion: pCompletion, curtain: pCurtain, dimValue: pDimValue)
     }
-    
     
     func searchRemote(completion pCompletion: @escaping (Error?, Array<Remote>?) -> Void, room pRoom :Room?) {
         self.dataFetchManagerFireBase.searchRemote(completion: pCompletion, room: pRoom)
     }
     
-    
     func remoteDetails(completion pCompletion: @escaping (Error?, Remote?) -> Void, remote pRemote :Remote) {
         self.dataFetchManagerFireBase.remoteDetails(completion: pCompletion, remote: pRemote)
     }
     
-    
+    func remoteChangesObserver(completion pCompletion: @escaping (Error?, Remote?) -> Void, remote pRemote :Remote) {
+         self.dataFetchManagerFireBase.remoteObserve(completion: pCompletion, remote: pRemote)
+    }
     func updateRemoteKey(completion pCompletion: @escaping (Error?) -> Void, remote pRemote :Remote, remoteKey pRemoteKey :RemoteKey) {
         self.dataFetchManagerFireBase.updateRemoteKey(completion: pCompletion, remote: pRemote, remoteKey: pRemoteKey)
     }
     
-    
     func clickRemoteKey(completion pCompletion: @escaping (Error?) -> Void, remote pRemote :Remote, remoteKey pRemoteKey :RemoteKey) {
         self.dataFetchManagerFireBase.clickRemoteKey(completion: pCompletion, remote: pRemote, remoteKey: pRemoteKey)
     }
-    
     
     func recordRemoteKey(completion pCompletion: @escaping (Error?) -> Void, remote pRemote :Remote, remoteKey pRemoteKey :RemoteKey) {
         self.dataFetchManagerFireBase.recordRemoteKey(completion: pCompletion, remote: pRemote, remoteKey: pRemoteKey)
@@ -147,6 +146,9 @@ class DataFetchManager: NSObject {
     // MARK:- Controller
     func resetController(completion pCompletion: @escaping (Error?, Array<Appliance>?) -> Void, room ssid :String?,room password :String?, Applinces pApplinces :ControllerAppliance?, includeOnOnly pIncludeOnOnly :Bool) {
         self.dataFetchManagerFireBase.resetController(completion: pCompletion, room: ssid, room: password, Applinces: pApplinces, includeOnOnly: pIncludeOnOnly)
+    }
+    func reNameControllername(Controller pComplition: @escaping(Error?,Bool)-> Void, Appliance pAppliances: ControllerAppliance?){
+        self.dataFetchManagerFireBase.reNameControllerName(complition: pComplition, Appliance: pAppliances)
     }
     
     // MARK: - VDP
@@ -178,11 +180,16 @@ class DataFetchManager: NSObject {
     func updateSensorCalibrate(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         self.dataFetchManagerFireBase.updateSensorCalibrate(completion: pCompletion, sensor: pSensor)
     }
-    
+    func deleteOccupySensorUnAssign(completion pComplition: @escaping(Error?, Sensor?) -> Void, sensor pSensor: ControllerAppliance){
+        self.dataFetchManagerFireBase.deleteSensorOccupancyUnAssign(completion: pComplition, sensor: pSensor)
+    }
     func updateSensorbtnFixNow(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         self.dataFetchManagerFireBase.updateSensorBrnFixNow(completion: pCompletion, sensor: pSensor)
     }
     
+    func updateRoomSequence(room pRoom: Array<Room>?,complition pComplition: @escaping(Error?)-> Void) {
+        self.dataFetchManagerFireBase.updateRoomSequence(room: pRoom, compliton: pComplition)
+    }
     func updateSensor(completion pCompletion: @escaping (Error?) -> Void, sensor pSensor :Sensor) {
         self.dataFetchManagerFireBase.updateSensorBrnFixNow(completion: pCompletion, sensor: pSensor)
     }
@@ -318,7 +325,12 @@ class DataFetchManager: NSObject {
     func searchRoom(completion pCompletion: @escaping (Error?, Array<Room>?) -> Void) {
         self.dataFetchManagerFireBase.searchRoom(completion: pCompletion)
     }
-    
+    func deleteRoom(complition pComplition: @escaping(Error?)-> Void,room pRoom: Room?){
+        self.dataFetchManagerFireBase.deleteRoom(coplition: pComplition, room: pRoom)
+    }
+    func editRoomName(complition pComplition: @escaping(Error?)-> Void,room pRoom: Room?){
+        self.dataFetchManagerFireBase.editRoomName(coplition: pComplition, room: pRoom)
+    }
     func saveSchedule(completion pCompletion: @escaping (Error?, Schedule?) -> Void, schedule pSchedule :Schedule) {
         self.dataFetchManagerFireBase.saveSchedule(completion: pCompletion, schedule: pSchedule)
     }
@@ -330,7 +342,12 @@ class DataFetchManager: NSObject {
     func coreList(completion pCompletion: @escaping (Error?, [Core]?) -> Void) {
         self.dataFetchManagerFireBase.coreList(completion: pCompletion)
     }
-    
+    func updateMacId(completion pCompletion: @escaping (Error?)-> Void, Appliances pAppliances: ControllerAppliance?, message pmessage: String){
+        self.dataFetchManagerFireBase.updateMacid(completion: pCompletion, Appliances: pAppliances,message: pmessage)
+    }
+    func getMacId(completion pCompletion: @escaping (Error?,Any)-> Void, Appliances pAppliances: ControllerAppliance?){
+        self.dataFetchManagerFireBase.getMacId(completion: pCompletion, Appliances: pAppliances)
+    }
     func updateCore(completion pCompletion: @escaping (Error?) -> Void, pCore core :Core) {
         self.dataFetchManagerFireBase.updateCoreState(completion: pCompletion, pcore: core)
         self.dataFetchManagerFireBase.updateCoreData(completion: pCompletion, pcore: core)
@@ -409,6 +426,10 @@ class DataFetchManager: NSObject {
         self.dataFetchManagerFireBase.updateRuleState(completion: pCompletion, rule: pRule, state: pState)
     }
     
+    // MARK: - PROFILE GET
+    func getProfileIcon(complition pComplition: @escaping(UIImage)-> Void){
+        dataFetchManagerFireBase.loadProfileImage(complition: pComplition)
+    }
     // MARK: - VDP
     
     func vdpConnectionUrl(completion pCompletion: @escaping (SocketIOClient?) -> Void, socket psocket: SocketIOClient?) {
@@ -417,5 +438,27 @@ class DataFetchManager: NSObject {
     // MARK: - BUY PRODUCT
     func selectProductList(completion pCompletion: @escaping (Error?, Array<Ecommerce>?) -> Void) {
         self.dataFetchManagerFireBase.selectProductList(completion: pCompletion)
+    }
+    func selectProductAddressList(completion pCompletion: @escaping (Error?, Array<address>?) -> Void) {
+        self.dataFetchManagerFireBase.selectBuyProductAddressList(completion: pCompletion)
+    }
+    func orderList(complition pComplition: @escaping([OrderList]?)-> Void){
+        self.dataFetchManagerFireBase.orderList(complition: pComplition)
+    }
+    func orderPlace(complition pComplition: @escaping(Error?)-> Void, OrderList POrderList: [cartData]?, address Paddress: address?, user pUser: UserVerify?){
+        self.dataFetchManagerFireBase.orderPlace(complition: pComplition, OrderList: POrderList, address: Paddress, user: pUser)
+    }
+    func saveNewAddress(complition pComplition: @escaping(Error?)-> Void, address Paddress: address?){
+        self.dataFetchManagerFireBase.saveAddress(complition: pComplition, address: Paddress )
+    }
+    func addToCart(complition pComplistion: @escaping(Error?, Array<Ecommerce>?)->Void, Product Bprocuct: Ecommerce){
+        self.dataFetchManagerFireBase.addToCart(complition: pComplistion, product: Bprocuct)
+    }
+    func fetchDataCommon(complition pComplistion: @escaping(Error?, Any)->Void, databasePath pdatabase: String){
+        self.dataFetchManagerFireBase.fetchDataCommon(complition: pComplistion, databasePath: pdatabase)
+    }
+    // MARK: - Help and Support
+    func getTechnicalSheet(completion pCompletion: @escaping(Result<[technicalSheet],Error>)-> Void){
+        self.dataFetchManagerFireBase.getTechnicalSheet(comletion: pCompletion)
     }
 }

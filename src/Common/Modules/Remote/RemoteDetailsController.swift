@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class RemoteDetailsController: BaseController {
     var selectedRemote :Remote?
@@ -15,7 +18,6 @@ class RemoteDetailsController: BaseController {
     
     @IBOutlet weak var remoteControlScrollView :UIScrollView!
     var remoteControl :RemoteControl?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +37,19 @@ class RemoteDetailsController: BaseController {
         
         self.dynamicButtonContainerView.toggle(forceCollpase: true)
         self.reloadAllData()
+        self.remoteObserver()
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Database.database().reference().removeAllObservers()
+    }
+    func remoteObserver(){
+        if let aRemote = self.selectedRemote {
+            DataFetchManager.shared.remoteChangesObserver(completion: {(error, remote) in
+                self.reloadAllData()
+            }, remote: aRemote)
+        }
+    }
     
     override func reloadAllData() {
         if let aRemote = self.selectedRemote {
@@ -179,7 +192,6 @@ class RemoteDetailsController: BaseController {
             RoutingManager.shared.gotoUpdateRemoteButton(controller: self, selectedRemote: aRemote, selectedRemoteKey: aRemoteKey)
         }
     }
-    
 }
 
 

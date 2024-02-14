@@ -15,7 +15,9 @@ class SocketConnectionPool {
     
     private var connections: [SocketConnection] = []
     
-    private init() {}
+    private init() {
+        
+    }
     
     func getConnection() -> SocketConnection {
         if let connection = connections.popLast() {
@@ -26,7 +28,10 @@ class SocketConnectionPool {
             return connection
         }
     }
-    
+    func disConnect(){
+        let connection = self.getConnection()
+        connection.socket?.disconnect()
+    }
     func releaseConnection(_ connection: SocketConnection) {
         connections.append(connection)
     }
@@ -38,14 +43,17 @@ class SocketConnectionPool {
         cnx.socket?.connect()
         // Add event listeners
         cnx.socket?.on(clientEvent: .connect) {data, ack in
-            print("Connected....")
+            print("Connected....Ohh")
             let cnnection = self.getConnection()
             self.releaseConnection(cnnection)
          //   self.timer.invalidate()
         }
         cnx.socket?.on(clientEvent: .disconnect) {data, ack in
-            print("disConnected....")
-            cnx.socket?.connect()
+            print("disConnected....Ohh")
+            let connection = self.getConnection()
+            connection.socket?.connect()
+            self.releaseConnection(connection)
+           // cnx.socket?.connect()
          //   self.timer.invalidate()
         }
         cnx.socket?.on("addPeer") { (data, ack) in
@@ -59,7 +67,7 @@ class SocketConnectionPool {
                    //  self.delegate?.webrtcAddPeer(data: data)
                  }
                 
-                 print("addpeer socket")
+                 print("addpeer socket.... Ohh")
              }
         return cnx
     }

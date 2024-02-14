@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CartBuyProduct" representedClassName="CartBuyProduct" syncable="YES">
+        <attribute name="alexaSupport" optional="YES" attributeType="String"/>
+        <attribute name="deviceId" optional="YES" attributeType="String"/>
+        <attribute name="dprice" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="googleHomeSupport" optional="YES" attributeType="String"/>
+        <attribute name="installation" optional="YES" attributeType="String"/>
+        <attribute name="itemCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="operationRange" optional="YES" attributeType="String"/>
+        <attribute name="powerSupply" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="productImage" optional="YES" attributeType="String"/>
+        <attribute name="productSlides" optional="YES" attributeType="String"/>
+        <attribute name="productSummary" optional="YES" attributeType="String"/>
+        <attribute name="sensorDetectionRange" optional="YES" attributeType="String"/>
+        <attribute name="subType" optional="YES" attributeType="String"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
+    </entity>
+</model>

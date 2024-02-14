@@ -14,7 +14,7 @@ class Appliance: NSObject {
     var title :String?
     
     var brandTitle :String?
-    
+    var typeSelected: String?
     var roomId :String?
     var roomTitle :String?
     
@@ -33,7 +33,8 @@ class Appliance: NSObject {
     var ledStripProperty1 :Int?
     var ledStripProperty2 :Int?
     var ledStripProperty3 :Int?
-    
+    var ledMode: Bool = true
+    var RGBMode: Bool = true
     var type :ApplianceType? {
         didSet {
             self.updateIcon()
@@ -73,11 +74,29 @@ class Appliance: NSObject {
     var scheduleDimmableValue :Int?
     var stripLightEvent: String?
     var StripDiming: String?
+    var selectedScedularType: String{
+        var returnVal = ""
+        switch scheduleState{
+        case true: if (scheduleDimmableValue != 1 && hardwareId?.hasPrefix("CL0") == true){
+            returnVal = "diming is at \(String(describing: scheduleDimmableValue ?? 1))"}
+            else if (scheduleDimmableValue != 1 && isDimmable){
+                 returnVal = "diming level: \(String(describing: scheduleDimmableValue ?? 1))"
+            }else{
+                 returnVal = "On"
+            }
+        case false:
+            returnVal = "Off"
+        }
+        return returnVal
+    }
     var selectedAppType: String{
         var returnVal = ""
         switch scheduleState{
-        case true:
-            returnVal = "When switch is On"
+        case true: if (scheduleDimmableValue != 1 && isDimmable){
+            returnVal = "When diming is at \(String(describing: scheduleDimmableValue ?? 1))"}
+            else{
+                returnVal = "When switch is On"
+            }
         case false:
             returnVal = "When switch is Off"
         }
@@ -87,9 +106,26 @@ class Appliance: NSObject {
        var returnVal = ""
        switch scheduleState{
        case true:
-           returnVal = "Turn on \(String(describing: title ?? ""))"
+           if (scheduleDimmableValue != 1 && isDimmable){
+               returnVal = "Set to \(String(describing: scheduleDimmableValue ?? 1))"}
+           else{
+               if stripLightEvent != nil{
+                   let valu = Int(stripLightEvent ?? "00")
+                   let x = Appliance.GlowPatternType(rawValue: valu!)
+                   returnVal = "Mode:\(String(describing: x!))"
+                   if let x1 = ledStripProperty1, let x2 = ledStripProperty2, let x3 = ledStripProperty3{
+                       let hexValue = String(format:"%02X", Int(x1)) + String(format:"%02X", Int(x2)) + String(format:"%02X", Int(x3))
+                       returnVal += ",Color:#\(hexValue)"
+                   }
+               }else{
+                   returnVal = "Turn on"// \(String(describing: title ?? ""))"
+               }
+           }
        case false:
-           returnVal = "Turn Off \(String(describing: title ?? ""))"
+           returnVal = "Turn Off"// \(String(describing: title ?? ""))"
+       }
+       if typeSelected == "goodbye"{
+           returnVal = "good bye to controller"
        }
        return returnVal
    }
@@ -124,7 +160,8 @@ class Appliance: NSObject {
         anAppliance.scheduleCommand = self.scheduleCommand
         anAppliance.scheduleState = self.scheduleState
         anAppliance.scheduleDimmableValue = self.scheduleDimmableValue
-        
+        anAppliance.typeSelected = self.typeSelected
+        anAppliance.stripLightEvent = self.stripLightEvent
         return anAppliance
     }
     
@@ -259,12 +296,10 @@ class Appliance: NSObject {
             case StripType.singleStrip:
                 aReturnVal = "Single Strip"
             }
-            
             return aReturnVal
         }
     }
 
-    
     enum GlowPatternType :Int {
         case on = 0
         case rgb = 1
@@ -296,36 +331,4 @@ class Appliance: NSObject {
     }
     
 }
-class ControllerAppliance: NSObject {
-    
-    var id :String?
-    var name :String?
-    var roomName :String?
-    var online :Bool?
-    
-    var roomId :String?
-    var hardwareId :String?
-    var title :String?
-    var lastOperated :Double?
-    var wifiSignalStrength :String?
-    var wifiSsid : String?
-    var wifiPassword : String?
-    var controllerType : String?
-    
-    func clone() -> ControllerAppliance {
-        let anAppliance = ControllerAppliance()
-        
-        anAppliance.id = self.id
-        anAppliance.title = self.title
-        anAppliance.roomId = self.roomId
-        anAppliance.name = self.name
-        anAppliance.roomName = self.roomName
-        anAppliance.hardwareId = self.hardwareId
-        anAppliance.online = self.online
-        anAppliance.lastOperated = self.lastOperated
-        anAppliance.wifiSignalStrength = self.wifiSignalStrength
-        anAppliance.wifiSsid = self.wifiSsid
-        anAppliance.wifiPassword = self.wifiPassword
-        return anAppliance
-    }
-}
+

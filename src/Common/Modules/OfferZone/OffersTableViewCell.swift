@@ -18,8 +18,6 @@ class OffersTableViewCell: UITableViewCell {
         super.awakeFromNib()
         //containerDataView.setCornerRadiusWithBorder(color: UIColor(red: 219/255, green: 219/255, blue: 219/255, alpha: 1), radius: 8, width: 1)
         containerDataView.addShadowToView(cornerRadius: 8)
-
-
         // Initialization code
     }
     
@@ -32,7 +30,7 @@ class OffersTableViewCell: UITableViewCell {
             let url = URL(string: imageLink)
 
             offerImage.kf.setImage(with: url)
-            offerImage.contentMode = .scaleAspectFill
+            offerImage.contentMode = .scaleAspectFit
         }
         
         // offerTitle.text = offerData.title
@@ -43,7 +41,6 @@ class OffersTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }
 
 extension UIView {

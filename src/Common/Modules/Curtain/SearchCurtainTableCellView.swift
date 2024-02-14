@@ -22,6 +22,9 @@ class SearchCurtainTableCellView: UITableViewCell {
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var closeButton: UIButton!
     
+    @IBOutlet weak var lblOpen: UILabel!
+    @IBOutlet weak var lblClose: UILabel!
+    @IBOutlet weak var lblPause: UILabel!
     var curtain :Curtain?
     weak var delegate :SearchCurtainTableCellViewDelegate?
     
@@ -70,9 +73,15 @@ class SearchCurtainTableCellView: UITableViewCell {
         if self.curtain?.type == Curtain.CurtainType.rolling {
             self.buttonContainerView.isHidden = true
             self.slider.isHidden = false
+            self.lblOpen.isHidden = true
+            self.lblClose.isHidden = true
+            self.lblPause.isHidden = true
         } else {
             self.buttonContainerView.isHidden = false
             self.slider.isHidden = true
+            self.lblOpen.isHidden = false
+            self.lblPause.isHidden = false
+            self.lblClose.isHidden = false
         }
         self.slider.value = Float(self.curtain?.level ?? 0)
     }

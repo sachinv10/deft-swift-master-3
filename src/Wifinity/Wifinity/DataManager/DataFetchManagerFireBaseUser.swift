@@ -17,7 +17,6 @@ extension DataFetchManagerFireBase {
     func login(completion pCompletion: @escaping (Error?, User?) -> Void, user pUser :User) {
         DispatchQueue.global(qos: .background).async {
             self.requestCount += 1
-            
             var aUser :User?
             var aReturnValError :Error?
             
@@ -84,6 +83,20 @@ extension DataFetchManagerFireBase {
         
     }
     
+    func updateUserDetail(completion pCompletion: @escaping (Error?, User?) -> Void, user pUser :User) {
+        DispatchQueue.global(qos: .background).async {
+          
+            var stanAloanDic: Dictionary<String, Any>? = Dictionary<String, Any>()
+            stanAloanDic?.updateValue(pUser.emailAddress, forKey: "email")
+            stanAloanDic?.updateValue(pUser.password, forKey: "password")
+            if let uid = (Auth.auth().currentUser?.uid){
+                Database.database().reference().child("standaloneUserDetails").child(uid).updateChildValues(stanAloanDic!, withCompletionBlock: { (error, pdatabaserefrances) in
+                    pCompletion(error, pUser)
+                })
+            }
+        }
+        
+    }
     
     func logout(completion pCompletion: @escaping (Error?) -> Void) {
         DispatchQueue.global(qos: .background).async {
@@ -134,6 +147,17 @@ extension DataFetchManagerFireBase {
         }
         
     }
+    //get profile icon
+    func loadProfileImage(complition pComplition: @escaping(UIImage)-> Void) {
+        DispatchQueue.global(qos: .background).async {
+            
+         guard let data = UserDefaults.standard.data(forKey: String(describing: Auth.auth().currentUser?.uid)) else { return }
+         let decoded = try! PropertyListDecoder().decode(Data.self, from: data)
+         let image = UIImage(data: decoded)
+        // profileImage.image = image
+            pComplition(image ?? UIImage(named: "LoginBanner")!)
+        }
+    }
    
     func devicesDetails(completion pCompletion: @escaping (Error?, Array<ControllerAppliance>?) -> Void) {
         DispatchQueue.global(qos: .background).async {
@@ -176,7 +200,6 @@ extension DataFetchManagerFireBase {
              //   pCompletion(aReturnValError, anApplianceArray)
             }
         }
-        
     }
     func devidedetail(pcontrollerApplince: ControllerAppliance) ->  String{
         
@@ -191,7 +214,6 @@ extension DataFetchManagerFireBase {
                                 pcontrollerApplince.hardwareId = String(i)
                             }
                         }
-                       
                     }
                     aDispatchSemaphore.signal()
                 }
@@ -207,7 +229,6 @@ extension DataFetchManagerFireBase {
                                 pcontrollerApplince.hardwareId = String(i)
                             }
                         }
-
                     }
                     aDispatchSemaphore.signal()
                 }
@@ -273,7 +294,7 @@ extension DataFetchManagerFireBase {
                             .child("applianceDetails")
                             .child(aDeviceId)
                             .observe(DataEventType.value) { (pDataSnapshot) in
-                                if let anArray = DataContractManagerFireBase.appliances(any: pDataSnapshot.value) {
+                            if let anArray = DataContractManagerFireBase.appliances(any: pDataSnapshot.value) {
                                     aFetchedApplianceArray.append(contentsOf: anArray)
                                 }
                                 anApplianceDispatchSemaphore.signal()
@@ -286,8 +307,9 @@ extension DataFetchManagerFireBase {
                             return pLhs.operatedCount ?? 0 > pRhs.operatedCount ?? 0
                         }
                         anApplianceArray = Array(aFetchedApplianceArray.prefix(6))
-                    }
-                    }catch{
+                      }
+                     }catch{
+                        aReturnValError = error
                         print(error)
                         print("Crash in Applinces")
                     }
@@ -316,5 +338,19 @@ extension DataFetchManagerFireBase {
         }
         
     }
-    
+    func updateRoomSequence(room pRoom: Array<Room>?, compliton pComplition:@escaping(Error?)-> Void){
+        DispatchQueue.global(qos: .background).async {
+            var anError: Error?
+            let token = CacheManager.shared.fcmToken
+            let uid = Auth.auth().currentUser?.uid
+            for (key, item) in pRoom!.enumerated(){
+                self.database.child("rooms").child(uid ?? "").child(item.id ?? "").child("deviceToken").child(token ?? "").updateChildValues(["position":"\(String(key))"], withCompletionBlock: {(error, DatabaseReference) in
+                    if error != nil{
+                        anError = error
+                    }
+                })
+            }
+            pComplition(anError)
+        }
+    }
 }

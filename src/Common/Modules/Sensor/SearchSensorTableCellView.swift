@@ -232,8 +232,9 @@ class SearchSensorTableCellView: UITableViewCell {
                 self.lpgContainerView.isHidden = true
                 if pSensor.controllerType == "Lidar Sensor"{
                     syncButton.isHidden = true
+                  //  appNotificationButton.isHidden = true
                 }
-                self.lblIntensity.text = "Last Opration:"
+                self.lblIntensity.text = "Last Operation:"
                 print(pSensor.lastOperationTime)
                 if pSensor.lastOperation == "-1"{
                     self.lightValueLabel.text =  "OUT"

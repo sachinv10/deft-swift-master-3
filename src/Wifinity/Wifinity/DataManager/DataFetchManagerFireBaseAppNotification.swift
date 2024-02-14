@@ -138,12 +138,18 @@ extension DataFetchManagerFireBase {
                         if let aDict = pDataSnapshot.value as? Dictionary<String,Any> {
                             if let anIpAddress = aDict["ip"] as? String
                                , let aPort = aDict["port"] as? Int
-                               , var aUrlComponents = URLComponents(string: String(format: "http://%@:%d", anIpAddress, aPort)) {
-                                aUrlComponents.path = "/standAlonelog/getNotification"
+                                , var aUrlComponents = URLComponents(string: String(format: "http://%@:%d", anIpAddress, aPort)) {
                                 var aQueryItemArray = Array<URLQueryItem>()
+                                if pHardwareId?.prefix(3) != "P00"{
+                                    aUrlComponents.path = "/standAlonelog/getNotification"
                                 aQueryItemArray.append(URLQueryItem(name: "uid", value: Auth.auth().currentUser!.uid))
                                 aQueryItemArray.append(URLQueryItem(name: "notificationType", value: anAppNotificationType))
-                               // aQueryItemArray.append(URLQueryItem(name: "hardwareId", value: pHardwareId))
+                                }else{
+                                    aUrlComponents.path = "/standAlonelog/getOccupancyNotification"
+                                }
+                                if (pHardwareId != nil){
+                                    aQueryItemArray.append(URLQueryItem(name: "hardwareId", value: pHardwareId))
+                                }
                                 aQueryItemArray.append(URLQueryItem(name: "count", value: String(format: "%d", pPageNumber)))
                                 aUrlComponents.queryItems = aQueryItemArray
                                 aNotificationUrl = aUrlComponents.url
@@ -159,8 +165,11 @@ extension DataFetchManagerFireBase {
                 
                 // Fetch DEFT app notifications
                 var aUrlRequest = URLRequest(url: aNotificationUrl!)
-                aUrlRequest.httpMethod = "GET"
-                
+                if pHardwareId?.prefix(3) != "P00"{
+                    aUrlRequest.httpMethod = "GET"
+                }else{
+                    aUrlRequest.httpMethod = "POST"
+                }
                 let anAppNotificationDispatchSemaphore = DispatchSemaphore(value: 0)
                 let aDataTask = URLSession.shared.dataTask(with: aUrlRequest, completionHandler: { (pData, pUrlResponse, pError) in
                     if let aResponseBody = pData
@@ -168,6 +177,7 @@ extension DataFetchManagerFireBase {
                         anAppNotificationArray = DataContractManagerFireBase.appNotifications(array: anArray)
                     }
                     
+                    let data = try? JSONSerialization.jsonObject(with: pData!, options: [])
                     anAppNotificationDispatchSemaphore.signal()
                 })
                 aDataTask.resume()
@@ -177,6 +187,7 @@ extension DataFetchManagerFireBase {
                     anAppNotificationArray = nil
                 }
             } catch {
+                print(error.localizedDescription)
                 anError = error
             }
             
@@ -214,6 +225,10 @@ extension DataFetchManagerFireBase {
                 aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/globalOffActivatedDevice")
                 aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/lockActivatedDevice")
                 aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/schedularActivatedDevice")
+                aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/temperatureActivatedDevice")
+                aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/vdpActivatedDevice")
+                aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/SmartSensorActivatedDevice")
+                aPathTokenDict.updateValue(aNotificationToken, forKey: aBasePath + "/SmokeSensorActivatedDevice")
                 
                 for aPath in aPathTokenDict.keys {
                     let aToken = aPathTokenDict[aPath]
@@ -235,6 +250,21 @@ extension DataFetchManagerFireBase {
                     } else if aPath.hasSuffix("schedularActivatedDevice")
                     && pAppNotificationSettings.isSchedularNotificationSubscribed == true {
                         anIsNotificationSubscribed = true
+                    } else if aPath.hasSuffix("temperatureActivatedDevice")
+                    && pAppNotificationSettings.isTemperatureNotificationSubscribed == true {
+                        anIsNotificationSubscribed = true
+                    }else if aPath.hasSuffix("vdpActivatedDevice")
+                                && pAppNotificationSettings.isVDPNotificationSubscribed == true {
+                                    anIsNotificationSubscribed = true
+                    }else if aPath.hasSuffix("criticalNotificationDeviceToken")
+                                && pAppNotificationSettings.isCriticalNotificationDeviceToken == true {
+                                    anIsNotificationSubscribed = true
+                    }else if aPath.hasSuffix("SmartSensorActivatedDevice")
+                                && pAppNotificationSettings.isSmartSensorNotificationSubscribed == true {
+                                    anIsNotificationSubscribed = true
+                    }else if aPath.hasSuffix("SmokeSensorActivatedDevice")
+                                && pAppNotificationSettings.isSmokeSensorNotificationSubscribed == true {
+                                    anIsNotificationSubscribed = true
                     }
                     
                     // Check if token is already saved
@@ -280,7 +310,6 @@ extension DataFetchManagerFireBase {
                         _ = aDispatchSemaphore.wait(timeout: .distantFuture)
                     }
                 }
-                
                 anAppNotificationSettings = pAppNotificationSettings
             } catch {
                 anError = error
@@ -291,7 +320,6 @@ extension DataFetchManagerFireBase {
                 pCompletion(anError, anAppNotificationSettings)
             }
         }
-        
     }
     
     
@@ -316,16 +344,19 @@ extension DataFetchManagerFireBase {
                 aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/globalOffActivatedDevice")
                 aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/lockActivatedDevice")
                 aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/schedularActivatedDevice")
-                
+                aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/temperatureActivatedDevice")
+                aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/vdpActivatedDevice")
+                aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/SmartSensorActivatedDevice")
+                aPathTokenDict.updateValue(pNotificationToken, forKey: aBasePath + "/SmokeSensorActivatedDevice")
                 let aSettings = AppNotificationSettings()
                 
                 for aPath in aPathTokenDict.keys {
                     let aToken = aPathTokenDict[aPath]
-                    
+                    print("path=\(aPath)")
                     var aDoesTokenExist :Bool = false
                     
                     let aTokenKeyDispatchSemaphore = DispatchSemaphore(value: 0)
-                    self.database
+                     self.database
                         .child(aPath)
                         .observe(.value) { (pDataSnapshot) in
                             let anEnumerator = pDataSnapshot.children
@@ -350,10 +381,19 @@ extension DataFetchManagerFireBase {
                             aSettings.isLockNotificationSubscribed = true
                         } else if aPath.hasSuffix("schedularActivatedDevice") {
                             aSettings.isSchedularNotificationSubscribed = true
+                        }else if aPath.hasSuffix("criticalNotificationDeviceToken") {
+                            aSettings.isCriticalNotificationDeviceToken = true
+                        }else if aPath.hasSuffix("vdpActivatedDevice") {
+                            aSettings.isVDPNotificationSubscribed = true
+                        }else if aPath.hasSuffix("temperatureActivatedDevice") {
+                            aSettings.isTemperatureNotificationSubscribed = true
+                        }else if aPath.hasSuffix("SmartSensorActivatedDevice") {
+                            aSettings.isSmartSensorNotificationSubscribed = true
+                        }else if aPath.hasSuffix("SmokeSensorActivatedDevice") {
+                            aSettings.isSmokeSensorNotificationSubscribed = true
                         }
                     }
                 }
-                
                 anAppNotificationSettings = aSettings
             } catch {
                 anError = error

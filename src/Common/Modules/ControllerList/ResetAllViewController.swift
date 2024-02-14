@@ -10,10 +10,17 @@ import UIKit
 class ResetAllViewController: BaseController {
   
     var controllerApplince:[ControllerAppliance]? = [ControllerAppliance]()
+    var controllerAction: ControllerAppliance.ControllerChoice = .Reset
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Reset Controllers"
-        self.subTitle = ""
+        switch controllerAction{
+        case .Delete:
+            self.title = "Delete Controller"
+        case .Reset:
+            self.title = "Reset Controller"
+        }
+         self.subTitle = ""
         tableview.dataSource = self
         tableview.delegate = self
       
@@ -39,18 +46,20 @@ class ResetAllViewController: BaseController {
 
                 if pError != nil {
                     //  displaySuccess
-                    PopupManager.shared.displayError(message: "Can not search appliances", description: pError!.localizedDescription)
+                    if pError?.localizedDescription == "Success"{
+                        self.showToast(message: "update Credential successfully",duration: 2)
+                    }
+                   // PopupManager.shared.displayError(message: "Can not update Credential", description: pError!.localizedDescription)
                 } else {
-                    
                     if pApplianceArray != nil && pApplianceArray!.count > 0 {
                         //    self.appliances = pApplianceArray!
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                        //   self.reloadAllView()
                     }
                 }
             }, room: txtfldSSID.text, room: txtfldPassword.text, Applinces: item, includeOnOnly: true)
         }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6){
+                RoutingManager.shared.gobacktoControllerList()
+            }
     }
 }
 extension ResetAllViewController: UITableViewDataSource, UITableViewDelegate{

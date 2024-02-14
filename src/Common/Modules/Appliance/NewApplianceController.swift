@@ -209,7 +209,8 @@ class NewApplianceController: BaseController {
     
     func gotoSelectDevice() {
         #if APP_WIFINITY
-        RoutingManager.shared.gotoSelectDevice(controller: self, delegate: self, room: self.room, hardwareTypes: [Device.HardwareType.oneSwitch, Device.HardwareType.twoSwitch, Device.HardwareType.threeSwitch, Device.HardwareType.fourSwitch, Device.HardwareType.fiveSwitch, Device.HardwareType.sixSwitch, Device.HardwareType.sevenSwitch, Device.HardwareType.eightSwitch, Device.HardwareType.nineSwitch, Device.HardwareType.tenSwitch, Device.HardwareType.ctOneSwitch, Device.HardwareType.ctTwoSwitch, Device.HardwareType.ctThreeSwitch, Device.HardwareType.ctFourSwitch, Device.HardwareType.ctFiveSwitch, Device.HardwareType.ctSixSwitch, Device.HardwareType.ctSevenSwitch, Device.HardwareType.ctEightSwitch, Device.HardwareType.ctNineSwitch, Device.HardwareType.ctTenSwitch, Device.HardwareType.ctNineSwitch, Device.HardwareType.clOneSwitch], shouldCheckForAddedApplianceCount: true)
+        RoutingManager.shared.gotoSelectDevice(controller: self, delegate: self, room: self.room, hardwareTypes: [Device.HardwareType.oneSwitch, Device.HardwareType.twoSwitch, Device.HardwareType.threeSwitch, Device.HardwareType.fourSwitch, Device.HardwareType.fiveSwitch, Device.HardwareType.sixSwitch, Device.HardwareType.sevenSwitch, Device.HardwareType.eightSwitch, Device.HardwareType.nineSwitch, Device.HardwareType.tenSwitch, Device.HardwareType.ctOneSwitch, Device.HardwareType.ctTwoSwitch, Device.HardwareType.ctThreeSwitch, Device.HardwareType.ctFourSwitch, Device.HardwareType.ctFiveSwitch, Device.HardwareType.ctSixSwitch, Device.HardwareType.ctSevenSwitch, Device.HardwareType.ctEightSwitch, Device.HardwareType.ctNineSwitch, Device.HardwareType.ctTenSwitch, Device.HardwareType.ctNineSwitch, Device.HardwareType.clOneSwitch,Device.HardwareType.CSoneSwitch, Device.HardwareType.CStwoSwitch, Device.HardwareType.CSthreeSwitch, Device.HardwareType.CSfourSwitch, Device.HardwareType.CSfiveSwitch, Device.HardwareType.CSsixSwitch, Device.HardwareType.CSsevenSwitch, Device.HardwareType.CSeightSwitch, Device.HardwareType.CSnineSwitch, Device.HardwareType.CStenSwitch],
+            shouldCheckForAddedApplianceCount: true)
         #endif
     }
     
@@ -227,8 +228,8 @@ class NewApplianceController: BaseController {
                 self.appliance = anAppliance
                 self.reloadAllView()
                 PopupManager.shared.displaySuccess(message: "Appliance saved successfully.", description: nil, completion: {
-                    RoutingManager.shared.goToPreviousScreen(self)
-                })
+                    self.delegate?.didtappedDonebtn()
+                 })
             }
         }, appliance: anAppliance)
     }

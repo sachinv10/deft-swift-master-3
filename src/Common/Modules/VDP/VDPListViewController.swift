@@ -441,7 +441,7 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
     }
     var iiceServer = [IceServer]()
     func geticeServer()  {
-       
+        Database.database().reference().child("restfulApi").child("vdpIceServers").keepSynced(true)
         let uid = Auth.auth().currentUser?.uid
         let ref = Database.database().reference().child("restfulApi").child("vdpIceServers").observeSingleEvent(of: .value, with: {(DataSnapshot) in
             
@@ -480,6 +480,7 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
 //
 //            }
          })
+       
     }
     private func routeChange(_ n: Notification) {
         
@@ -552,6 +553,7 @@ class VDPListViewController: BaseController,URLSessionWebSocketDelegate,RTCPeerC
         if remoteStream != nil{
             DashboardController.socket?.leaveNamespace()
         }
+        timer.invalidate()
     //    socket?.disconnect()
 //    DashboardController.socket.disconnect()
 //    DashboardController.socket = nil
@@ -818,7 +820,8 @@ extension VDPListViewController{
                     self.sendSDP(sdp: RTCSessionDescription!)
                 })
             } else {
-                print("sdp creation error: \(Error)")
+                self.showToast(message: "sdp creation error: \(Error?.localizedDescription ?? "nil")")
+                print("sdp creation error: \(Error?.localizedDescription ?? "nil")")
             }
         }
     }
@@ -1071,7 +1074,6 @@ extension VDPListViewController{
         }
     }
     
-    
     func dataChannel(_ dataChannel: RTCDataChannel, didReceiveMessageWith buffer: RTCDataBuffer) {
         //   self.delegate?.webRTCClient(didReceiveData: buffer.data)
         delegate?.webRTCClient(didReceiveData: buffer.data)
@@ -1119,13 +1121,32 @@ extension VDPListViewController{
     public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState){
         print("newState=\(newState)")
         
+        switch newState {
+               case .connected:
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Connected", duration: 2)
+            })
+                   print("ICE connection state: Connected")
+               case .disconnected:
+                   print("ICE connection state: Disconnected")
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Disconnected", duration: 2)
+            })
+                case .failed:
+                   print("ICE connection state: Failed")
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.showToast(message: "ICE connection Failed", duration: 2)
+            })
+                default:
+                   break
+               }
+       
     }
     
     
     /** Called any time the IceGatheringState changes. */
     public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState){
         print("didChange=\(newState)")
-        
     }
     
     
@@ -1333,6 +1354,7 @@ extension VDPListViewController{
         print(data)
         guard let dataInfo = data.first else { return }
         print("Received ICE candidate= \(dataInfo) is typing...")
+        self.showToast(message: "Trying to connect", duration: 1)
         guard let resultNew = dataInfo as? [String:Any]else{
             return
         }
@@ -1340,17 +1362,21 @@ extension VDPListViewController{
         
         print("icecandidate = \(peer_id)")
         if self.icecandidate == true{
+           // self.showToast(message: "Received ICE candidate", duration: 2)
                 //   let should_create_offer = resultNew["should_create_offer"]  as! Bool
-                let json = resultNew["ice_candidate"]  as? [String:Any]
+                let json = resultNew["ice_candidate"] as? [String:Any]
                 let candidate = RTCIceCandidate(
                     sdp: json!["candidate"] as! String,
                     sdpMLineIndex: Int32(json?["sdpMLineIndex"] as! Int),
                     sdpMid: json?["id"] as? String)
                 print("call to ice candidate in \(peer_id)")
                 self.onCandidate(candidate: candidate);
-            }
+        }else{
+         //   self.showToast(message: "ICE candidate faild", duration: 2)
+
+        }
     }
-    
+
     func webrtcError() {
         print("list error")
     }

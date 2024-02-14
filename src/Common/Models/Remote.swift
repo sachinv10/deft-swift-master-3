@@ -496,3 +496,11 @@ class RemoteKey: NSObject {
     }
     
 }
+// MARK: - URL Device Operated
+struct RequestParameters: Codable {
+    let uid: String
+    let date: String
+    let deviceName: String
+    let command: String
+    let description: String
+}

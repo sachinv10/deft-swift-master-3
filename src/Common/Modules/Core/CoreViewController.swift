@@ -28,8 +28,10 @@ class CoreViewController: BaseController {
         SelectComponentController.coreSensor = false
         SelectComponentController.ApplianceType = ""
         // Do any additional setup after loading the view.
+//        let data = DataManager(dataService: self)
+//        data.performDataFetch()
     }
-    
+   
     @IBAction func backButtonClicked(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -114,7 +116,6 @@ extension CoreViewController {
             }
         }, pCore: anAppliance)
     }
-    
 }
 
 extension CoreViewController {
@@ -152,27 +153,38 @@ extension CoreViewController: UITableViewDataSource,UITableViewDelegate {
         if pEditingStyle == .delete {
             if pIndexPath.row < self.coreDataArray.count {
                 let acore = self.coreDataArray[pIndexPath.row]
-                PopupManager.shared.displayConfirmation(message: "Do you want to delete selected CORE?", description: nil, completion: {
-                    self.deleteMood(pcore: acore)
-                })
+                if acore.state ?? false{
+                   PopupManager.shared.displayError(message: "please turn off Core", description: "")
+                }else{
+                   PopupManager.shared.displayConfirmation(message: "Do you want to delete selected CORE?", description: nil, completion: {
+                        self.deleteMood(pcore: acore)
+                    })
+                }
             }
         }
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let acore = self.coreDataArray[indexPath.row]
-        //        newCoreId = acore.ruleId
-        //        RoutingManager.shared.gotoCreateNewCore(controller: self, shouldAddNavigationController: true, newCoreId: newCoreId, core: acore, pdelegate: self)
+        if acore.state ?? false{
+           PopupManager.shared.displayError(message: "please turn off Core", description: "")
+        }else{
+            PopupManager.shared.displayConfirmation(message: "Do you want to edit selected CORE?", description: nil, completion: { [self] in
+                newCoreId = acore.ruleId
+                RoutingManager.shared.gotoCreateNewCore(controller: self, shouldAddNavigationController: true, newCoreId: newCoreId, core: acore, pdelegate: self)
+            })
+        }
     }
 }
 
 extension CoreViewController: CoreTableViewDelegate, newCoreControllerDelegate {
     func deleteMood(pcore: Core){
-        
         DataFetchManager.shared.deleteCore(completion: { error in
-            if error != nil{ print(error.debugDescription)
+            if error != nil{
+                 PopupManager.shared.displayError(message: "Can not delete Core.", description: error.debugDescription)
             }else{
-                print("core deleted")
-            }
+                PopupManager.shared.displaySuccess(message: "Core deleted successfully.", description: "")
+             }
         }, pCore: pcore)
     }
     
@@ -191,6 +203,13 @@ extension CoreViewController: CoreTableViewDelegate, newCoreControllerDelegate {
             self.updateCore(anAppliance: anAppliance, status: pState)
         }
     }
+    
+}
+extension CoreViewController: DataService{
+    func fetchData(completion: @escaping (Result<Data, Error>) -> Void) {
+        print("featch data")
+    }
+    
     
 }
 protocol newCoreControllerDelegate: NSObject{

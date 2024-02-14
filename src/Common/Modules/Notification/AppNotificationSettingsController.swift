@@ -1,3 +1,4 @@
+
 //
 //  AppNotificationSettingsController.swift
 //  Wifinity
@@ -40,6 +41,10 @@ class AppNotificationSettingsController: BaseController {
         self.cellTypes.append(.globalOffNotification)
         self.cellTypes.append(.lockNotification)
         self.cellTypes.append(.schedularNotification)
+        self.cellTypes.append(.tempratureNotification)
+        self.cellTypes.append(.VDPNotificaton)
+        self.cellTypes.append(.SmartSensorNotificaton)
+        self.cellTypes.append(.SmokeSensorNotificaton)
         self.cellTypes.sort(by: {(pLhs, pRhs) in
             return pLhs.rawValue <= pRhs.rawValue
         })
@@ -91,6 +96,10 @@ class AppNotificationSettingsController: BaseController {
         case globalOffNotification = "Global Off Notification"
         case lockNotification = "Lock Notification"
         case schedularNotification = "Schedular Notification"
+        case tempratureNotification = "Temperature Notification"
+        case VDPNotificaton = "VDP Notificaton"
+        case SmartSensorNotificaton = "Smart Sensor Notificaton"
+        case SmokeSensorNotificaton = "Smoke Sensor Notificaton"
     }
     
 }
@@ -167,6 +176,14 @@ extension AppNotificationSettingsController :UITableViewDataSource, UITableViewD
                     aValue =  self.appNotificationSettings?.isLockNotificationSubscribed == true
                 case .schedularNotification:
                     aValue =  self.appNotificationSettings?.isSchedularNotificationSubscribed == true
+                case .tempratureNotification:
+                    aValue = self.appNotificationSettings?.isTemperatureNotificationSubscribed == true
+                case .VDPNotificaton:
+                    aValue = self.appNotificationSettings?.isVDPNotificationSubscribed == true
+                case .SmartSensorNotificaton:
+                    aValue = self.appNotificationSettings?.isSmartSensorNotificationSubscribed == true
+                case .SmokeSensorNotificaton:
+                    aValue = self.appNotificationSettings?.isSmokeSensorNotificationSubscribed == true
                 }
                 aCellView.load(title: aCellType.rawValue, value: aValue)
                 aCellView.delegate = self
@@ -202,6 +219,14 @@ extension AppNotificationSettingsController :AppNotificationSettingsTableCellVie
                 anAppNotificationSettings.isLockNotificationSubscribed = pValue
             case .schedularNotification:
                 anAppNotificationSettings.isSchedularNotificationSubscribed = pValue
+            case .tempratureNotification:
+                anAppNotificationSettings.isTemperatureNotificationSubscribed = pValue
+            case .VDPNotificaton:
+                anAppNotificationSettings.isVDPNotificationSubscribed = pValue
+            case .SmartSensorNotificaton:
+                anAppNotificationSettings.isSmartSensorNotificationSubscribed = pValue
+            case .SmokeSensorNotificaton:
+                anAppNotificationSettings.isSmokeSensorNotificationSubscribed = pValue
             }
             self.saveAppNotificationSettings(appNotificationSettings: anAppNotificationSettings)
         }

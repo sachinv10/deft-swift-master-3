@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -178,6 +178,9 @@
                                             <outlet property="buttonContainerView" destination="r2P-wx-xF9" id="6cN-7Z-REl"/>
                                             <outlet property="closeButton" destination="6Xb-fh-ivv" id="ukp-rG-FVm"/>
                                             <outlet property="iconImageView" destination="tg7-Ed-40O" id="J1d-JR-pRT"/>
+                                            <outlet property="lblClose" destination="YeO-Ks-qQf" id="9jx-t4-wf7"/>
+                                            <outlet property="lblOpen" destination="oQf-En-faM" id="VlV-hT-06Y"/>
+                                            <outlet property="lblPause" destination="qU5-xV-waY" id="H5S-k3-Z8a"/>
                                             <outlet property="onlineIndicatorView" destination="h8c-Pj-om2" id="RdP-vI-1ix"/>
                                             <outlet property="openButton" destination="5nR-XR-bmn" id="WJu-l9-sbm"/>
                                             <outlet property="slider" destination="wYa-PT-Map" id="lwV-XL-K7J"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SearchLockController: BaseController {
     @IBOutlet weak var lockTableView: AppTableView!
@@ -22,8 +23,58 @@ class SearchLockController: BaseController {
         
         self.lockTableView.tableFooterView = UIView()
         self.lockTableView.delaysContentTouches = false
+        if Auth.auth().currentUser?.uid == "PNCl5uSBBEN6zAE7I3vWvGWFdHi1"{
+          //  openApp(appName: "")
+            checkAndOpenApp()
+//            let appURL = URL(string: "https://apps.apple.com/in/app/smart-life-smart-living/id1115101477")
+//            if let appURL = appURL, UIApplication.shared.canOpenURL(appURL) {
+//                UIApplication.shared.open(appURL, options: [:], completionHandler: { success in
+//                    if success {
+//                        print("Successfully opened the installed app.")
+//                    } else {
+//                        print("Failed to open the installed app.")
+//                    }
+//                })
+//            }
+        }
     }
     
+    func checkAndOpenApp(){
+        let app = UIApplication.shared
+        let vs = "SmartLife-SmartLiving"
+        if let xurl = encodeURL(vs){
+        let appScheme = "\(xurl)://app"
+        if app.canOpenURL(URL(string: appScheme)!) {
+            print("App is install and can be opened")
+            let url = URL(string:appScheme)!
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        } else {
+            print("App in not installed. Go to AppStore")
+            if let url = URL(string: "https://apps.apple.com/in/app/smart-life-smart-living/id1115101477"),
+                UIApplication.shared.canOpenURL(url)
+            {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+        }
+    }
+      
+    func encodeURL(_ urlString: String) -> URL? {
+        // Encode the entire URL
+        if let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+            let encodedURL = URL(string: encodedString) {
+            return encodedURL
+        }
+        return nil
+    }
     
     override func reloadAllData() {
         self.locks.removeAll()
@@ -53,6 +104,7 @@ class SearchLockController: BaseController {
                     self.locks = pLockArray!
                 }
                 self.reloadAllView()
+                //lock implimentation
             }
         })
     }

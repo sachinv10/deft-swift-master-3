@@ -43,15 +43,25 @@ class ResetAllControllrTCell: UITableViewCell{
         self.backgroundColor = UIColor(named: "PrimaryLightestColor")
 //        lblcheckbtn.setImage(UIImage(named:"Checkmarkempty"), for: .normal)
       //   lblcheckbtn.setImage(UIImage(named:"Checkmark"), for: .selected)
+        lblcheckbtn.addPadding(UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 25)) // Adjust padding as needed
+        
         lblcheckbtn.layer.borderWidth = 1
         lblcheckbtn.layer.borderColor = UIColor.gray.cgColor
         lblcheckbtn.setTitle("", for: .normal)
       //  self.isChecked = false
+        lblcheckbtn.isHidden = true
     }
     var delegate: ResetControllerTableCellViewDelegate?
     func load(pController: ControllerAppliance) {
         lblheding.text = pController.name
         lblSubheding.text = pController.id
+       if controllerApp?.isSelected == true{
+          // lblcheckbtn.backgroundColor = UIColor.green
+           self.accessoryType = .checkmark
+       }else{
+        //   lblcheckbtn.backgroundColor = UIColor.clear
+           self.accessoryType = .none
+       }
     }
     
     @IBAction func didtappedCheckBox(_ sender: UIButton) {
@@ -65,13 +75,16 @@ class ResetAllControllrTCell: UITableViewCell{
 //                }
        //  self.isSelected = !self.isSelected
         if lblcheckbtn.backgroundColor == UIColor.clear{
-        lblcheckbtn.backgroundColor = UIColor.green
+      //  lblcheckbtn.backgroundColor = UIColor.green
+            controllerApp?.isSelected = true
             delegate?.cellView(self, btnsender: sender)
+        
         }else{
-            lblcheckbtn.backgroundColor = UIColor.clear
-            delegate?.cellViewR(self, btnsender: sender)
+            controllerApp?.isSelected = false
+        //    lblcheckbtn.backgroundColor = UIColor.clear
+            delegate?.cellView(self, btnsender: sender)
         }
-}
+  }
 }
 class ResetAllWifiViewController: BaseController{
   
@@ -80,13 +93,18 @@ class ResetAllWifiViewController: BaseController{
     var ControllerId = [String]()
     
     var controllerApplince :[ControllerAppliance]?
-  
+    var controllerAction: ControllerAppliance.ControllerChoice = .Reset
     var SelectedcontrollerApp:[ControllerAppliance]? = [ControllerAppliance]()
     @IBOutlet weak var tableview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.title = "Reset Controller"
+        switch controllerAction{
+        case .Delete:
+            self.title = "Delete Controller"
+        case .Reset:
+            self.title = "Reset Controller"
+        }
+      
         self.subTitle = ""
         tableview.delegate = self
         tableview.dataSource = self
@@ -97,9 +115,8 @@ class ResetAllWifiViewController: BaseController{
  
     @IBAction func didtappedContue(_ sender: Any) {
         let uniquePosts = Array(Set(SelectedcontrollerApp!))
-        RoutingManager.shared.gotoAllResetControllerSetting(controller: self, controller: uniquePosts)
+        RoutingManager.shared.gotoAllResetControllerSetting(controller: self, controller: uniquePosts,userChoise: controllerAction)
     }
-    
 }
 extension ResetAllWifiViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -114,6 +131,23 @@ extension ResetAllWifiViewController: UITableViewDelegate, UITableViewDataSource
         cell.load(pController: applinceobj!)
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ResetAllControllrTCell
+        let applinceobj = controllerApplince?[indexPath.row]
+        var apl = applinceobj?.id
+        var controllerapplinces = applinceobj
+        lblcontinuebtn.isHidden = false
+     if let indexid = SelectedcontrollerApp?.firstIndex(where: {(pobject) -> Bool in
+            return pobject.id == apl && pobject.roomId == controllerapplinces?.roomId
+       }){
+         controllerapplinces?.isSelected = false
+         SelectedcontrollerApp?.remove(at: indexid)
+     }else{
+         controllerapplinces?.isSelected = true
+         SelectedcontrollerApp?.append(controllerapplinces!)
+     }
+        tableview.reloadRows(at: [indexPath], with: .automatic)
+    }
 }
 extension ResetAllWifiViewController: ResetControllerTableCellViewDelegate{
 
@@ -121,9 +155,17 @@ extension ResetAllWifiViewController: ResetControllerTableCellViewDelegate{
         print(pSender.controllerApp?.name)
         var apl = pSender.controllerApp?.id
         var controllerapplinces = pSender.controllerApp
-        SelectedcontrollerApp?.append(controllerapplinces!)
+      //  SelectedcontrollerApp?.append(controllerapplinces!)
         ControllerId.append(apl!)
         lblcontinuebtn.isHidden = false
+     if let indexid = SelectedcontrollerApp?.firstIndex(where: {(pobject) -> Bool in
+            return pobject.id == apl && pobject.roomId == controllerapplinces?.roomId
+       }){
+         SelectedcontrollerApp?.remove(at: indexid)
+     }else{
+         SelectedcontrollerApp?.append(controllerapplinces!)
+     }
+        tableview.reloadData()
     }
     
     func cellViewR(_ pSender: ResetAllControllrTCell, btnsender sender: UIButton) {
@@ -134,8 +176,11 @@ extension ResetAllWifiViewController: ResetControllerTableCellViewDelegate{
                  ControllerId.remove(at: item)
                 break
              }
-                
         }
      }
 }
- 
+extension UIButton {
+    func addPadding(_ padding: UIEdgeInsets) {
+        contentEdgeInsets = padding
+    }
+}
